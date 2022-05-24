@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myStyle.css') }}">
+    <!-- Fontawesome CDN Link -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<title>Index</title>
+</head>
+
+<!-- Da sconosciuto
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://viz-js.com/bower_components/viz.js/viz-lite.js"></script>
+<script src="https://github.com/magjac/d3-graphviz/releases/download/v0.0.4/d3-graphviz.min.js"></script>-->
+
+<!-- StackOverflow
+<script src="//d3js.org/d3.v4.min.js"></script> -->
+<script src="https://unpkg.com/viz.js@1.8.0/viz.js"></script>
+<!-- <script src="{{url_for('static', filename='styles/provaViz.js')}}"></script> -->
+<!--<script src="https://unpkg.com/d3-graphviz@0.1.2/build/d3-graphviz.js"></script>
+<script src="https://github.com/mdaines/viz.js"></script>-->
+
+<!--
+<script src="https://dagrejs.github.io/project/dagre-d3/latest/dagre-d3.min.js"></script>
+<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+ -->
+
+
+<!-- Da codice sorgente
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://dagrejs.github.io/project/graphlib-dot/v0.6.4/graphlib-dot.min.js"></script>
+<!--<script src="https://dagrejs.github.io/project/dagre-d3/v0.5.0/dagre-d3.min.js"></script>
+<script src="https://dagrejs.github.io/project/dagre-d3/latest/dagre-d3.js"></script> -->
+
+<!-- Dot parser
+<script src="/static/styles/dotparser.js"></script>
+<script src="/static/styles/dotgraph.js"></script> -->
+
+<script>
+function showImg(img) {
+    var x = document.getElementById(img);
+    if(x.style.display == "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+		x.style.width= "100%";
+    }
+}
+/*
+window.onload = function () {
+	if (document.readyState == "complete") { 
+		document.getElementById("loadingMessage").style.visibility = "hidden";	
+	}	
+}
+*/
+function checkRefresh()
+{
+		// This is a fresh page load
+		document.refreshForm.visited.value = "1";
+		if (document.readyState == "complete") { 
+			document.getElementById("loadingMessage").style.visibility = "hidden";	
+		}	
+		// You may want to add code here special for
+		// fresh page loads
+
+}
+</script>
+
+
+<body onLoad="checkRefresh()">
+
+<p id="path_frontend" style="display:none">{{path}}</p>
+
+<form name="refreshForm">
+<input type="hidden" name="visited" value="1" />
+</form>
+	
+	<div id="loadingMessage" style="visibility:visible">
+		This page is loading!
+		<br />
+		Please wait.
+		<div class="loader"></div>
+	</div>
+
+	<input type="checkbox" id="check" onclick="mainMenu()">
+	<label for="check">
+		<i class="fas fa-bars" id="btn"></i>
+	</label>
+	<div class="container">
+		<div class="menu" id="menu">
+			<input type="radio" name="slider" checked id="map" onclick="displayContent()">
+			<input type="radio" name="slider" id="elanalysis" onclick="displayContent()">
+			<input type="radio" name="slider" id="cChecking" onclick="displayContent()">
+			<div class="list" id="list">
+				<label for="map" class="map">
+					<i class="fas fa-sitemap"></i>
+					<span class="topic">Map</span>
+				</label>
+				<label for="elanalysis" class="elanalysis">
+					<i class="fas fa-chart-line"></i>
+					<span class="topic">Event Log Analysis</span>
+				</label>
+				<label for="cChecking" class="cChecking">
+					<i class="fas fa-check-double"></i>
+					<span class="topic">Conformance Checking</span>
+				</label>
+				<div class="slider"></div>
+			</div>
+			
+			<div class="bottomleft" id="bottomleft">
+				<form action="" method='POST' enctype = "multipart/form-data">
+					<!-- <button type="button" for="myFile">Import log</button> -->
+					<button type="button" onclick="update()">Import log</button>
+					<input type='file' id="file" name="file" style="display:none">
+					<br />
+					<button type="button" onclick="exportDsl()">Export to DSL</button>
+					<br />
+					<button type="button">Export to DEF-PIPE</button>
+					<input type="submit" id="updateBtn" value="Update" style="display:none">
+					<input type="hidden" value="{{updated}}" name="updated" id="updated">
+				</form>
+			</div>	
+		</div>			
+		
+		<div class="content" id="content">
+			
+				<div class="text-content">
+					<div class="map text" id="map-text">
+					 	<div class="title" style="float: left"> Map Content</div>
+						<p id='digraphF' style='display:none'>{{ stringF }}</p>
+						<p id='digraphP' style='display:none'>{{ stringP }}</p>
+						<p id='petriFreq' style='display:none'>Try</p>
+						<p id='petriPerf' style='display:none'>Try</p>
+						<p id='bpmn' style='display:none'>Try</p>
+						<p id='mapTitle' style="text-align: center;">{{ filename }}</p>
+						<p id='median' style='display:none'>{{ median }}</p>
+						<p id='total' style='display:none'>{{ total }}</p>
+						
+						<div class="slidecontainer">
+						  <input type="range" min="1" max="500" value="100" class="sliderZoom" id="myRange">
+						  <p>Zoom: <span id="demo"></span>%</p>
+						</div>
+						
+						<input type="checkbox" id="check_tabs">
+						<label for="check_tabs">
+							<i class="fas fa-edit" id="btn_tabs"></i>
+						</label>
+						
+						<div class="mapContainer">
+						
+							
+							<span class="popuptext" id="myPopup">Popup text...</span>
+							
+							<div class="map-content" id="map-content">
+								<svg id="graphContainer">
+								
+								</svg>
+							</div>	
+						
+							<div class="mytabs">
+							
+									<input type="radio" name="mytabs" id="tabFreq" checked="checked" value="frequency" onclick="getMap()">
+									<label for="tabFreq">Frequency</label>
+									<div class="tab">
+										
+										<form action="" method='POST'>
+											<input type="hidden" id='tabTypeFreq' name='tabType' value="frequency">
+											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF">
+											<p>Path: <span id="pathF"></span>%</p>
+											
+											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF">
+											<p>Activities: <span id="actF"></span>%</p>
+											
+											
+											<input type="hidden" min="0" max="100" value="{{myPathP_init}}" name="myPathP">
+											<input type="hidden" min="0" max="100" value="{{myActP_init}}"  name="myActP">
+											
+											
+											<br />
+											
+											<select name="freqs" class="dropdown">
+											  <option value="absFreq">Absolute frequency</option>
+											  <option value="caseFreq">Case Frequency</option>
+											  <option value="maxRep">Max. repetition</option>
+											</select>
+											
+											<br />
+											<br />
+										
+										
+											<button type="button" onclick="request('false')">Submit</button>
+										
+										</form> 
+										
+										
+									</div>
+									
+									
+									<input type="radio" name="mytabs" id="tabPerf" value="performance" onclick="getMap()">
+									<label for="tabPerf">Performance</label>
+									<div class="tab">
+										
+										<form action="" method='POST'>
+											<input type="hidden" id='tabTypePerf' name='tabType' value="performance">
+											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP'>
+											<p>Path: <span id="pathP"></span>%</p>
+											
+											
+											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP'>
+											<p>Activities: <span id="actP"></span>%</p>
+											
+											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
+											<input type="hidden" min="0" max="100" value="{{myActF_init}}"  name="myActF">
+											<input type="hidden" value="{{perf_checked}}"  name="perf_checked" id="perf_checked">
+											
+											<br />
+											
+											<select name="perfs" class="dropdown">
+											  <option value="totDur">Total duration</option>
+											  <option value="medDur">Median duration</option>
+											  <option value="meanDur">Mean duration</option>
+											  <option value="maxDur">Max. duration</option>
+											  <option value="minDur">Min. duration</option>
+											</select>
+											
+											<br />
+											<br />
+										
+											<button type="button" onclick="request('true')">Submit</button>
+										
+										</form> 										
+										
+									</div>
+							</div>	
+				
+						</div>
+						
+					</div>
+					
+					<div class="elanalysis text" id="elanalysis-text">
+					 	<div class="title"> Event Log Analysis Content</div>
+						<div class="row">
+						  <div class="column left">
+							<div class="containerVariants">
+								<h3>Variants</h3>
+								<ul id="variants-ul">
+								</ul>
+							</div>
+						  </div>
+						  <div class="column middle">
+							<div class="containerCases">
+								<h3>Cases</h3>
+								<ul id="case-ul">
+								</ul>
+							</div>
+						  </div>
+						  <div class="column right">
+							<table id="eventsTable">
+							</table>
+						  </div>
+						</div>
+
+						<input type="checkbox" id="check_filter">
+						<label for="check_filter">
+							<i class="fas fa-filter" id="btn_filter"></i>
+						</label>
+						
+						<div class="mytabs">
+							
+							<input type="radio" name="myfilter" id="tabFilter" checked="checked" value="filtering">
+							<label for="tabFilter">Filtering</label>
+							<div class="tab"> 
+								<div class="btn-group">
+									<button type="button" id="timeframe_filter" style="grid-column: 1 / 2;grid-row: 1;" onclick="openForm(this.id)"><i class="far fa-clock"></i>
+										<strong>Timeframe</strong>
+										<br>
+										<small>Filters by timestamps</small>
+									</button>
+									<i id="timeframe_remove" class="fa-solid fa-trash-can" style="visibility: hidden; grid-column: 2 / 2;grid-row: 1;" onclick="removeFilter(this.id)"></i>
+									<button type="button"id="perf_filter" style="grid-column: 1 / 2;grid-row: 2;" onclick="openForm(this.id)"><i class="fas fa-stopwatch"></i>
+										<strong>Performance</strong>
+										<br>
+										<small>Filters cases by performance</small>
+									</button>
+									<i id="perf_remove" class="fa-solid fa-trash-can" style="visibility: hidden; grid-column: 2 / 2;grid-row: 2;" onclick="removeFilter(this.id)"></i>
+									<button type="button" id="endpoints_filter" style="grid-column: 1 / 2;grid-row: 3;" onclick="openForm(this.id)"><i class="fas fa-route"></i>
+										<strong>Endpoints</strong>
+										<br>
+										<small>Removes incomplete cases</small>
+									</button>
+									<i id="endpoints_remove" class="fa-solid fa-trash-can" style="visibility: hidden; grid-column: 2 / 2;grid-row: 3;" onclick="removeFilter(this.id)"></i>
+									<button type="button" id="attribute_filter" style="grid-column: 1 / 2;grid-row: 4;" onclick="openForm(this.id)"><i class="fas fa-comment-slash"></i>
+										<strong>Attribute</strong>
+										<br>
+										<small>Removes events by attribute</small>
+									</button>
+									<i id="attribute_remove" class="fa-solid fa-trash-can" style="visibility: hidden; grid-column: 2 / 2;grid-row: 4;" onclick="removeFilter(this.id)"></i>
+									<button type="button" id="follower_filter" style="grid-column: 1 / 2;grid-row: 5;" onclick="openForm(this.id)"><i class="fas fa-people-arrows"></i>
+										<strong>Follower</strong>
+										<br>
+										<small>Filters by subsequences</small>
+									</button>
+									<i id="follower_remove" class="fa-solid fa-trash-can" style="visibility: hidden; grid-column: 2 / 2;grid-row: 5;" onclick="removeFilter(this.id)"></i>
+								</div>
+							</div>
+						</div>
+
+						<div class="blocker" id="blocker" onclick="closeForm()"></div>
+						<div class="form-popup" id="myForm">
+						  <form action="" class="form-container">
+							<h1 id="filter_title" style="color:#7a4791; text-align: center">Timeframe</h1>
+							<hr style="background:#cfa8d5">
+							<br />
+							<!-- FILTER FOR TIMEFRAME -->
+							<div id="timeframe_filter_div" style="display:none">
+								<label for="starting-time">Choose your starting time:</label>
+								<input type="datetime-local" id="starting-time" name="starting-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="20">
+								<br />
+								<br />
+								<label for="ending-time">Choose your ending time:</label>
+								<input type="datetime-local" id="ending-time" name="ending-time" value="2018-06-14T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="20">
+								<br />
+								<br />
+								<text>Keep cases by:</text>
+								<select name="keep_timeframe" id="keep_timeframe" class="dropdown">
+								  <option value="contained">Contained in timeframe</option>
+								  <option value="intersecting">Intersecting timeframe</option>
+								  <option value="started">Started in timeframe</option>
+								  <option value="completed">Completed in timeframe</option>
+								  <option value="trim">Trim to timeframe</option>
+								</select>
+								<br />
+								<br />
+								<img id="img" src="../static/images/contained.jpg" style="width:400px; height: auto; float: center">
+							</div>
+							<!-- FILTER FOR PERFORMANCE -->	
+							<div id="perf_filter_div" style="display:none">
+								<label for="filter_by_performance">Filter by: </label>
+								<select id="filter_by_performance" name="filter_by_performance" class="dropdown">
+								  <option value="caseDuration">Case duration</option>
+								  <option value="eventsNumber">Number of events</option>
+								</select>
+								<br />
+								<br />
+								<label id="label_input_min" for="input_min">Minimum duration: <small>(Use cases running longer than)</small></label>
+								<br />
+								<input type="number" id="input_min" name="input_min" step="any" />
+								<select id="select_time_1" name="select_time_1" class="dropdown" style="padding: 3px">
+								  <option value="mills">Milliseconds</option>
+								  <option value="seconds">Seconds</option>
+								  <option value="minutes">Minutes</option>
+								  <option value="hours">Hours</option>
+								  <option value="days">Days</option>
+								  <option value="weeks">Weeks</option>
+								  <option value="years">Years</option>
+								</select>
+								<br />
+								<label id="label_input_max" for="input_max">Maximum duration: <small>(Use cases running shorter than)</small></label>
+								<br />
+								<input type="number" id="input_max" name="input_max" step="any" />
+								<select id= "select_time_2" name="select_time_2" class="dropdown" style="padding: 3px">
+								  <option value="mills">Milliseconds</option>
+								  <option value="seconds">Seconds</option>
+								  <option value="minutes">Minutes</option>
+								  <option value="hours">Hours</option>
+								  <option value="days">Days</option>
+								  <option value="weeks">Weeks</option>
+								  <option value="years">Years</option>
+								</select>
+							</div>	
+								
+							<!-- FILTER FOR ENDPOINTS -->
+							<div id="endpoints_filter_div" style="display:none">
+								<label for="filter_by">Filter by: </label>
+								<select id= "filter_by" name="filter_by" class="dropdown">
+								  <option value="activity">Activity</option>
+								  <option value="resource">Resource</option>
+								  <option value="costs">Costs</option>
+								  <option value="caseID" style="display:none">CaseID</option>
+								  <option value="variants" style="display:none">Variants</option>
+								</select>
+								<label for="mode_for_endpoints" style="margin-left: 10px;">Mode: </label>
+								<select id="mode_for_endpoints" name="mode_for_endpoints" class="dropdown">
+								  <option value="discard">Discard cases</option>
+								  <option value="trimLongest">Trim Longest</option>
+								  <option value="trimFirst">Trim First</option>
+								</select>
+								
+								<text id="endpoints_text" style="font-size: 12px; color:#4f4f4f; float:right; max-width: 300px; margin-left: 5px;"></text>
+								<br />
+								<br />
+								<div style="width: 45%; float:left">
+									<text style="font-size:12px; float:left;">Start event values: </text>
+									<br />
+									<fieldset id="fieldset1" class="checkboxgroup">
+										<label><input type="checkbox"> checkbox 1</label>
+										<label><input type="checkbox"> checkbox 2</label>
+										<label><input type="checkbox"> checkbox 3</label>
+										<label><input type="checkbox"> checkbox 4</label>
+									</fieldset>
+								</div>
+								<div style="width: 45%; float:right">
+									<text style="font-size:12px; float:left;">End event values: </text>
+									<br />
+									<fieldset id="fieldset2" class="checkboxgroup">
+										<label><input type="checkbox"> checkbox 1</label>
+										<label><input type="checkbox"> checkbox 2</label>
+										<label><input type="checkbox"> checkbox 3</label>
+										<label><input type="checkbox"> checkbox 4</label>
+									</fieldset>
+								</div>
+								<br />
+								<br />
+								<br />
+							</div>
+							<!-- FILTER FOR ATTRIBUTES -->
+							<div id="attribute_filter_div" style="display:none">
+								<label for="filter_by">Filter by: </label>
+								<select id= "filter_by" name="filter_by" class="dropdown">
+								  <option value="activity">Activity</option>
+								  <option value="resource">Resource</option>
+								  <option value="costs">Costs</option>
+								  <option value="caseID">CaseID</option>
+								  <option value="variants">Variants</option>
+								</select>
+								<label for="mode_for_attribute"style="margin-left: 10px;">Mode: </label>
+								<select id="mode_for_attribute" name="mode_for_attribute" class="dropdown">
+								  <option value="selected">Keep selected</option>
+								  <option value="mandatory">Mandatory</option>
+								  <option value="forbidden">Forbidden</option>
+								</select>
+								<text id="attribute_text" style="font-size: 12px; color:#4f4f4f; float:right; max-width: 300px; margin-left: 5px;"></text>
+								<br />
+								<br />
+								<div>
+									<text style="font-size:12px; float:left;">Event values: </text>
+									<br />
+									<fieldset id="fieldset3" class="checkboxgroup">
+										<label><input type="checkbox"> checkbox 1</label>
+										<label><input type="checkbox"> checkbox 2</label>
+										<label><input type="checkbox"> checkbox 3</label>
+										<label><input type="checkbox"> checkbox 4</label>
+									</fieldset>
+								</div>	
+								<br />
+								<br />
+							
+							</div>
+							
+							<!-- FILTER FOR FOLLOWER -->
+							<div id="follower_filter_div" style="display:none">
+								<label for="filter_by">Filter by:  </label>
+								<select id= "filter_by" name="filter_by" class="dropdown">
+								  <option value="activity">Activity</option>
+								  <option value="resource">Resource</option>
+								  <option value="costs">Costs</option>
+								  <option value="caseID" style="display:none">CaseID</option>
+								  <option value="variants" style="display:none">Variants</option>
+								</select>
+								<br />
+								<label for="reference_for_follower">Reference event must be </label>
+								<select id="reference_for_follower" name="reference_for_follower" class="dropdown" style="padding: 3px">
+								  <option value="even_follow">eventually followed</option>
+								  <option value="dir_follow">directly followed</option>
+								  <option value="nev_even_follow">never eventually followed</option>
+								  <option value="nev_dir_follow">never directly followed</option>
+								</select>
+								<label for="mode_for_follower"> by a follower event.</label> 
+								<br />
+								<br />
+								<div style="width: 45%; float:left">
+									<text style="font-size:12px; float:left;">Reference event values: </text>
+									<br />
+									<fieldset id="fieldset4" class="checkboxgroup">
+										<label><input type="checkbox"> checkbox 1</label>
+										<label><input type="checkbox"> checkbox 2</label>
+										<label><input type="checkbox"> checkbox 3</label>
+										<label><input type="checkbox"> checkbox 4</label>
+									</fieldset>
+								</div>
+								<div style="width: 45%; float:right">
+									<text style="font-size:12px; float:left;">Follower event values: </text>
+									<br />
+									<fieldset id="fieldset5" class="checkboxgroup">
+										<label><input type="checkbox"> checkbox 1</label>
+										<label><input type="checkbox"> checkbox 2</label>
+										<label><input type="checkbox"> checkbox 3</label>
+										<label><input type="checkbox"> checkbox 4</label>
+									</fieldset>
+								</div>
+								<br />
+								<br />
+								<br />
+								<br />
+								<br />
+								<br />
+								<div style="font-size:12px">
+									<input type="checkbox" id="require_for_follower">
+									<label for="require_for_follower"> Require </label>
+									<select id="mode_for_follower" name="mode_for_follower" class="dropdown" style="padding: 3px" disabled>
+									  <option value="same">same value</option>
+									  <option value="different">different values</option>
+									</select>
+									<label for="require_for_follower"> of</label>
+									<select id= "filter_by_follower" name="filter_by" class="dropdown" style="padding: 3px" disabled>
+									  <option value="activity">Activity</option>
+									  <option value="resource">Resource</option>
+									  <option value="costs">Costs</option>
+									  <option value="caseID" style="display:none">CaseID</option>
+									  <option value="variants" style="display:none">Variants</option>
+									</select>
+									<label for="filter_by_follower"> for each pair of events matched above.</label>
+									<br />
+									<br />
+									<input type="checkbox" id="time_for_follower">
+									<label for="time_for_follower">Time between matching events must be </label>
+									<select id="mode_time_for_follower" name="mode_time_for_follower" class="dropdown" style="padding: 3px" disabled>
+									  <option value="shorter">shorter</option>
+									  <option value="longer">longer</option>
+									</select>
+									<label for="require_for_follower"> than </label>
+									<input type="number" id="input_time_follower" name="input_time" step="any" disabled />
+									<select id= "select_time_3" name="select_time_3" class="dropdown" style="padding: 3px" disabled>
+									  <option value="mills">Milliseconds</option>
+									  <option value="seconds">Seconds</option>
+									  <option value="minutes">Minutes</option>
+									  <option value="hours">Hours</option>
+									  <option value="days">Days</option>
+									  <option value="weeks">Weeks</option>
+									  <option value="years">Years</option>
+									</select>
+								</div>
+							
+							</div>
+							<br />
+							<br />
+							<br />
+							<div style="text-align:center">
+								<!-- <button type="submit" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button> -->
+								<button type="button" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button>
+								<button type="button" class="btn" onclick="closeForm()">Cancel</button>
+							</div>
+							
+						  </form>
+						</div>
+
+								
+					</div>
+					<div class="cChecking text" id="cChecking-text" style="height:500px">
+					 	<div class="title"> Conformance Checking Content</div>
+						<p>Here you should see things</p>
+								
+					</div>
+				</div>
+				
+		</div>
+		
+	</div>
+	
+</body>
+
+<!--(parser -- Dario)-->
+<script>
+
+var graphTextF;
+var graphTextP;
+var graphNodesF;
+var graphNodesP;
+var graphNodes;
+var graphEdgesF;
+var graphEdgesP;
+var graphEdges;
+var dslSteps;
+
+function getGraphText(selector){
+	// take the graph in text form and save it 
+	// F is annotated with frequencies
+	// P is annotated with durations
+	if ( selector == 'frequency')
+		var graphText = document.getElementById("digraphF").innerHTML;
+	else
+		var graphText = document.getElementById("digraphP").innerHTML;
+	// fix formatting
+	graphText = graphText.replace(/&#34;/g, '"');
+	graphText = graphText.replace(/&gt;/g, ">");
+	// transform the string into an array, each line is an element
+	// then remove from the array the first 3 and last 2 elements which are useless
+	var graphText = graphText.split('\n\t').splice(3);
+	graphText.pop();
+	graphText.pop();
+
+	return graphText;
+}
+
+function getGraphNodes(graphText){
+	// obtain the array of nodes with parameter 
+	var graphNodes = [];
+	var j = 0;
+	// cycle throguh the graph array 
+	for (var i=0; i<graphText.length; i++){
+		// if this element has no '->' in the string, it's a node
+		if (graphText[i].search('->') == -1){
+			// if the current element is START
+			if (graphText[i].search('\"@@startnode\"') != -1){
+				// \"@@startnode\" [label=\"@@S\" fillcolor=\"#32CD32\" fontcolor=\"#32CD32\" shape=circle style=filled]"
+				graphNodes[j] = graphText[i].split('\"').splice(1,1);
+				graphNodes[j][1] = 'start';
+				graphNodes[j][2] = '';
+				graphNodes[j][3] = '';
+				j++;
+			}
+			// if the current element is END
+			else if (graphText[i].search('\"@@endnode\"') != -1){
+				graphNodes[j] = graphText[i].split('\"').splice(1,1);
+				graphNodes[j][1] = 'end';
+				graphNodes[j][2] = '';
+				graphNodes[j][3] = '';
+				j++;
+			}
+			// otherwise
+			else{
+				// save it into the nodes array, remove useless info from the string and increment j
+				// final array has two elements, (0):ID and (1):label
+				graphNodes[j] = graphText[i].split(' [');
+				graphNodes[j][1] = graphNodes[j][1].split('" ').shift().split('"').pop();
+				// if additional info about performance of frequency are not useful 
+				// add .split(' (').shift() to the previous line of code
+				graphNodes[j][2] = graphNodes[j][1].split('(').pop().split(')').shift();
+				graphNodes[j][1] = graphNodes[j][1].split('(').shift();
+				graphNodes[j][1] = graphNodes[j][1].substring(0, graphNodes[j][1].length-1);
+				j++;
+			}
+		}	
+	}
+	
+	return graphNodes;
+}
+
+function getCombinedNodes(graphNodesF, graphNodesP){
+	for (var i=0; i<graphNodesF.length; i++)
+		graphNodesF[i][3] = graphNodesP[i][2];
+	return graphNodesF;
+}
+
+function getGraphEdges(graphText, boolFreq){
+	//obtain the array of edges with parameter
+	var graphEdges = [];
+	var j = 0;
+	// cycle throguh the graph array 
+	for (var i=0; i<graphText.length; i++){
+		// if this element has '->' in the string, it's a node
+		if (graphText[i].search('->') != -1){
+			// save it into the nodes array, remove useless info from the string and increment j
+			graphEdges[j] = graphText[i].split(' f').shift().split(' [');
+			graphEdges[j][2] = graphEdges[j][1].split('=').pop();
+			graphEdges[j][0] = graphEdges[j][0].split(' -> ');
+			graphEdges[j][1] = graphEdges[j][0].pop();
+			graphEdges[j][0] = graphEdges[j][0].shift();
+			if (boolFreq){
+				graphEdges[j][2] = graphEdges[j][2].split('\"').splice(1,1);
+				graphEdges[j][2] = graphEdges[j][2].shift();
+			}
+			if (graphEdges[j][0] == '\"@@startnode\"' || graphEdges[j][1] =='\"@@endnode\"'){
+				if (graphEdges[j][0].search('\"') != -1)
+					graphEdges[j][0] = graphEdges[j][0].split('\"').splice(1,1).shift();
+				if (graphEdges[j][1].search('\"') != -1)
+					graphEdges[j][1] = graphEdges[j][1].split('\"').splice(1,1).shift();
+				graphEdges[j][2] = '';
+			}
+			j++;
+		}	
+	}
+	
+	return graphEdges;
+}
+
+function getCombinedEdges(graphEdgesF, graphEdgesP){
+	for (var i=0; i<graphEdgesF.length; i++){
+		graphEdgesF[i][3] = graphEdgesP[i][2];
+		
+	}
+	return graphEdgesF;
+}
+
+function getLabeledGraphEdges(graphNodes, graphEdges){
+	// for each couple of elements in graphEdges 
+	for (var i=0; i<graphEdges.length; i++){
+		// for each element in graphNodes
+		for (var j=0; j<graphNodes.length; j++){
+			// if they are equal, swap ID in edges for the Label in Nodes
+			if ( graphEdges[i][0] === graphNodes[j][0])
+				graphEdges[i][0] = graphNodes[j][1];
+			if ( graphEdges[i][1] === graphNodes[j][0])
+				graphEdges[i][1] = graphNodes[j][1];
+		}
+	}
+	return 1;
+}
+
+function getDslSteps(graphNodes, graphEdges){
+	// from graphNodes and graphEdges get a unique matrix ready for conversion
+	var dslSteps = [];
+	// for each node 
+	for (var i=0; i<graphNodes.length; i++){
+		// save info about the node
+		dslSteps[i] = [];
+		dslSteps[i].push([graphNodes[i][1], graphNodes[i][2], graphNodes[i][3]]);
+		// then, for each edge
+		for (var j=0; j<graphEdges.length; j++){
+			// check if the current node is the successor
+			if (graphEdges[j][1] == graphNodes[i][1]){
+				// in that case save the info about the edge
+				dslSteps[i].push([graphEdges[j][0], graphEdges[j][2], graphEdges[j][3]]);
+			}
+		}
+	}
+	return dslSteps;
+}
+
+</script>
+
+<!--(onclick exportdsl -- Dario)-->
+<script>
+
+// Function to download data to a file
+function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
+
+function exportDsl(){
+
+	var predecessors = [];
+	var parameters = [];
+	var count = [];
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	var dsl = 'Pipeline ' + pipelineName +'{\n';
+	
+	for (var i=0; i<dslSteps.length; i++){
+		predecessors[i] = '';
+		count[i] = 0;
+		// get parameters of the current step in a string
+		parameters[i] = '\t\t\t\tFrequency: ' + dslSteps[i][0][1] + ',\n\t\t\t\tDuration: ' + dslSteps[i][0][2];
+		// iterate on the predecessors of the current step and save them in a string
+		for (var j=1; j<dslSteps[i].length; j++){
+			count[i]++;
+			predecessors[i] = predecessors[i] + '\t\t\t\t' + dslSteps[i][j][0].replace(' ', '_');
+			if (j<dslSteps[i].length-1)
+				predecessors[i] = predecessors[i] +',\n';	
+		}
+		// print the whole string for each step
+		dsl = dsl + '\t-\tStep Step: ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		if (predecessors[i] != ''){
+			dsl = dsl + '\n\t\t\tPrevious:';
+			if (count[i]>1)
+				dsl = dsl + '[';
+			dsl = dsl + '\n' + predecessors[i];
+			if (count[i]>1)
+				dsl = dsl + '\n\t\t\t]';
+		}
+		if (dslSteps[i][0][0] == 'start' || dslSteps[i][0][0] == 'end')
+			dsl = dsl + '\n';
+		else
+			dsl = dsl + '\n\t\t\tEnvironmentParameters:\n' + parameters[i] + '\n';
+	}
+	dsl = dsl + '\}';
+	// return the dsl
+	download(dsl, pipelineName, 'txt');
+}
+
+</script>
+
+<!--(script with getMap())-->
+<script>
+var frontend = document.getElementById("path_frontend").innerHTML;
+
+function getMap(bool) {
+		
+		// DARIO START
+		if (bool){
+			// get graph in an array
+			graphTextF = getGraphText('frequency');
+			graphTextP = getGraphText();
+			// get nodes in an array 
+			graphNodesF = getGraphNodes(graphTextF);
+			graphNodesP = getGraphNodes(graphTextP);
+			graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+			// get edges in an array
+			graphEdgesF = getGraphEdges(graphTextF, false);
+			graphEdgesP = getGraphEdges(graphTextP, true);
+			graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+			getLabeledGraphEdges(graphNodes, graphEdges);
+			// get final matrix ready for dsl conversion
+			dslSteps = getDslSteps(graphNodes, graphEdges);
+			// debug
+			/*console.log('GraphTextF:');
+			console.log(graphTextF);
+			console.log('GraphTextP:');
+			console.log(graphTextP);
+			console.log('GraphEdgesF:');
+			console.log(graphEdgesF);
+			console.log('GraphEdgesP:');
+			console.log(graphEdgesP);*/
+			console.log('GraphNodes:');
+			console.log(graphNodes);
+			console.log('LabeledGraphEdges:');
+			console.log(graphEdges);
+			console.log('DSL:');
+			console.log(dslSteps);
+		}
+		//DARIO END
+		
+		var selected = document.querySelector('input[name="mytabs"]:checked').value;
+		var sample;
+			 
+			
+			if (selected == 'frequency') {
+				sample = document.getElementById("digraphF").innerHTML;
+			}
+			else {
+				sample = document.getElementById("digraphP").innerHTML;
+			}
+		
+		//var sample = 'digraph g{ a -> b}';
+		sample = sample.replace(/&#34;/g, '"');
+		sample = sample.replace(/&gt;/g, ">");
+		sample = sample.replace(/&lt;/g, "<");
+		//sample = sample.replace(/●/g, "  &#9679;"); //9679
+		sample = sample.replace(/●/g, " ");
+		//sample = sample.replace(/■/g, '    &#9724;'); //9632
+		sample = sample.replace(/■/g, " ");
+		
+		
+		var options = {
+		  format: 'svg',
+		  ALLOW_MEMORY_GROWTH: 1,
+		  totalMemory: 537395200
+		  // format: 'png-image-element'
+		}
+
+		var image = Viz(sample, options);
+		var main = document.getElementById('graphContainer');
+
+		main.innerHTML = image;		// SVG
+
+		// Optional - resize the SVG element based on the contents.
+		/*var svg = document.querySelector('#graphContainer');
+		var bbox = svg.getBBox();
+		svg.style.width = bbox.width + 10.0 + "px";
+		svg.style.height = bbox.height + 10.0 + "px";*/
+		
+		var allGs = document.getElementsByTagName('g');
+		var firstG = allGs[0];
+		
+		var figli = main.children;
+		//console.log(figli[0].attributes.width.value);
+		
+		var graph = figli[0].children[0];
+		//console.log(figli[0].children[0].children[3].children[3].innerHTML);
+		//console.log(figli[0].children[0].children[3]);
+		//console.log(figli[0]);
+		//console.log(firstG.viewBox);
+		//firstG.style.shape = "circle";
+		//console.log(firstG.style.shape);
+			
+		var nodes = document.getElementsByClassName("node");
+		var edges = document.getElementsByClassName("edge");
+		
+		var nodesNames = [];
+		var names;
+		
+		for(var i=0; i<nodes.length; i++){
+			
+			//console.log(nodes[i].children[2].innerHTML);
+			nodesNames[i] = nodes[i].children[2].innerHTML;
+			//console.log(nodes[i].children[2].innerHTML);
+			nodes[i].children[0].innerHTML = nodesNames[i];
+			
+			names = nodesNames[i].split(' (')[0];
+			names = '"'+ names +'"';
+			//console.log(names);
+			
+			nodes[i].addEventListener("click", function(e) {
+				// When the user clicks call function to open the popup
+			    openInfo(e);
+			}, false);
+			if(nodes[i].children[2].getAttribute("text-anchor") != "start"){
+				if(nodes[i].children[0].innerHTML != ""){
+					nodes[i].children[2].setAttribute("font-size", "10");
+				}
+				else{
+					nodes[i].children[2].setAttribute("fill", "red");
+				}
+			}
+			else{
+				nodes[i].children[1].setAttribute("fill", "green");
+			}
+			
+		}
+		
+		var edgesNames = [];
+		var popup = document.getElementById("myPopup");
+		
+		for( i=0; i<edges.length; i++){
+			edgesNames[i] = edges[i].children[3].innerHTML;
+			edges[i].children[0].innerHTML = edgesNames[i];
+			
+			edges[i].addEventListener("click", function(e) {
+				// When the user clicks call function to open the popup
+			    openInfo(e);
+			}, false);
+		}
+		
+		
+		var median = document.getElementById('median').innerHTML;
+		var total = document.getElementById('total').innerHTML;
+		
+		function secondsToHms(d) {
+			d = Number(d);
+			var h = Math.floor(d / 3600);
+			var m = Math.floor(d % 3600 / 60);
+			var s = Math.floor(d % 3600 % 60);
+
+			var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+			var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+			var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+			return hDisplay + mDisplay + sDisplay; 
+		}
+		var x = secondsToHms(median);
+		var y = secondsToHms(total);
+		popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y;
+		
+		function openInfo(e) {
+		// When the user clicks, open the popup
+		
+			popup.classList.toggle("show");
+			popup.style.left = e.clientX-100 + "px";
+			popup.style.top = (e.clientY-180) + "px";
+			popup.style.zIndez = "15";
+			
+		}	
+}	
+</script>
+
+<script>
+var filtered_timeframe = false, filtered_perf = false;
+
+function reqListener1 () {
+  document.getElementById("digraphF").innerHTML = this.responseText;
+  //getMap(false);
+}
+
+function freqRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener1);
+	oReq.open("GET", frontend+"dfgFrequency", false);
+	oReq.send();
+}
+
+function request(p_check) {
+	
+	var pf = document.getElementById("myPathF").value;
+	var af = document.getElementById("myActF").value;
+	var df = "dfgFreqReduced";
+
+	var pp = document.getElementById("myPathP").value;
+	var ap = document.getElementById("myActP").value;
+	var dp = "dfgPerfReduced"
+	//console.log(String(pf) + " " + String(af) + " " +String(pp)+ " "+String(ap) + " "+String(p_check));
+	
+	var oReq = new XMLHttpRequest();
+	if (p_check == "false") {
+		oReq.addEventListener("load", reqListener1);
+		oReq.open("GET", frontend+df+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
+	}
+	else {
+		oReq.addEventListener("load", reqListener2);
+		oReq.open("GET", frontend+dp+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
+	}
+	
+	oReq.send();
+	getMap(false);
+}
+
+function reqListener2 () {
+  document.getElementById("digraphP").innerHTML = this.responseText;
+  //getMap(false);
+}
+
+function perfRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener2);
+	oReq.open("GET", frontend+"dfgPerformance", false);
+	oReq.send();
+}
+
+freqRequest();
+perfRequest();
+
+var variantsInfo, json, allVariants, ul1, ul2, allCases, allEvents, maxDate, minDate;
+
+
+var selected = "variant1";
+
+var dates = [];
+
+function showEvents(varKey, caseKey) {
+	console.log
+	allCases = json[varKey];
+	allCases.forEach( (c) => {
+		
+		var ck = Object.keys(c)[0]; //case key
+		console.log(caseKey +" =?= "+ck);
+		if(caseKey == ck){
+			console.log("yes");
+			allEvents = Object.values(c)[0]; // all events
+		}
+	 });
+	 console.log(allEvents);
+	 
+	 var table = document.getElementById("eventsTable");
+	 //var tableHTML = "<tr><th>Activity</th><th>Resource</th><th>Date</th><th>Time</th><th>Duration</th><th>Role</th></tr>"
+	 var tableHTML = "<tr>";
+	 var i = 0;
+	 
+	 
+	 allEvents.forEach((e) => {
+		//dates.push(new Date(e["time:timestamp"]));
+	
+		var date = e["time:timestamp"].split(" ")[0];
+		var time = e["time:timestamp"].split(" ")[1];
+	 
+		
+		//console.log(e);
+		//console.log(Object.entries(e));
+		
+		if(i==0){
+			tableHTML += "<th>Activity</th><th>Resource</th>" ;
+			Object.entries(e).forEach((attr) => { 
+				if(attr[0] == "time:timestamp") {
+					tableHTML += "<th>Date</th><th>Time</th>" ;
+				} else if (attr[0] == "Activity" || attr[0] == "Resource") {
+	
+				}else {
+					tableHTML += "<th>"+ attr[0] +"</th>" ;
+				}
+			});
+			tableHTML += "<tr>";
+			i++;
+		}
+		
+		tableHTML += "<tr>"
+		tableHTML += "<td>" + e["Activity"] + "</td>"
+		tableHTML += "<td>" + e["Resource"] + "</td>"
+		Object.entries(e).forEach((attr) => { 
+			if(attr[0] == "time:timestamp") {
+					tableHTML += "<td>"+date+"</td><td>"+time+"</td>" ;
+			} else if (attr[0] == "Activity" || attr[0] == "Resource") {
+	
+			}else {
+				tableHTML += "<td>" + attr[1] + "</td>" ;
+			}
+		});
+		
+		
+		/*tableHTML += "<td>" + e["Activity"] + "</td>"
+		tableHTML += "<td>" + e["Resource"] + "</td>"
+		tableHTML += "<td>" + date + "</td>"
+		tableHTML += "<td>" + time + "</td>"
+		tableHTML += "<td>" + "Duration" + "</td>"
+		tableHTML += "<td>" + "Role" + "</td>"*/
+		tableHTML += "</tr>"
+	 });
+	 
+	 
+	table.innerHTML = tableHTML;
+	
+	var liItems = document.getElementById("case-ul").getElementsByTagName("li"); 
+	//console.log(liItems);
+	for (i = 0; i < liItems.length; i++) {
+		//console.log(liItems[i].id == li.id);
+		if(liItems[i].id == "case"+caseKey){
+			//console.log(liItems[i].id);
+			//console.log(li.id);
+			liItems[i].setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white;");
+			//selected = li.id;
+		}
+		else {
+			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color: black;");
+		}
+	}
+
+}
+
+
+function showCases(li, key1) {
+	var liItems = document.getElementById("variants-ul").getElementsByTagName("li"); 
+	//console.log(liItems);
+	for (i = 0; i < liItems.length; i++) {
+		//console.log(liItems[i].id == li.id);
+		if(liItems[i].id == li.id){
+			//console.log(liItems[i].id);
+			//console.log(li.id);
+			li.setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white;");
+			selected = li.id;
+		}
+		else {
+			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color:black;");
+		}
+	}
+	//console.log(selected);
+	
+	allCases = json[key1];
+	ul2.innerHTML = "";
+	allCases.forEach( (c) => {
+		var caseKey = Object.keys(c)[0]; //case key
+		allEvents = Object.values(c)[0]; // all events
+		
+		
+		var li2 = document.createElement('li');
+		if("variant"+key1 == selected){
+			li2.innerHTML = '<span>' + "Case " + caseKey + '</span><br><small>' + "Events: " + allEvents.length + '</small>';
+			li2.setAttribute("style", "cursor: pointer");
+			li2.setAttribute("id", "case"+ caseKey);
+			//alert("ok");
+			//li2.setAttribute("onclick", "alert('Variant "+ e +"')");
+			li2.setAttribute("onclick", "showEvents("+key1+",'"+caseKey+"')");
+			ul2.append(li2);
+		}
+	});
+
+
+	/*
+	
+	
+		
+		Object.values(allEvents)[0].forEach((key3) => {
+		  //----For each event I see its details
+		  
+			//----singleEvent = allEvents[key3];
+			//console.log(singleEvent); //?
+			//console.log(key3); //Contains details regarding signle case
+			
+			//console.log("Event: " + Object.keys(singleEvent)[key]);
+			//console.log(Object.values(singleEvent)[key]);
+		});
+	  });*/
+};
+
+function reqListener3 () {
+   
+  var response = this.responseText;
+  if (filtered_timeframe == true || filtered_perf == true) {
+	  document.getElementById("digraphF").innerHTML = response.split("|||")[0];
+	  document.getElementById("digraphP").innerHTML = response.split("|||")[1];
+	  variantsInfo = response.split("|||")[2];
+  }
+  else{
+	variantsInfo = response;
+  }
+  
+  
+  json = JSON.parse(variantsInfo);
+  //console.log(json);
+  
+  allVariants = Object.keys(json);
+  //console.log("Total variants: " +String(allVariants.length));
+  //allVariants.lenght = Number of variants
+  //Object.values(allVariants) = array with Variants ID
+  
+  ul1 = document.getElementById("variants-ul");
+  ul2 = document.getElementById("case-ul");
+  
+	
+  ul1.innerHTML = "";
+  ul2.innerHTML = "";
+  document.getElementById("eventsTable").innerHTML = "";
+  Object.keys(json).forEach((key1) => {
+	
+	
+	
+	//----For each variant I see which are the cases corresponding
+	//console.log("Variant " + String(key1));
+	allCases = json[key1];
+	//----allCases.length = Number of cases for each specific Variant (json[key])
+	//console.log("Total cases: " + String(allCases.length));
+	//console.log(allCases);
+	
+	
+	var li = document.createElement('li');
+	li.innerHTML = '<span>' + "Variant " + key1 + '</span><br><small>' + "Cases: " + String(allCases.length) + '</small>';
+	li.setAttribute("style", "cursor: pointer");
+	li.setAttribute("id", "variant"+key1);
+	//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
+	li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
+	ul1.append(li);	
+	
+	// calculate min and max dates
+	 
+	allCases.forEach( (c) => {
+		allEvents = Object.values(c)[0]; // all events
+		allEvents.forEach((e) => {
+			dates.push(new Date(e["time:timestamp"]));
+		});
+	 });
+	 
+
+  });
+	
+	document.getElementById(selected).click();
+	
+	maxDate=new Date(Math.max.apply(null,dates));
+	minDate=new Date(Math.min.apply(null,dates));
+	maxDate = maxDate.toISOString().split(".")[0];
+	minDate = minDate.toISOString().split(".")[0];
+  
+  //getMap(false);
+}
+
+
+
+function variantRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener3);
+	oReq.open("GET", frontend+"variants", false);
+	oReq.send();
+}
+
+variantRequest();	
+//getMap(false);
+/*
+function reqListener3 () {
+  document.getElementById("petriFreq").innerHTML = this.responseText;
+}
+
+function petriNetFreq() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener3);
+	oReq.open("GET", frontend+"petriFreq", false);
+	oReq.send();
+}
+
+function reqListener4 () {
+  document.getElementById("petriPerf").innerHTML = this.responseText;
+}
+
+function petriNetPerf() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener4);
+	oReq.open("GET", frontend+"petriPerf", false);
+	oReq.send();
+}
+
+petriNetFreq();
+petriNetPerf();
+		
+function reqListener5 () {
+  document.getElementById("bpmn").innerHTML = this.responseText;
+}
+
+function bpmnRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener5);
+	oReq.open("GET", frontend+"bpmn", false);
+	oReq.send();
+}
+
+bpmnRequest();
+*/
+
+/*
+function starting(){
+	start = this.responseText;
+	start = start.match(/(?!^)".*?"/g);
+}
+function ending(){
+	end = this.responseText;
+	end = end.match(/(?!^)".*?"/g);
+}
+function startingPoint() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", starting);
+	oReq.open("GET", frontend+"start", false);
+	oReq.send();
+}
+function endingPoint() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", ending);
+	oReq.open("GET", frontend+"end", false);
+	oReq.send();
+}
+
+startingPoint();
+endingPoint();
+*/
+
+</script>
+
+<script>
+var perf_checked = document.getElementById("perf_checked");
+if ((perf_checked).value == "true"){
+	(document.getElementById("tabFreq")).checked = false;
+	(document.getElementById("tabPerf")).checked = true;
+}
+
+var menu = document.getElementById("menu");
+menu.style.display = "none";
+
+	
+	getMap(true);
+
+window.onchange = function() {
+	if (document.getElementById("file").files[0] != undefined) {
+		//document.getElementById("loadingMessage").style.visibility = "visible";
+		document.getElementById("updateBtn").click();
+        document.getElementById("loadingMessage").style.visibility = "visible";
+	}
+	var timeframe_selected = document.getElementById("keep_timeframe").value;
+	var img = document.getElementById("img");
+	var source = "../static/images/"
+	img.src = source+timeframe_selected+".jpg";
+	
+	document.getElementById("starting-time").setAttribute("min", minDate);
+	document.getElementById("starting-time").setAttribute("max", maxDate);
+	document.getElementById("starting-time").setAttribute("value", minDate);
+	document.getElementById("ending-time").setAttribute("min", minDate);	
+	document.getElementById("ending-time").setAttribute("max", maxDate);
+	document.getElementById("ending-time").setAttribute("value", maxDate);
+	
+	var perf_selected = document.getElementById("filter_by_performance").value;
+	if (perf_selected == "caseDuration") {
+		document.getElementById("select_time_1").style.display = "inline-block";
+		document.getElementById("select_time_2").style.display = "inline-block";
+		document.getElementById("label_input_min").innerHTML = "Minimum duration: <small>(Use cases running longer than)</small>";
+		document.getElementById("label_input_max").innerHTML = "Maximum duration: <small>(Use cases running shorter than)</small>";
+	}
+	if (perf_selected == "eventsNumber") {
+		document.getElementById("select_time_1").style.display = "none";
+		document.getElementById("select_time_2").style.display = "none";
+		document.getElementById("label_input_min").innerHTML = "Minimum number of events";
+		document.getElementById("label_input_max").innerHTML = "Maximum number of events";
+	}
+	
+	var endpoints_selected = document.getElementById("mode_for_endpoints").value;
+	if (endpoints_selected == "discard") {
+
+		document.getElementById("endpoints_text").innerHTML = "This filter removes all cases in which the first and last events \r do not have one of the selected values.";
+	}
+	else {
+		document.getElementById("endpoints_text").innerHTML = "This filter trims all cases to the sequence between"
+																	+"the first occurence \r of a start value and the last occurrence of an end value.";
+	}
+	
+	var attribute_selected = document.getElementById("mode_for_attribute").value;
+	switch (attribute_selected) {
+		case "selected":
+			document.getElementById("attribute_text").innerHTML = "This filter removes all events that do not have one of the selected values.";
+			break;
+		case "mandatory":
+			document.getElementById("attribute_text").innerHTML = "This filter removes all cases that do not have at least one event with one of the selected values.";
+			break;
+		case "forbidden":
+			document.getElementById("attribute_text").innerHTML = "This filter removes all cases that have at least one event with one of the selected values.";
+			break;
+		default:
+			document.getElementById("attribute_text").innerHTML = "";
+	}
+	
+	var check_require = document.getElementById("require_for_follower");
+	if (check_require.checked) {
+		document.getElementById("mode_for_follower").disabled = false;
+		document.getElementById("filter_by_follower").disabled = false;
+	}
+	else {
+		document.getElementById("mode_for_follower").disabled = true;
+		document.getElementById("filter_by_follower").disabled=true;
+	}
+
+	var check_time = document.getElementById("time_for_follower");
+	if (check_time.checked) {
+		document.getElementById("mode_time_for_follower").disabled = false;
+		document.getElementById("select_time_3").disabled = false;
+		document.getElementById("input_time_follower").disabled = false;
+	}
+	else {
+		document.getElementById("mode_time_for_follower").disabled = true;
+		document.getElementById("select_time_3").disabled = true;
+		document.getElementById("input_time_follower").disabled = true;
+	}
+		
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+  document.getElementById("blocker").style.display = "none";
+  document.getElementById("check_filter").checked = false;
+}
+
+
+
+function applyFilter() {
+	
+	var tf_selected = document.getElementById("keep_timeframe").value;
+	var start_tf = document.getElementById("starting-time").value;
+	var end_tf = document.getElementById("ending-time").value;
+	
+	start_tf = start_tf.replace("T", " ");
+	end_tf = end_tf.replace("T", " ");
+	
+	
+	var time1 = document.getElementById("select_time_1").value;
+	var min = document.getElementById("input_min").value;
+	var min_sec;
+	switch(time1){
+		case "mills": min_sec = (min / 1000); break;
+		case "seconds": min_sec = min; break;
+		case "minutes": min_sec = (min *60); break;
+		case "hours": min_sec = (min *3600); break;
+		case "days": min_sec = (min *86400); break;
+		case "weeks": min_sec = (min *604800); break;
+		case "years": min_sec = (min *3,154e+7); break; 
+	}
+	
+	var time2 = document.getElementById("select_time_2").value;
+	var max = document.getElementById("input_max").value;
+	var max_sec;
+	switch(time2){
+		case "mills": max_sec = (max / 1000); break;
+		case "seconds": max_sec = max; break;
+		case "minutes": max_sec = (max *60); break;
+		case "hours": max_sec = (max *3600); break;
+		case "days": max_sec = (max *86400); break;
+		case "weeks": max_sec = (max *604800); break;
+		case "years": max_sec = (max *3,154e+7); break;
+	}		
+	
+	var oReq = new XMLHttpRequest();
+	//oReq.addEventListener("load", reqListenerFilter);
+	oReq.addEventListener("load", reqListener3);
+	
+	if(document.getElementById("timeframe_filter_div").style.display == "block"){
+		document.getElementById("timeframe_filter").setAttribute("style", "background-color: #7a4791;");
+		document.getElementById("timeframe_remove").style.visibility = "visible";
+		filtered_timeframe = true;
+		//oReq.open("GET", frontend+"filterTimeframe"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected, false);
+	}
+	
+	if(document.getElementById("perf_filter_div").style.display == "block"){		
+		document.getElementById("perf_filter").setAttribute("style", "background-color: #7a4791;");
+		document.getElementById("perf_remove").style.visibility = "visible";
+		filtered_perf = true;
+		//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
+	}
+	
+	oReq.open("GET", frontend+"filter"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected+"&min="+String(min_sec)+"&max="+String(max_sec)+"&filterTime="+filtered_timeframe+"&filterPerf="+filtered_perf, false);
+	oReq.send();
+	getMap(false);
+	closeForm();
+	
+}
+
+function removeFilter(id){
+	document.getElementById(id).style.visibility = "hidden";
+	id= id.split("_")[0];
+	document.getElementById(id+"_filter").setAttribute("style", "background-color: #cfa8d5;");
+	
+	var oReq = new XMLHttpRequest();
+	//oReq.addEventListener("load", reqListenerFilter);
+	oReq.addEventListener("load", reqListener3);
+	
+	switch(id){
+		case "timeframe": 
+			filtered_timeframe = false;
+			break;
+			
+		case "perf": 
+			filtered_perf = false;
+			break;
+	}
+
+	var tf_selected = document.getElementById("keep_timeframe").value;
+	var start_tf = document.getElementById("starting-time").value;
+	var end_tf = document.getElementById("ending-time").value;
+		
+	start_tf = start_tf.replace("T", " ");
+	end_tf = end_tf.replace("T", " ");
+	
+		//oReq.open("GET", frontend+"filterTimeframe"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected, false);
+		//oReq.send();
+	//filtered_timeframe = false;
+
+
+	var time1 = document.getElementById("select_time_1").value;
+	var min = document.getElementById("input_min").value;
+	var min_sec;
+	switch(time1){
+		case "mills": min_sec = (min / 1000); break;
+		case "seconds": min_sec = min; break;
+		case "minutes": min_sec = (min *60); break;
+		case "hours": min_sec = (min *3600); break;
+		case "days": min_sec = (min *86400); break;
+		case "weeks": min_sec = (min *604800); break;
+		case "years": min_sec = (min *3,154e+7); break; 
+	}
+	
+	var time2 = document.getElementById("select_time_2").value;
+	var max = document.getElementById("input_max").value;
+	var max_sec;
+	switch(time2){
+		case "mills": max_sec = (max / 1000); break;
+		case "seconds": max_sec = max; break;
+		case "minutes": max_sec = (max *60); break;
+		case "hours": max_sec = (max *3600); break;
+		case "days": max_sec = (max *86400); break;
+		case "weeks": max_sec = (max *604800); break;
+		case "years": max_sec = (max *3,154e+7); break;
+	}
+	//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
+	//oReq.send();
+	//filtered_perf = false;
+	console.log(filtered_perf);
+	console.log(filtered_timeframe);
+	
+	if(filtered_perf == false && filtered_timeframe == false) {
+		freqRequest();
+		perfRequest();
+		variantRequest();
+		
+	}
+	else{
+		oReq.open("GET", frontend+"filter"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected+"&min="+String(min_sec)+"&max="+String(max_sec)+"&filterTime="+filtered_timeframe+"&filterPerf="+filtered_perf, false);
+		oReq.send();
+	}
+	//filtered = false;
+	//freqRequest();
+	//perfRequest();
+	//variantRequest();
+	getMap(false);
+	
+	closeForm();
+}
+		
+function update(){
+	document.getElementById('updated').value = true;
+	document.getElementById('file').click();
+	
+}
+
+function openForm(id) {
+	document.getElementById("blocker").style.display = "block";
+	switch (id) {
+	  case 'timeframe_filter':
+		document.getElementById("filter_title").innerHTML = "Timeframe";
+		document.getElementById("timeframe_filter_div").style.display = "block";
+		document.getElementById("perf_filter_div").style.display = "none";
+		document.getElementById("endpoints_filter_div").style.display = "none";
+		document.getElementById("attribute_filter_div").style.display = "none";
+		document.getElementById("follower_filter_div").style.display = "none";
+		break;
+	  case 'perf_filter':
+		document.getElementById("filter_title").innerHTML = "Performance";
+		document.getElementById("perf_filter_div").style.display = "block";
+		document.getElementById("timeframe_filter_div").style.display = "none";
+		document.getElementById("endpoints_filter_div").style.display = "none";
+		document.getElementById("attribute_filter_div").style.display = "none";
+		document.getElementById("follower_filter_div").style.display = "none";
+		break;
+	  case 'endpoints_filter':
+		document.getElementById("filter_title").innerHTML = "Endpoints";
+		document.getElementById("endpoints_filter_div").style.display = "block";
+		document.getElementById("timeframe_filter_div").style.display = "none";
+		document.getElementById("perf_filter_div").style.display = "none";
+		document.getElementById("attribute_filter_div").style.display = "none";
+		document.getElementById("follower_filter_div").style.display = "none";
+		break;
+	  case 'attribute_filter':
+		document.getElementById("filter_title").innerHTML = "Attribute";
+		document.getElementById("attribute_filter_div").style.display = "block";
+		document.getElementById("timeframe_filter_div").style.display = "none";
+		document.getElementById("perf_filter_div").style.display = "none";
+		document.getElementById("endpoints_filter_div").style.display = "none";
+		document.getElementById("follower_filter_div").style.display = "none";
+		
+		break;
+	  case 'follower_filter':
+		document.getElementById("filter_title").innerHTML = "Follower";
+		document.getElementById("follower_filter_div").style.display = "block";
+		document.getElementById("timeframe_filter_div").style.display = "none";
+		document.getElementById("perf_filter_div").style.display = "none";
+		document.getElementById("endpoints_filter_div").style.display = "none";
+		document.getElementById("attribute_filter_div").style.display = "none";
+		break;
+	  default:
+		document.getElementById("filter_title").innerHTML = "Sorry, there has been an error. No filter has been applied yet.";
+	}
+  document.getElementById("myForm").style.display = "block";
+}
+
+
+
+var menuBtn = document.getElementById("check");
+var menu = document.getElementById("menu");
+var content = document.getElementById("content");
+var map = document.getElementById("map");
+var elanalysis = document.getElementById("elanalysis");
+var cChecking = document.getElementById("cChecking");
+var mapText = document.getElementById("map-text");
+var elanalysisText = document.getElementById("elanalysis-text");
+var cCheckingText = document.getElementById("cChecking-text");
+
+
+function mainMenu(){
+	if (menuBtn.checked == false) {
+		menu.style.display = "none";
+		content.style.maxWidth = "100%";
+		//console.log(document.getElementById("file").files[0]);
+	}
+	else {
+		menu.style.display = "flex";
+		content.style.maxWidth = "80%";
+	}
+}
+
+function displayContent(){
+	if (map.checked == true) {
+		mapText.style.display = "block";
+		elanalysisText.style.display = "none";
+		cCheckingText.style.display = "none";
+		menu.style.display = "none";
+		content.style.maxWidth = "100%";
+		menuBtn.checked = false;
+		
+	}
+	if (elanalysis.checked == true) {
+		mapText.style.display = "none";
+		elanalysisText.style.display = "block";
+		cCheckingText.style.display = "none";
+		menu.style.display = "none";
+		content.style.maxWidth = "100%";
+		menuBtn.checked = false;
+	}
+	if (cChecking.checked == true) {
+		mapText.style.display = "none";
+		elanalysisText.style.display = "none";
+		cCheckingText.style.display = "block";
+		menu.style.display = "none";
+		content.style.maxWidth = "100%";
+		menuBtn.checked = false;
+	}
+}
+
+</script>
+
+
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+const zvgZoom = document.getElementById("graphContainer");
+
+output.innerHTML = slider.value;
+
+
+//Zooming and paning with mouse
+
+const svgContainer = document.getElementById("map-content");
+//console.log(svgContainer);
+
+var viewBox = {x:0,y:0,w:"1920",h:"1080"};
+var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+zvgZoom.setAttribute('viewBox', attr);
+//console.log(zvgZoom.clientWidth);
+//console.log(String(zvgZoom.style.width));
+//const svgSize = {w:zvgZoom.style.width,h:zvgZoom.style.height};
+const svgSize = {w:"1920",h:"1080"};
+//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
+var isPanning = false;
+var startPoint = {x:0,y:0};
+var endPoint = {x:0,y:0};;
+var scale = 1;
+
+svgContainer.onmousewheel = function(e) {
+   e.preventDefault();
+   var w = viewBox.w;
+   var h = viewBox.h;
+   var mx = e.offsetX;//mouse x  
+   var my = e.offsetY;    
+   var dw = -w*Math.sign(e.deltaY)*0.05;
+   var dh = -h*Math.sign(e.deltaY)*0.05;
+   var dx = dw*mx/svgSize.w;
+   var dy = dh*my/svgSize.h;
+   viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+   scale = svgSize.w/viewBox.w;
+   slider.value = scale*100;
+   output.innerHTML = slider.value;
+//   zoomValue.innerText = String(Math.round(scale*100)/100);
+   var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+   zvgZoom.setAttribute('viewBox', attr);
+   
+
+}
+
+
+svgContainer.onmousedown = function(e){
+   isPanning = true;
+   startPoint = {x:e.x,y:e.y};   
+}
+
+svgContainer.onmousemove = function(e){
+   if (isPanning){
+  endPoint = {x:e.x,y:e.y};
+  var dx = (startPoint.x - endPoint.x)/scale;
+  var dy = (startPoint.y - endPoint.y)/scale;
+  var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
+  var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+  zvgZoom.setAttribute('viewBox', attr);
+   }
+}
+
+svgContainer.onmouseup = function(e){
+   if (isPanning){ 
+  endPoint = {x:e.x,y:e.y};
+  var dx = (startPoint.x - endPoint.x)/scale;
+  var dy = (startPoint.y - endPoint.y)/scale;
+  viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
+  var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+  zvgZoom.setAttribute('viewBox', attr);
+  isPanning = false;
+  }
+}
+
+svgContainer.onmouseleave = function(e){
+ isPanning = false;
+}
+ 
+var lastNum = 0;
+var v;
+slider.oninput = function(e) {
+
+  if(lastNum < this.value) {
+		v = -500;
+	} else {
+		v = 500;
+	}
+	lastNum = this.value;
+ 
+   var w = viewBox.w;
+   var h = viewBox.h;
+   var mx = 0;//mouse x  
+   var my = 0;
+   var dw = -w*Math.sign(v)*0.05;
+   var dh = -h*Math.sign(v)*0.05;
+   var dx = dw*mx/svgSize.w;
+   var dy = dh*my/svgSize.h;
+   viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+   scale = svgSize.w/viewBox.w;
+   slider.value = scale*100;
+   output.innerHTML = slider.value;
+   var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+   zvgZoom.setAttribute('viewBox', attr);
+  
+}
+</script>
+
+<script>
+var sliderPF = document.getElementById("myPathF");
+var sliderPP = document.getElementById("myPathP");
+var sliderAF = document.getElementById("myActF");
+var sliderAP = document.getElementById("myActP");
+var outputPF = document.getElementById("pathF");
+var outputPP = document.getElementById("pathP");
+var outputAF = document.getElementById("actF");
+var outputAP = document.getElementById("actP");
+
+outputPF.innerHTML = sliderPF.value;
+outputPP.innerHTML = sliderPP.value;
+outputAF.innerHTML = sliderAF.value;
+outputAP.innerHTML = sliderAP.value;
+
+sliderPF.oninput = function() {
+  outputPF.innerHTML = this.value;
+}
+sliderPP.oninput = function() {
+  outputPP.innerHTML = this.value;
+}
+sliderAF.oninput = function() {
+  outputAF.innerHTML = this.value;
+}
+sliderAP.oninput = function() {
+  outputAP.innerHTML = this.value;
+}
+</script>
+
+
+</html>
