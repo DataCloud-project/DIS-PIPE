@@ -91,3 +91,6 @@ If there is an error saying <br />
 ``` C:\Users\<username>\<miniconda3|anaconda3>\envs\pm4py_env2\lib\site-packages\pm4py\visualization\common\gview.py```
 <br />with this line  
 <br /> ```from graphviz import Digraph```
+
+<!---# DIS-PIPE Event Log Manager
+It provides dedicated *segmentation*, *abstraction*, and *filtering* functionalities to transform the (collected) event data into an interpretable event log by extrapolating relevant fragments for an effective pipeline discovery. We implemented **DIS-PIPE-Event-Log-Manager** as a standalone tool developed using Java SE 8, Python 3.9 and C.-->
