@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myStyle.css') }}">
     <!-- Fontawesome CDN Link -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>Index</title>
 </head>
 
@@ -109,12 +112,12 @@ function checkRefresh()
 			<div class="bottomleft" id="bottomleft">
 				<form action="" method='POST' enctype = "multipart/form-data">
 					<!-- <button type="button" for="myFile">Import log</button> -->
-					<button type="button" onclick="update()">Import log</button>
+					<button class="menu_button" type="button" onclick="update()">Import log</button>
 					<input type='file' id="file" name="file" style="display:none">
 					<br />
-					<button type="button" onclick="exportDsl()">Export to DSL</button>
+					<button class="menu_button" type="button" onclick="exportDsl()">Export to DSL</button>
 					<br />
-					<button type="button">Export to DEF-PIPE</button>
+					<button class="menu_button" type="button">Export to DEF-PIPE</button>
 					<input type="submit" id="updateBtn" value="Update" style="display:none">
 					<input type="hidden" value="{{updated}}" name="updated" id="updated">
 				</form>
@@ -128,17 +131,23 @@ function checkRefresh()
 					 	<div class="title" style="float: left"> Map Content</div>
 						<p id='digraphF' style='display:none'>{{ stringF }}</p>
 						<p id='digraphP' style='display:none'>{{ stringP }}</p>
+						<p id='allDt' style='display:none'>{{ stringDuration }}</p>
+						<p id='allFq' style='display:none'>{{ stringFrequency }}</p>
+						<p id='allEdgeFq' style='display:none'>{{ stringEdgeFrequency }}</p>
+						<p id='usedVariable' style='display:none'>{{ stringUsedVarible }}</p>
+						<p id='allEdgeDt' style='display:none'>{{ stringEdgeDuration }}</p>
 						<p id='petriFreq' style='display:none'>Try</p>
 						<p id='petriPerf' style='display:none'>Try</p>
 						<p id='bpmn' style='display:none'>Try</p>
-						<p id='mapTitle' style="text-align: center;">{{ filename }}</p>
+						<p id='mapTitle' style="text-align: center;">{{ nameupload }}</p>
 						<p id='median' style='display:none'>{{ median }}</p>
 						<p id='total' style='display:none'>{{ total }}</p>
 						
 						<div class="slidecontainer">
 						  <input type="range" min="1" max="500" value="100" class="sliderZoom" id="myRange">
-						  <p>Zoom: <span id="demo"></span>%</p>
+						  <p style="font-size: 10px;">Zoom: <span id="demo"></span>%</p>
 						</div>
+						<br>
 						
 						<input type="checkbox" id="check_tabs">
 						<label for="check_tabs">
@@ -155,21 +164,35 @@ function checkRefresh()
 								
 								</svg>
 							</div>	
+							<div class="blocker_first" id="blocker5" onclick="closeChangement()"></div>
+							<div class="form-loading" id="myChange">
+								<div class="form-container">
+									<center>
+									<br>
+									<span>Change Applied</span>
+									<br>
+									<button type="button" class="btn" onclick="closeChangement()">Close</button>
+									</center>
+								</div>
+							</div>
 						
 							<div class="mytabs">
 							
 									<input type="radio" name="mytabs" id="tabFreq" checked="checked" value="frequency" onclick="getMap()">
-									<label for="tabFreq">Frequency</label>
+									<label id="labelTabFreq" for="tabFreq">Frequency</label>
 									<div class="tab">
 										
 										<form action="" method='POST'>
+											<center>
 											<input type="hidden" id='tabTypeFreq' name='tabType' value="frequency">
 											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF">
-											<p>Path: <span id="pathF"></span>%</p>
+											Path: <textarea style="resize: none;" rows="1" cols="2"  id="pathF"></textarea>%
+											<button class="setPath" type="button" style="width: 70px; " id="setPathF" onclick="updateInfo('PF')">set Path</button>
 											
 											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF">
-											<p>Activities: <span id="actF"></span>%</p>
-											
+											Activities: <textarea style="resize: none;" rows="1" cols="2" id="actF"></textarea>%
+											<button type="button" style="width: 95px; " id="setActF" onclick="updateInfo('AF')">set Activities</button>
+											<br>
 											
 											<input type="hidden" min="0" max="100" value="{{myPathP_init}}" name="myPathP">
 											<input type="hidden" min="0" max="100" value="{{myActP_init}}"  name="myActP">
@@ -177,7 +200,7 @@ function checkRefresh()
 											
 											<br />
 											
-											<select name="freqs" class="dropdown">
+											<select id="perfromanceFrequency" name="freqs" class="dropdown">
 											  <option value="absFreq">Absolute frequency</option>
 											  <option value="caseFreq">Case Frequency</option>
 											  <option value="maxRep">Max. repetition</option>
@@ -187,7 +210,14 @@ function checkRefresh()
 											<br />
 										
 										
-											<button type="button" onclick="request('false')">Submit</button>
+											<button class="dis_submit" disabled type="button" onclick="pre_request('false')">Submit</button>
+
+											<br />
+
+											<p class="change_form" style="visibility: hidden;"  > * Apply changes</p>
+											
+											<button id="invisibleButton" type="button" hidden>My Button</button>
+											</center>
 										
 										</form> 
 										
@@ -196,37 +226,46 @@ function checkRefresh()
 									
 									
 									<input type="radio" name="mytabs" id="tabPerf" value="performance" onclick="getMap()">
-									<label for="tabPerf">Performance</label>
+									<label id="labelTabPerf" for="tabPerf">Performance</label>
 									<div class="tab">
 										
 										<form action="" method='POST'>
+											<center>
 											<input type="hidden" id='tabTypePerf' name='tabType' value="performance">
 											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP'>
-											<p>Path: <span id="pathP"></span>%</p>
+											Path: <textarea style="resize: none;" rows="1" cols="2" id="pathP"></textarea>% 
+											<button class="setPath" type="button" style="width: 70px; " id="setPathP" onclick="updateInfo('PP')">set Path</button>
+											
 											
 											
 											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP'>
-											<p>Activities: <span id="actP"></span>%</p>
-											
+											Activities: <textarea style="resize: none;" rows="1" cols="2" id="actP"></textarea>%
+											<button type="button" style="width: 95px; " id="setActP" onclick="updateInfo('AP')">set Activities</button>
+											<br>
 											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
 											<input type="hidden" min="0" max="100" value="{{myActF_init}}"  name="myActF">
 											<input type="hidden" value="{{perf_checked}}"  name="perf_checked" id="perf_checked">
 											
 											<br />
 											
-											<select name="perfs" class="dropdown">
-											  <option value="totDur">Total duration</option>
-											  <option value="medDur">Median duration</option>
-											  <option value="meanDur">Mean duration</option>
-											  <option value="maxDur">Max. duration</option>
-											  <option value="minDur">Min. duration</option>
+											<select id="performanceDuration" name="perfs" class="dropdown">
+												<option selected value="totDur">Total duration</option>
+												<option value="medDur">Median duration</option>
+												<option value="meanDur">Mean duration</option>
+												<option value="maxDur">Max. duration</option>
+												<option value="minDur">Min. duration</option>
 											</select>
 											
 											<br />
 											<br />
 										
-											<button type="button" onclick="request('true')">Submit</button>
-										
+											<button class="dis_submit" disabled type="button" onclick="pre_request('true')">Submit</button>
+
+											<br>
+											<p class="change_form" style="visibility: hidden;" > * Apply changes</p>
+
+											</center>
+											
 										</form> 										
 										
 									</div>
@@ -239,36 +278,107 @@ function checkRefresh()
 					<div class="elanalysis text" id="elanalysis-text">
 					 	<div class="title"> Event Log Analysis Content</div>
 						<div class="row">
-						  <div class="column left">
+							<div class="column left">
 							<div class="containerVariants">
-								<h3>Variants</h3>
+								<h4 style="text-align:center;">Variants</h4>
+								<hr>
+								<br>
 								<ul id="variants-ul">
 								</ul>
 							</div>
-						  </div>
-						  <div class="column middle">
+							</div>
+							<div class="column middle">
 							<div class="containerCases">
-								<h3>Cases</h3>
+								<h4 style="text-align:center;">Cases</h4>
+								<hr>
+								<br>
 								<ul id="case-ul">
 								</ul>
 							</div>
-						  </div>
-						  <div class="column right">
-							<table id="eventsTable">
-							</table>
-						  </div>
+							</div>
+							<div class="column right">
+								<table id="eventsTable">
+								</table>
+							</div>
+							<div class="column filtro">
+								<h4 style="text-align:center;">Filters</h4>
+								<!-- <ul id="variants-filters">
+								</ul> -->
+								<hr>
+
+								<center>
+									<span>Choose a filter:</span>
+									<!-- <br> -->
+									<!-- <button style="all: revert">Add a Filter</button> -->
+									<!-- <select id="chooseFilter" name="chFilter">
+										<option selected value="noFilter"> ✖️ No filter </option>
+										<option value="Timeframe"> 🕑 Timeframe </option>
+										<option value="Performance"> ⌛ Performance </option>
+										<option value="Attribute"> 📊 Attribute </option>
+									</select> -->
+									<br>
+								
+
+								<button title="Focus the analysis on a time period" style="text-align:center;" class="filtro_bottone legend text-table " id="timeframe_filter" onclick="openForm(this.id)">
+									🕑 Timeframe
+								</button>
+								<br>
+								<!-- <i id="timeframe_remove" onclick="removeFilter(this.id)"></i> -->
+
+								<button title="Focus the analysis of the data set &#013; according to certain performance criteria" style="text-align:center;" class="filtro_bottone legend text-table"id="perf_filter" onclick="openForm(this.id)">
+									⌛ Performance
+								</button>
+								<br>
+								<!-- <i id="perf_remove" onclick="removeFilter(this.id)"></i> -->
+								<!-- <button style="text-align:center;" class="legend text-table" id="endpoints_filter" onclick="openForm(this.id)"><i class="fas fa-route"></i>
+									Endpoints
+								</button> -->
+								<!-- <i id="endpoints_remove" onclick="removeFilter(this.id)"></i> -->
+								<button title="You can use it to split your data set &#013; based on a particular attribute, but also to &#013;filter cases based on the presence or absence of activities, &#013;to filter case IDs and variants, or to remove individual &#013; activities or attribute values" style="text-align:center;" class=" filtro_bottone legend text-table" id="attribute_filter" onclick="openForm(this.id)">
+									📊 Attribute
+								</button>
+								<br>
+
+								<button style="text-align:center;" class=" filtro_bottone legend text-table" id="follower_filter" onclick="openForm(this.id)">
+									➡️ Folower
+								</button>
+								<!-- <i id="attribute_remove" onclick="removeFilter(this.id)"></i> -->
+								<!-- <button style="text-align:center;" class="legend text-table" id="follower_filter" onclick="openForm(this.id)"><i class="fas fa-people-arrows"></i>
+									Follower
+								</button> -->
+								<!-- <i id="follower_remove" onclick="removeFilter(this.id)"></i> -->
+								<br>
+								<br>
+								<div hidden="true" id="history_span">
+									<h5 style="text-align:center;">Filters History</h5>
+									<hr>
+									<br>
+								</div>
+								
+			
+								<!-- <span hidden="true" underlined id="history_span"> History Paragraph</span> -->
+
+								<div id="history_div">
+
+								</div>
+
+								</center>
+
+								
+						
+							</div>
 						</div>
 
 						<input type="checkbox" id="check_filter">
-						<label for="check_filter">
+						<!-- <label for="check_filter">
 							<i class="fas fa-filter" id="btn_filter"></i>
-						</label>
+						</label> -->
 						
 						<div class="mytabs">
 							
 							<input type="radio" name="myfilter" id="tabFilter" checked="checked" value="filtering">
 							<label for="tabFilter">Filtering</label>
-							<div class="tab"> 
+							<!-- <div class="tab"> 
 								<div class="btn-group">
 									<button type="button" id="timeframe_filter" style="grid-column: 1 / 2;grid-row: 1;" onclick="openForm(this.id)"><i class="far fa-clock"></i>
 										<strong>Timeframe</strong>
@@ -300,17 +410,38 @@ function checkRefresh()
 										<small>Filters by subsequences</small>
 									</button>
 									<i id="follower_remove" class="fa-solid fa-trash-can" style="visibility: hidden; grid-column: 2 / 2;grid-row: 5;" onclick="removeFilter(this.id)"></i>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+				
+									<span hidden="true" underlined id="history_span"> History Paragraph</span>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+									<div> &zwnj;</div>
+									<div id="history_div">
+
+									</div>
+								
 								</div>
-							</div>
+							</div> -->
 						</div>
+						
+						<div class="blocker" id="blocker4" onclick="closeOrder()"></div>
+						<div class="blocker" id="blocker3" onclick="closeRemove()"></div>
+						<div class="blocker" id="blocker2" onclick="closeLoading()"></div>
 
 						<div class="blocker" id="blocker" onclick="closeForm()"></div>
 						<div class="form-popup" id="myForm">
-						  <form action="" class="form-container">
+						  <!-- INCOLLARE FORM -->
+							<form action="" class="form-container">
 							<h1 id="filter_title" style="color:#7a4791; text-align: center">Timeframe</h1>
 							<hr style="background:#cfa8d5">
-							<br />
+							<br>
 							<!-- FILTER FOR TIMEFRAME -->
+							<center>
 							<div id="timeframe_filter_div" style="display:none">
 								<label for="starting-time">Choose your starting time:</label>
 								<input type="datetime-local" id="starting-time" name="starting-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="20">
@@ -322,22 +453,24 @@ function checkRefresh()
 								<br />
 								<text>Keep cases by:</text>
 								<select name="keep_timeframe" id="keep_timeframe" class="dropdown">
-								  <option value="contained">Contained in timeframe</option>
-								  <option value="intersecting">Intersecting timeframe</option>
-								  <option value="started">Started in timeframe</option>
-								  <option value="completed">Completed in timeframe</option>
-								  <option value="trim">Trim to timeframe</option>
+									<option value="contained">Contained in timeframe</option>
+									<option value="intersecting">Intersecting timeframe</option>
+									<option value="started">Started in timeframe</option>
+									<option value="completed">Completed in timeframe</option>
+									<option value="trim">Trim to timeframe</option>
 								</select>
 								<br />
 								<br />
 								<img id="img" src="../static/images/contained.jpg" style="width:400px; height: auto; float: center">
 							</div>
+							</center>
+							<center>
 							<!-- FILTER FOR PERFORMANCE -->	
 							<div id="perf_filter_div" style="display:none">
 								<label for="filter_by_performance">Filter by: </label>
 								<select id="filter_by_performance" name="filter_by_performance" class="dropdown">
-								  <option value="caseDuration">Case duration</option>
-								  <option value="eventsNumber">Number of events</option>
+									<option value="caseDuration">Case duration</option>
+									<option value="eventsNumber">Number of events</option>
 								</select>
 								<br />
 								<br />
@@ -345,44 +478,45 @@ function checkRefresh()
 								<br />
 								<input type="number" id="input_min" name="input_min" step="any" />
 								<select id="select_time_1" name="select_time_1" class="dropdown" style="padding: 3px">
-								  <option value="mills">Milliseconds</option>
-								  <option value="seconds">Seconds</option>
-								  <option value="minutes">Minutes</option>
-								  <option value="hours">Hours</option>
-								  <option value="days">Days</option>
-								  <option value="weeks">Weeks</option>
-								  <option value="years">Years</option>
+									<option value="mills">Milliseconds</option>
+									<option value="seconds">Seconds</option>
+									<option value="minutes">Minutes</option>
+									<option value="hours">Hours</option>
+									<option value="days">Days</option>
+									<option value="weeks">Weeks</option>
+									<option value="years">Years</option>
 								</select>
 								<br />
 								<label id="label_input_max" for="input_max">Maximum duration: <small>(Use cases running shorter than)</small></label>
 								<br />
 								<input type="number" id="input_max" name="input_max" step="any" />
 								<select id= "select_time_2" name="select_time_2" class="dropdown" style="padding: 3px">
-								  <option value="mills">Milliseconds</option>
-								  <option value="seconds">Seconds</option>
-								  <option value="minutes">Minutes</option>
-								  <option value="hours">Hours</option>
-								  <option value="days">Days</option>
-								  <option value="weeks">Weeks</option>
-								  <option value="years">Years</option>
+									<option value="mills">Milliseconds</option>
+									<option value="seconds">Seconds</option>
+									<option value="minutes">Minutes</option>
+									<option value="hours">Hours</option>
+									<option value="days">Days</option>
+									<option value="weeks">Weeks</option>
+									<option value="years">Years</option>
 								</select>
 							</div>	
+							</center>
 								
 							<!-- FILTER FOR ENDPOINTS -->
 							<div id="endpoints_filter_div" style="display:none">
-								<label for="filter_by">Filter by: </label>
-								<select id= "filter_by" name="filter_by" class="dropdown">
-								  <option value="activity">Activity</option>
-								  <option value="resource">Resource</option>
-								  <option value="costs">Costs</option>
-								  <option value="caseID" style="display:none">CaseID</option>
-								  <option value="variants" style="display:none">Variants</option>
+								<label for="filter_by_2">Filter by: </label>
+								<select id= "filter_by_2" name="filter_by" class="dropdown">
+									<option selected value="activity">Activity</option>
+									<option value="resource">Resource</option>
+									<option value="costs">Costs</option>
+									<option value="caseID" style="display:none">CaseID</option>
+									<option value="variants" style="display:none">Variants</option>
 								</select>
 								<label for="mode_for_endpoints" style="margin-left: 10px;">Mode: </label>
 								<select id="mode_for_endpoints" name="mode_for_endpoints" class="dropdown">
-								  <option value="discard">Discard cases</option>
-								  <option value="trimLongest">Trim Longest</option>
-								  <option value="trimFirst">Trim First</option>
+									<option value="discard">Discard cases</option>
+									<option value="trimLongest">Trim Longest</option>
+									<option value="trimFirst">Trim First</option>
 								</select>
 								
 								<text id="endpoints_text" style="font-size: 12px; color:#4f4f4f; float:right; max-width: 300px; margin-left: 5px;"></text>
@@ -414,55 +548,65 @@ function checkRefresh()
 							</div>
 							<!-- FILTER FOR ATTRIBUTES -->
 							<div id="attribute_filter_div" style="display:none">
-								<label for="filter_by">Filter by: </label>
-								<select id= "filter_by" name="filter_by" class="dropdown">
-								  <option value="activity">Activity</option>
-								  <option value="resource">Resource</option>
-								  <option value="costs">Costs</option>
-								  <option value="caseID">CaseID</option>
-								  <option value="variants">Variants</option>
-								</select>
-								<label for="mode_for_attribute"style="margin-left: 10px;">Mode: </label>
-								<select id="mode_for_attribute" name="mode_for_attribute" class="dropdown">
-								  <option value="selected">Keep selected</option>
-								  <option value="mandatory">Mandatory</option>
-								  <option value="forbidden">Forbidden</option>
-								</select>
-								<text id="attribute_text" style="font-size: 12px; color:#4f4f4f; float:right; max-width: 300px; margin-left: 5px;"></text>
-								<br />
-								<br />
-								<div>
+								<div class="row">
+									<div class="left_pop">
+										<span>
+											<label for="filter_by">Filter by: </label>
+											<select id= "filter_by" name="filter_by" class="dropdown" onchange="cambia()">
+												<option value="activity">Activity</option>
+												<option value="resource">Resource</option>
+												<option value="costs">Costs</option>
+												<option value="caseID">CaseID</option>
+												<option value="variants">Variants</option>
+											</select>
+										</span>
+									</div>
+									<div class="left_pop">
+										<span>
+											<label for="mode_for_attribute"style="margin-left: 10px;">Mode: </label>
+											<select id="mode_for_attribute" name="mode_for_attribute" class="dropdown">
+												<option value="selected">Keep selected</option>
+												<option value="mandatory">Mandatory</option>
+												<option value="forbidden">Forbidden</option>
+											</select>
+	
+										</span>
+									</div>
+									<div class="left_pop">
+										<span>
+											<text id="attribute_text" style="font-size: 12px; color:#4f4f4f; "></text>
+										</span>
+									</div>
+								</div>		
+								
+								
+								<div id="container_div" >
 									<text style="font-size:12px; float:left;">Event values: </text>
 									<br />
-									<fieldset id="fieldset3" class="checkboxgroup">
-										<label><input type="checkbox"> checkbox 1</label>
-										<label><input type="checkbox"> checkbox 2</label>
-										<label><input type="checkbox"> checkbox 3</label>
-										<label><input type="checkbox"> checkbox 4</label>
+									<fieldset id="fieldset3" class="checkboxgroup" style=" height:200px; overflow:auto;">
+										
 									</fieldset>
 								</div>	
-								<br />
-								<br />
 							
 							</div>
 							
 							<!-- FILTER FOR FOLLOWER -->
 							<div id="follower_filter_div" style="display:none">
-								<label for="filter_by">Filter by:  </label>
-								<select id= "filter_by" name="filter_by" class="dropdown">
-								  <option value="activity">Activity</option>
-								  <option value="resource">Resource</option>
-								  <option value="costs">Costs</option>
-								  <option value="caseID" style="display:none">CaseID</option>
-								  <option value="variants" style="display:none">Variants</option>
+								<label for="filter_by_2">Filter by:  </label>
+								<select id= "filter_by_2" name="filter_by" class="dropdown">
+									<option value="activity">Activity</option>
+									<option value="resource">Resource</option>
+									<option value="costs">Costs</option>
+									<option value="caseID" style="display:none">CaseID</option>
+									<option value="variants" style="display:none">Variants</option>
 								</select>
 								<br />
 								<label for="reference_for_follower">Reference event must be </label>
 								<select id="reference_for_follower" name="reference_for_follower" class="dropdown" style="padding: 3px">
-								  <option value="even_follow">eventually followed</option>
-								  <option value="dir_follow">directly followed</option>
-								  <option value="nev_even_follow">never eventually followed</option>
-								  <option value="nev_dir_follow">never directly followed</option>
+									<option value="even_follow">eventually followed</option>
+									<option value="dir_follow">directly followed</option>
+									<option value="nev_even_follow">never eventually followed</option>
+									<option value="nev_dir_follow">never directly followed</option>
 								</select>
 								<label for="mode_for_follower"> by a follower event.</label> 
 								<br />
@@ -497,16 +641,16 @@ function checkRefresh()
 									<input type="checkbox" id="require_for_follower">
 									<label for="require_for_follower"> Require </label>
 									<select id="mode_for_follower" name="mode_for_follower" class="dropdown" style="padding: 3px" disabled>
-									  <option value="same">same value</option>
-									  <option value="different">different values</option>
+										<option value="same">same value</option>
+										<option value="different">different values</option>
 									</select>
 									<label for="require_for_follower"> of</label>
 									<select id= "filter_by_follower" name="filter_by" class="dropdown" style="padding: 3px" disabled>
-									  <option value="activity">Activity</option>
-									  <option value="resource">Resource</option>
-									  <option value="costs">Costs</option>
-									  <option value="caseID" style="display:none">CaseID</option>
-									  <option value="variants" style="display:none">Variants</option>
+										<option value="activity">Activity</option>
+										<option value="resource">Resource</option>
+										<option value="costs">Costs</option>
+										<option value="caseID" style="display:none">CaseID</option>
+										<option value="variants" style="display:none">Variants</option>
 									</select>
 									<label for="filter_by_follower"> for each pair of events matched above.</label>
 									<br />
@@ -514,19 +658,19 @@ function checkRefresh()
 									<input type="checkbox" id="time_for_follower">
 									<label for="time_for_follower">Time between matching events must be </label>
 									<select id="mode_time_for_follower" name="mode_time_for_follower" class="dropdown" style="padding: 3px" disabled>
-									  <option value="shorter">shorter</option>
-									  <option value="longer">longer</option>
+										<option value="shorter">shorter</option>
+										<option value="longer">longer</option>
 									</select>
 									<label for="require_for_follower"> than </label>
 									<input type="number" id="input_time_follower" name="input_time" step="any" disabled />
 									<select id= "select_time_3" name="select_time_3" class="dropdown" style="padding: 3px" disabled>
-									  <option value="mills">Milliseconds</option>
-									  <option value="seconds">Seconds</option>
-									  <option value="minutes">Minutes</option>
-									  <option value="hours">Hours</option>
-									  <option value="days">Days</option>
-									  <option value="weeks">Weeks</option>
-									  <option value="years">Years</option>
+										<option value="mills">Milliseconds</option>
+										<option value="seconds">Seconds</option>
+										<option value="minutes">Minutes</option>
+										<option value="hours">Hours</option>
+										<option value="days">Days</option>
+										<option value="weeks">Weeks</option>
+										<option value="years">Years</option>
 									</select>
 								</div>
 							
@@ -540,7 +684,42 @@ function checkRefresh()
 								<button type="button" class="btn" onclick="closeForm()">Cancel</button>
 							</div>
 							
-						  </form>
+							</form>
+						</div>
+
+						
+
+						<div class="form-loading" id="myLoading">
+							<div class="form-container">
+								<center>
+								<br>
+								<span>Filter Applied</span>
+								<br>
+								<button type="button" class="btn" onclick="closeLoading()">Close</button>
+								</center>
+							</div>
+						</div>
+
+						<div class="form-loading" id="myRemove">
+							<div class="form-container">
+								<center>
+								<br>
+								<span>Filter Removed</span>
+								<br>
+								<button type="button" class="btn" onclick="closeRemove()">Close</button>
+								</center>
+							</div>
+						</div>
+
+						<div class="form-loading" id="myOrder">
+							<div class="form-container">
+								<center>
+								<br>
+								<span>Filters order changed</span>
+								<br>
+								<button type="button" class="btn" onclick="closeOrder()">Close</button>
+								</center>
+							</div>
 						</div>
 
 								
@@ -558,6 +737,66 @@ function checkRefresh()
 	
 </body>
 
+<script type="text/javascript">
+
+	function cambia(){
+		event.stopImmediatePropagation();
+		if(document.getElementById("filter_by").value == "resource"){
+			var ar_Act=getAllUsedVariables("resources")
+		}else if (document.getElementById("filter_by").value == "costs"){
+			var ar_Act=getAllUsedVariables("resources_cost")
+			// var ar_Act=getAllUsedVariables("activities")
+		}else if (document.getElementById("filter_by").value == "variants"){
+			var ar_Act=getAllUsedVariables("variant")
+		}else if (document.getElementById("filter_by").value == "activity"){
+			var ar_Act=getAllUsedVariables("activities")
+		}else if (document.getElementById("filter_by").value == "caseID"){
+			var ar_Act=getAllUsedVariables("caseid")	
+		}
+
+		$('#fieldset3').empty();
+		listToFilter=[]
+
+		for (const act of ar_Act) {
+			// console.log(act);
+			addCheckbox(act)
+		}
+		
+	}
+
+	
+	function addCheckbox(name) {
+	   var container = $('#fieldset3');
+	   var inputs = container.find('input');
+	   var id = inputs.length+1;
+	
+	//    $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
+	//    $('<label />', { 'for': 'cb'+id, text: name }).appendTo('cb'+id);
+	   $('<label><input class="boxchecked" type="checkbox" id="'+name+'" value="'+name+'" onchange="cb(this.value, this.checked)">' +name+ '</label>').appendTo(container);
+	}
+
+	
+	function cb(valore,controllo){
+		if(controllo) {
+			// console.log(this.value)
+			var valore_s=valore.replace(".", "@");
+			listToFilter.push(valore_s)
+			console.log(listToFilter)
+		}else{
+			var valore_s=valore.replace(".", "@");
+			const index = listToFilter.indexOf(valore_s);
+			if (index > -1) {
+				listToFilter.splice(index, 1); // 2nd parameter means remove one item only
+			}
+			console.log(listToFilter)
+		}
+	}
+
+
+
+	
+</script>
+
 <!--(parser -- Dario)-->
 <script>
 
@@ -570,6 +809,193 @@ var graphEdgesF;
 var graphEdgesP;
 var graphEdges;
 var dslSteps;
+var color_highlight='#8B008B';
+
+var history_crono={};
+var indice=0;
+
+
+var meanDurationFP;
+var meanEdgeDuration;
+var $total_mean=0
+		var $total_min=0
+		var $total_max=0
+		var $total_median=0
+		var $total_total=0
+var listToFilter=[]
+
+// Function to take min/max/mean/median/total duration of nodes
+function getAllDuration(variable){
+
+	var duration_dictionary=document.getElementById("allDt").innerHTML
+	// console.log(document.getElementById("allDt").innerHTML);
+
+	duration_dictionary=duration_dictionary.split("*")
+
+	var mean_duration=duration_dictionary[0];
+	var total_duration=duration_dictionary[1];
+	var median_duration=duration_dictionary[2];
+	var max_duration=duration_dictionary[3];
+	var min_duration=duration_dictionary[4];
+	
+
+	// var mDFP=document.getElementById("allDt").innerHTML;
+	var mDFP=""
+	if(variable=="mean"){
+		mDFP=JSON.parse(mean_duration.replace(/'/g,"\""));
+	}else if(variable=="total"){
+		mDFP=JSON.parse(total_duration.replace(/'/g,"\""));
+	}else if(variable=="median"){
+		mDFP=JSON.parse(median_duration.replace(/'/g,"\""));
+	}else if(variable=="max"){
+		mDFP=JSON.parse(max_duration.replace(/'/g,"\""));
+	}else if(variable=="min"){
+		mDFP=JSON.parse(min_duration.replace(/'/g,"\""));
+	}
+
+	return mDFP
+	
+}
+
+
+function getAllFrequency(variable){
+
+	var duration_dictionary=document.getElementById("allFq").innerHTML
+	// console.log(document.getElementById("allDt").innerHTML);
+
+	duration_dictionary=duration_dictionary.split("*")
+
+	var absolute_freq=duration_dictionary[0];
+	var case_freq=duration_dictionary[1];
+	var max_freq=duration_dictionary[2];
+
+
+
+	// var mDFP=document.getElementById("allDt").innerHTML;
+	var mDFP=""
+	if(variable=="absolute"){
+		mDFP=JSON.parse(absolute_freq.replace(/'/g,"\""));
+	}else if(variable=="case"){
+		mDFP=JSON.parse(case_freq.replace(/'/g,"\""));
+	}else if(variable=="max"){
+		mDFP=JSON.parse(max_freq.replace(/'/g,"\""));
+	}
+
+	return mDFP
+
+}
+
+
+function getAllEdgeDuration(variable){
+
+	var duration_dictionary=document.getElementById("allEdgeDt").innerHTML
+	// console.log(document.getElementById("allDt").innerHTML);
+
+	duration_dictionary=duration_dictionary.split("*")
+
+	var mean_duration=duration_dictionary[0];
+	var total_duration=duration_dictionary[1];
+	var median_duration=duration_dictionary[2];
+	var max_duration=duration_dictionary[3];
+	var min_duration=duration_dictionary[4];
+
+
+	// var mDFP=document.getElementById("allDt").innerHTML;
+	var mDFP=""
+	if(variable=="mean"){
+		mDFP=JSON.parse(mean_duration.replace(/'/g,"\""));
+	}else if(variable=="total"){
+		mDFP=JSON.parse(total_duration.replace(/'/g,"\""));
+	}else if(variable=="median"){
+		mDFP=JSON.parse(median_duration.replace(/'/g,"\""));
+	}else if(variable=="max"){
+		mDFP=JSON.parse(max_duration.replace(/'/g,"\""));
+	}else if(variable=="min"){
+		mDFP=JSON.parse(min_duration.replace(/'/g,"\""));
+	}
+
+	return mDFP
+
+}
+
+function getAllEdgeFrequency(variable){
+
+	var duration_dictionary=document.getElementById("allEdgeFq").innerHTML
+	// console.log(document.getElementById("allDt").innerHTML);
+
+	duration_dictionary=duration_dictionary.split("*")
+
+	var absolute_freq=duration_dictionary[0];
+	var case_freq=duration_dictionary[1];
+	var max_freq=duration_dictionary[2];
+
+
+
+	// var mDFP=document.getElementById("allDt").innerHTML;
+	var mDFP=""
+	if(variable=="absolute"){
+		mDFP=JSON.parse(absolute_freq.replace(/'/g,"\""));
+	}else if(variable=="case"){
+		mDFP=JSON.parse(case_freq.replace(/'/g,"\""));
+	}else if(variable=="max"){
+		mDFP=JSON.parse(max_freq.replace(/'/g,"\""));
+	}
+
+	return mDFP
+
+}
+
+
+function getAllUsedVariables(variable){
+	var uv_dictionary=document.getElementById("usedVariable").innerHTML
+	
+	uv_dictionary = uv_dictionary.replace("'", '"');
+	uv_dictionary=uv_dictionary.split("*")
+
+	// activities=uv_dictionary[0]
+	// resources=uv_dictionary[1]
+	// resources_cost=uv_dictionary[2]
+	// caseid=uv_dictionary[3]
+	// variant=uv_dictionary[4]
+
+	
+	var activities = Object.keys(JSON.parse(uv_dictionary[0]));
+	var resources = Object.keys(JSON.parse(uv_dictionary[1]));
+	// var resources_cost = Object.keys(JSON.parse(uv_dictionary[2]));
+	// console.log(uv_dictionary[2])
+	// var rs_cost=JSON.stringify(uv_dictionary[2]);
+	// console.log(rs_cost)
+	var resources_cost=Object.keys(JSON.parse(uv_dictionary[2]));
+	// console.log(resources_cost)
+
+	var caseid = Object.keys(JSON.parse(uv_dictionary[3]));
+	var variant = Object.keys(JSON.parse(uv_dictionary[4]));
+
+	// console.log(obj[0]);
+	// var mean_duration=duration_dictionary[0];
+	// var total_duration=duration_dictionary[1];
+	// var median_duration=duration_dictionary[2];
+	// var max_duration=duration_dictionary[3];
+	// var min_duration=duration_dictionary[4];
+
+
+	// var mDFP=document.getElementById("allDt").innerHTML;
+	// var mDFP=""
+	if(variable=="activities"){
+		result=activities
+	}else if(variable=="resources"){
+		result=resources
+	}else if(variable=="resources_cost"){
+		result=resources_cost
+	}else if(variable=="caseid"){
+		result=caseid
+	}else if(variable=="variant"){
+		result=variant
+	}
+
+	return result
+}
+
 
 function getGraphText(selector){
 	// take the graph in text form and save it 
@@ -785,7 +1211,7 @@ function exportDsl(){
 <!--(script with getMap())-->
 <script>
 var frontend = document.getElementById("path_frontend").innerHTML;
-
+var nodes_id_association={}
 function getMap(bool) {
 		
 		// DARIO START
@@ -804,6 +1230,26 @@ function getMap(bool) {
 			getLabeledGraphEdges(graphNodes, graphEdges);
 			// get final matrix ready for dsl conversion
 			dslSteps = getDslSteps(graphNodes, graphEdges);
+
+			meanDurationFP= getAllDuration("mean");
+			meanEdgeDuration= getAllEdgeDuration("mean");
+			// getAllUsedVariables("activities")
+			var array_Activities=getAllUsedVariables("activities")
+			for (const act of array_Activities) {
+				// console.log(act);
+				addCheckbox(act)
+			}
+			$(document).ready(function(){
+				$('#filter_by').on('change', function(e) {
+					e.stopImmediatePropagation();
+					var typeD=this.value
+					console.log(typeD)
+					
+				});
+			});
+			
+			// console.log(getAllEdgeFrequency("absolute")["register request#examine casually"]);
+			// console.log(getAllFrequency("absolute")["reject request"]);
 			// debug
 			/*console.log('GraphTextF:');
 			console.log(graphTextF);
@@ -819,6 +1265,10 @@ function getMap(bool) {
 			console.log(graphEdges);
 			console.log('DSL:');
 			console.log(dslSteps);
+			console.log('MeanDuration:');
+			console.log(meanDurationFP);
+			console.log('MeanEdgeDuration:');
+			console.log(meanEdgeDuration);
 		}
 		//DARIO END
 		
@@ -851,6 +1301,7 @@ function getMap(bool) {
 		}
 
 		var image = Viz(sample, options);
+
 		var main = document.getElementById('graphContainer');
 
 		main.innerHTML = image;		// SVG
@@ -874,6 +1325,18 @@ function getMap(bool) {
 		//console.log(firstG.viewBox);
 		//firstG.style.shape = "circle";
 		//console.log(firstG.style.shape);
+
+
+		var $totale = 0
+		
+		var $total_mean = 0
+		var $total_median = 0
+		var $total_max = 0
+		var $total_min = 0
+		var $total_total = 0
+
+		var $totale_edge=0
+		var $make_somma=0
 			
 		var nodes = document.getElementsByClassName("node");
 		var edges = document.getElementsByClassName("edge");
@@ -881,47 +1344,1232 @@ function getMap(bool) {
 		var nodesNames = [];
 		var names;
 		
-		for(var i=0; i<nodes.length; i++){
-			
-			//console.log(nodes[i].children[2].innerHTML);
-			nodesNames[i] = nodes[i].children[2].innerHTML;
-			//console.log(nodes[i].children[2].innerHTML);
-			nodes[i].children[0].innerHTML = nodesNames[i];
-			
-			names = nodesNames[i].split(' (')[0];
-			names = '"'+ names +'"';
-			//console.log(names);
-			
-			nodes[i].addEventListener("click", function(e) {
-				// When the user clicks call function to open the popup
-			    openInfo(e);
-			}, false);
-			if(nodes[i].children[2].getAttribute("text-anchor") != "start"){
-				if(nodes[i].children[0].innerHTML != ""){
-					nodes[i].children[2].setAttribute("font-size", "10");
+		var pp=0;
+
+		$(document).ready(function(){
+			for(var i=0; i<nodes.length; i++){
+				
+				//console.log(nodes[i].children[2].innerHTML);
+				nodesNames[i] = nodes[i].children[2].innerHTML;
+				//console.log(nodes[i].children[2].innerHTML);
+				// console.log(nodes[i].children[0].innerHTML)
+				if(nodes[i].id!=undefined){
+					var use=nodes[i].id
+					$("#"+use).append("<label class='label_node' hidden>"+nodes[i].children[0].innerHTML+"</label>");
+				}
+
+				nodes[i].children[0].innerHTML = nodesNames[i];
+				// console.log(nodes[i].children[0].innerHTML)
+
+
+				
+
+				
+				names = nodesNames[i].split(' (')[0];
+				names = '"'+ names +'"';
+				//console.log(names);
+				
+				nodes[i].addEventListener("click", function(e) {
+					// When the user clicks call function to open the popup
+					openInfo(e);
+				}, false);
+				if(nodes[i].children[2].getAttribute("text-anchor") != "start"){
+					if(nodes[i].children[0].innerHTML != ""){
+						nodes[i].children[2].setAttribute("font-size", "10");
+					}
+					else{
+						nodes[i].children[2].setAttribute("fill", "red");
+					}
 				}
 				else{
-					nodes[i].children[2].setAttribute("fill", "red");
+					nodes[i].children[1].setAttribute("fill", "green");
 				}
+				
 			}
-			else{
-				nodes[i].children[1].setAttribute("fill", "green");
-			}
-			
-		}
+		});
+
 		
+
+		var selected_nodes={}  //used to memoryze the selected nodes
+
+		
+
+		lista_ora=['w','h','s','m','d','y']
+		number_selected_activity=0
+
+		// Apply functions on node*************************************************************
+		$(document).ready(function(){
+			$(".node").on('click', function(event){
+				
+				$used_id=this.id
+				$temp= ($("#"+$used_id).find("polygon").attr('stroke'))
+				$check_node=($("#"+$used_id).find("polygon")).length
+
+				
+				if($temp=="#000000" && $check_node!=0){
+					
+					var $titolo = $("#"+$used_id+" title").html(); 				
+					$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+					$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+
+					$titolo_name=$titolo.split(' (')[0].trim()
+					// console.log($titolo_name)
+
+					$titolo_time=$titolo.split(' (')[1].trim()
+					$statistica=$titolo_time.substring(0,$titolo_time.length-1)
+					// console.log($statistica)
+					
+					$myduration_mean=getAllDuration("mean");
+					$myduration_total=getAllDuration("total");
+					$myduration_min=getAllDuration("min")
+					$myduration_max=getAllDuration("max")
+					$myduration_median=getAllDuration("median");
+					// console.log($myduration_mean)
+					$myfrequency_absolute=getAllFrequency("absolute");
+					$myfrequency_case=getAllFrequency("case")
+					$myfrequency_max=getAllFrequency("max")
+					//___________________________________________________
+					
+					$resultduration_mean=$myduration_mean[$titolo_name]
+					$resultduration_total=$myduration_total[$titolo_name]
+					$resultduration_min=$myduration_min[$titolo_name]
+					$resultduration_max=$myduration_max[$titolo_name]
+					$resultduration_median=$myduration_median[$titolo_name]
+
+					$resultfrequency_absolute=$myfrequency_absolute[$titolo_name]
+					$resultfrequency_case=$myfrequency_case[$titolo_name]
+					$resultfrequency_max=$myfrequency_max[$titolo_name]
+					
+					$total_mean=$total_mean+$resultduration_mean
+					$total_min=$total_min+$resultduration_min
+					$total_max=$total_max+$resultduration_max
+					$total_median=$total_median+$resultduration_median
+					$total_total=$total_total+$resultduration_total
+
+
+
+					var t_name=$titolo_name
+
+					if(document.getElementById("tabPerf").checked==false){
+						selected_edges={}
+						selected_nodes={}
+						$(".node").find("polygon").attr('stroke', "#000000");
+							$(".node").find("text").css({"text-decoration":"revert"});
+
+							$(".edge").find("path").attr('stroke', "#000000");
+							$(".edge").find("polygon").attr('stroke', "#000000");
+							$(".edge").find("text").css({"text-decoration":"revert"});
+							
+
+							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+					}
+
+
+					selected_nodes[t_name]=$resultduration_mean
+					// console.log(selected_nodes)
+					// console.log(sum_dict(selected_nodes))
+
+
+					if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
+
+						$(".node").find("polygon").attr('stroke', "#000000");
+						$(".node").find("text").css({"text-decoration":"revert"});
+
+						$(".edge").find("path").attr('stroke', "#000000");
+						$(".edge").find("polygon").attr('stroke', "#000000");
+						$(".edge").find("text").css({"text-decoration":"revert"});
+
+						
+						
+						
+						$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+						$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+					}
+					
+
+					var bool_switch = document.getElementById("tabPerf").checked;
+					if ((bool_switch) == true){
+						
+						if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
+							popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+									+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
+									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
+									+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
+									+"Max duration: " +  "<br />"+secondsToHms($total_max) 
+
+						}else if(Object.keys(selected_nodes).length>0){
+							popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($resultduration_mean) + "<br /> <br />" 
+									+"Median duration: " +  "<br />"+ secondsToHms($resultduration_median) + "<br /> <br />" 
+									+"Total duration: " +  "<br />"+secondsToHms($resultduration_total) + "<br /> <br />"  
+									+"Min duration: " +  "<br />"+secondsToHms($resultduration_min) + "<br /> <br />"  
+									+"Max duration: " +  "<br />"+secondsToHms($resultduration_max) 
+						}
+
+					}else if(Object.keys(selected_nodes).length>0){
+						popup.innerHTML ="Absolute frequency: "+  "<br />" + $resultfrequency_absolute + "<br /> <br />" 
+									+"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
+									+"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
+									
+					}
+					// popup.innerHTML = "Median duration: " + secondsToHms($resultduration_median) + "<br /> <br />" + "Total duration: " + secondsToHms($resultduration_total)+ "<br /> <br />"  +"Selected duration node: <br />"+ secondsToHms($totale) + "<br /> <br />" +"Selected duration edge: <br />"+ secondsToHms($totale_edge);
+					
+					
+					$("#myPopup").attr("class","popuptext show")
+
+					if(Object.keys(selected_nodes).length==0 && Object.keys(selected_edges).length==0){
+						$("#myPopup").attr("class","popuptext")
+					}
+
+					/*
+					if(Object.keys(selected_nodes).length>0){
+
+						$(".edge").find("polygon").attr('stroke', "#000000");
+						$(".edge").find("path").attr('stroke', '#000000');
+						$(".edge").find("text").css({"text-decoration":"revert"});
+						$totale_edge=0
+					}*/
+
+					
+					// if(number_selected_activity==0){
+					// 	$("#myPopup").attr("class","popuptext")
+					// }
+
+				}else if($check_node!=0){
+
+					var $titolo = $("#"+$used_id+" title").html(); 				
+					$("#"+$used_id).find("polygon").attr('stroke', "#000000");
+					$("#"+$used_id).find("text").css({"text-decoration":"revert"});
+					
+					$titolo_name=$titolo.split(' (')[0].trim()
+					// console.log($titolo_name)
+
+					
+					$titolo_time=$titolo.split(' (')[1].trim()
+					$statistica=$titolo_time.substring(0,$titolo_time.length-1)
+					// console.log($statistica)
+
+					// number_selected_activity=number_selected_activity-1
+					
+					$myduration_mean=getAllDuration("mean");
+					$myduration_total=getAllDuration("total");
+					$myduration_min=getAllDuration("min")
+					$myduration_max=getAllDuration("max")
+					$myduration_median=getAllDuration("median");
+
+					$resultduration_mean=$myduration_mean[$titolo_name]
+					$resultduration_total=$myduration_total[$titolo_name]
+					$resultduration_min=$myduration_min[$titolo_name]
+					$resultduration_max=$myduration_max[$titolo_name]
+					$resultduration_median=$myduration_median[$titolo_name]
+
+
+					// $totale=$totale-$resultduration_mean
+					$total_mean=$total_mean-$resultduration_mean
+					$total_min=$total_min-$resultduration_min
+					$total_max=$total_max-$resultduration_max
+					$total_median=$total_median-$resultduration_median
+					$total_total=$total_total-$resultduration_total
+
+					$myfrequency_absolute=getAllFrequency("absolute");
+					$myfrequency_case=getAllFrequency("case")
+					$myfrequency_max=getAllFrequency("max")
+															
+					$resultfrequency_absolute=$myfrequency_absolute[$titolo_name]
+					$resultfrequency_case=$myfrequency_case[$titolo_name]
+					$resultfrequency_max=$myfrequency_max[$titolo_name]
+
+
+
+					delete selected_nodes[$titolo_name]
+					// console.log(selected_nodes)
+					// console.log(sum_dict(selected_nodes))
+					// if(document.getElementById("tabPerf").checked==false){
+					// 	selected_edges={}
+					// 	selected_nodes={}
+					// 	$(".node").find("polygon").attr('stroke', "#000000");
+					// 		$(".node").find("text").css({"text-decoration":"revert"});
+
+					// 		$(".edge").find("path").attr('stroke', "#000000");
+					// 		$(".edge").find("polygon").attr('stroke', "#000000");
+					// 		$(".edge").find("text").css({"text-decoration":"revert"});
+							
+
+					// 		$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+					// 		$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+					// }
+
+					if(Object.keys(selected_nodes).length>1 && document.getElementById("tabPerf").checked==false){
+
+						
+						selected_nodes={}
+				
+					}
+
+					if($total_mean<0){	$total_mean=0 }
+					if($total_min<0){	$total_min=0 }
+					if($total_max<0){	$total_max=0 }
+					if($total_median<0){	$total_median=0 }
+					if($total_total<0){	$total_total=0 }
+
+					if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
+
+						$(".node").find("polygon").attr('stroke', "#000000");
+						$(".node").find("text").css({"text-decoration":"revert"});
+
+						$(".edge").find("path").attr('stroke', "#000000");
+						$(".edge").find("polygon").attr('stroke', "#000000");
+						$(".edge").find("text").css({"text-decoration":"revert"});
+
+				
+
+
+						$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+						$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+					}
+
+
+					var bool_switch = document.getElementById("tabPerf").checked;
+					if ((bool_switch) == true){
+						if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
+							popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+									+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
+									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
+									+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
+									+"Max duration: " +  "<br />"+secondsToHms($total_max) 
+		
+
+						}else if(Object.keys(selected_nodes).length>0 || Object.keys(selected_edges).length>0){
+							popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
+									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
+									+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
+									+"Max duration: " +  "<br />"+secondsToHms($total_max) 
+
+						}
+						
+					}else if(Object.keys(selected_nodes).length>0){
+						popup.innerHTML ="Absolute frequency: "+  "<br />" +$resultfrequency_absolute + "<br /> <br />" 
+									+"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
+									+"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
+									
+					}
+
+
+
+					if(Object.keys(selected_nodes).length==0 && Object.keys(selected_edges).length==0){
+						$("#myPopup").attr("class","popuptext")
+					}
+					// if(number_selected_activity==0){
+					// 	$("#myPopup").attr("class","popuptext")
+					// }
+					// 
+				}else{
+					// $("#myPopup").attr("class","popuptext")
+				}
+				
+				// console.log($("#"+$used_id).html())
+				// console.log(this.id.innerHTML)
+				// console.log($totale)
+				// console.log(secondsToHms($totale))				
+			});
+		});
+		// ****************************************************************************************************
+
+		
+
+		
+
+		// analyze edge****************************************************************************************
+		$totale_edge=0
+
+		var selected_edges={}
+
+		$(document).ready(function(){
+			$(".edge").on('click', function(event){
+				
+				$used_id=this.id
+				$temp_polygon= ($("#"+$used_id).find("polygon").attr('stroke'))
+				$temp_path= ($("#"+$used_id).find("path").attr('stroke'))
+
+				$check_edge= ($("#"+$used_id).find("polygon")).length
+				var $titolo_1 = $("#"+$used_id+" text").html();
+				// if(lista_ora.includes(String($titolo_1[$titolo_1.length-1]))){
+				
+				if($temp_polygon=="#000000" && $check_edge!=0 && $titolo_1!=undefined){
+								
+					$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+					$("#"+$used_id).find("path").attr('stroke', color_highlight);
+					$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+					
+
+					$statistica=$titolo_1.substring(0,$titolo_1.length-1)
+
+					$myduration_edge_mean=getAllEdgeDuration("mean");
+					$myduration_edge_total=getAllEdgeDuration("total");
+					$myduration_edge_min=getAllEdgeDuration("min")
+					$myduration_edge_max=getAllEdgeDuration("max")
+					$myduration_edge_median=getAllEdgeDuration("median");
+
+					$myfrequency_edge_absolute=getAllEdgeFrequency("absolute");
+					$myfrequency_edge_case=getAllEdgeFrequency("case")
+					$myfrequency_edge_max=getAllEdgeFrequency("max")
+															
+
+
+					// $titolo=$titolo_1.split(' (')[0].trim()
+					var $label_title_edge= $("#"+$used_id).find("label").text();
+					
+					// console.log($label_title_edge)
+					if($label_title_edge!=undefined && $label_title_edge!=""){
+						// console.log($label_title_edge)
+						var $source_edge= $label_title_edge.split('->')[0].trim()
+						// console.log($source_edge)
+						// console.log(nodes_id_association[$source_edge])
+						var $target_edge= $label_title_edge.split('->')[1].trim()
+						// console.log($target_edge)
+						// console.log(nodes_id_association[$target_edge])
+
+						$resultduration_edge_mean=$myduration_edge_mean[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_total=$myduration_edge_total[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_min=$myduration_edge_min[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_max=$myduration_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_median=$myduration_edge_median[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+
+						// console.log(nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge])
+						$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						
+						$total_mean=$total_mean+$resultduration_edge_mean
+						$total_min=$total_min+$resultduration_edge_min
+						$total_max=$total_max+$resultduration_edge_max
+						$total_median=$total_median+$resultduration_edge_median
+						$total_total=$total_total+$resultduration_edge_total
+
+						if(document.getElementById("tabPerf").checked==false){
+							selected_edges={}
+							selected_nodes={}
+							$(".node").find("polygon").attr('stroke', "#000000");
+							$(".node").find("text").css({"text-decoration":"revert"});
+
+							$(".edge").find("path").attr('stroke', "#000000");
+							$(".edge").find("polygon").attr('stroke', "#000000");
+							$(".edge").find("text").css({"text-decoration":"revert"});
+							
+							$("#"+$used_id).find("path").attr('stroke', color_highlight);
+							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+						}
+
+						var edge_extended_name=[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						selected_edges[edge_extended_name]=$resultduration_edge_mean
+
+						if(Object.keys(selected_edges).length>1 && document.getElementById("tabPerf").checked==false){
+							selected_edges={}
+						}
+
+						if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
+
+							$(".node").find("polygon").attr('stroke', "#000000");
+							$(".node").find("text").css({"text-decoration":"revert"});
+
+							$(".edge").find("path").attr('stroke', "#000000");
+							$(".edge").find("polygon").attr('stroke', "#000000");
+							$(".edge").find("text").css({"text-decoration":"revert"});
+
+
+							$("#"+$used_id).find("path").attr('stroke', color_highlight);
+							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+						}
+
+						var bool_switch = document.getElementById("tabPerf").checked;
+						if ((bool_switch) == true){
+							
+							if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
+								popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+										+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
+										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
+										+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
+										+"Max duration: " +  "<br />"+secondsToHms($total_max) 
+
+							}else if(Object.keys(selected_edges).length>0){
+								popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($resultduration_edge_mean) + "<br /> <br />" 
+										+"Median duration: " +  "<br />"+ secondsToHms($resultduration_edge_median) + "<br /> <br />" 
+										+"Total duration: " +  "<br />"+secondsToHms($resultduration_edge_total) + "<br /> <br />"  
+										+"Min duration: " +  "<br />"+secondsToHms($resultduration_edge_min) + "<br /> <br />"  
+										+"Max duration: " +  "<br />"+secondsToHms($resultduration_edge_max) 
+							}
+
+						}else if(Object.keys(selected_edges).length>0){ //
+							
+							popup.innerHTML ="Absolute frequency: "+  "<br />" + $resultfrequency_edge_absolute + "<br /> <br />" 
+										+"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
+										+"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
+										
+						}
+
+
+						
+
+
+
+
+					}
+
+					// $statistica=$titolo_1.substring(0,$titolo_1.length-1)
+					// console.log(lista_ora.includes(String($titolo_1[$titolo_1.length-1])))
+					// console.log($statistica)
+					// console.log($titolo_1)
+					// console.log(String($titolo_1[$titolo_1.length-1]))
+					//$myduration=getAllDuration("mean");
+					//$resultduration=$myduration[$titolo]
+					// if(String($titolo_1[$titolo_1.length-1])=="m"){
+					// 	$make_somma=parseInt($statistica)*60
+					// }
+					// if(String($titolo_1[$titolo_1.length-1])=="h"){
+					// 	$make_somma=parseInt($statistica)*60*60
+					// }
+					// if(String($titolo_1[$titolo_1.length-1])=="D" || String($titolo_1[$titolo_1.length-1])=="d"){
+					// 	$make_somma=parseInt($statistica)*60*60*24
+					// }
+					// if(String($titolo_1[$titolo_1.length-1])=="s"){
+					// 	$make_somma=parseInt($statistica)
+					// }
+					
+					// $totale_edge=$totale_edge+$make_somma
+					// number_selected_activity=number_selected_activity+1
+
+					/* commento utile forse
+					if(Object.keys(selected_edges).length>0){
+						$(".node").find("polygon").attr('stroke', "#000000");
+						$(".node").find("text").css({"text-decoration":"revert"});
+						selected_nodes={}
+					}
+					*/
+					
+					// popup.innerHTML = "Selected edge duration: <br />"+ secondsToHms($totale_edge);
+					// $("#myPopup").attr("class","popuptext show")
+					// if(number_selected_activity==0){
+					// 	$("#myPopup").attr("class","popuptext")
+					// }
+					$("#myPopup").attr("class","popuptext show")
+
+					if(Object.keys(selected_edges).length==0 && Object.keys(selected_nodes).length==0){
+						$("#myPopup").attr("class","popuptext")
+					}
+					
+				}else if($check_edge!=0 && $titolo_1!=undefined){
+
+					// var $titolo = $("#"+$used_id+" title").html(); 
+					$("#"+$used_id).find("polygon").attr('stroke', "#000000");
+					$("#"+$used_id).find("path").attr('stroke', '#000000');
+					$("#"+$used_id).find("text").css({"text-decoration":"revert"});
+					// $("#"+$used_id).find("text").attr('fill',"#000000");
+					// $titolo=$titolo.split(' (')[0].trim()
+					number_selected_activity=number_selected_activity-1
+					$statistica=$titolo_1.substring(0,$titolo_1.length-1)
+					// console.log($statistica)
+
+					$myduration_edge_mean=getAllEdgeDuration("mean");
+					$myduration_edge_total=getAllEdgeDuration("total");
+					$myduration_edge_min=getAllEdgeDuration("min")
+					$myduration_edge_max=getAllEdgeDuration("max")
+					$myduration_edge_median=getAllEdgeDuration("median");
+
+					$myfrequency_edge_absolute=getAllEdgeFrequency("absolute");
+					$myfrequency_edge_case=getAllEdgeFrequency("case")
+					$myfrequency_edge_max=getAllEdgeFrequency("max")
+
+					var $label_title_edge= $("#"+$used_id).find("label").text();
+					if($label_title_edge!=undefined && $label_title_edge!=""){
+						// console.log($label_title_edge)
+						var $source_edge= $label_title_edge.split('->')[0].trim()
+						// console.log($source_edge)
+						var $target_edge= $label_title_edge.split('->')[1].trim()
+						// console.log($target_edge)
+
+						$resultduration_edge_mean=$myduration_edge_mean[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_total=$myduration_edge_total[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_min=$myduration_edge_min[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_max=$myduration_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultduration_edge_median=$myduration_edge_median[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+
+						
+						$total_mean=$total_mean-$resultduration_edge_mean
+						$total_min=$total_min-$resultduration_edge_min
+						$total_max=$total_max-$resultduration_edge_max
+						$total_median=$total_median-$resultduration_edge_median
+						$total_total=$total_total-$resultduration_edge_total
+
+						$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+
+						var edge_extended_name2=[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						delete selected_edges[edge_extended_name2]
+
+						// if(document.getElementById("tabPerf").checked==false){
+						// selected_edges={}
+						// selected_nodes={}
+						// $(".node").find("polygon").attr('stroke', "#000000");
+						// 	$(".node").find("text").css({"text-decoration":"revert"});
+
+						// 	$(".edge").find("path").attr('stroke', "#000000");
+						// 	$(".edge").find("polygon").attr('stroke', "#000000");
+						// 	$(".edge").find("text").css({"text-decoration":"revert"});
+							
+
+						// 	$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+						// 	$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+						// }
+
+						if(Object.keys(selected_nodes).length>1 && document.getElementById("tabPerf").checked==false){							
+							// selected_nodes={}
+						}
+						if($total_mean<0){	$total_mean=0 }
+						if($total_min<0){	$total_min=0 }
+						if($total_max<0){	$total_max=0 }
+						if($total_median<0){	$total_median=0 }
+						if($total_total<0){	$total_total=0 }
+
+						if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
+		
+							$(".node").find("polygon").attr('stroke', "#000000");
+							$(".node").find("text").css({"text-decoration":"revert"});
+
+							$(".edge").find("path").attr('stroke', "#000000");
+							$(".edge").find("polygon").attr('stroke', "#000000");
+							$(".edge").find("text").css({"text-decoration":"revert"});
+							
+							$("#"+$used_id).find("path").attr('stroke', color_highlight);
+							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
+							
+						}
+
+						var bool_switch = document.getElementById("tabPerf").checked;
+						if ((bool_switch) == true){
+							if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
+								popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+										+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
+										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
+										+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
+										+"Max duration: " +  "<br />"+secondsToHms($total_max) 
+			
+
+							}else if(Object.keys(selected_edges).length>0 || Object.keys(selected_nodes).length>0){
+								popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
+										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
+										+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
+										+"Max duration: " +  "<br />"+secondsToHms($total_max) 
+
+							}
+							
+						}else if(Object.keys(selected_edges).length>0){ //
+							popup.innerHTML ="Absolute frequency: "+  "<br />" +$resultfrequency_edge_absolute + "<br /> <br />" 
+										+"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
+										+"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
+													}
+
+						if(Object.keys(selected_edges).length==0 && Object.keys(selected_nodes).length==0){
+							$("#myPopup").attr("class","popuptext")
+						}
+					
+					
+					// console.log($titolo_1)
+					
+					// if(String($titolo_1[$titolo_1.length-1])=="m"){
+					// 	$make_somma=parseInt($statistica)*60
+					// }
+					// if(String($titolo_1[$titolo_1.length-1])=="h"){
+					// 	$make_somma=parseInt($statistica)*60*60
+					// }
+					// if(String($titolo_1[$titolo_1.length-1])=="D" || String($titolo_1[$titolo_1.length-1])=="d"){
+					// 	$make_somma=parseInt($statistica)*60*60*24
+					// }
+					// if(String($titolo_1[$titolo_1.length-1])=="s"){
+					// 	$make_somma=parseInt($statistica)
+					// }
+					
+					// $totale_edge=$totale_edge-$make_somma
+					
+					
+					// if($totale_edge<0){
+					// 	$totale_edge=0
+					// }
+					// if($totale_edge!=0){
+					// 	popup.innerHTML = "Selected edge duration: <br />"+ secondsToHms($totale_edge);
+					// }
+					
+					// if($totale_edge==0){
+					// 	$("#myPopup").attr("class","popuptext")
+					// }
+					// if(number_selected_activity==0){
+					// 	$("#myPopup").attr("class","popuptext")
+					// }
+					}	
+				}
+					 
+				// }else{
+					// $("#myPopup").attr("class","popuptext")
+				// }
+				
+				
+			});
+		});
+		// *****************************************************************************************************
+
 		var edgesNames = [];
 		var popup = document.getElementById("myPopup");
-		
-		for( i=0; i<edges.length; i++){
-			edgesNames[i] = edges[i].children[3].innerHTML;
-			edges[i].children[0].innerHTML = edgesNames[i];
+		$(document).ready(function(){
+   					
+
+			for( i=0; i<edges.length; i++){
+				// edgesNames[i] = edges[i].children[3].innerHTML;
+				// edges[i].children[0].innerHTML = edgesNames[i];
+				
+				if(edges[i].children[3]!= undefined){
+					
+					
+					if(edges[i].id!=undefined){
+						var use=edges[i].id
+						$("#"+use).append("<label class='label_edge' hidden>"+edges[i].children[0].innerHTML+"</label>");
+					}
+					
+					edgesNames[i] = edges[i].children[3].innerHTML;
+					edges[i].children[0].innerHTML = edgesNames[i];
+					
+
+					
+
+					edges[i].addEventListener("click", function(e) {
+					// When the user clicks call function to open the popup
+						openInfo(e);
+					}, false);
+
+					// console.log($label)
+
+
+
+				}
 			
-			edges[i].addEventListener("click", function(e) {
-				// When the user clicks call function to open the popup
-			    openInfo(e);
-			}, false);
-		}
+
+
+				// edges[i].addEventListener("click", function(e) {
+				// 	// When the user clicks call function to open the popup
+				//     openInfo(e);
+				// }, false);
+			}
+		});
+		
+		// Switch Duration**************************************************************************
+		$(document).ready(function(){
+
+			$(".dis_submit").on('click', function(event){
+				$("#myPopup").attr("class","popuptext");
+				number_selected_activity=0
+				// console.log("change-do")
+			})
+			$("#tabFreq").on('click', function(event){
+				$("#myPopup").attr("class","popuptext");
+				number_selected_activity=0
+				// console.log("change-do")
+			})
+			$("#tabPerf").on('click', function(event){
+				$("#myPopup").attr("class","popuptext");
+				number_selected_activity=0
+				// console.log("change-do")
+			})
+
+
+			// ################################################################
+	
+
+
+
+
+		
+
+			var bool_switch = document.getElementById("tabPerf").checked;
+			if ((bool_switch) == true){
+				// if($('select[name=perfs] option').filter(':selected').val()=="totDur"){
+					var typeD=$('select[name=perfs] option').filter(':selected').val()
+					var classList = $('.node');
+					
+					$.each(classList, function(index, item) {
+						var node_id=item.id
+						if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
+							
+							if(typeD=="totDur"){
+								$duration_values=getAllDuration("total");
+							}else if (typeD=="medDur"){
+								$duration_values=getAllDuration("median");
+							}else if (typeD=="meanDur"){
+								$duration_values=getAllDuration("mean");
+							}else if (typeD=="maxDur"){
+								$duration_values=getAllDuration("max");
+							}else if (typeD=="minDur"){
+								$duration_values=getAllDuration("min");
+							}
+							
+							// console.log($myduration_total)
+
+							var $title = $("#"+node_id+" title").html(); 				
+							
+							$titolo_name=$title.split(' (')[0].trim()
+							$("#"+node_id).find("text").text($titolo_name);
+							// $move_y=$clonare.attr("y")
+							// console.log($titolo_name)
+							
+							$("#"+node_id).find("text").attr("class","text_name")
+							$("#"+node_id).find("title").text($titolo_name+" ("+timeToHms($duration_values[$titolo_name])+")");
+						
+							$label_id=$("#"+node_id).find("label").text()
+							// console.log()
+							nodes_id_association[$label_id]=$titolo_name
+
+							$clonare=$("#"+node_id).find("text").clone()
+							$move_y=$clonare.attr("y")
+							$clonare.attr("y",(parseFloat($move_y)+10)+"")
+							$clonare.attr("class","stat_name")
+							$clonare.text("("+timeToHms($duration_values[$titolo_name])+")")
+							// console.log($clonare.attr("y"))
+							$("#"+node_id).find("text").attr("y",(parseFloat($move_y)-5)+"")
+							$clonare.appendTo("#"+node_id)
+							// console.log($("#"+node_id).find("text").text())
+							// console.log($duration_values[$titolo_name])
+							
+						}
+
+						if($("#"+node_id).find(".label_node").text()=="@@startnode" || $("#"+node_id).find(".label_node").text()=="@@endnode"){
+							$("#"+node_id).find("title").text(" ")
+						}
+						
+						
+						
+					});
+
+
+					var classList = $('.edge');
+					$.each(classList, function(index, item) {
+						var edge_id=item.id
+						// if(node_id!="@@S" && node_id!="@@E"){
+							
+							if(typeD=="totDur"){
+								$duration_edge_values=getAllEdgeDuration("total");
+							}else if (typeD=="medDur"){
+								$duration_edge_values=getAllEdgeDuration("median");
+							}else if (typeD=="meanDur"){
+								$duration_edge_values=getAllEdgeDuration("mean");
+							}else if (typeD=="maxDur"){
+								$duration_edge_values=getAllEdgeDuration("max");
+							}else if (typeD=="minDur"){
+								$duration_edge_values=getAllEdgeDuration("min");
+							}
+							
+							// console.log($myduration_total)
+
+							var $title = $("#"+edge_id+" title").html(); 	
+							var $label_title= $("#"+edge_id+" label").text(); 
+							// console.log($title)	
+							// console.log($label_title)
+							
+							if($label_title!=undefined && $label_title!=""){
+								var $source= $label_title.split('->')[0].trim()
+								var $target= $label_title.split('->')[1].trim()
+
+								
+								// console.log(nodes_id_association[$source])
+								// console.log(nodes_id_association[$target])
+								// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
+								// secondsToHms
+								
+								// $titolo_name=$title.split(' (')[0].trim()
+								// $("#"+node_id).find("text").text($titolo_name);
+								// // $move_y=$clonare.attr("y")
+								
+								// $("#"+node_id).find("text").attr("class","text_name")
+								$("#"+edge_id).find("text").text(edgetimeconvert($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+								// $("#"+edge_id).find("title").text(timeToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+								$clone=$("#"+edge_id).find("text").clone()
+								$move_x=$clone.attr("x")
+								// $clonare.attr("y",(parseFloat($move_y)+10)+"")
+								// $clonare.attr("class","stat_name")
+								// $clonare.text("("+timeToHms($duration_values[$titolo_name])+")")
+								// // console.log($clonare.attr("y"))
+								$("#"+edge_id).find("text").attr("x",(parseFloat($move_x)+7)+"")
+								// $clonare.appendTo("#"+node_id)
+								// console.log($("#"+node_id).find("text").text())
+								// console.log($duration_values[$titolo_name])
+								
+							// }
+							}
+						
+						
+						
+					});
+
+					
+				// }
+			}
+			
+			
+			var bool_switch2 = document.getElementById("tabFreq").checked;
+			if(bool_switch2){
+					var typeF=$('select[name=freqs] option').filter(':selected').val()
+					
+					var classList = $('.node');
+					$.each(classList, function(index, item) {
+						var node_id=item.id
+						if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
+							
+							if(typeF=="absFreq"){
+								$frequency_values=getAllFrequency("absolute");
+							}else if (typeF=="caseFreq"){
+								$frequency_values=getAllFrequency("case");
+							}else if (typeF=="maxRep"){
+								$frequency_values=getAllFrequency("max");
+							}
+							
+							// console.log($myduration_total)
+
+							// var $title = $("#"+node_id+" title").html(); 				
+							
+							// $titolo_name=$title.split(' (')[0].trim()
+							// $("#"+node_id).find("text").text($titolo_name);
+							// // $move_y=$clonare.attr("y")
+							// // console.log($titolo_name)
+							
+							// $("#"+node_id).find("text").attr("class","text_name")
+							// $("#"+node_id).find("title").text($titolo_name+" ("+timeToHms($duration_values[$titolo_name])+")");
+						
+							
+							var $title = $("#"+node_id+" title").html(); 				
+								
+							$titolo_name=$title.split(' (')[0].trim()
+
+							$label_id=$("#"+node_id).find("label").text()
+							nodes_id_association[$label_id]=$titolo_name
+
+							$("#"+node_id).find("text").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
+							// $("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");
+			
+							$("#"+node_id).find("title").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
+
+							
+						}
+
+						if($("#"+node_id).find(".label_node").text()=="@@startnode" || $("#"+node_id).find(".label_node").text()=="@@endnode"){
+							$("#"+node_id).find("title").text(" ")
+						}
+						
+						
+						
+					});
+
+
+					var classEdge = $('.edge');
+					$.each(classEdge, function(index, item) {
+						var edge_id=item.id
+						
+						// if(node_id!="@@S" && node_id!="@@E"){
+							
+						if(typeF=="absFreq"){
+							$frequency_edge_values=getAllEdgeFrequency("absolute");
+						}else if (typeF=="caseFreq"){
+							$frequency_edge_values=getAllEdgeFrequency("case");
+						}else if (typeF=="maxRep"){
+							$frequency_edge_values=getAllEdgeFrequency("max");
+						}
+						
+
+						var $title = $("#"+edge_id+" title").html(); 
+						// console.log($title)	
+						// var $label_title= $("#"+edge_id).find("label").text(); 
+						// console.log($label_title)	
+						
+						var $title = $("#"+edge_id+" title").html(); 	
+						var $label_title= $("#"+edge_id+" label").text(); 
+						
+
+
+						
+						if($label_title!=undefined && $label_title!=""){
+							// console.log($label_title)
+							var $source= $label_title.split('->')[0].trim()
+							// console.log($source)
+							var $target= $label_title.split('->')[1].trim()
+							// console.log($target)
+							// var $source= $title.split('-&gt;')[0].trim()
+							// var $target= $title.split('-&gt;')[1].trim()
+							
+							// console.log(nodes_id_association)
+							// console.log(nodes_id_association[$source])
+							// console.log(nodes_id_association[$target])
+							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
+							
+						
+							
+							$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+							$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+							if($source=="@@startnode"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+							}
+							if($target=="@@endnode"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+							}
+						
+
+						}
+						
+						
+						
+					});
+
+
+			
+			}
+
+				
+				// console.log(nodes_id_association)
+
+			$('#performanceDuration').on('change', function(e) {
+				e.stopImmediatePropagation();
+
+				var typeD=this.value
+
+				var classList = $('.node');
+				// console.log(classList)
+				$.each(classList, function(index, item) {
+					var node_id=item.id
+					if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
+						if(typeD=="totDur"){
+							$duration_values=getAllDuration("total");
+						}else if (typeD=="medDur"){
+							$duration_values=getAllDuration("median");
+						}else if (typeD=="meanDur"){
+							$duration_values=getAllDuration("mean");
+						}else if (typeD=="maxDur"){
+							$duration_values=getAllDuration("max");
+						}else if (typeD=="minDur"){
+							$duration_values=getAllDuration("min");
+						}
+						
+						var $title = $("#"+node_id+" title").html(); 				
+								
+								$titolo_name=$title.split(' (')[0].trim()
+								$("#"+node_id).find(".text_name").text($titolo_name);
+								$("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");
+				
+								$("#"+node_id).find("title").text($titolo_name+" ("+timeToHms($duration_values[$titolo_name])+")");
+
+
+						if($("#"+node_id).find("title").text()=="@@E (instant)" || $("#"+node_id).find("title").text()=="@@S (instant)"){
+							$("#"+node_id).find("title").text(" ")
+						}	
+
+					}
+					
+					
+					
+				});
+
+
+				var classedge = $('.edge');
+				$.each(classedge, function(index, item) {
+					var edge_id=item.id
+					// if(node_id!="@@S" && node_id!="@@E"){
+						
+						if(typeD=="totDur"){
+							$duration_edge_values=getAllEdgeDuration("total");
+							// console.log("total")
+						}else if (typeD=="medDur"){
+							$duration_edge_values=getAllEdgeDuration("median");
+							// console.log("median")
+						}else if (typeD=="meanDur"){
+							$duration_edge_values=getAllEdgeDuration("mean");
+							// console.log("mean")
+						}else if (typeD=="maxDur"){
+							$duration_edge_values=getAllEdgeDuration("max");
+							// console.log("max")
+						}else if (typeD=="minDur"){
+							$duration_edge_values=getAllEdgeDuration("min");
+							// console.log("min")
+						}
+						
+
+						var $title = $("#"+edge_id+" title").html(); 	
+						var $label_title= $("#"+edge_id).find("label").text(); 
+						// console.log($label_title)	
+						
+						if($label_title!=undefined && $label_title!=""){
+							// console.log($label_title)
+							var $source= $label_title.split('->')[0].trim()
+							// console.log($source)
+							var $target= $label_title.split('->')[1].trim()
+							// console.log($target)
+
+							
+							// console.log(nodes_id_association)
+							// console.log(nodes_id_association[$source])
+							// console.log(nodes_id_association[$target])
+							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
+							
+						
+						
+							$("#"+edge_id).find("text").text(edgetimeconvert($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+							$("#"+edge_id).find("title").text(timeToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+							if($source=="@@startnode"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+							}
+							if($target=="@@endnode"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+							}
+
+						}
+						
+						
+					// }
+					
+					
+					
+				});
+				
+			});
+
+			// nuovo nuovo
+			$('#perfromanceFrequency').on('change', function(e) {
+				e.stopImmediatePropagation();
+
+				var typeF=this.value
+
+				var classList = $('.node');
+				// console.log(classList)
+				$.each(classList, function(index, item) {
+					var node_id=item.id
+					if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
+						if(typeF=="absFreq"){
+							$frequency_values=getAllFrequency("absolute");
+						}else if (typeF=="caseFreq"){
+							$frequency_values=getAllFrequency("case");
+						}else if (typeF=="maxRep"){
+							$frequency_values=getAllFrequency("max");
+						}
+						
+						var $title = $("#"+node_id+" title").html(); 				
+								
+						$titolo_name=$title.split(' (')[0].trim()
+						$("#"+node_id).find("text").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
+						// $("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");
+		
+						$("#"+node_id).find("title").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
+
+
+						if($("#"+node_id).find("title").text()=="@@E (instant)" || $("#"+node_id).find("title").text()=="@@S (instant)"){
+							$("#"+node_id).find("title").text(" ")
+						}	
+
+					}
+					
+					
+					
+				});
+
+				
+				var classedge = $('.edge');
+				$.each(classedge, function(index, item) {
+					var edge_id=item.id
+					// if(node_id!="@@S" && node_id!="@@E"){
+						
+						
+						if(typeF=="absFreq"){
+							$frequency_edge_values=getAllEdgeFrequency("absolute");
+						}else if (typeF=="caseFreq"){
+							$frequency_edge_values=getAllEdgeFrequency("case");
+						}else if (typeF=="maxRep"){
+							$frequency_edge_values=getAllEdgeFrequency("max");
+						}
+						
+
+						var $title = $("#"+edge_id+" title").html(); 	
+						var $label_title= $("#"+edge_id).find("label").text(); 
+						// console.log($label_title)	
+						
+						if($label_title!=undefined && $label_title!=""){
+							// console.log($label_title)
+							var $source= $label_title.split('->')[0].trim()
+							// console.log($source)
+							var $target= $label_title.split('->')[1].trim()
+							// console.log($target)
+
+							
+							// console.log(nodes_id_association)
+							// console.log(nodes_id_association[$source])
+							// console.log(nodes_id_association[$target])
+							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
+							
+						
+						
+							$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+							$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+						
+
+						}
+						
+						
+					// }
+					
+					
+					
+				});
+				
+			});
+
+
+
+
+		});
+		// *******************************************************************************************************************************
+
+		// function getNode(nodeName){
+		// 	$("#"+node_id).find(".text_name").text($titolo_name);
+		// }
+
+		
+
+
+
+
+
+		
+
+
+		
+		
+
+
+	
+
+
+
+
+
+	
 		
 		
 		var median = document.getElementById('median').innerHTML;
@@ -929,24 +2577,107 @@ function getMap(bool) {
 		
 		function secondsToHms(d) {
 			d = Number(d);
-			var h = Math.floor(d / 3600);
-			var m = Math.floor(d % 3600 / 60);
-			var s = Math.floor(d % 3600 % 60);
-
-			var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-			var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-			var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-			return hDisplay + mDisplay + sDisplay; 
+			
+			var result=""
+			if(d>=1){
+    			var h = Math.floor(d / 3600);
+    			var m = Math.floor(d % 3600 / 60);
+    			var s = Math.floor(d % 3600 % 60);
+    
+    			var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    			var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    			var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    			result=hDisplay + mDisplay + sDisplay;
+    			
+			}else if(d>=0 && d<1){
+			    var milliDisplay= d*1000;
+			    result= Math.round(milliDisplay)+ " milliseconds"
+			}
+			if(result==""){
+    				result="instant"
+    			}
+			return result; 
 		}
+
+		//function similar to secondsToHms used inside node
+		function timeToHms(d) {
+			d = Number(d);
+		
+			var result=""
+			if(d>=1){
+    			var h = Math.floor(d / 3600);
+    			var m = Math.floor(d % 3600 / 60);
+    			var s = Math.floor(d % 3600 % 60);
+    
+    			var hDisplay = h > 0 ? h + (h == 1 ? "h" : "h") : "";
+    			var mDisplay = m > 0 ? m + (m == 1 ? "m" : "m") : "";
+    			var sDisplay = s > 0 ? s + (s == 1 ? "s" : "s") : "";
+    			result=hDisplay + mDisplay + sDisplay;
+    			
+			}else if(d>=0 && d<1){
+			    var milliDisplay= d*1000;
+			    result= Math.round(milliDisplay)+ "ms"
+			}
+			if(result==""){
+    				result="instant"
+    			}
+			return result; 
+		}
+
+
+		function edgetimeconvert(d) {
+			d = Number(d);
+		
+			var result=""
+			if(d>=1){
+				var w = Math.floor(d/(7*24*60*60))
+				if(w>1){ return w+"w"}
+				var days= Math.floor(d/(24*60*60))
+				if(days>1){ return days+"d"}
+    			var h = Math.floor(d / 3600);
+				if(h>1){ return h+"h"}
+    			var m = Math.floor(d / 60);
+				if(m>1){ return m+"m"}
+    			var s = Math.floor(d);
+    			result=s+"s";
+    			
+			}else if(d>=0 && d<1){
+			    var milliDisplay= d*1000;
+			    result= Math.round(milliDisplay)+ "ms"
+			}
+			if(result==""){
+    				result="instant"
+    			}
+			return result; 
+		}
+
+
+
 		var x = secondsToHms(median);
 		var y = secondsToHms(total);
-		popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y;
+		// popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y;
+		// popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y+ "<br /> <br />"  +"Selected duration node: "+ secondsToHms($totale) + "<br /> <br />" +"Selected duration edge: <br />"+ secondsToHms($totale_edge);
 		
+
+		// function to do dictionary sum
+		function sum_dict( obj ) {
+			var sum = 0;
+			for( var el in obj ) {
+				if( obj.hasOwnProperty( el ) ) {
+				sum += parseFloat( obj[el] );
+				}
+			}
+			return sum;
+		}
+
+
+
 		function openInfo(e) {
 		// When the user clicks, open the popup
+		// When the user clicks, open the popup
 		
-			popup.classList.toggle("show");
-			popup.style.left = e.clientX-100 + "px";
+			// popup.classList.toggle("show");
+			popup.style.left = e.clientX-100+200 + "px";
 			popup.style.top = (e.clientY-180) + "px";
 			popup.style.zIndez = "15";
 			
@@ -955,11 +2686,215 @@ function getMap(bool) {
 </script>
 
 <script>
-var filtered_timeframe = false, filtered_perf = false;
+var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
+
+
+function swipeRemoveRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", swipeRemoveListener);
+	oReq.open("GET", frontend+"swipeRemoveAction", false);
+	oReq.send();
+}
+
+function swipeRemoveListener () {
+	var response=this.responseText;
+	var arrayResponse=response.split("£")
+	document.getElementById("digraphF").innerHTML = arrayResponse[0];
+	document.getElementById("digraphP").innerHTML = arrayResponse[1];
+	var response = arrayResponse[2];
+	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
+	
+		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
+		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
+		variantsInfo = response.split("|||")[2];
+		// console.log(variantsInfo)
+	}
+	else{
+		
+		variantsInfo = response;
+	}
+  
+	// console.log(variantsInfo)
+	json = JSON.parse(variantsInfo);
+	//console.log(json);
+
+	allVariants = Object.keys(json);
+	//console.log("Total variants: " +String(allVariants.length));
+	//allVariants.lenght = Number of variants
+	//Object.values(allVariants) = array with Variants ID
+
+	ul1 = document.getElementById("variants-ul");
+	ul2 = document.getElementById("case-ul");
+
+
+	ul1.innerHTML = "";
+	ul2.innerHTML = "";
+	document.getElementById("eventsTable").innerHTML = "";
+	Object.keys(json).forEach((key1) => {
+
+		//----For each variant I see which are the cases corresponding
+		//console.log("Variant " + String(key1));
+		allCases = json[key1];
+		//----allCases.length = Number of cases for each specific Variant (json[key])
+		//console.log("Total cases: " + String(allCases.length));
+		//console.log(allCases);
+
+
+		var li = document.createElement('li');
+		li.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Variant " + key1 + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Cases: " + String(allCases.length) + '</small>';
+		li.setAttribute("style", "cursor: pointer");
+		li.setAttribute("id", "variant"+key1);
+		//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
+		li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
+		ul1.append(li);	
+
+		// calculate min and max dates
+			
+		allCases.forEach( (c) => {
+			allEvents = Object.values(c)[0]; // all events
+			allEvents.forEach((e) => {
+				dates.push(new Date(e["time:timestamp"]));
+			});
+		});
+			
+
+	});
+	
+  	if(document.getElementById(selected)!=null){
+		document.getElementById(selected).click();
+	}
+	
+	
+	maxDate=new Date(Math.max.apply(null,dates));
+	minDate=new Date(Math.min.apply(null,dates));
+	maxDate = maxDate.toISOString().split(".")[0];
+	minDate = minDate.toISOString().split(".")[0];
+	
+}
+
+
+function initialRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", initialListener);
+	oReq.open("GET", frontend+"initialAction", false);
+	oReq.send();
+}
+
+function initialListener () {
+	var response=this.responseText;
+	var arrayResponse=response.split("£")
+	document.getElementById("digraphF").innerHTML = arrayResponse[0];
+	document.getElementById("digraphP").innerHTML = arrayResponse[1];
+	document.getElementById("usedVariable").innerHTML = arrayResponse[2];
+	document.getElementById("allDt").innerHTML = arrayResponse[3];
+	document.getElementById("allEdgeDt").innerHTML = arrayResponse[5];
+	document.getElementById("allFq").innerHTML = arrayResponse[6];
+	document.getElementById("allEdgeFq").innerHTML = arrayResponse[7];
+	var response = arrayResponse[4];
+	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
+	
+		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
+		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
+		variantsInfo = response.split("|||")[2];
+		// console.log(variantsInfo)
+	}
+	else{
+		
+		variantsInfo = response;
+	}
+  
+	// console.log(variantsInfo)
+	json = JSON.parse(variantsInfo);
+	//console.log(json);
+
+	allVariants = Object.keys(json);
+	//console.log("Total variants: " +String(allVariants.length));
+	//allVariants.lenght = Number of variants
+	//Object.values(allVariants) = array with Variants ID
+
+	ul1 = document.getElementById("variants-ul");
+	ul2 = document.getElementById("case-ul");
+
+
+	ul1.innerHTML = "";
+	ul2.innerHTML = "";
+	document.getElementById("eventsTable").innerHTML = "";
+	Object.keys(json).forEach((key1) => {
+
+		//----For each variant I see which are the cases corresponding
+		//console.log("Variant " + String(key1));
+		allCases = json[key1];
+		//----allCases.length = Number of cases for each specific Variant (json[key])
+		//console.log("Total cases: " + String(allCases.length));
+		//console.log(allCases);
+
+
+		var li = document.createElement('li');
+		li.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Variant " + key1 + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Cases: " + String(allCases.length) + '</small>';
+		li.setAttribute("style", "cursor: pointer");
+		li.setAttribute("id", "variant"+key1);
+		//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
+		li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
+		ul1.append(li);	
+
+		// calculate min and max dates
+			
+		allCases.forEach( (c) => {
+			allEvents = Object.values(c)[0]; // all events
+			allEvents.forEach((e) => {
+				dates.push(new Date(e["time:timestamp"]));
+			});
+		});
+			
+
+	});
+	
+  	if(document.getElementById(selected)!=null){
+		document.getElementById(selected).click();
+	}
+	
+	
+	maxDate=new Date(Math.max.apply(null,dates));
+	minDate=new Date(Math.min.apply(null,dates));
+	maxDate = maxDate.toISOString().split(".")[0];
+	minDate = minDate.toISOString().split(".")[0];
+
+	//getMap(false);
+}
+
+
+function reqListener91 () {
+	document.getElementById("allFq").innerHTML = this.responseText;
+	// console.log(this.responseText)
+	//getMap(false);
+}
+
+function csmRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener91);
+	oReq.open("GET", frontend+"allfrequency", false);
+	oReq.send();
+}
+
+
+function reqListener92 () {
+	document.getElementById("allEdgeFq").innerHTML = this.responseText;
+	// console.log(this.responseText)
+	//getMap(false);
+}
+
+function csmEdgeRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener92);
+	oReq.open("GET", frontend+"alledgefrequency", false);
+	oReq.send();
+}
+
 
 function reqListener1 () {
-  document.getElementById("digraphF").innerHTML = this.responseText;
-  //getMap(false);
+	document.getElementById("digraphF").innerHTML = this.responseText;
+
+	//getMap(false);
 }
 
 function freqRequest() {
@@ -969,34 +2904,12 @@ function freqRequest() {
 	oReq.send();
 }
 
-function request(p_check) {
-	
-	var pf = document.getElementById("myPathF").value;
-	var af = document.getElementById("myActF").value;
-	var df = "dfgFreqReduced";
-
-	var pp = document.getElementById("myPathP").value;
-	var ap = document.getElementById("myActP").value;
-	var dp = "dfgPerfReduced"
-	//console.log(String(pf) + " " + String(af) + " " +String(pp)+ " "+String(ap) + " "+String(p_check));
-	
-	var oReq = new XMLHttpRequest();
-	if (p_check == "false") {
-		oReq.addEventListener("load", reqListener1);
-		oReq.open("GET", frontend+df+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
-	}
-	else {
-		oReq.addEventListener("load", reqListener2);
-		oReq.open("GET", frontend+dp+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
-	}
-	
-	oReq.send();
-	getMap(false);
-}
 
 function reqListener2 () {
-  document.getElementById("digraphP").innerHTML = this.responseText;
-  //getMap(false);
+	document.getElementById("digraphP").innerHTML = this.responseText;
+	//   document.getElementById("loadingMessage").style.visibility = "hidden";	
+	// console.log("digraphP");
+  	//getMap(false);
 }
 
 function perfRequest() {
@@ -1006,15 +2919,188 @@ function perfRequest() {
 	oReq.send();
 }
 
-freqRequest();
-perfRequest();
 
-var variantsInfo, json, allVariants, ul1, ul2, allCases, allEvents, maxDate, minDate;
+function reqListener3 () {
+   
+	var response = this.responseText;
+	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
+	
+		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
+		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
+		variantsInfo = response.split("|||")[2];
+		// console.log(variantsInfo)
+	}
+	else{
+		
+		variantsInfo = response;
+	}
+  
+	// console.log(variantsInfo)
+	json = JSON.parse(variantsInfo);
+	//console.log(json);
+
+	allVariants = Object.keys(json);
+	//console.log("Total variants: " +String(allVariants.length));
+	//allVariants.lenght = Number of variants
+	//Object.values(allVariants) = array with Variants ID
+
+	ul1 = document.getElementById("variants-ul");
+	ul2 = document.getElementById("case-ul");
 
 
-var selected = "variant1";
+	ul1.innerHTML = "";
+	ul2.innerHTML = "";
+	document.getElementById("eventsTable").innerHTML = "";
+	Object.keys(json).forEach((key1) => {
 
-var dates = [];
+		//----For each variant I see which are the cases corresponding
+		//console.log("Variant " + String(key1));
+		allCases = json[key1];
+		//----allCases.length = Number of cases for each specific Variant (json[key])
+		//console.log("Total cases: " + String(allCases.length));
+		//console.log(allCases);
+
+
+		var li = document.createElement('li');
+		li.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Variant " + key1 + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Cases: " + String(allCases.length) + '</small>';
+		li.setAttribute("style", "cursor: pointer");
+		li.setAttribute("id", "variant"+key1);
+		//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
+		li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
+		ul1.append(li);	
+
+		// calculate min and max dates
+			
+		allCases.forEach( (c) => {
+			allEvents = Object.values(c)[0]; // all events
+			allEvents.forEach((e) => {
+				dates.push(new Date(e["time:timestamp"]));
+			});
+		});
+			
+
+	});
+	
+  	if(document.getElementById(selected)!=null){
+		document.getElementById(selected).click();
+	}
+	
+	
+	maxDate=new Date(Math.max.apply(null,dates));
+	minDate=new Date(Math.min.apply(null,dates));
+	maxDate = maxDate.toISOString().split(".")[0];
+	minDate = minDate.toISOString().split(".")[0];
+  
+  //getMap(false);
+}
+
+function variantRequest() {
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener3);
+	oReq.open("GET", frontend+"variants", false);
+	oReq.send();
+}
+
+
+function reqListener70 () {
+  document.getElementById("allDt").innerHTML = this.responseText;
+//   console.log(this.responseText)
+//   getMap(false);
+}
+
+function allDurationRequest(){
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener70);
+	oReq.open("GET", frontend+"allduration", false);
+	oReq.send();
+}
+
+
+function reqListener71 () {
+  document.getElementById("allEdgeDt").innerHTML = this.responseText;
+//   console.log(this.responseText)
+//   getMap(false);
+}
+
+function allEdgeDurationRequest(){
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener71);
+	oReq.open("GET", frontend+"alledgeduration", false);
+	oReq.send();
+}
+
+
+function reqListener72 () {
+  document.getElementById("usedVariable").innerHTML = this.responseText;
+//   console.log(this.responseText)
+//   getMap(false);
+}
+
+function allUsedVariable(){
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener72);
+	oReq.open("GET", frontend+"usedvariable", false);
+	oReq.send();
+}
+
+
+function pre_request(p_check){
+	document.getElementById("loadingMessage").style.visibility = "visible";	
+	request(p_check)
+}
+
+function request(p_check) {
+
+	
+    // $(document).ready(function(){
+    //     $(".dosubmit").click(function(){
+    //         $(this).css('background-color', 'red');
+    //     });
+    // });
+	document.getElementById("loadingMessage").style.visibility = "hidden";
+
+	var pf = document.getElementById("myPathF").value;
+	var af = document.getElementById("myActF").value;
+	var df = "dfgFreqReduced";
+
+	var pp = document.getElementById("myPathP").value;
+	var ap = document.getElementById("myActP").value;
+	var dp = "dfgPerfReduced"
+	//console.log(String(pf) + " " + String(af) + " " +String(pp)+ " "+String(ap) + " "+String(p_check));
+	
+	var oReq1 = new XMLHttpRequest();
+	var oReq2 = new XMLHttpRequest();
+	// var oReq12
+
+	// if (p_check == "false") {
+		oReq1.addEventListener("load", reqListener1);
+		oReq1.open("GET", frontend+df+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
+	// }
+	// else {
+		oReq2.addEventListener("load", reqListener2);
+		oReq2.open("GET", frontend+dp+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
+	// }
+	
+	oReq1.send();
+	oReq2.send();
+	getMap(false);
+	$(".change_form").css("visibility", "hidden");
+	$(".dis_submit").removeClass("dosubmit");
+	$(".dis_submit").attr('disabled', true);
+
+	
+	document.getElementById("myChange").style.display = "block";
+	document.getElementById("blocker5").style.display = "block";
+}
+
+
+function swap(json){
+  var ret = {};
+  for(var key in json){
+    ret[json[key]] = key;
+  }
+  return ret;
+}
 
 function showEvents(varKey, caseKey) {
 	console.log
@@ -1022,20 +3108,23 @@ function showEvents(varKey, caseKey) {
 	allCases.forEach( (c) => {
 		
 		var ck = Object.keys(c)[0]; //case key
-		console.log(caseKey +" =?= "+ck);
+		// console.log(caseKey +" =?= "+ck);
 		if(caseKey == ck){
-			console.log("yes");
+			// console.log("yes");
 			allEvents = Object.values(c)[0]; // all events
 		}
 	 });
-	 console.log(allEvents);
+	//  console.log(allEvents);
 	 
 	 var table = document.getElementById("eventsTable");
 	 //var tableHTML = "<tr><th>Activity</th><th>Resource</th><th>Date</th><th>Time</th><th>Duration</th><th>Role</th></tr>"
 	 var tableHTML = "<tr>";
 	 var i = 0;
 	 
-	 
+	//  console.log("fps")
+	//  console.log(allEvents[0]['concept:name'])
+	 var parameter_dicitionary={}
+	 var indx=0
 	 allEvents.forEach((e) => {
 		//dates.push(new Date(e["time:timestamp"]));
 	
@@ -1047,32 +3136,78 @@ function showEvents(varKey, caseKey) {
 		//console.log(Object.entries(e));
 		
 		if(i==0){
-			tableHTML += "<th>Activity</th><th>Resource</th>" ;
-			Object.entries(e).forEach((attr) => { 
-				if(attr[0] == "time:timestamp") {
-					tableHTML += "<th>Date</th><th>Time</th>" ;
-				} else if (attr[0] == "Activity" || attr[0] == "Resource") {
+			// tableHTML += "<th><h6>Activity</h6><hr><br></th><th><h6>Resource</h6><hr><br></th>" ;
+			Object.entries(e).forEach((attr) => {
+				// console.log("xdxd")
+				// console.log(attr) 
+				// if(attr[0] == "time:timestamp") {
+				// 	tableHTML += "<th><h6>Date</h6><hr><br></th><th><h6>Time</h6><hr><br></th>" ;
+				// } else if (attr[0] == "Activity" || attr[0] == "Resource") {
 	
-				}else {
-					tableHTML += "<th>"+ attr[0] +"</th>" ;
+				if(attr[0] in parameter_dicitionary){
+
+				}else{
+					parameter_dicitionary[attr[0]]=indx
+					indx=indx+1
+					tableHTML += "<th><h6>"+ attr[0] +"</h6><hr><br></th>" ;
 				}
+				// }else {
+				
+				// }
 			});
-			tableHTML += "<tr>";
-			i++;
+			// tableHTML += "<tr>";
+			// i++;
 		}
+		inv_map = swap(parameter_dicitionary)
+		// console.log(inv_map)
 		
-		tableHTML += "<tr>"
-		tableHTML += "<td>" + e["Activity"] + "</td>"
+		// tableHTML += "<tr>"
+		// tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e["Activity"] + "</td>"
+		// tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e["Resource"] + "</td>"
+		
+		
+		
+		/*tableHTML += "<td>" + e["Activity"] + "</td>"
 		tableHTML += "<td>" + e["Resource"] + "</td>"
-		Object.entries(e).forEach((attr) => { 
-			if(attr[0] == "time:timestamp") {
-					tableHTML += "<td>"+date+"</td><td>"+time+"</td>" ;
-			} else if (attr[0] == "Activity" || attr[0] == "Resource") {
+		tableHTML += "<td>" + date + "</td>"
+		tableHTML += "<td>" + time + "</td>"
+		tableHTML += "<td>" + "Duration" + "</td>"
+		tableHTML += "<td>" + "Role" + "</td>"*/
+		// tableHTML += "</tr>"
+	 });
+	 tableHTML += "</tr>"
+
+	 allEvents.forEach((e) => {
+		//dates.push(new Date(e["time:timestamp"]));
 	
-			}else {
-				tableHTML += "<td>" + attr[1] + "</td>" ;
+		var date = e["time:timestamp"].split(" ")[0];
+		var time = e["time:timestamp"].split(" ")[1];
+	 
+		
+		// console.log(e)
+		for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
+			// console.log(inv_map[kf]);
+			if(e[inv_map[kf]]!=undefined){
+				tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
+				// console.log(e[inv_map[kf]]);
+			}else{
+				tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
 			}
-		});
+			
+			
+		}
+	
+		// Object.entries(e).forEach((attr) => { 
+			// if(attr[0] == "time:timestamp") {
+			// 		tableHTML += "<td class='text-table' style='border-radius: 4px;'>"+date+"</td><td class='text-table' style='border-radius: 4px;'>"+time+"</td>" ;
+			// } else if (attr[0] == "Activity" || attr[0] == "Resource") {
+	
+			// }else {
+				// console.log(attr) 
+				// tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + attr[1] + "</td>" ;
+			// }
+		// });
+		
 		
 		
 		/*tableHTML += "<td>" + e["Activity"] + "</td>"
@@ -1084,7 +3219,6 @@ function showEvents(varKey, caseKey) {
 		tableHTML += "</tr>"
 	 });
 	 
-	 
 	table.innerHTML = tableHTML;
 	
 	var liItems = document.getElementById("case-ul").getElementsByTagName("li"); 
@@ -1094,16 +3228,15 @@ function showEvents(varKey, caseKey) {
 		if(liItems[i].id == "case"+caseKey){
 			//console.log(liItems[i].id);
 			//console.log(li.id);
-			liItems[i].setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white;");
+			liItems[i].setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white; border-radius: 5px;");
 			//selected = li.id;
 		}
 		else {
-			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color: black;");
+			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color: black; border-radius: 5px;");
 		}
 	}
 
 }
-
 
 function showCases(li, key1) {
 	var liItems = document.getElementById("variants-ul").getElementsByTagName("li"); 
@@ -1113,11 +3246,11 @@ function showCases(li, key1) {
 		if(liItems[i].id == li.id){
 			//console.log(liItems[i].id);
 			//console.log(li.id);
-			li.setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white;");
+			li.setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white; ; border-radius: 5px;");
 			selected = li.id;
 		}
 		else {
-			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color:black;");
+			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color:black; ; border-radius: 5px;");
 		}
 	}
 	//console.log(selected);
@@ -1131,8 +3264,8 @@ function showCases(li, key1) {
 		
 		var li2 = document.createElement('li');
 		if("variant"+key1 == selected){
-			li2.innerHTML = '<span>' + "Case " + caseKey + '</span><br><small>' + "Events: " + allEvents.length + '</small>';
-			li2.setAttribute("style", "cursor: pointer");
+			li2.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Case " + caseKey + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Events: " + allEvents.length + '</small>';
+			li2.setAttribute("style", "cursor: pointer; border-radius: 5px;");
 			li2.setAttribute("id", "case"+ caseKey);
 			//alert("ok");
 			//li2.setAttribute("onclick", "alert('Variant "+ e +"')");
@@ -1159,86 +3292,26 @@ function showCases(li, key1) {
 	  });*/
 };
 
-function reqListener3 () {
-   
-  var response = this.responseText;
-  if (filtered_timeframe == true || filtered_perf == true) {
-	  document.getElementById("digraphF").innerHTML = response.split("|||")[0];
-	  document.getElementById("digraphP").innerHTML = response.split("|||")[1];
-	  variantsInfo = response.split("|||")[2];
-  }
-  else{
-	variantsInfo = response;
-  }
-  
-  
-  json = JSON.parse(variantsInfo);
-  //console.log(json);
-  
-  allVariants = Object.keys(json);
-  //console.log("Total variants: " +String(allVariants.length));
-  //allVariants.lenght = Number of variants
-  //Object.values(allVariants) = array with Variants ID
-  
-  ul1 = document.getElementById("variants-ul");
-  ul2 = document.getElementById("case-ul");
-  
-	
-  ul1.innerHTML = "";
-  ul2.innerHTML = "";
-  document.getElementById("eventsTable").innerHTML = "";
-  Object.keys(json).forEach((key1) => {
-	
-	
-	
-	//----For each variant I see which are the cases corresponding
-	//console.log("Variant " + String(key1));
-	allCases = json[key1];
-	//----allCases.length = Number of cases for each specific Variant (json[key])
-	//console.log("Total cases: " + String(allCases.length));
-	//console.log(allCases);
-	
-	
-	var li = document.createElement('li');
-	li.innerHTML = '<span>' + "Variant " + key1 + '</span><br><small>' + "Cases: " + String(allCases.length) + '</small>';
-	li.setAttribute("style", "cursor: pointer");
-	li.setAttribute("id", "variant"+key1);
-	//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
-	li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
-	ul1.append(li);	
-	
-	// calculate min and max dates
-	 
-	allCases.forEach( (c) => {
-		allEvents = Object.values(c)[0]; // all events
-		allEvents.forEach((e) => {
-			dates.push(new Date(e["time:timestamp"]));
-		});
-	 });
-	 
 
-  });
-	
-	document.getElementById(selected).click();
-	
-	maxDate=new Date(Math.max.apply(null,dates));
-	minDate=new Date(Math.min.apply(null,dates));
-	maxDate = maxDate.toISOString().split(".")[0];
-	minDate = minDate.toISOString().split(".")[0];
-  
-  //getMap(false);
-}
+var variantsInfo, json, allVariants, ul1, ul2, allCases, allEvents, maxDate, minDate;
 
 
+var selected = "variant1";
 
-function variantRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener3);
-	oReq.open("GET", frontend+"variants", false);
-	oReq.send();
-}
+var dates = [];
 
-variantRequest();	
+
+/* redesigned start part	*/
+// freqRequest();
+// perfRequest();
+// allUsedVariable();
+// allDurationRequest();
+// variantRequest();	
+// allEdgeDurationRequest();
+// csmRequest();
+// csmEdgeRequest();
+initialRequest();
+
 //getMap(false);
 /*
 function reqListener3 () {
@@ -1311,8 +3384,8 @@ endingPoint();
 <script>
 var perf_checked = document.getElementById("perf_checked");
 if ((perf_checked).value == "true"){
-	(document.getElementById("tabFreq")).checked = false;
-	(document.getElementById("tabPerf")).checked = true;
+	(document.getElementById("tabFreq")).checked = true;
+	(document.getElementById("tabPerf")).checked = false;
 }
 
 var menu = document.getElementById("menu");
@@ -1408,16 +3481,39 @@ function closeForm() {
   document.getElementById("check_filter").checked = false;
 }
 
+function closeLoading(){
+	document.getElementById("myLoading").style.display = "none";
+	document.getElementById("blocker2").style.display = "none";
+}
+function closeRemove(){
+	document.getElementById("myRemove").style.display = "none";
+	document.getElementById("blocker3").style.display = "none";
+}
+function closeOrder(){
+	document.getElementById("myOrder").style.display = "none";
+	document.getElementById("blocker4").style.display = "none";
+}
+function closeChangement(){
+	document.getElementById("myChange").style.display = "none";
+	document.getElementById("blocker5").style.display = "none";
+}
+
 
 
 function applyFilter() {
 	
 	var tf_selected = document.getElementById("keep_timeframe").value;
+	var pf_selected = document.getElementById("filter_by_performance").value;
+	var af_selected = document.getElementById("filter_by").value;
+	var af_selected_mode = document.getElementById("mode_for_attribute").value;
+
 	var start_tf = document.getElementById("starting-time").value;
 	var end_tf = document.getElementById("ending-time").value;
 	
 	start_tf = start_tf.replace("T", " ");
 	end_tf = end_tf.replace("T", " ");
+
+	
 	
 	
 	var time1 = document.getElementById("select_time_1").value;
@@ -1451,26 +3547,299 @@ function applyFilter() {
 	oReq.addEventListener("load", reqListener3);
 	
 	if(document.getElementById("timeframe_filter_div").style.display == "block"){
-		document.getElementById("timeframe_filter").setAttribute("style", "background-color: #7a4791;");
-		document.getElementById("timeframe_remove").style.visibility = "visible";
+		// document.getElementById("timeframe_filter").setAttribute("style", "background-color: #7a4791;");
+		// document.getElementById("timeframe_remove").style.visibility = "visible";
 		filtered_timeframe = true;
 		//oReq.open("GET", frontend+"filterTimeframe"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected, false);
 	}
 	
 	if(document.getElementById("perf_filter_div").style.display == "block"){		
-		document.getElementById("perf_filter").setAttribute("style", "background-color: #7a4791;");
-		document.getElementById("perf_remove").style.visibility = "visible";
+		// document.getElementById("perf_filter").setAttribute("style", "background-color: #7a4791;");
+		// document.getElementById("perf_remove").style.visibility = "visible";
 		filtered_perf = true;
 		//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
 	}
+
+	if(document.getElementById("attribute_filter_div").style.display == "block"){		
+		// document.getElementById("attribute_filter").setAttribute("style", "background-color: #7a4791;");
+		// document.getElementById("attribute_remove").style.visibility = "visible";
+		filtered_attribute = true;
+		//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
+	}
 	
-	oReq.open("GET", frontend+"filter"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected+"&min="+String(min_sec)+"&max="+String(max_sec)+"&filterTime="+filtered_timeframe+"&filterPerf="+filtered_perf, false);
+	
+	// console.log(end_tf)																		//min_event max_event				
+	// console.log(start_tf)
+
+	var filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
+	
+									 "&filterPerf="+filtered_perf+		"&perfFrame="+pf_selected+	"&min="+String(min_sec)+		"&max="+String(max_sec)+
+									 																"&minevent="+String(min)+		"&maxevent="+String(max)+
+																	 
+									 "&filterAttr="+filtered_attribute +	"&attrFrame="+af_selected +	"&attrFilt="+af_selected_mode+	"&listattr="+listToFilter
+	
+									 
+	history_crono[String(indice)]=filtro
+	
+	// console.log(history_crono)
+	// console.log(history_crono.length)
+	oReq.open("GET",frontend+filtro, false);
 	oReq.send();
 	getMap(false);
+
 	closeForm();
+	closeLoading();
 	
+	var container = $('#history_div');
+	if(filtered_timeframe){
+		$('#history_span').attr("hidden", false); 
+	   	// var inputs = container.find('input');
+	   	// var id = inputs.length+1;
+	
+	//    $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
+	//    $('<label />', { 'for': 'cb'+id, text: name }).appendTo('cb'+id);
+		var idvalue="valore"+String(indice)
+		var element=$("<div class='history_element' id="+idvalue+ "></div>")
+		element.appendTo(container)
+	   $("<span class='element_title' value="+String(indice)+">"+String(indice)+") Timeframe:     \n" +tf_selected+' '+ '</span>').appendTo(element);
+	   $('<br>').appendTo(element);
+	   $("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
+	   $('<span>&zwnj;</span>').appendTo(element);
+	   $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
+	   $('<span>&zwnj;</span>').appendTo(element);
+	   $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
+	   $('<div> &zwnj; </div>').appendTo(element);
+	
+
+	}
+	if(filtered_perf){
+		if(pf_selected=="caseDuration"){
+			$('#history_span').attr("hidden", false); 	
+			var idvalue="valore"+String(indice)
+			var element=$("<div class='history_element' id="+idvalue+ "></div>")
+			element.appendTo(container)
+			$("<span class='element_title' value="+String(indice)+">"+String(indice)+ ") Perforamance: \n" +pf_selected+ '</span>').appendTo(element);
+			$('<br>').appendTo(element);
+			$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
+			$('<span>&zwnj;</span>').appendTo(element);
+			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
+			$('<span>&zwnj;</span>').appendTo(element);
+			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
+			$('<div> &zwnj; </div>').appendTo(element);
+
+		}else if(pf_selected=="eventsNumber"){
+		
+			$('#history_span').attr("hidden", false); 
+			var idvalue="valore"+String(indice)
+			var element=$("<div class='history_element' id="+idvalue+ "></div>")
+			element.appendTo(container)
+			$("<span class='element_title' value="+String(indice)+">"+String(indice)+ ") Performance: \n" +pf_selected+ '</span>').appendTo(element);
+			$('<br>').appendTo(element);
+			$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
+			$('<span>&zwnj;</span>').appendTo(element);
+			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
+			$('<span>&zwnj;</span>').appendTo(element);
+			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
+			$('<div> &zwnj; </div>').appendTo(element);
+
+		}
+		
+	}
+	if(filtered_attribute){
+		$('#history_span').attr("hidden", false);  
+		var idvalue="valore"+String(indice)
+		var element=$("<div class='history_element' id="+idvalue+ "></div>")
+		element.appendTo(container)
+		$("<span class='element_title' value="+String(indice)+">"+String(indice)+") Attribute:    \n " +af_selected+'\n '+"("+ af_selected_mode+")"+ '</span>').appendTo(element);
+		$('<br>').appendTo(element);
+		$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
+		$('<span>&zwnj;</span>').appendTo(element);
+		$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
+		$('<span>&zwnj;</span>').appendTo(element);
+		$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
+		$('<div> &zwnj; </div>').appendTo(element);
+	  
+	}
+	indice=indice+1;
+	filtered_timeframe=false
+	filtered_perf=false
+	filtered_attribute=false
+	document.getElementById("myLoading").style.display = "block";
+	document.getElementById("blocker2").style.display = "block";
 }
 
+function filterSwipeUp(id){
+	// console.log(id)
+	// console.log(history_crono)
+	var indice_up= String(parseInt(id)-1)
+	var temp=history_crono[id]
+	history_crono[id]=history_crono[indice_up]
+	history_crono[indice_up]=temp
+	// console.log(history_crono)
+
+	
+	var v1 = $('#valore'+String(id)).html(),
+        v2 = $('#valore'+(indice_up)).html();
+ 
+
+	
+	// console.log(v1)
+	// console.log('#valore'+String(id))
+	
+	// console.log(v2)
+	// console.log('#valore'+(indice_up))
+
+	$('#valore'+String(id)).html(v2);
+    $('#valore'+(indice_up)).html(v1);
+
+	var classList_id = $('#valore'+String(id)+' .history_bottone');
+						
+	$.each(classList_id, function(index, item) {
+		item.value=String(id)
+	});
+
+	var classList_id_up = $('#valore'+indice_up+' .history_bottone');
+						
+	$.each(classList_id_up, function(index, item) {
+		item.value=indice_up
+	});
+
+	// var classList_title = $('#valore'+String(id)+' .element_title');
+	var classList_title = $('#valore'+String(id)+' .element_title');
+						
+	$.each(classList_title, function(index, item) {
+		$(this).value=String(id)
+		var testo=$(this).html()
+		var newtext= String(id)+") "+testo.split(")")[1].trim()
+		$(this).html(newtext)
+	});
+
+
+	var classList_title_up = $('#valore'+indice_up+' .element_title');
+						
+	$.each(classList_title_up, function(index, item) {
+		$(this).value=indice_up
+		var testo=$(this).html()
+		var newtext= indice_up+") "+testo.split(")")[1].trim()
+		$(this).html(newtext)
+	});
+    
+	/* check to redesign start part	*/
+	// freqRequest();
+	// perfRequest();
+	// variantRequest();
+	swipeRemoveRequest();
+	apply_crono()
+
+	document.getElementById("myOrder").style.display = "block";
+	document.getElementById("blocker4").style.display = "block";
+
+}
+
+function filterSwipeDown(id){
+
+	var indice_up= String(parseInt(id)+1)
+	var temp=history_crono[id]
+	history_crono[id]=history_crono[indice_up]
+	history_crono[indice_up]=temp
+
+	var v1 = $('#valore'+String(id)).html(),
+        v2 = $('#valore'+(indice_up)).html();
+ 
+	$('#valore'+String(id)).html(v2);
+    $('#valore'+(indice_up)).html(v1);
+
+
+	var classList_id = $('#valore'+String(id)+' .history_bottone');
+						
+	$.each(classList_id, function(index, item) {
+		item.value=String(id)
+	});
+
+	var classList_id_up = $('#valore'+indice_up+' .history_bottone');
+						
+	$.each(classList_id_up, function(index, item) {
+		item.value=indice_up
+	});
+
+	var classList_title = $('#valore'+String(id)+' .element_title');
+						
+	$.each(classList_title, function(index, item) {
+	
+		$(this).value=String(id)
+		var testo=$(this).html()
+		var newtext= String(id)+") "+testo.split(")")[1].trim()
+		$(this).html(newtext)
+	});
+					
+	var classList_title_up = $('#valore'+indice_up+' .element_title');
+											
+	$.each(classList_title_up, function(index, item) {
+	
+		$(this).value=indice_up
+		var testo=$(this).html()
+		
+		var newtext= indice_up+") "+testo.split(")")[1].trim()
+		$(this).html(newtext)
+		
+	});
+
+	/* check to redesign start part	*/
+	// freqRequest();
+	// perfRequest();
+	// variantRequest();
+	swipeRemoveRequest();
+	apply_crono()
+
+	document.getElementById("myOrder").style.display = "block";
+	document.getElementById("blocker4").style.display = "block";
+}
+
+function filterRemove(id){
+
+	delete history_crono[id]
+	// console.log(history_crono)
+	$('#valore'+id).remove();
+	
+	/* check to redesign start part	*/
+	// freqRequest();	
+	// perfRequest();
+	// variantRequest();
+	swipeRemoveRequest();
+	apply_crono();
+
+	document.getElementById("myRemove").style.display = "block";
+	document.getElementById("blocker3").style.display = "block";
+}
+
+function apply_crono(){
+	redo_function=true
+	
+	var oReq = new XMLHttpRequest();
+	//oReq.addEventListener("load", reqListenerFilter);
+	oReq.addEventListener("load", reqListener3);
+	
+	
+	Object.keys(history_crono).forEach(function(key) {
+   		
+		oReq.open("GET",frontend+history_crono[key], false);
+
+		oReq.send();
+		
+	});
+
+	getMap(false);
+	redo_function=false;
+	
+	if(Object.keys(history_crono).length === 0){
+		
+		$('#history_span').attr("hidden", true); 
+	}
+
+}
+
+
+/*
 function removeFilter(id){
 	document.getElementById(id).style.visibility = "hidden";
 	id= id.split("_")[0];
@@ -1488,9 +3857,14 @@ function removeFilter(id){
 		case "perf": 
 			filtered_perf = false;
 			break;
+
+		case "attribute":
+			filtered_attribute = false;
+			break;
 	}
 
 	var tf_selected = document.getElementById("keep_timeframe").value;
+	var pf_selected = document.getElementById("filter_by_performance").value;
 	var start_tf = document.getElementById("starting-time").value;
 	var end_tf = document.getElementById("ending-time").value;
 		
@@ -1533,10 +3907,12 @@ function removeFilter(id){
 	console.log(filtered_perf);
 	console.log(filtered_timeframe);
 	
-	if(filtered_perf == false && filtered_timeframe == false) {
+	if(filtered_perf == false && filtered_timeframe == false && filtered_attribute == false) {
 		freqRequest();
 		perfRequest();
 		variantRequest();
+		$('#history_div').empty();
+		$('#history_span').attr("hidden", true); 
 		
 	}
 	else{
@@ -1551,7 +3927,7 @@ function removeFilter(id){
 	
 	closeForm();
 }
-		
+*/		
 function update(){
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
@@ -1787,18 +4163,103 @@ outputPF.innerHTML = sliderPF.value;
 outputPP.innerHTML = sliderPP.value;
 outputAF.innerHTML = sliderAF.value;
 outputAP.innerHTML = sliderAP.value;
+// $('textarea').prop('readonly', true);
+
+// function used to update simultaneously the slider and the textarea
+function updateInfo(caso){
+	if(caso=="PP"){
+		sliderPP.value = outputPP.value
+		sliderPF.value = outputPP.value
+		outputPF.value =outputPP.value
+		outputPF.innerHTML =outputPP.value
+	}else if(caso=="PF"){
+		sliderPF.value = outputPF.value
+		sliderPP.value = outputPF.value
+		outputPP.value =outputPF.value
+		outputPP.innerHTML =outputPF.value
+	}else if(caso=="AF"){
+		sliderAF.value = outputAF.value
+		sliderAP.value = outputAF.value
+		outputAP.value =outputAF.value
+		outputAP.innerHTML =outputAF.value
+	}else if(caso=="AP"){
+		sliderAP.value = outputAP.value
+		sliderAF.value = outputAP.value
+		outputAF.value =outputAP.value
+		outputAF.innerHTML =outputAP.value
+	}
+
+	$(".change_form").css("visibility", "visible");
+	$(".dis_submit").addClass("dosubmit");
+	$(".dis_submit").attr('disabled', false);
+
+
+}
+
+
+
+// avoid to use enter to have a new line
+$('#pathP').keypress(function(event) {
+	if (event.keyCode == 13) {
+		event.preventDefault();
+		// $('textarea').prop('readonly', true);
+		// document.getElementById("invisibleButton2").click();
+	}
+});
+$('#pathF').keypress(function(event) {
+	if (event.keyCode == 13) {
+		event.preventDefault();
+		// $('textarea').prop('readonly', true);
+		// document.getElementById("invisibleButton2").click();
+	}
+});
+
 
 sliderPF.oninput = function() {
-  outputPF.innerHTML = this.value;
+	outputPF.innerHTML = this.value;
+	outputPP.innerHTML = this.value;
+	outputPF.value = this.value;
+	outputPP.value = this.value;
+	sliderPP.value = this.value;
+	sliderPF.value = this.value;
+	$(".change_form").css("visibility", "visible");
+	$(".dis_submit").addClass("dosubmit");
+	$(".dis_submit").attr('disabled', false);
+	
+
 }
 sliderPP.oninput = function() {
-  outputPP.innerHTML = this.value;
+	outputPF.innerHTML = this.value;
+  	outputPP.innerHTML = this.value;
+	outputPF.value = this.value;
+  	outputPP.value = this.value;
+	sliderPF.value = this.value;
+	sliderPP.value = this.value;
+	$(".change_form").css("visibility", "visible");
+	$(".dis_submit").addClass("dosubmit");
+	$(".dis_submit").attr('disabled', false);
 }
 sliderAF.oninput = function() {
-  outputAF.innerHTML = this.value;
+	outputAF.innerHTML = this.value;
+	outputAP.innerHTML = this.value;
+	outputAF.value = this.value;
+	outputAP.value = this.value;
+	sliderAF.value = this.value;
+	sliderAP.value = this.value;
+	$(".change_form").css("visibility", "visible");
+	$(".dis_submit").addClass("dosubmit");
+	$(".dis_submit").attr('disabled', false);
 }
 sliderAP.oninput = function() {
-  outputAP.innerHTML = this.value;
+	outputAP.innerHTML = this.value;
+	outputAF.innerHTML = this.value;
+	outputAP.value = this.value;
+	outputAF.value = this.value;
+	sliderAF.value = this.value;
+	sliderAP.value = this.value;
+	$(".change_form").css("visibility", "visible");
+	$(".dis_submit").addClass("dosubmit");
+	$(".dis_submit").attr('disabled', false);
 }
 </script>
 

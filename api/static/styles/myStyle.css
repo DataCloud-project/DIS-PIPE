@@ -34,7 +34,7 @@ body{
 	width:100%;
 	height: 100%;
 	text-align: center;
-	font-size: 24px;
+	font-size: 10px;
 	padding-top: 15%;
 }
 
@@ -64,7 +64,7 @@ body{
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .container .topic{
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 500;
   margin-bottom: 20px;
 }
@@ -105,7 +105,7 @@ body{
   /*background: red;*/
   border-radius: 12px;
   margin: 5px 0;
-  font-size: 18px;
+  font-size: 8px;
   font-weight: 500;
   line-height: 20px;
   cursor: pointer;
@@ -153,7 +153,7 @@ body{
   display: none;
 }
 .content .text-content .title{
-  font-size: 20px;
+  font-size: 14px;
   margin-bottom: 10px;
   font-weight: 500;
 }
@@ -197,10 +197,10 @@ label #btn{
 	cursor: pointer;
 	background: white;
 	border-radius: 3px;
-	z-index: 3;
+	/* z-index: 3; */
 	left: 40px;
 	top: 25px;
-	font-size: 35px;
+	font-size: 23px;
 	color: #6d50e2;
 	padding: 6px 12px;
 }
@@ -213,7 +213,7 @@ label #btn_tabs{
 	z-index: 3;
 	right: 40px;
 	top: 25px;
-	font-size: 35px;
+	font-size: 23px;
 	color: #6d50e2;
 	padding: 6px 12px;
 }
@@ -223,10 +223,10 @@ label #btn_filter{
 	cursor: pointer;
 	background: white;
 	border-radius: 3px;
-	z-index: 15;
+	/* z-index: 15; */
 	right: 40px;
 	top: 25px;
-	font-size: 35px;
+	font-size: 23px;
 	color: #6d50e2;
 	padding: 12px;
 }
@@ -238,8 +238,8 @@ label #btn_filter{
 	cursor: pointer;
 	background: white;
 	border-radius: 3px;
-	z-index: 3;
-	font-size: 35px;
+	/* z-index: 3; */
+	font-size: 23px;
 	color: #6d50e2;
 	padding: 6px 12px;
 }
@@ -262,7 +262,7 @@ label #btn_filter{
 	padding: 15px;
 	color: white;
 	z-index: 20;
-	font-size: 25px;
+	font-size: 13px;
 	margin-right: 5px;
 	margin-left: 30px;
 	float: right;
@@ -340,7 +340,7 @@ input#tabFilter:checked + label {
   cursor: pointer; /* Pointer/hand icon */
   width: 100%; /* Set a width if needed */
   white-space: normal;
-  font-size: 14;
+  font-size: 7;
 }
 
 .map-content{
@@ -351,7 +351,7 @@ input#tabFilter:checked + label {
 	margin-right: 5px;
 	background: transparent;
 	overflow: auto;
-	unselected: on;
+	/* unselected: on; */
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -443,10 +443,14 @@ width: 100%;
   background-color: #cfa8d5;
   color: white;
   padding: 16px;
-  font-size: 14px;
+  font-size: 11px;
   border: none;
   cursor: pointer;
   border-radius: 12px;
+}
+
+.dosubmit:hover{
+  background-color: #7a4791;
 }
 
 /* Dropdown button on hover & focus */
@@ -460,19 +464,62 @@ width: 100%;
 }
 /* Create three unequal columns that floats next to each other */
 .column {
-  float: left;
-  padding: 10px;
+  
+  /* padding: 10px; */
 }
 
-.left, .middle {
-  width: 15%;
+.left {
+  float: left;
+  width: 12%;
+  padding: 10px;
+  /* border-style: solid */
+
+}
+.left_pop{
+  float: left;
+  width: 33%;
+  /* padding: 10px; */
+
+}
+
+.middle {
+  float: left;
+  width: 12%;
+  padding: 10px;
+  /* border-style: solid */
+  /* height: 100%; */
+  
+}
+
+#case-ul{
+  height:480px; 
+  overflow:auto;
+  border: none;
+}
+#variants-ul{
+  height:480px; 
+  overflow:auto;
+  border: none;
 }
 
 .right {
-  width: 70%;
+  width: 55%;
   overflow: auto;
-  padding-right: 10px;
+  float: left;
+  /* padding-right: 10px; */
   white-space: nowrap;
+  padding: 10px;
+  /* padding: 10px; */
+  /* border-style: solid */
+  
+}
+
+.filtro {
+  width: 21%;
+  float:right;
+  padding: 10px;
+  /* border-style: solid */
+
 }
 
 /* Clear floats after the columns */
@@ -529,20 +576,106 @@ li {
 button{
   background-color: #cfa8d5;
   color: white;
-  padding: 6px;
-  font-size: 16px;
+  /* padding: 6px; */
+  font-size: 8px;
   border: none;
   cursor: pointer;
   border-radius: 12px;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
   width: 265px;
+}
+.menu_button{
+  padding: 5px;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.dis_submit{
+  padding: 5px;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+
+.setPath{
+  font-size: 12px;
+  /* width: 145px; */
+  border-radius: 5px;
+}
+#setActF{
+  font-size: 12px;
+  /* width: 145px; */
+  border-radius: 5px;
+}
+#setActP{
+  font-size: 12px;
+  /* width: 145px; */
+  border-radius: 5px;
+}
+
+#actF{
+    height: 1.7em;
+    border-radius: 5px;
+}
+#actP{
+  height: 1.7em;
+  border-radius: 5px;
+}
+#pathF{
+  height: 1.7em;
+  border-radius: 5px;
+}
+#pathP{
+  height: 1.7em;
+  border-radius: 5px;
+}
+
+.filtro_bottone{
+  background-color: #cfa8d5;
+  color: white;
+  /* padding: 6px; */
+  font-size: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  /* margin-bottom: 5px; */
+  width: 150px;
+}
+
+.history_bottone{
+  background-color: #cfa8d5;
+  color: white;
+  /* padding: 5px; */
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  /* margin-bottom: 5px; */
+  width: 27px;
+}
+
+.history_element{
+  /* border-style: dotted; */
+  border-bottom: 2px outset;
+}
+
+.element_title{
+  font-size: 12px;
+}
+
+.legend {
+  /* float: center; */
+  text-align: center;
+}
+.text-table{
+  font-size: 13px;
 }
 
 .bottomleft input[type=submit]{
   background-color: #cfa8d5;
   color: white;
   padding: 6px;
-  font-size: 16px;
+  font-size: 8px;
   border: none;
   cursor: pointer;
   border-radius: 12px;
@@ -553,7 +686,7 @@ button{
 	background-color: #cfa8d5;
   color: white;
   padding: 16px;
-  font-size: 14px;
+  font-size: 8px;
   border: none;
   cursor: pointer;
   border-radius: 12px;
@@ -566,7 +699,7 @@ button{
   /*Preso da popup*/
   display: inline-block;
   /**/
-  width: 160px;
+  width: 300px;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -612,12 +745,35 @@ button{
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
-  position: fixed;
+  /* position: fixed;
   left: 40%;
-  top: 10%;
+  top: 10%; */
   /*transform: translate(-50%, -50%);*/
   border: 3px solid #cfa8d5;
-  z-index: 15;
+  z-index: 15; 
+  position: absolute;
+    max-width: 1000px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  /* position:absolute; */
+  /* top:50%; */
+  /* left:50%; */
+  /* width:600px;  adjust as per your needs */
+  /* height:500px;  adjust as per your needs */
+  /* margin-left:-300px;   negative half of width above */
+  /* margin-top:-250px;   negative half of height above */
+}
+
+.form-loading {
+  display: none;
+  border: 3px solid #cfa8d5;
+  z-index: 45; 
+  position: absolute;
+  max-width: 1000px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Add styles to the form container */
@@ -628,14 +784,26 @@ button{
 
 .blocker {
     position: fixed;
-	display: none;
+	  display: none;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     content: ' ';
     background: rgba(0,0,0,.5);
-	z-index: 15;
+	  z-index: 15;
+}
+
+.blocker_first {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: ' ';
+  background: rgba(0,0,0,.5);
+  z-index: 1;
 }
 
 
@@ -643,7 +811,7 @@ button{
 .checkboxgroup {
     overflow: auto;
 	background: #cfa8d5;
-	border: 1px solid #7a4791
+	border: 1px solid #7a4791;
 	max-height: 50%;
 }
 
@@ -663,9 +831,9 @@ button{
 
 svg {
   overflow: hidden;
-  overlap: false;
-  font-size: 10;
-  shape: rect;
+  /* overlap: false; */
+  font-size: 7;
+  /* shape: rect; */
   background-color: transparent;
 }
 .node rect {
