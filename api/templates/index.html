@@ -102,7 +102,7 @@ function checkRefresh()
 					<i class="fas fa-chart-line"></i>
 					<span class="topic">Event Log Analysis</span>
 				</label>
-				<label for="cChecking" class="cChecking">
+				<label for="cChecking" class="cChecking"  onclick="doSomething()">
 					<i class="fas fa-check-double"></i>
 					<span class="topic">Conformance Checking</span>
 				</label>
@@ -136,6 +136,7 @@ function checkRefresh()
 						<p id='allEdgeFq' style='display:none'>{{ stringEdgeFrequency }}</p>
 						<p id='usedVariable' style='display:none'>{{ stringUsedVarible }}</p>
 						<p id='allEdgeDt' style='display:none'>{{ stringEdgeDuration }}</p>
+						<p id='stringPetriNet' style='display:none'>{{ stringPetriNet }}</p>
 						<p id='petriFreq' style='display:none'>Try</p>
 						<p id='petriPerf' style='display:none'>Try</p>
 						<p id='bpmn' style='display:none'>Try</p>
@@ -154,16 +155,20 @@ function checkRefresh()
 							<i class="fas fa-edit" id="btn_tabs"></i>
 						</label>
 						
+						<!-- First page - Map Content -->
 						<div class="mapContainer">
 						
-							
 							<span class="popuptext" id="myPopup">Popup text...</span>
 							
+							<!-- graph container -->
 							<div class="map-content" id="map-content">
 								<svg id="graphContainer">
 								
 								</svg>
-							</div>	
+							</div>
+							<!-- end graph container -->
+
+							<!-- Feedback of change -->
 							<div class="blocker_first" id="blocker5" onclick="closeChangement()"></div>
 							<div class="form-loading" id="myChange">
 								<div class="form-container">
@@ -175,7 +180,9 @@ function checkRefresh()
 									</center>
 								</div>
 							</div>
+							<!-- End feedback of change -->
 						
+							<!-- popup path and activities -->
 							<div class="mytabs">
 							
 									<input type="radio" name="mytabs" id="tabFreq" checked="checked" value="frequency" onclick="getMap()">
@@ -270,11 +277,14 @@ function checkRefresh()
 										
 									</div>
 							</div>	
+							<!-- end popup -->
 				
 						</div>
+						<!-- end first page -->
 						
 					</div>
 					
+					<!-- Second page Event log analisis -->
 					<div class="elanalysis text" id="elanalysis-text">
 					 	<div class="title"> Event Log Analysis Content</div>
 						<div class="row">
@@ -308,14 +318,7 @@ function checkRefresh()
 
 								<center>
 									<span>Choose a filter:</span>
-									<!-- <br> -->
-									<!-- <button style="all: revert">Add a Filter</button> -->
-									<!-- <select id="chooseFilter" name="chFilter">
-										<option selected value="noFilter"> ✖️ No filter </option>
-										<option value="Timeframe"> 🕑 Timeframe </option>
-										<option value="Performance"> ⌛ Performance </option>
-										<option value="Attribute"> 📊 Attribute </option>
-									</select> -->
+									
 									<br>
 								
 
@@ -323,17 +326,12 @@ function checkRefresh()
 									🕑 Timeframe
 								</button>
 								<br>
-								<!-- <i id="timeframe_remove" onclick="removeFilter(this.id)"></i> -->
 
 								<button title="Focus the analysis of the data set &#013; according to certain performance criteria" style="text-align:center;" class="filtro_bottone legend text-table"id="perf_filter" onclick="openForm(this.id)">
 									⌛ Performance
 								</button>
 								<br>
-								<!-- <i id="perf_remove" onclick="removeFilter(this.id)"></i> -->
-								<!-- <button style="text-align:center;" class="legend text-table" id="endpoints_filter" onclick="openForm(this.id)"><i class="fas fa-route"></i>
-									Endpoints
-								</button> -->
-								<!-- <i id="endpoints_remove" onclick="removeFilter(this.id)"></i> -->
+			
 								<button title="You can use it to split your data set &#013; based on a particular attribute, but also to &#013;filter cases based on the presence or absence of activities, &#013;to filter case IDs and variants, or to remove individual &#013; activities or attribute values" style="text-align:center;" class=" filtro_bottone legend text-table" id="attribute_filter" onclick="openForm(this.id)">
 									📊 Attribute
 								</button>
@@ -342,11 +340,7 @@ function checkRefresh()
 								<button style="text-align:center;" class=" filtro_bottone legend text-table" id="follower_filter" onclick="openForm(this.id)">
 									➡️ Folower
 								</button>
-								<!-- <i id="attribute_remove" onclick="removeFilter(this.id)"></i> -->
-								<!-- <button style="text-align:center;" class="legend text-table" id="follower_filter" onclick="openForm(this.id)"><i class="fas fa-people-arrows"></i>
-									Follower
-								</button> -->
-								<!-- <i id="follower_remove" onclick="removeFilter(this.id)"></i> -->
+		
 								<br>
 								<br>
 								<div hidden="true" id="history_span">
@@ -354,9 +348,6 @@ function checkRefresh()
 									<hr>
 									<br>
 								</div>
-								
-			
-								<!-- <span hidden="true" underlined id="history_span"> History Paragraph</span> -->
 
 								<div id="history_div">
 
@@ -724,11 +715,27 @@ function checkRefresh()
 
 								
 					</div>
+					<!-- End second page -->
+
+
+					<!-- Start Conformance checking -->
 					<div class="cChecking text" id="cChecking-text" style="height:500px">
 					 	<div class="title"> Conformance Checking Content</div>
-						<p>Here you should see things</p>
+						 <div id="InitialMarking">Initial Marking</div>
+						 <div id="FinalMarking">Final Marking</div>
+						 <br>
+						 <div class="map-content" id="petrinet-content">
+							<svg id="petriContainer">
+							
+							</svg>
+						</div>
+
+						
 								
 					</div>
+
+
+
 				</div>
 				
 		</div>
@@ -1212,6 +1219,7 @@ function exportDsl(){
 <script>
 var frontend = document.getElementById("path_frontend").innerHTML;
 var nodes_id_association={}
+var petri_sample
 function getMap(bool) {
 		
 		// DARIO START
@@ -1306,6 +1314,10 @@ function getMap(bool) {
 
 		main.innerHTML = image;		// SVG
 
+
+
+		
+		
 		// Optional - resize the SVG element based on the contents.
 		/*var svg = document.querySelector('#graphContainer');
 		var bbox = svg.getBBox();
@@ -2688,6 +2700,26 @@ function getMap(bool) {
 <script>
 var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
 
+function petriRequest(){
+
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", petriListener);
+	oReq.open("GET", frontend+"conformanceChecking", false);
+	oReq.send();
+
+}
+
+function petriListener(){
+	var response=this.responseText.split("£")
+	console.log(response[0])
+	console.log(response[1])
+	console.log(response[2])
+	document.getElementById("stringPetriNet").innerHTML = response[0];
+	document.getElementById("InitialMarking").innerHTML = "Initial Marking: "+response[1];
+	document.getElementById("FinalMarking").innerHTML = "Final Marking: "+response[2];
+
+}
+
 
 function swipeRemoveRequest() {
 	var oReq = new XMLHttpRequest();
@@ -3311,6 +3343,7 @@ var dates = [];
 // csmRequest();
 // csmEdgeRequest();
 initialRequest();
+
 
 //getMap(false);
 /*
@@ -4037,6 +4070,105 @@ function displayContent(){
 	}
 }
 
+
+function doSomething(){
+	petriRequest();
+	petri_sample=document.getElementById("stringPetriNet").innerHTML
+	petri_sample = petri_sample.replace(/&#34;/g, '"');
+	petri_sample = petri_sample.replace(/&gt;/g, ">");
+	petri_sample = petri_sample.replace(/&lt;/g, "<");
+	//petri_sample = petri_sample.replace(/●/g, "  &#9679;"); //9679
+	petri_sample = petri_sample.replace(/●/g, " ");
+	//petri_sample = petri_sample.replace(/■/g, '    &#9724;'); //9632
+	petri_sample = petri_sample.replace(/■/g, " ");
+	console.log(petri_sample)
+
+	var petri_options = {
+		  format: 'svg',
+		  ALLOW_MEMORY_GROWTH: 1,
+		  totalMemory: 537395200
+		  // format: 'png-image-element'
+		}
+		var petri_image = Viz(petri_sample, petri_options);
+		var petri_main = document.getElementById('petriContainer');
+
+		petri_main.innerHTML = petri_image;
+
+
+	const zvgZoom = document.getElementById("petriContainer");
+
+	//Zooming and paning with mouse
+
+	const svgContainer = document.getElementById("petrinet-content");
+	//console.log(svgContainer);
+
+	var viewBox = {x:0,y:0,w:"1920",h:"1080"};
+	var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+	zvgZoom.setAttribute('viewBox', attr);
+
+
+	const svgSize = {w:"1920",h:"1080"};
+//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
+var isPanning = false;
+var startPoint = {x:0,y:0};
+var endPoint = {x:0,y:0};;
+var scale = 1;
+
+svgContainer.onmousewheel = function(e) {
+   e.preventDefault();
+   var w = viewBox.w;
+   var h = viewBox.h;
+   var mx = e.offsetX;//mouse x  
+   var my = e.offsetY;    
+   var dw = -w*Math.sign(e.deltaY)*0.05;
+   var dh = -h*Math.sign(e.deltaY)*0.05;
+   var dx = dw*mx/svgSize.w;
+   var dy = dh*my/svgSize.h;
+   viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+   scale = svgSize.w/viewBox.w;
+   slider.value = scale*100;
+   output.innerHTML = slider.value;
+//   zoomValue.innerText = String(Math.round(scale*100)/100);
+   var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+   zvgZoom.setAttribute('viewBox', attr);
+   
+
+}
+
+
+svgContainer.onmousedown = function(e){
+   isPanning = true;
+   startPoint = {x:e.x,y:e.y};   
+}
+
+svgContainer.onmousemove = function(e){
+   if (isPanning){
+  endPoint = {x:e.x,y:e.y};
+  var dx = (startPoint.x - endPoint.x)/scale;
+  var dy = (startPoint.y - endPoint.y)/scale;
+  var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
+  var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+  zvgZoom.setAttribute('viewBox', attr);
+   }
+}
+
+svgContainer.onmouseup = function(e){
+   if (isPanning){ 
+  endPoint = {x:e.x,y:e.y};
+  var dx = (startPoint.x - endPoint.x)/scale;
+  var dy = (startPoint.y - endPoint.y)/scale;
+  viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
+  var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+  zvgZoom.setAttribute('viewBox', attr);
+  isPanning = false;
+  }
+}
+
+svgContainer.onmouseleave = function(e){
+ isPanning = false;
+}
+
+}
 </script>
 
 
@@ -4056,6 +4188,12 @@ const svgContainer = document.getElementById("map-content");
 var viewBox = {x:0,y:0,w:"1920",h:"1080"};
 var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
 zvgZoom.setAttribute('viewBox', attr);
+
+
+
+
+
+
 //console.log(zvgZoom.clientWidth);
 //console.log(String(zvgZoom.style.width));
 //const svgSize = {w:zvgZoom.style.width,h:zvgZoom.style.height};

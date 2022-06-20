@@ -42,6 +42,7 @@ nomeupload=""
 # start_case=False
 # global first
 first=0
+dfg_f=None
 
 with open('../properties.txt') as f:
     lines = f.readlines()
@@ -79,7 +80,7 @@ if platform.system() == "Linux":
         log_path = 'event logs/running-example.xes'
 
 def home(file):
-    # global nomeupload 
+    global nomeupload 
     # global first
     # if(first==0):
     #     nomeupload=file
@@ -96,6 +97,7 @@ def home(file):
         stringEdgeDuration = "", \
         stringEdgeFrequency = "", \
         stringFrequency = "", \
+        stringPetriNet = "", \
         median = "", \
         total = "", \
         myPathF_init = "100", \
@@ -428,7 +430,7 @@ def dfgFreqReduced():
     else:
         path = int(myPathF)
     #print("Freq: "+str(act)+" "+str(path))
-
+    global dfg_f
     dfg_f, sa_f, ea_f = pm4py.discover_directly_follows_graph(log)
     parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
     activities_count_f = pm4py.get_event_attribute_values(log, "concept:name")
@@ -1447,7 +1449,7 @@ def initialAction():
     
     log_duplicate=log
 
-    
+    global dfg
     #DFG - process discovery
     #dfg_freq = dfg_discovery.apply(log)
     dfg, start_activities, end_activities = pm4py.discover_dfg(log)
@@ -1945,7 +1947,38 @@ def swipeRemoveAction():
 
 
 
+@app.route('/conformanceChecking', methods=['GET', 'POST'])
+def conformanceChecking():
 
+    global log
+    global dfg
+
+    from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
+    global dfg_f
+    if(dfg_f!=None):
+        dfg_conf =dfg_f
+    else:
+        dfg_conf = dfg
+
+    from pm4py.objects.conversion.dfg import converter as dfg_mining
+    net, im, fm = dfg_mining.apply(dfg_conf)
+
+    gviz = pn_visualizer.apply(net, im, fm)
+    # pn_visualizer.view(gviz)
+
+    from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
+    # pnml_exporter.apply(net, im, "petri.pnml")
+
+    pnml_exporter.apply(net, im, "net\\petri_final.pnml", final_marking=fm)
+    with open('net\\marking.txt', 'w') as f:
+        f.write(str(im))
+        f.write('\n')
+        f.write(str(fm))
+
+    from pm4py.objects.log.exporter.xes import exporter as xes_exporter
+    xes_exporter.apply(log, 'net\\petri_log.xes')
+
+    return str(gviz)+"£"+str(im)+"£"+str(fm)
 
 
 app.run(host=path_f, port=int(port_n))

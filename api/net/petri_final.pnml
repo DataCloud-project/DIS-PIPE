@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="cucina apre">
+        <name>
+          <text>cucina apre</text>
+        </name>
+      </place>
+      <place id="cucina">
+        <name>
+          <text>cucina</text>
+        </name>
+      </place>
+      <place id="prepara il piatto">
+        <name>
+          <text>prepara il piatto</text>
+        </name>
+      </place>
+      <place id="scegli ricetta">
+        <name>
+          <text>scegli ricetta</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="fine">
+        <name>
+          <text>fine</text>
+        </name>
+      </place>
+      <transition id="cucina apre_1">
+        <name>
+          <text>cucina apre</text>
+        </name>
+      </transition>
+      <transition id="fine_2">
+        <name>
+          <text>fine_2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="2bba5627-127f-446b-a16f-19954622e75c"/>
+      </transition>
+      <transition id="prepara il piatto_4">
+        <name>
+          <text>prepara il piatto</text>
+        </name>
+      </transition>
+      <transition id="cucina_5">
+        <name>
+          <text>cucina</text>
+        </name>
+      </transition>
+      <transition id="scegli ricetta_3">
+        <name>
+          <text>scegli ricetta</text>
+        </name>
+      </transition>
+      <transition id="fine_6">
+        <name>
+          <text>fine</text>
+        </name>
+      </transition>
+      <arc id="2013289444448" source="source" target="cucina apre_1"/>
+      <arc id="2013289444640" source="fine" target="fine_2"/>
+      <arc id="2013289445024" source="fine_2" target="sink"/>
+      <arc id="2013289444256" source="cucina apre_1" target="cucina apre"/>
+      <arc id="2013289445264" source="cucina apre" target="scegli ricetta_3"/>
+      <arc id="2013289445648" source="scegli ricetta_3" target="scegli ricetta"/>
+      <arc id="2013289446032" source="scegli ricetta" target="prepara il piatto_4"/>
+      <arc id="2013289445840" source="prepara il piatto_4" target="prepara il piatto"/>
+      <arc id="2013289446512" source="prepara il piatto" target="cucina_5"/>
+      <arc id="2013289446896" source="cucina_5" target="cucina"/>
+      <arc id="2013289447280" source="cucina" target="fine_6"/>
+      <arc id="2013289447088" source="fine_6" target="fine"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
