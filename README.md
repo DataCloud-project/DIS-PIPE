@@ -94,3 +94,17 @@ If there is an error saying <br />
 
 <!---# DIS-PIPE Event Log Manager
 It provides dedicated *segmentation*, *abstraction*, and *filtering* functionalities to transform the (collected) event data into an interpretable event log by extrapolating relevant fragments for an effective pipeline discovery. We implemented **DIS-PIPE-Event-Log-Manager** as a standalone tool developed using Java SE 8, Python 3.9 and C.-->
+
+## Contributing
+
+Before raising a pull request, please read our contributing guide.
+
+## Core development team
+
+* [Simone Agostinelli](https://github.com/SimoneONE)
+* [Dario Benvenuti](https://github.com/d-benvenuti)
+* [Andrea Marrella](https://github.com/and182)
+
+## License
+
+DIS-PIPE is released as open source software under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
