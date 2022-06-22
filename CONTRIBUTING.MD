@@ -29,7 +29,7 @@ If you want to raise a pull request with a new feature, or a refactoring of exis
 
 Upon [pull requests](#pull-requests) we use [ESLint checker rules](https://github.com/DataCloud-project/DIS-PIPE/blob/main/.eslintrc.cjs) to automatically check that the code is properly formatted.
 
-Please also make sure to provide a detailed description of your changes by adding a new section in the [CHANGELOG.md](https://github.com/DataCloud-project/DIS-PIPE/blob/main/CHANGELOG.md) file before requesting the pull request.
+Please also make sure to provide a detailed description of your changes by adding a new section in the [CHANGELOG.md](https://github.com/DataCloud-project/DIS-PIPE/blob/main/CHANGELOG.MD) file before requesting the pull request.
 
 The pull request will be reviewed by at least one member of the [core development team](https://github.com/DataCloud-project/DIS-PIPE/blob/main/README.md#core-development-team).
 
