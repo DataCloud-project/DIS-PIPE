@@ -8,6 +8,7 @@ import sys
 from jinja2 import Undefined
 import requests
 import json
+import re
 
 
 #IMAGES_FOLDER = os.path.join('static', 'images')
@@ -137,12 +138,27 @@ def end():
 @app.route('/', methods = ['POST'])
 def upload_file():
   f = request.files['file']
+  print(f.filename)
+
+  regex_expression="^[\w\.,\s-]+\.xes$"
+  check = re.search(regex_expression, f.filename)
+
+  global nomeupload
+  if(check):
+    print("")
+  else:
+    print("file not allowed")
+    return home(nomeupload)
+
+    
+  
+
   if f.filename == '':
     print("empty")
   #f.save("event logs/" + f.filename)
   f.save(log_path)
 
-  global nomeupload
+  
   nomeupload = f.filename
 
   return home(f.filename)
@@ -1953,7 +1969,9 @@ def conformanceChecking():
     global log
     global dfg
 
+    activities = pm4py.get_event_attribute_values(log, "concept:name")
     from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
+    from pm4py.algo.discovery.alpha import algorithm as alpha_miner
     global dfg_f
     if(dfg_f!=None):
         dfg_conf =dfg_f
@@ -1961,13 +1979,24 @@ def conformanceChecking():
         dfg_conf = dfg
 
     from pm4py.objects.conversion.dfg import converter as dfg_mining
-    net, im, fm = dfg_mining.apply(dfg_conf)
+    # net, im, fm = dfg_mining.apply(dfg_conf)
+    net, im, fm = alpha_miner.apply(log)
 
     gviz = pn_visualizer.apply(net, im, fm)
     # pn_visualizer.view(gviz)
+    places = net.places
+    transitions = net.transitions
+    arcs = net.arcs
+    trst=[]
+
+    for tr in transitions:
+        # print((str(tr.name)+" "+str(tr.label)))
+        trst.append([str(tr.name), str(tr.label)])
 
     from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
     # pnml_exporter.apply(net, im, "petri.pnml")
+
+
 
     pnml_exporter.apply(net, im, "net\\petri_final.pnml", final_marking=fm)
     with open('net\\marking.txt', 'w') as f:
@@ -1978,7 +2007,7 @@ def conformanceChecking():
     from pm4py.objects.log.exporter.xes import exporter as xes_exporter
     xes_exporter.apply(log, 'net\\petri_log.xes')
 
-    return str(gviz)+"£"+str(im)+"£"+str(fm)
+    return str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst)
 
 
 app.run(host=path_f, port=int(port_n))

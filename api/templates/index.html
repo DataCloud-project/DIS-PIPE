@@ -113,7 +113,7 @@ function checkRefresh()
 				<form action="" method='POST' enctype = "multipart/form-data">
 					<!-- <button type="button" for="myFile">Import log</button> -->
 					<button class="menu_button" type="button" onclick="update()">Import log</button>
-					<input type='file' id="file" name="file" style="display:none">
+					<input accept=".xes" type='file' id="file" name="file" style="display:none">
 					<br />
 					<button class="menu_button" type="button" onclick="exportDsl()">Export to DSL</button>
 					<br />
@@ -193,11 +193,13 @@ function checkRefresh()
 											<center>
 											<input type="hidden" id='tabTypeFreq' name='tabType' value="frequency">
 											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF">
-											Path: <textarea style="resize: none;" rows="1" cols="2"  id="pathF"></textarea>%
+											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2"  id="pathF"></textarea>%
 											<button class="setPath" type="button" style="width: 70px; " id="setPathF" onclick="updateInfo('PF')">set Path</button>
 											
+											<br><br>
+
 											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF">
-											Activities: <textarea style="resize: none;" rows="1" cols="2" id="actF"></textarea>%
+											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actF"></textarea>%
 											<button type="button" style="width: 95px; " id="setActF" onclick="updateInfo('AF')">set Activities</button>
 											<br>
 											
@@ -240,13 +242,13 @@ function checkRefresh()
 											<center>
 											<input type="hidden" id='tabTypePerf' name='tabType' value="performance">
 											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP'>
-											Path: <textarea style="resize: none;" rows="1" cols="2" id="pathP"></textarea>% 
+											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="pathP"></textarea>% 
 											<button class="setPath" type="button" style="width: 70px; " id="setPathP" onclick="updateInfo('PP')">set Path</button>
-											
+											<br><br>
 											
 											
 											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP'>
-											Activities: <textarea style="resize: none;" rows="1" cols="2" id="actP"></textarea>%
+											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actP"></textarea>%
 											<button type="button" style="width: 95px; " id="setActP" onclick="updateInfo('AP')">set Activities</button>
 											<br>
 											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
@@ -337,7 +339,7 @@ function checkRefresh()
 								</button>
 								<br>
 
-								<button style="text-align:center;" class=" filtro_bottone legend text-table" id="follower_filter" onclick="openForm(this.id)">
+								<button style="text-align:center; visibility: hidden;" class=" filtro_bottone legend text-table" id="follower_filter" onclick="openForm(this.id)">
 									➡️ Folower
 								</button>
 		
@@ -435,11 +437,11 @@ function checkRefresh()
 							<center>
 							<div id="timeframe_filter_div" style="display:none">
 								<label for="starting-time">Choose your starting time:</label>
-								<input type="datetime-local" id="starting-time" name="starting-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="20">
+								<input type="datetime-local" id="starting-time" name="starting-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
 								<br />
 								<br />
 								<label for="ending-time">Choose your ending time:</label>
-								<input type="datetime-local" id="ending-time" name="ending-time" value="2018-06-14T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="20">
+								<input type="datetime-local" id="ending-time" name="ending-time" value="2018-06-14T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
 								<br />
 								<br />
 								<text>Keep cases by:</text>
@@ -666,12 +668,21 @@ function checkRefresh()
 								</div>
 							
 							</div>
-							<br />
-							<br />
-							<br />
+							<div class="disapper_space">
+								<br />
+								<br />
+							</div>
+
+							<!-- <center id="disappear_loading" style="visibility: hidden;">
+								<div class="loader2"></div>
+							</center> -->
+							
+							<span id="triggerFilterSpan" style="visibility: hidden;" onclick="triggerInvisibleFunction()">Invisible</span>
+							
 							<div style="text-align:center">
+								
 								<!-- <button type="submit" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button> -->
-								<button type="button" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button>
+								<button type="button" class="btn" style="margin-right:10px" onclick="asyncCall()">Apply</button>
 								<button type="button" class="btn" onclick="closeForm()">Cancel</button>
 							</div>
 							
@@ -679,6 +690,9 @@ function checkRefresh()
 						</div>
 
 						
+
+						
+
 
 						<div class="form-loading" id="myLoading">
 							<div class="form-container">
@@ -719,18 +733,192 @@ function checkRefresh()
 
 
 					<!-- Start Conformance checking -->
-					<div class="cChecking text" id="cChecking-text" style="height:500px">
-					 	<div class="title"> Conformance Checking Content</div>
-						 <div id="InitialMarking">Initial Marking</div>
-						 <div id="FinalMarking">Final Marking</div>
-						 <br>
-						 <div class="map-content" id="petrinet-content">
+					<div class="cChecking text" id="cChecking-text">
+					 	<div class="title"> Conformance Checking</div>
+						<!-- <div id="InitialMarking">Initial Marking</div>
+						<div id="FinalMarking">Final Marking</div> -->
+						<!-- <br> -->
+						<!-- <div class="map-content" id="petrinet-content">
 							<svg id="petriContainer">
 							
 							</svg>
-						</div>
+						</div> -->
+						<center>
+						<div id="formConformanceChecking" style="display: block;">
+							<!-- INCOLLARE FORM -->
+							<br>
+							<br>
+							<div class="conformance-container">
+								<div class="conformance-title">Map transitions to Event classes</div>
+								
+								<hr>
+								
+								
+								<div id="attribute_filter_div">
+									<!-- <div class="row">
+										<div class="left_pop">
+											<span>
+												
+											</span>
+										</div>
+										
+										<div class="left_pop">
+											<span>
+												<text style="font-size: 12px; color:#4f4f4f; "></text>
+											</span>
+										</div>
+									</div>		 -->
+									
+									
+									<div class="row">
+										<div class="column-col space" style=" visibility:hidden">
+										  
+										</div>
+										<div id="transition_pnml" class="column-col left-col">
+											<span class="conformance-under-title" style="text-decoration: underline">pnml transitions</span>
+											<span class="conformance-under-title">  &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj;</span>
+											
+											<br>
+											<p>&zwnj; </p>
+											
+										
+											
+											
+										</div>
+										<div class="column-col center-col" style=" visibility:hidden">
+										  
+										</div>
+										<div id="transition_log" class="column-col right-col">
+											<span class="conformance-under-title" style="text-decoration: underline">Log Activities</span><br>
+											<span class="conformance-under-title">  &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj;</span>
+											
+											
+											<br>
+											<p>&zwnj; </p>
+											
+											
 
+										</div>
+											<div class="column-col space" style=" visibility:hidden">
+										  
+										</div>
+									</div>
+								
+								</div>
+							
 						
+							
+								<div style="text-align:center">
+									<br>
+									<button type="button" style="font-size: 16px; visibility: hidden" onclick="resetField()">Reset</button>
+									<button type="button" style="font-size: 16px;" onclick="nextDivForm()">Next</button>
+									
+								</div>
+							
+							</div>
+						</div>
+						</center>
+						
+
+						<!-- <center> -->
+						<div id="formConformanceChecking2" class="divcenter" style="display: none;">
+							<!-- INCOLLARE FORM -->
+							<br>
+							<br>
+							<div class="conformance-container2">
+								<div class="conformance-title">Personalize</div>
+								<hr>
+							
+								<div id="personalize_filter_div">
+
+									<div class="row">
+
+										<div class="column-col space2" style=" visibility:hidden">
+											
+										</div>
+
+										<div class="column-col center2-col" >
+											
+										
+								
+											<span>Cost for disalignment activities</span><br>
+											<select id="disalignment_log" onchange="changedisalignment_select()">
+												
+											</select>
+											<textarea class="vmiddle" name="move_log" id="move_log" cols="3" rows="1" onchange="changedisalignment_dictionary('log')"></textarea>
+											<textarea class="vmiddle" name="move_model" id="move_model" cols="3" rows="1" onchange="changedisalignment_dictionary('model')"></textarea>
+											<br>
+											<br>
+											<input type="checkbox" id="discard_check" name="" value="True">
+											<label for="discard_check"> Discard duplicate traces</label>
+											<br>
+											<br>
+											<span>Planner list</span><br>
+											<input type="radio" id="Planner1" name="planner_list" value="Planner 1">
+											<label for="Planner1">Planner 1</label><br>
+											<input type="radio" id="Planner2" name="planner_list" value="Planner 2">
+											<label for="Planner2">Planner 2</label><br>
+											<input type="radio" id="Planner3" name="planner_list" value="Planner 3">
+											<label for="Planner3">Planner 3</label><br>
+											<input style="visibility: hidden;" type="radio" id="Planner4" name="planner_list" value="Planner 4">
+											<label style="visibility: hidden;" for="Planner4">Add a planner</label>
+											<br>
+											<br>
+											
+											<input type="checkbox" id="trace_length" value="True"  onchange="trace_length_filter()">
+											<label for="trace_length"> Filter trace length</label>
+											<br>
+										
+											<span id="define_length" style="color: grey;">Define length</span>
+											<textarea placeholder="min" disabled class="vmiddle" name="minlen" id="minlen" cols="4" rows="1"></textarea>
+											<textarea placeholder="max" disabled class="vmiddle" name="maxlen" id="maxlen" cols="4" rows="1"></textarea>
+										</div>
+
+										<div class="column-col space2-center" style=" visibility:hidden">
+											
+										</div>
+
+										<div class="column-col center2-col">
+											<span>Log detail</span><br>
+											<textarea class="vmiddle" style="width:100%;" name="log_detail" id="log_detail" cols="10" rows="5" ></textarea>
+											<br>
+											<br>
+											<span style="visibility: hidden;" >Pnml detail</span><br>
+											<textarea class="vmiddle" style="width:100%;" name="model_detail" id="model_detail" cols="10" rows="5" ></textarea>
+											<br>
+											<br>
+											
+										</div>
+
+										<!-- <div class="column-col space2" style=" visibility:hidden">
+											
+										</div> -->
+
+
+									</div>
+									
+								</div>
+							
+						
+							
+								<div style="text-align:center">
+									<br>
+									<button type="button" style="font-size: 16px;" onclick="backDivForm()">Back</button>
+									<button type="button" style="font-size: 16px;" onclick="showResultonDFG()">Next</button>
+									
+								</div>
+							
+							</div>
+						</div>
+						<!-- </center> -->
+
+						<div class="map-content" id="map2-content" style="display: none;">
+							<button type="button" style="font-size: 16px;" onclick="backPrecDiv()">Back</button>
+							<br><br>
+							<svg id="graphContainer2">
+							
+							</svg>
+						</div>
 								
 					</div>
 
@@ -745,6 +933,185 @@ function checkRefresh()
 </body>
 
 <script type="text/javascript">
+
+	const levenshteinDistance = (str1 = '', str2 = '') => {
+		const track = Array(str2.length + 1).fill(null).map(() =>
+		Array(str1.length + 1).fill(null));
+		for (let i = 0; i <= str1.length; i += 1) {
+			track[0][i] = i;
+		}
+		for (let j = 0; j <= str2.length; j += 1) {
+			track[j][0] = j;
+		}
+		for (let j = 1; j <= str2.length; j += 1) {
+			for (let i = 1; i <= str1.length; i += 1) {
+				const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
+				track[j][i] = Math.min(
+					track[j][i - 1] + 1, // deletion
+					track[j - 1][i] + 1, // insertion
+					track[j - 1][i - 1] + indicator, // substitution
+				);
+			}
+		}
+		return track[str2.length][str1.length];
+	};
+
+
+
+
+	var disalignment_dictionary={}
+
+	
+
+	function trace_length_filter(){
+		if($('#trace_length').is(":checked")){
+			$('#maxlen').prop('disabled', false);
+			$('#minlen').prop('disabled', false);
+			$('#define_length').css('color','black');
+		}else{
+			$('#maxlen').prop('disabled', true);
+			$('#minlen').prop('disabled', true);
+			$('#define_length').css('color','grey');
+		}
+		
+	}
+
+	function changedisalignment_select(){
+		var changed_disalign=$('#disalignment_log option:selected').val();
+		
+		
+		$("#move_model").val(disalignment_dictionary[changed_disalign][0])
+		$("#move_log").val(disalignment_dictionary[changed_disalign][1])
+
+	}
+
+	function changedisalignment_dictionary(valore){
+		if(valore=="log"){
+			
+			
+			var changed_disalign=$('#disalignment_log option:selected').val();
+			// console.log(changed_disalign)
+			// console.log($("#move_model").val())
+			// disalignment_dictionary[tr_array[i][1]]=[0,0]
+			var temp=disalignment_dictionary[changed_disalign]
+			temp[1]=parseInt($("#move_log").val())
+			disalignment_dictionary[changed_disalign]=temp
+
+		}else if(valore=="model"){
+			var changed_disalign=$('#disalignment_log option:selected').val();
+			// console.log(changed_disalign)
+			// console.log($("#move_model").val())
+			var temp=disalignment_dictionary[changed_disalign]
+			temp[0]=parseInt($("#move_model").val())
+			disalignment_dictionary[changed_disalign]=temp
+
+		}
+		// console.log(disalignment_dictionary)
+
+	}
+
+	var inizio=0
+
+	function addTransitionName(){
+		// Create text with HTML
+		// console.log(tr_name)
+		
+		var tr_array = JSON.parse(tr_name.replace(/'/g,"\"") );
+		var log_array=JSON.parse(log_name.replace(/'/g,"\"") );
+	
+		// console.log(log_array)
+		// console.log(tr_array[0][1]);
+		backDivForm();
+		
+		if(inizio==0){
+			for (let i = 0; i < tr_array.length; i++) {
+			// console.log(tr_array[i][1])
+			$("#transition_pnml").append("<p>"+tr_array[i][1]+"</p>","<br>");   // A
+			// sel.append($("<option>").attr('value',1).text(tr_array[i][1]));
+			if(i==0){
+				$('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]).attr('selected','selected'))
+			}else{
+				$('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]))
+			}
+			
+			$('#move_log').text("0")
+			$('#move_model').text("0")
+			var sel = $('<select>').attr('id',tr_array[i][1])
+
+			disalignment_dictionary[tr_array[i][1]]=[1,1]
+			if(tr_array[i][1]=='None'){
+				disalignment_dictionary[tr_array[i][1]]=[0,0]
+			}
+
+			var selected_elem=""
+			var minimo=5000
+			for (let j = 0; j < log_array.length; j++) {
+				if(levenshteinDistance(tr_array[i][1],log_array[j])<minimo){
+					minimo=levenshteinDistance(tr_array[i][1],log_array[j])
+					selected_elem=log_array[j]
+				}
+			}
+
+			for (let k = 0; k < log_array.length; k++) {
+				if(selected_elem==log_array[k]){
+
+					sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]).attr('selected','selected'));
+				}else{
+					sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]));
+				}
+				
+			}
+			$('#transition_log').append(sel,"<br>","<br>");
+			// console.log(String(i))
+			}
+
+			changedisalignment_select()
+		
+
+			// console.log(disalignment_dictionary)
+			inizio=1
+		
+		}
+		// console.log(typeof tr_array);
+		
+
+		
+		
+	}
+
+	function showResultonDFG(){
+		document.getElementById("formConformanceChecking").style.display = "none";
+		document.getElementById("formConformanceChecking2").style.display = "none";
+		document.getElementById("map2-content").style.display = "block";
+		document.getElementById('graphContainer2').innerHTML = document.getElementById('graphContainer').innerHTML
+
+	}
+
+	function backDivForm(){
+		document.getElementById("formConformanceChecking").style.display = "block";
+		document.getElementById("formConformanceChecking2").style.display = "none";
+		document.getElementById("map2-content").style.display = "none";
+	}
+
+	function backPrecDiv(){
+		document.getElementById("formConformanceChecking").style.display = "none";
+		document.getElementById("formConformanceChecking2").style.display = "block";
+		document.getElementById("map2-content").style.display = "none";
+		// document.getElementById('graphContainer2').innerHTML = document.getElementById('graphContainer').innerHTML
+
+	}
+
+	function nextDivForm(){
+		document.getElementById("formConformanceChecking").style.display = "none";
+		document.getElementById("formConformanceChecking2").style.display = "block";
+		document.getElementById("map2-content").style.display = "none";
+	}
+
+	function resetField(){
+
+	}
+
+
 
 	function cambia(){
 		event.stopImmediatePropagation();
@@ -1251,7 +1618,7 @@ function getMap(bool) {
 				$('#filter_by').on('change', function(e) {
 					e.stopImmediatePropagation();
 					var typeD=this.value
-					console.log(typeD)
+					// console.log(typeD)
 					
 				});
 			});
@@ -1313,6 +1680,8 @@ function getMap(bool) {
 		var main = document.getElementById('graphContainer');
 
 		main.innerHTML = image;		// SVG
+
+		// document.getElementById('graphContainer2').innerHTML=image
 
 
 
@@ -2689,8 +3058,10 @@ function getMap(bool) {
 		// When the user clicks, open the popup
 		
 			// popup.classList.toggle("show");
-			popup.style.left = e.clientX-100+200 + "px";
-			popup.style.top = (e.clientY-180) + "px";
+			// popup.style.left = e.clientX-100+200 + "px";
+			// popup.style.top = (e.clientY-280) + "px";
+			popup.style.top= "10%"
+			popup.style.left= "47%"
 			popup.style.zIndez = "15";
 			
 		}	
@@ -2699,6 +3070,8 @@ function getMap(bool) {
 
 <script>
 var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
+var tr_name=""
+var log_name=""
 
 function petriRequest(){
 
@@ -2711,13 +3084,19 @@ function petriRequest(){
 
 function petriListener(){
 	var response=this.responseText.split("£")
-	console.log(response[0])
-	console.log(response[1])
-	console.log(response[2])
+	// console.log(response[0])
+	// console.log(response[1])
+	// console.log(response[2])
+	// console.log(response[3])
+	// console.log(response[4])
+	tr_name=response[4]
+	log_name=response[3]
+	addTransitionName();
 	document.getElementById("stringPetriNet").innerHTML = response[0];
+	/*
 	document.getElementById("InitialMarking").innerHTML = "Initial Marking: "+response[1];
 	document.getElementById("FinalMarking").innerHTML = "Final Marking: "+response[2];
-
+	*/
 }
 
 
@@ -3135,7 +3514,7 @@ function swap(json){
 }
 
 function showEvents(varKey, caseKey) {
-	console.log
+	// console.log
 	allCases = json[varKey];
 	allCases.forEach( (c) => {
 		
@@ -3170,7 +3549,7 @@ function showEvents(varKey, caseKey) {
 		if(i==0){
 			// tableHTML += "<th><h6>Activity</h6><hr><br></th><th><h6>Resource</h6><hr><br></th>" ;
 			Object.entries(e).forEach((attr) => {
-				// console.log("xdxd")
+			
 				// console.log(attr) 
 				// if(attr[0] == "time:timestamp") {
 				// 	tableHTML += "<th><h6>Date</h6><hr><br></th><th><h6>Time</h6><hr><br></th>" ;
@@ -3428,16 +3807,31 @@ menu.style.display = "none";
 	getMap(true);
 
 window.onchange = function() {
-	if (document.getElementById("file").files[0] != undefined) {
+	var regex = new RegExp(/^[\w\.,\s-]+\.xes$/);
+
+	if (document.getElementById("file").files[0] != undefined && regex.test(document.getElementById("file").files[0]['name']) == false) {
+		// console.log(document.getElementById("file").files[0])
+		document.getElementById("file").value = ""
+		alert("File not compatible");
+		
 		//document.getElementById("loadingMessage").style.visibility = "visible";
+		// document.getElementById("updateBtn").click();
+        // document.getElementById("loadingMessage").style.visibility = "visible";
+	}else if (document.getElementById("file").files[0] != undefined) {
+		//document.getElementById("loadingMessage").style.visibility = "visible";
+		inizio=0
 		document.getElementById("updateBtn").click();
         document.getElementById("loadingMessage").style.visibility = "visible";
 	}
+	
+
+
 	var timeframe_selected = document.getElementById("keep_timeframe").value;
 	var img = document.getElementById("img");
 	var source = "../static/images/"
 	img.src = source+timeframe_selected+".jpg";
 	
+
 	document.getElementById("starting-time").setAttribute("min", minDate);
 	document.getElementById("starting-time").setAttribute("max", maxDate);
 	document.getElementById("starting-time").setAttribute("value", minDate);
@@ -3533,18 +3927,62 @@ function closeChangement(){
 
 
 
+async function asyncCall() {
+//   console.log('calling');
+//   await $("#disappear_loading").css("visibility", "visible");
+  await $("#loadingMessage").css("visibility", "visible");
+//   document.getElementById("loadingMessage").style.visibility = "visible";	
+//   const result = await applyFilter();
+
+  $("#triggerFilterSpan").click()
+  // expected output: "resolved"
+}
+
+
+
+function triggerInvisibleFunction(){
+	
+	setTimeout(() => {
+		applyFilter()
+	}, 1);
+	
+}
+
+function dateMachRegex(date) {
+	const regex = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})$/g;
+	if (date.match(regex)) {
+		return date;
+	} else if ((date+":00").match(regex)) {
+		return date+":00";
+	}
+	return "error";
+}
+
 function applyFilter() {
 	
+	
+	// let p = new Promise((resolve,reject) =>{
+	// 	document.getElementById("disappear_loading").style.visibility = "visible";	
+
+    // // setTimeout(function(){ console.log("Hello"); }, 3000);
+
+    //     resolve("Success")   
+    // }).then((message) =>  {
 	var tf_selected = document.getElementById("keep_timeframe").value;
 	var pf_selected = document.getElementById("filter_by_performance").value;
 	var af_selected = document.getElementById("filter_by").value;
 	var af_selected_mode = document.getElementById("mode_for_attribute").value;
 
 	var start_tf = document.getElementById("starting-time").value;
+	start_tf=dateMachRegex(start_tf)
+	// console.log(start_tf)
 	var end_tf = document.getElementById("ending-time").value;
+	end_tf=dateMachRegex(end_tf)
 	
 	start_tf = start_tf.replace("T", " ");
 	end_tf = end_tf.replace("T", " ");
+	// console.log(start_tf)
+	// console.log(end_tf)
 
 	
 	
@@ -3697,152 +4135,245 @@ function applyFilter() {
 	filtered_timeframe=false
 	filtered_perf=false
 	filtered_attribute=false
+	
+
+	// // setTimeout(() => , 1000);
+	// // resolve("gtttt")
+	// }).then((message) =>  {
+	// 	console.log("this is the then "+message)
+	// 	// document.getElementById("loadingMessage").style.visibility = "hidden";	
+
+	$("#loadingMessage").css("visibility", "hidden");
 	document.getElementById("myLoading").style.display = "block";
 	document.getElementById("blocker2").style.display = "block";
+	// })
+
+	
+
 }
 
 function filterSwipeUp(id){
+
+	if(Object.keys(history_crono).length==1){
+		alert("Impossible to apply this filter")
+	}else if(parseInt(id)==0){
+		alert("Impossible to apply this filter")
+	}else{
+
+	$("#loadingMessage").css("visibility", "visible");
 	// console.log(id)
 	// console.log(history_crono)
-	var indice_up= String(parseInt(id)-1)
-	var temp=history_crono[id]
-	history_crono[id]=history_crono[indice_up]
-	history_crono[indice_up]=temp
-	// console.log(history_crono)
+	setTimeout(() => {
+		var indice_up= String(parseInt(id)-1)
+		var temp=history_crono[id]
+		history_crono[id]=history_crono[indice_up]
+		history_crono[indice_up]=temp
+		// console.log(history_crono)
 
+		
+		var v1 = $('#valore'+String(id)).html(),
+			v2 = $('#valore'+(indice_up)).html();
 	
-	var v1 = $('#valore'+String(id)).html(),
-        v2 = $('#valore'+(indice_up)).html();
- 
 
-	
-	// console.log(v1)
-	// console.log('#valore'+String(id))
-	
-	// console.log(v2)
-	// console.log('#valore'+(indice_up))
+		
+		// console.log(v1)
+		// console.log('#valore'+String(id))
+		
+		// console.log(v2)
+		// console.log('#valore'+(indice_up))
 
-	$('#valore'+String(id)).html(v2);
-    $('#valore'+(indice_up)).html(v1);
+		$('#valore'+String(id)).html(v2);
+		$('#valore'+(indice_up)).html(v1);
 
-	var classList_id = $('#valore'+String(id)+' .history_bottone');
-						
-	$.each(classList_id, function(index, item) {
-		item.value=String(id)
-	});
+		var classList_id = $('#valore'+String(id)+' .history_bottone');
+							
+		$.each(classList_id, function(index, item) {
+			item.value=String(id)
+		});
 
-	var classList_id_up = $('#valore'+indice_up+' .history_bottone');
-						
-	$.each(classList_id_up, function(index, item) {
-		item.value=indice_up
-	});
+		var classList_id_up = $('#valore'+indice_up+' .history_bottone');
+							
+		$.each(classList_id_up, function(index, item) {
+			item.value=indice_up
+		});
 
-	// var classList_title = $('#valore'+String(id)+' .element_title');
-	var classList_title = $('#valore'+String(id)+' .element_title');
-						
-	$.each(classList_title, function(index, item) {
-		$(this).value=String(id)
-		var testo=$(this).html()
-		var newtext= String(id)+") "+testo.split(")")[1].trim()
-		$(this).html(newtext)
-	});
+		// var classList_title = $('#valore'+String(id)+' .element_title');
+		var classList_title = $('#valore'+String(id)+' .element_title');
+							
+		$.each(classList_title, function(index, item) {
+			$(this).value=String(id)
+			var testo=$(this).html()
+			var newtext= String(id)+") "+testo.split(")")[1].trim()
+			$(this).html(newtext)
+		});
 
 
-	var classList_title_up = $('#valore'+indice_up+' .element_title');
-						
-	$.each(classList_title_up, function(index, item) {
-		$(this).value=indice_up
-		var testo=$(this).html()
-		var newtext= indice_up+") "+testo.split(")")[1].trim()
-		$(this).html(newtext)
-	});
-    
-	/* check to redesign start part	*/
-	// freqRequest();
-	// perfRequest();
-	// variantRequest();
-	swipeRemoveRequest();
-	apply_crono()
+		var classList_title_up = $('#valore'+indice_up+' .element_title');
+							
+		$.each(classList_title_up, function(index, item) {
+			$(this).value=indice_up
+			var testo=$(this).html()
+			var newtext= indice_up+") "+testo.split(")")[1].trim()
+			$(this).html(newtext)
+		});
+		
+		/* check to redesign start part	*/
+		// freqRequest();
+		// perfRequest();
+		// variantRequest();
+		swipeRemoveRequest();
+		apply_crono()
 
-	document.getElementById("myOrder").style.display = "block";
-	document.getElementById("blocker4").style.display = "block";
-
+		$("#loadingMessage").css("visibility", "hidden");
+		document.getElementById("myOrder").style.display = "block";
+		document.getElementById("blocker4").style.display = "block";
+	},1);
+	}
 }
 
 function filterSwipeDown(id){
 
-	var indice_up= String(parseInt(id)+1)
-	var temp=history_crono[id]
-	history_crono[id]=history_crono[indice_up]
-	history_crono[indice_up]=temp
-
-	var v1 = $('#valore'+String(id)).html(),
-        v2 = $('#valore'+(indice_up)).html();
- 
-	$('#valore'+String(id)).html(v2);
-    $('#valore'+(indice_up)).html(v1);
+	if(Object.keys(history_crono).length==1){
+		alert("Impossible to apply this filter")
+	}else if(parseInt(id)==Object.keys(history_crono).length-1){
+		alert("Impossible to apply this filter")
+	}else{
 
 
-	var classList_id = $('#valore'+String(id)+' .history_bottone');
-						
-	$.each(classList_id, function(index, item) {
-		item.value=String(id)
-	});
+	$("#loadingMessage").css("visibility", "visible");
 
-	var classList_id_up = $('#valore'+indice_up+' .history_bottone');
-						
-	$.each(classList_id_up, function(index, item) {
-		item.value=indice_up
-	});
+	setTimeout(() => {
+		var indice_up= String(parseInt(id)+1)
+		var temp=history_crono[id]
+		history_crono[id]=history_crono[indice_up]
+		history_crono[indice_up]=temp
+		// console.log(history_crono)
 
-	var classList_title = $('#valore'+String(id)+' .element_title');
-						
-	$.each(classList_title, function(index, item) {
+		var v1 = $('#valore'+String(id)).html(),
+			v2 = $('#valore'+(indice_up)).html();
 	
-		$(this).value=String(id)
-		var testo=$(this).html()
-		var newtext= String(id)+") "+testo.split(")")[1].trim()
-		$(this).html(newtext)
-	});
-					
-	var classList_title_up = $('#valore'+indice_up+' .element_title');
-											
-	$.each(classList_title_up, function(index, item) {
-	
-		$(this).value=indice_up
-		var testo=$(this).html()
-		
-		var newtext= indice_up+") "+testo.split(")")[1].trim()
-		$(this).html(newtext)
-		
-	});
+		$('#valore'+String(id)).html(v2);
+		$('#valore'+(indice_up)).html(v1);
 
-	/* check to redesign start part	*/
-	// freqRequest();
-	// perfRequest();
-	// variantRequest();
-	swipeRemoveRequest();
-	apply_crono()
 
-	document.getElementById("myOrder").style.display = "block";
-	document.getElementById("blocker4").style.display = "block";
+		var classList_id = $('#valore'+String(id)+' .history_bottone');
+							
+		$.each(classList_id, function(index, item) {
+			item.value=String(id)
+		});
+
+		var classList_id_up = $('#valore'+indice_up+' .history_bottone');
+							
+		$.each(classList_id_up, function(index, item) {
+			item.value=indice_up
+		});
+
+		var classList_title = $('#valore'+String(id)+' .element_title');
+							
+		$.each(classList_title, function(index, item) {
+		
+			$(this).value=String(id)
+			var testo=$(this).html()
+			var newtext= String(id)+") "+testo.split(")")[1].trim()
+			$(this).html(newtext)
+		});
+						
+		var classList_title_up = $('#valore'+indice_up+' .element_title');
+												
+		$.each(classList_title_up, function(index, item) {
+		
+			$(this).value=indice_up
+			var testo=$(this).html()
+			
+			var newtext= indice_up+") "+testo.split(")")[1].trim()
+			$(this).html(newtext)
+			
+		});
+
+		/* check to redesign start part	*/
+		// freqRequest();
+		// perfRequest();
+		// variantRequest();
+		swipeRemoveRequest();
+		apply_crono()
+
+		$("#loadingMessage").css("visibility", "hidden");
+		document.getElementById("myOrder").style.display = "block";
+		document.getElementById("blocker4").style.display = "block";
+	},1);
+	}
 }
 
 function filterRemove(id){
-
-	delete history_crono[id]
-	// console.log(history_crono)
-	$('#valore'+id).remove();
+	$("#loadingMessage").css("visibility", "visible");
+	var temp=history_crono[id]
+	// console.log(id)
+	// console.log(temp)
 	
-	/* check to redesign start part	*/
-	// freqRequest();	
-	// perfRequest();
-	// variantRequest();
-	swipeRemoveRequest();
-	apply_crono();
+	setTimeout(() => {
+		var history_length=(Object.keys(history_crono).length)
+		var history_indice=id
 
-	document.getElementById("myRemove").style.display = "block";
-	document.getElementById("blocker3").style.display = "block";
+		var v1 = $('#valore'+id).html();
+
+
+		delete history_crono[id]
+		// console.log(history_crono)
+		$('#valore'+id).remove();
+		// 
+		// 
+		
+		
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		for (let i = 0; i < history_length; i += 1) {
+			if(i>history_indice){
+				var temp = history_crono[String(i)]
+				history_crono[String(i-1)]=temp
+				
+				$('#valore'+String(i)).attr("id","valore"+String(i-1));
+				
+				var classList_id_up = $('#valore'+String(i-1)+' .history_bottone');	
+				$.each(classList_id_up, function(index, item) {
+					item.value=String(i-1)
+				});
+
+
+				var classList_title_up = $('#valore'+String(i-1)+' .element_title');
+									
+				$.each(classList_title_up, function(index, item) {
+					$(this).value=String(i-1)
+					// item.value=String(i-1)
+					var testo=$(this).html()
+					var newtext= String(i-1)+") "+testo.split(")")[1].trim()
+					$(this).html(newtext)
+					// $(this).value="4"
+				});
+
+
+				delete history_crono[String(i)]
+			}
+		// 	
+		}
+
+		// console.log(history_crono)
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+		
+		/* check to redesign start part	*/
+		// freqRequest();	
+		// perfRequest();
+		// variantRequest();
+		swipeRemoveRequest();
+		apply_crono();
+		indice=indice-1
+
+		$("#loadingMessage").css("visibility", "hidden");
+		document.getElementById("myRemove").style.display = "block";
+		document.getElementById("blocker3").style.display = "block";
+		
+	}, 1);
+
+	
 }
 
 function apply_crono(){
@@ -4072,22 +4603,26 @@ function displayContent(){
 
 
 function doSomething(){
-	petriRequest();
-	petri_sample=document.getElementById("stringPetriNet").innerHTML
-	petri_sample = petri_sample.replace(/&#34;/g, '"');
-	petri_sample = petri_sample.replace(/&gt;/g, ">");
-	petri_sample = petri_sample.replace(/&lt;/g, "<");
-	//petri_sample = petri_sample.replace(/●/g, "  &#9679;"); //9679
-	petri_sample = petri_sample.replace(/●/g, " ");
-	//petri_sample = petri_sample.replace(/■/g, '    &#9724;'); //9632
-	petri_sample = petri_sample.replace(/■/g, " ");
-	console.log(petri_sample)
+	$("#loadingMessage").css("visibility", "visible");
+	setTimeout(() => {
+	//
+		petriRequest();
+		petri_sample=document.getElementById("stringPetriNet").innerHTML
+		petri_sample = petri_sample.replace(/&#34;/g, '"');
+		petri_sample = petri_sample.replace(/&gt;/g, ">");
+		petri_sample = petri_sample.replace(/&lt;/g, "<");
+		//petri_sample = petri_sample.replace(/●/g, "  &#9679;"); //9679
+		petri_sample = petri_sample.replace(/●/g, " ");
+		//petri_sample = petri_sample.replace(/■/g, '    &#9724;'); //9632
+		petri_sample = petri_sample.replace(/■/g, " ");
+		console.log(petri_sample)
 
-	var petri_options = {
-		  format: 'svg',
-		  ALLOW_MEMORY_GROWTH: 1,
-		  totalMemory: 537395200
-		  // format: 'png-image-element'
+		/*
+		var petri_options = {
+			format: 'svg',
+			ALLOW_MEMORY_GROWTH: 1,
+			totalMemory: 537395200
+			// format: 'png-image-element'
 		}
 		var petri_image = Viz(petri_sample, petri_options);
 		var petri_main = document.getElementById('petriContainer');
@@ -4095,78 +4630,81 @@ function doSomething(){
 		petri_main.innerHTML = petri_image;
 
 
-	const zvgZoom = document.getElementById("petriContainer");
+		const zvgZoom = document.getElementById("petriContainer");
 
-	//Zooming and paning with mouse
+		//Zooming and paning with mouse
 
-	const svgContainer = document.getElementById("petrinet-content");
-	//console.log(svgContainer);
+		const svgContainer = document.getElementById("petrinet-content");
+		//console.log(svgContainer);
 
-	var viewBox = {x:0,y:0,w:"1920",h:"1080"};
-	var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-	zvgZoom.setAttribute('viewBox', attr);
-
-
-	const svgSize = {w:"1920",h:"1080"};
-//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
-var isPanning = false;
-var startPoint = {x:0,y:0};
-var endPoint = {x:0,y:0};;
-var scale = 1;
-
-svgContainer.onmousewheel = function(e) {
-   e.preventDefault();
-   var w = viewBox.w;
-   var h = viewBox.h;
-   var mx = e.offsetX;//mouse x  
-   var my = e.offsetY;    
-   var dw = -w*Math.sign(e.deltaY)*0.05;
-   var dh = -h*Math.sign(e.deltaY)*0.05;
-   var dx = dw*mx/svgSize.w;
-   var dy = dh*my/svgSize.h;
-   viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
-   scale = svgSize.w/viewBox.w;
-   slider.value = scale*100;
-   output.innerHTML = slider.value;
-//   zoomValue.innerText = String(Math.round(scale*100)/100);
-   var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-   zvgZoom.setAttribute('viewBox', attr);
-   
-
-}
+		var viewBox = {x:0,y:0,w:"1920",h:"1080"};
+		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+		zvgZoom.setAttribute('viewBox', attr);
 
 
-svgContainer.onmousedown = function(e){
-   isPanning = true;
-   startPoint = {x:e.x,y:e.y};   
-}
+		const svgSize = {w:"1920",h:"1080"};
+		//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
+		var isPanning = false;
+		var startPoint = {x:0,y:0};
+		var endPoint = {x:0,y:0};;
+		var scale = 1;
 
-svgContainer.onmousemove = function(e){
-   if (isPanning){
-  endPoint = {x:e.x,y:e.y};
-  var dx = (startPoint.x - endPoint.x)/scale;
-  var dy = (startPoint.y - endPoint.y)/scale;
-  var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
-  var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
-  zvgZoom.setAttribute('viewBox', attr);
-   }
-}
+		svgContainer.onmousewheel = function(e) {
+			e.preventDefault();
+			var w = viewBox.w;
+			var h = viewBox.h;
+			var mx = e.offsetX;//mouse x  
+			var my = e.offsetY;    
+			var dw = -w*Math.sign(e.deltaY)*0.05;
+			var dh = -h*Math.sign(e.deltaY)*0.05;
+			var dx = dw*mx/svgSize.w;
+			var dy = dh*my/svgSize.h;
+			viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+			scale = svgSize.w/viewBox.w;
+			slider.value = scale*100;
+			output.innerHTML = slider.value;
+			//   zoomValue.innerText = String(Math.round(scale*100)/100);
+			var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+			zvgZoom.setAttribute('viewBox', attr);
+		}
 
-svgContainer.onmouseup = function(e){
-   if (isPanning){ 
-  endPoint = {x:e.x,y:e.y};
-  var dx = (startPoint.x - endPoint.x)/scale;
-  var dy = (startPoint.y - endPoint.y)/scale;
-  viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
-  var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-  zvgZoom.setAttribute('viewBox', attr);
-  isPanning = false;
-  }
-}
 
-svgContainer.onmouseleave = function(e){
- isPanning = false;
-}
+		svgContainer.onmousedown = function(e){
+			isPanning = true;
+			startPoint = {x:e.x,y:e.y};   
+		}
+
+		svgContainer.onmousemove = function(e){
+			if (isPanning){
+				endPoint = {x:e.x,y:e.y};
+				var dx = (startPoint.x - endPoint.x)/scale;
+				var dy = (startPoint.y - endPoint.y)/scale;
+				var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
+				var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+				zvgZoom.setAttribute('viewBox', attr);
+			}
+		}
+
+		svgContainer.onmouseup = function(e){
+		if (isPanning){ 
+		endPoint = {x:e.x,y:e.y};
+		var dx = (startPoint.x - endPoint.x)/scale;
+		var dy = (startPoint.y - endPoint.y)/scale;
+		viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
+		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+		zvgZoom.setAttribute('viewBox', attr);
+		isPanning = false;
+		}
+		}
+
+		svgContainer.onmouseleave = function(e){
+		isPanning = false;
+		}
+		*/
+
+		$("#loadingMessage").css("visibility", "hidden");
+
+	}, 10);
 
 }
 </script>
@@ -4257,6 +4795,98 @@ svgContainer.onmouseup = function(e){
 svgContainer.onmouseleave = function(e){
  isPanning = false;
 }
+
+
+/*+*/
+
+const zvgZoom2 = document.getElementById("graphContainer2");
+
+// output.innerHTML = slider.value;
+
+
+//Zooming and paning with mouse
+
+const svgContainer2 = document.getElementById("map2-content");
+//console.log(svgContainer2);
+
+var viewBox2 = {x:0,y:0,w:"1920",h:"1080"};
+var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+zvgZoom2.setAttribute('viewBox', attr);
+
+
+
+
+
+
+//console.log(zvgZoom2.clientWidth);
+//console.log(String(zvgZoom2.style.width));
+//const svgSize = {w:zvgZoom2.style.width,h:zvgZoom2.style.height};
+const svgSize2 = {w:"1920",h:"1080"};
+//console.log("Initial svgSize2: "+String(svgSize2.w)+" "+String(svgSize2.h));
+var isPanning2 = false;
+var startPoint2 = {x:0,y:0};
+var endPoint2 = {x:0,y:0};;
+var scale2 = 1;
+
+svgContainer2.onmousewheel = function(e) {
+   e.preventDefault();
+   var w = viewBox2.w;
+   var h = viewBox2.h;
+   var mx = e.offsetX;//mouse x  
+   var my = e.offsetY;    
+   var dw = -w*Math.sign(e.deltaY)*0.05;
+   var dh = -h*Math.sign(e.deltaY)*0.05;
+   var dx = dw*mx/svgSize2.w;
+   var dy = dh*my/svgSize2.h;
+   viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w-dw,h:viewBox2.h-dh};
+   scale2 = svgSize2.w/viewBox2.w;
+   slider.value = scale2*100;
+   output.innerHTML = slider.value;
+//   zoomValue.innerText = String(Math.round(scale2*100)/100);
+   var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+   zvgZoom2.setAttribute('viewBox', attr);
+   
+
+}
+
+
+svgContainer2.onmousedown = function(e){
+   isPanning2 = true;
+   startPoint2 = {x:e.x,y:e.y};   
+}
+
+svgContainer2.onmousemove = function(e){
+   if (isPanning2){
+  endPoint2 = {x:e.x,y:e.y};
+  var dx = (startPoint2.x - endPoint2.x)/scale2;
+  var dy = (startPoint2.y - endPoint2.y)/scale2;
+  var movedViewBox = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};
+  var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+  zvgZoom2.setAttribute('viewBox', attr);
+   }
+}
+
+svgContainer2.onmouseup = function(e){
+   if (isPanning2){ 
+  endPoint2 = {x:e.x,y:e.y};
+  var dx = (startPoint2.x - endPoint2.x)/scale2;
+  var dy = (startPoint2.y - endPoint2.y)/scale2;
+  viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};   
+  var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+  zvgZoom2.setAttribute('viewBox', attr);
+  isPanning2 = false;
+  }
+}
+
+svgContainer2.onmouseleave = function(e){
+ isPanning2 = false;
+}
+
+
+// ##############################################à
+
+
+
  
 var lastNum = 0;
 var v;

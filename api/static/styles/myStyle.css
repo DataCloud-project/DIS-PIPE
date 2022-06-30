@@ -49,6 +49,17 @@ body{
   
 }
 
+.loader2 {
+  border: 8px solid #6d50e2;
+  border-top: 8px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  width: 40px;
+  height: 40px;
+  /* margin-left:47%; */
+  
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -152,11 +163,44 @@ body{
 .content .text{
   display: none;
 }
-.content .text-content .title{
+.content .text-content{
   font-size: 14px;
   margin-bottom: 10px;
   font-weight: 500;
 }
+
+.title{
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.vmiddle {
+  display:inlline-block;
+  vertical-align:top;
+  resize: none;
+}
+
+.divcenter {
+  margin: auto;
+  width: 76%;
+  /* border: 3px solid #73AD21; */
+  padding: 10px;
+}
+
+.conformance-title{
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.conformance-under-title{
+  font-size: 17px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
 .content .text p{
   text-align: justify;
 }
@@ -288,7 +332,7 @@ label #btn_filter{
 	padding: 25px;
 	background: #6d50e2;
 	border-radius: 12px;
-	left: 1050px;
+	left: 67%;
 	z-index: 2;
 	width: 30%;
 }
@@ -466,6 +510,38 @@ width: 100%;
 .column {
   
   /* padding: 10px; */
+}
+.column-col {
+  float: left;
+  padding: 10px;
+  
+}
+
+.center2-col {
+  width: 33%;
+}
+.space2{
+	width:16.5%;
+}
+
+.space2-center{
+  width: 2%;
+}
+
+.left-col {
+  width: 25%;
+}
+
+.right-col {
+  width: 25%;
+}
+
+.center-col {
+  width: 10%;
+}
+
+.space{
+	width:20%;
 }
 
 .left {
@@ -713,7 +789,7 @@ button{
 }
 
 /* Popup arrow */
-.popuptext::after {
+/* .popuptext::after {
   content: "";
   position: relative;
   top: 35px;
@@ -722,7 +798,7 @@ button{
   border-width: 5px;
   border-style: solid;
   border-color: #555 transparent transparent transparent;
-}
+} */
 
 /* Toggle this class when clicking on the popup container (hide and show the popup) */
 .mapContainer .show {
@@ -780,6 +856,28 @@ button{
 .form-container {
   padding: 10px;
   background-color: #dad3f8;
+}
+
+#formConformanceChecking{
+    left: 12%;
+    margin:auto;
+}
+
+.conformance-container {
+  width: 76%;
+
+  padding: 10px;
+  background-color: #dad3f8;
+  border-radius: 25px;
+}
+
+.conformance-container2 {
+  
+
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background-color: #dad3f8;
+  border-radius: 25px;
 }
 
 .blocker {
