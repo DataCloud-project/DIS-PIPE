@@ -556,7 +556,7 @@ function checkRefresh()
 									</div>
 									<div class="left_pop">
 										<span>
-											<label for="mode_for_attribute"style="margin-left: 10px;">Mode: </label>
+											<label id="mfa2" for="mode_for_attribute"style="margin-left: 10px;">Mode: </label>
 											<select id="mode_for_attribute" name="mode_for_attribute" class="dropdown">
 												<option value="selected">Keep selected</option>
 												<option value="mandatory">Mandatory</option>
@@ -682,8 +682,8 @@ function checkRefresh()
 							<div style="text-align:center">
 								
 								<!-- <button type="submit" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button> -->
-								<button type="button" class="btn" style="margin-right:10px" onclick="asyncCall()">Apply</button>
-								<button type="button" class="btn" onclick="closeForm()">Cancel</button>
+								<button type="button" class="btn" style="margin-right:10px; font-size:13px" onclick="asyncCall()">Apply</button>
+								<button type="button" class="btn" style="font-size:13px" onclick="closeForm()">Cancel</button>
 							</div>
 							
 							</form>
@@ -1117,15 +1117,34 @@ function checkRefresh()
 		event.stopImmediatePropagation();
 		if(document.getElementById("filter_by").value == "resource"){
 			var ar_Act=getAllUsedVariables("resources")
+			document.getElementById("mfa2").style.visibility = "visible";
+			document.getElementById("mode_for_attribute").style.visibility = "visible";
+			document.getElementById("attribute_text").style.visibility = "visible";
+			
 		}else if (document.getElementById("filter_by").value == "costs"){
 			var ar_Act=getAllUsedVariables("resources_cost")
 			// var ar_Act=getAllUsedVariables("activities")
+			document.getElementById("mfa2").style.visibility = "visible";
+			document.getElementById("mode_for_attribute").style.visibility = "visible";
+			document.getElementById("attribute_text").style.visibility = "visible";
 		}else if (document.getElementById("filter_by").value == "variants"){
 			var ar_Act=getAllUsedVariables("variant")
+			
+			document.getElementById("mfa2").style.visibility = "hidden";
+			document.getElementById("mode_for_attribute").style.visibility = "hidden";
+			document.getElementById("attribute_text").style.visibility = "hidden";
+
 		}else if (document.getElementById("filter_by").value == "activity"){
 			var ar_Act=getAllUsedVariables("activities")
+			document.getElementById("mfa2").style.visibility = "visible";
+			document.getElementById("mode_for_attribute").style.visibility = "visible";
+			document.getElementById("attribute_text").style.visibility = "visible";
+			
 		}else if (document.getElementById("filter_by").value == "caseID"){
-			var ar_Act=getAllUsedVariables("caseid")	
+			var ar_Act=getAllUsedVariables("caseid")
+			document.getElementById("mfa2").style.visibility = "hidden";	
+			document.getElementById("mode_for_attribute").style.visibility = "hidden";
+			document.getElementById("attribute_text").style.visibility = "hidden";
 		}
 
 		$('#fieldset3').empty();
@@ -3026,9 +3045,9 @@ function getMap(bool) {
 			    var milliDisplay= d*1000;
 			    result= Math.round(milliDisplay)+ "ms"
 			}
-			if(result==""){
-    				result="instant"
-    			}
+			// if(result==""){
+    		// 		result="instant"
+    		// 	}
 			return result; 
 		}
 
@@ -4060,6 +4079,11 @@ function applyFilter() {
 
 	closeForm();
 	closeLoading();
+
+	allDurationRequest()
+	allEdgeDurationRequest()
+	csmEdgeRequest()
+	csmRequest()
 	
 	var container = $('#history_div');
 	if(filtered_timeframe){

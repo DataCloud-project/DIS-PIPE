@@ -530,11 +530,13 @@ def allduration():
     import time
     import statistics
 
-    log = xes_importer.apply(log_path)
-    log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
-                                                            constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
-                                                            constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
+    # log = xes_importer.apply(log_path)
+    # log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
+    #                                                         constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
+    #                                                         constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
     
+    global log
+
     global activity_list
     activity_list = []
     for i in range(0, len(log)):
@@ -589,10 +591,12 @@ def alledgeduration():
     import time
     import statistics
 
-    log = xes_importer.apply(log_path)
-    log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
-                                                            constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
-                                                            constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
+    global log
+
+    # log = xes_importer.apply(log_path)
+    # log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
+    #                                                         constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
+    #                                                         constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
 
     dfg, start_activities, end_activities = pm4py.discover_dfg(log)
 
@@ -651,10 +655,12 @@ def allfrequency():
     import time
     import statistics
 
-    log = xes_importer.apply(log_path)
-    log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
-                                                            constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
-                                                            constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
+
+    global log
+    # log = xes_importer.apply(log_path)
+    # log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
+    #                                                         constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
+    #                                                         constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
 
     dfg, start_activities, end_activities = pm4py.discover_dfg(log)
 
@@ -725,10 +731,12 @@ def alledgefrequency():
     import time
     import statistics
 
-    log = xes_importer.apply(log_path)
-    log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
-                                                            constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
-                                                            constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
+
+    global log
+    # log = xes_importer.apply(log_path)
+    # log = interval_lifecycle.assign_lead_cycle_time(log, parameters={
+    #                                                         constants.PARAMETER_CONSTANT_START_TIMESTAMP_KEY: "start_timestamp",
+    #                                                         constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
 
     dfg, start_activities, end_activities = pm4py.discover_dfg(log)
 
