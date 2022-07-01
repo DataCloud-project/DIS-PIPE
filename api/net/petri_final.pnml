@@ -10,6 +10,11 @@
           <text>1</text>
         </initialMarking>
       </place>
+      <place id="({'decide'}, {'pay compensation', 'reinitiate request', 'reject request'})">
+        <name>
+          <text>({'decide'}, {'pay compensation', 'reinitiate request', 'reject request'})</text>
+        </name>
+      </place>
       <place id="({'check ticket'}, {'decide'})">
         <name>
           <text>({'check ticket'}, {'decide'})</text>
@@ -25,11 +30,6 @@
           <text>({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})</text>
         </name>
       </place>
-      <place id="({'decide'}, {'pay compensation', 'reject request', 'reinitiate request'})">
-        <name>
-          <text>({'decide'}, {'pay compensation', 'reject request', 'reinitiate request'})</text>
-        </name>
-      </place>
       <place id="({'register request', 'reinitiate request'}, {'check ticket'})">
         <name>
           <text>({'register request', 'reinitiate request'}, {'check ticket'})</text>
@@ -40,21 +40,6 @@
           <text>({'examine thoroughly', 'examine casually'}, {'decide'})</text>
         </name>
       </place>
-      <transition id="register request">
-        <name>
-          <text>register request</text>
-        </name>
-      </transition>
-      <transition id="examine thoroughly">
-        <name>
-          <text>examine thoroughly</text>
-        </name>
-      </transition>
-      <transition id="examine casually">
-        <name>
-          <text>examine casually</text>
-        </name>
-      </transition>
       <transition id="reinitiate request">
         <name>
           <text>reinitiate request</text>
@@ -65,9 +50,9 @@
           <text>pay compensation</text>
         </name>
       </transition>
-      <transition id="reject request">
+      <transition id="decide">
         <name>
-          <text>reject request</text>
+          <text>decide</text>
         </name>
       </transition>
       <transition id="check ticket">
@@ -75,30 +60,45 @@
           <text>check ticket</text>
         </name>
       </transition>
-      <transition id="decide">
+      <transition id="examine thoroughly">
         <name>
-          <text>decide</text>
+          <text>examine thoroughly</text>
         </name>
       </transition>
-      <arc id="2094069049088" source="({'check ticket'}, {'decide'})" target="decide"/>
-      <arc id="2094069049472" source="register request" target="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})"/>
-      <arc id="2094069049856" source="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})" target="examine thoroughly"/>
-      <arc id="2094068940032" source="register request" target="({'register request', 'reinitiate request'}, {'check ticket'})"/>
-      <arc id="2094068939264" source="({'decide'}, {'pay compensation', 'reject request', 'reinitiate request'})" target="pay compensation"/>
-      <arc id="2094066952704" source="({'examine thoroughly', 'examine casually'}, {'decide'})" target="decide"/>
-      <arc id="2094068939648" source="({'decide'}, {'pay compensation', 'reject request', 'reinitiate request'})" target="reinitiate request"/>
-      <arc id="2094069048608" source="reject request" target="end"/>
-      <arc id="2094069048992" source="check ticket" target="({'check ticket'}, {'decide'})"/>
-      <arc id="2094069049664" source="reinitiate request" target="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})"/>
-      <arc id="2094068939072" source="decide" target="({'decide'}, {'pay compensation', 'reject request', 'reinitiate request'})"/>
-      <arc id="2094068940224" source="reinitiate request" target="({'register request', 'reinitiate request'}, {'check ticket'})"/>
-      <arc id="2094068939456" source="({'decide'}, {'pay compensation', 'reject request', 'reinitiate request'})" target="reject request"/>
-      <arc id="2094068940368" source="({'register request', 'reinitiate request'}, {'check ticket'})" target="check ticket"/>
-      <arc id="2094068940752" source="examine thoroughly" target="({'examine thoroughly', 'examine casually'}, {'decide'})"/>
-      <arc id="2094066954192" source="examine casually" target="({'examine thoroughly', 'examine casually'}, {'decide'})"/>
-      <arc id="2094069048032" source="start" target="register request"/>
-      <arc id="2094069048416" source="pay compensation" target="end"/>
-      <arc id="2094068938976" source="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})" target="examine casually"/>
+      <transition id="register request">
+        <name>
+          <text>register request</text>
+        </name>
+      </transition>
+      <transition id="examine casually">
+        <name>
+          <text>examine casually</text>
+        </name>
+      </transition>
+      <transition id="reject request">
+        <name>
+          <text>reject request</text>
+        </name>
+      </transition>
+      <arc id="1863841881728" source="reject request" target="end"/>
+      <arc id="1863841880960" source="({'decide'}, {'pay compensation', 'reinitiate request', 'reject request'})" target="reinitiate request"/>
+      <arc id="1863842590336" source="examine casually" target="({'examine thoroughly', 'examine casually'}, {'decide'})"/>
+      <arc id="1863841881104" source="({'check ticket'}, {'decide'})" target="decide"/>
+      <arc id="1863841881488" source="register request" target="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})"/>
+      <arc id="1863841878416" source="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})" target="examine casually"/>
+      <arc id="1863842590096" source="examine thoroughly" target="({'examine thoroughly', 'examine casually'}, {'decide'})"/>
+      <arc id="1863841882016" source="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})" target="examine thoroughly"/>
+      <arc id="1863841881632" source="({'decide'}, {'pay compensation', 'reinitiate request', 'reject request'})" target="pay compensation"/>
+      <arc id="1863842587552" source="reinitiate request" target="({'register request', 'reinitiate request'}, {'check ticket'})"/>
+      <arc id="1863842587312" source="register request" target="({'register request', 'reinitiate request'}, {'check ticket'})"/>
+      <arc id="1863842589232" source="({'examine thoroughly', 'examine casually'}, {'decide'})" target="decide"/>
+      <arc id="1863841881536" source="pay compensation" target="end"/>
+      <arc id="1863841881920" source="reinitiate request" target="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})"/>
+      <arc id="1863842588224" source="({'decide'}, {'pay compensation', 'reinitiate request', 'reject request'})" target="reject request"/>
+      <arc id="1863842587840" source="({'register request', 'reinitiate request'}, {'check ticket'})" target="check ticket"/>
+      <arc id="1863841880912" source="check ticket" target="({'check ticket'}, {'decide'})"/>
+      <arc id="1863841880528" source="decide" target="({'decide'}, {'pay compensation', 'reinitiate request', 'reject request'})"/>
+      <arc id="1863841880048" source="start" target="register request"/>
     </page>
     <finalmarkings>
       <marking>

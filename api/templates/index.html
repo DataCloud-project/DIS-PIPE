@@ -842,6 +842,7 @@ function checkRefresh()
 										
 								
 											<span>Cost for disalignment activities</span><br>
+											<!-- <span>Cost to add/remove activities in/from trace</span><br> -->
 											<select id="disalignment_log" onchange="changedisalignment_select()">
 												
 											</select>
@@ -1892,7 +1893,7 @@ function getMap(bool) {
 					if ((bool_switch) == true){
 						
 						if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-							popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+							popup.innerHTML = "Selected values duration"+"<br /> <br />"
 									+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
 									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
 									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -2033,7 +2034,7 @@ function getMap(bool) {
 					var bool_switch = document.getElementById("tabPerf").checked;
 					if ((bool_switch) == true){
 						if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-							popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+							popup.innerHTML = "Selected values duration"+"<br /> <br />"
 									+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
 									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
 									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -2139,10 +2140,25 @@ function getMap(bool) {
 						$resultduration_edge_median=$myduration_edge_median[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
 
 						// console.log(nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge])
-						$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						// $resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						// $resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						// $resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
 						
+						if($source_edge=="@@startnode"){
+							$resultfrequency_edge_absolute=$myfrequency_edge_absolute["@@startnode"+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_case=$myfrequency_edge_case["@@startnode"+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						}else if($target_edge=="@@endnode"){
+							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+"@@endnode"]
+							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+"@@endnode"]
+							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						}else{
+							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						}
+
+
 						$total_mean=$total_mean+$resultduration_edge_mean
 						$total_min=$total_min+$resultduration_edge_min
 						$total_max=$total_max+$resultduration_edge_max
@@ -2190,7 +2206,7 @@ function getMap(bool) {
 						if ((bool_switch) == true){
 							
 							if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-								popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+								popup.innerHTML = "Selected values duration"+"<br /> <br />"
 										+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
 										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
 										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -2306,9 +2322,24 @@ function getMap(bool) {
 						$total_median=$total_median-$resultduration_edge_median
 						$total_total=$total_total-$resultduration_edge_total
 
-						$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						
+
+
+						if($source_edge=="@@startnode"){
+							$resultfrequency_edge_absolute=$myfrequency_edge_absolute["@@startnode"+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_case=$myfrequency_edge_case["@@startnode"+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						}else if($target_edge=="@@endnode"){
+							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+"@@endnode"]
+							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+"@@endnode"]
+							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						}else{
+							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+							$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
+						}
+
+
 
 						var edge_extended_name2=[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
 						delete selected_edges[edge_extended_name2]
@@ -2355,7 +2386,7 @@ function getMap(bool) {
 						var bool_switch = document.getElementById("tabPerf").checked;
 						if ((bool_switch) == true){
 							if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-								popup.innerHTML = "Selected nodes sum duration"+"<br /> <br />"
+								popup.innerHTML = "Selected values duration"+"<br /> <br />"
 										+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
 										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
 										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -2716,18 +2747,31 @@ function getMap(bool) {
 							// console.log(nodes_id_association[$target])
 							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
 							
-						
-							
-							$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-							$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
 							if($source=="@@startnode"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
+								$("#"+edge_id).find("text").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
+								$("#"+edge_id).find("title").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
+
+							}else if($target=="@@endnode"){
+								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
+								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
+							
+							}else{
+								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
 							}
-							if($target=="@@endnode"){
+							
+							// $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+							// $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+							if($source=="@@startnode" && typeF=="maxRep"){
 								$("#"+edge_id).find("text").text("");
 								$("#"+edge_id).find("title").text("")
+								// TESTTEST
+							}
+							if($target=="@@endnode" && typeF=="maxRep"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+								// TESTTEST
 							}
 						
 
@@ -2922,11 +2966,34 @@ function getMap(bool) {
 							// console.log(nodes_id_association[$target])
 							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
 							
-						
-						
-							$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-							$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
 
+							if($source=="@@startnode"){
+								$("#"+edge_id).find("text").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
+								$("#"+edge_id).find("title").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
+
+							}else if($target=="@@endnode"){
+								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
+								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
+							}else{
+								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+							}
+						
+							// console.log("prova7")+
+							// $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+							// $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
+
+							if($source=="@@startnode" && typeF=="maxRep"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+								// TESTTEST
+							}
+							if($target=="@@endnode" && typeF=="maxRep"){
+								$("#"+edge_id).find("text").text("");
+								$("#"+edge_id).find("title").text("")
+								// TESTTEST
+							}
 						
 
 						}
@@ -2980,14 +3047,18 @@ function getMap(bool) {
 			
 			var result=""
 			if(d>=1){
-    			var h = Math.floor(d / 3600);
-    			var m = Math.floor(d % 3600 / 60);
-    			var s = Math.floor(d % 3600 % 60);
+				var year = Math.floor(d / (3600*24*365));
+				var day = Math.floor(d % (3600*24*365) /(3600*24));
+    			var h = Math.floor(d % (3600*24*365) % (3600*24) /3600);
+    			var m = Math.floor(d % (3600*24*365) % (3600*24) % 3600 / 60);
+    			var s = Math.floor(d % (3600*24*365) % (3600*24) % 3600 % 60);
     
+				var yearDisplay = year > 0 ? year + (year == 1 ? "year, " : "years, ") : "";
+				var dayDisplay = day > 0 ? day + (day == 1 ? " day, " : " days, ") : "";
     			var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
     			var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
     			var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    			result=hDisplay + mDisplay + sDisplay;
+    			result=yearDisplay+dayDisplay+hDisplay + mDisplay + sDisplay;
     			
 			}else if(d>=0 && d<1){
 			    var milliDisplay= d*1000;
@@ -3005,21 +3076,25 @@ function getMap(bool) {
 		
 			var result=""
 			if(d>=1){
-    			var h = Math.floor(d / 3600);
-    			var m = Math.floor(d % 3600 / 60);
-    			var s = Math.floor(d % 3600 % 60);
+				var year = Math.floor(d / (3600*24*365));
+				var day = Math.floor(d % (3600*24*365) /(3600*24));
+    			var h = Math.floor(d % (3600*24*365) % (3600*24) /3600);
+    			var m = Math.floor(d % (3600*24*365) % (3600*24) % 3600 / 60);
+    			var s = Math.floor(d % (3600*24*365) % (3600*24) % 3600 % 60);
     
+				var yearDisplay = year > 0 ? year + (year == 1 ? "y" : "y") : "";
+				var dayDisplay = day > 0 ? day + (day == 1 ? "d" : "d") : "";
     			var hDisplay = h > 0 ? h + (h == 1 ? "h" : "h") : "";
     			var mDisplay = m > 0 ? m + (m == 1 ? "m" : "m") : "";
     			var sDisplay = s > 0 ? s + (s == 1 ? "s" : "s") : "";
-    			result=hDisplay + mDisplay + sDisplay;
+    			result=yearDisplay+dayDisplay+hDisplay + mDisplay + sDisplay;
     			
 			}else if(d>=0 && d<1){
 			    var milliDisplay= d*1000;
 			    result= Math.round(milliDisplay)+ "ms"
 			}
 			if(result==""){
-    				result="instant"
+    				result="0ms"
     			}
 			return result; 
 		}
@@ -3030,6 +3105,8 @@ function getMap(bool) {
 		
 			var result=""
 			if(d>=1){
+				var year= Math.floor(d/(365*24*60*60))
+				if(year>=1){ return year+"y"}
 				var w = Math.floor(d/(7*24*60*60))
 				if(w>1){ return w+"w"}
 				var days= Math.floor(d/(24*60*60))
@@ -3220,6 +3297,7 @@ function initialListener () {
 	document.getElementById("allEdgeDt").innerHTML = arrayResponse[5];
 	document.getElementById("allFq").innerHTML = arrayResponse[6];
 	document.getElementById("allEdgeFq").innerHTML = arrayResponse[7];
+	// console.log(arrayResponse[7])
 	var response = arrayResponse[4];
 	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
 	
@@ -4145,7 +4223,7 @@ function applyFilter() {
 		var idvalue="valore"+String(indice)
 		var element=$("<div class='history_element' id="+idvalue+ "></div>")
 		element.appendTo(container)
-		$("<span class='element_title' value="+String(indice)+">"+String(indice)+") Attribute:    \n " +af_selected+'\n '+"("+ af_selected_mode+")"+ '</span>').appendTo(element);
+		$("<span class='element_title' value="+String(indice)+">"+String(indice)+") Attribute:    \n " +af_selected+'\n '+"-"+ af_selected_mode+""+ '</span>').appendTo(element);
 		$('<br>').appendTo(element);
 		$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
 		$('<span>&zwnj;</span>').appendTo(element);

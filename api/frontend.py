@@ -605,13 +605,15 @@ def alledgeduration():
     follower_used_list=[]
     import datetime
     import statistics
+    already_sum=[]
 
     # print(dfg)
     # print("\n")
     for i in range(0, len(log)):
         for j in range(0, len(log[i])-1):
             for k in range(j, len(log[i])):
-                if((log[i][j]['concept:name'],log[i][k]['concept:name']) in dfg):            
+                if((log[i][j]['concept:name'],log[i][k]['concept:name']) in dfg and j!=k and ((log[i][j]['concept:name']==log[i][k]['concept:name'] and j+1==k )or (log[i][j]['concept:name'],log[i][k]['concept:name']) not in already_sum )):  
+                    already_sum.append((log[i][j]['concept:name'],log[i][k]['concept:name']))         
                     if((log[i][j]['concept:name'],log[i][k]['concept:name']) not in follower_list):
                         follower_list.append((log[i][j]['concept:name'],log[i][k]['concept:name']))
                         follower_used_list.append(log[i][j]['concept:name']+"#"+log[i][k]['concept:name'])
@@ -620,6 +622,8 @@ def alledgeduration():
                     time_result=log[i][k]['start_timestamp']-log[i][j]['time:timestamp']
                     time_result=time_result.total_seconds()
                     follower_dictionary[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']].append(time_result)
+                    # print(follower_dictionary)
+        already_sum=[]
 
    
     mean_edge_dizionario=dict.fromkeys(follower_used_list)
@@ -739,6 +743,9 @@ def alledgefrequency():
     #                                                         constants.PARAMETER_CONSTANT_TIMESTAMP_KEY: "time:timestamp"})
 
     dfg, start_activities, end_activities = pm4py.discover_dfg(log)
+    # print(dfg)
+    # print(start_activities)
+    # print(end_activities)
 
     #ABSOLUTE FREQUENCY
     #absolute frequency
@@ -754,6 +761,29 @@ def alledgefrequency():
                 else:
                     follower_dictionary_absolute[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']]=str(int(follower_dictionary_absolute[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']])+1)
 
+    for i in range(0, len(log)):
+        j=0
+        if(log[i][j]['concept:name'] in start_activities):
+
+            if("@@startnode"+"#"+log[i][j]['concept:name'] not in follower_dictionary_absolute):
+                follower_dictionary_absolute["@@startnode"+"#"+log[i][j]['concept:name']]=str(1)
+            else:
+                follower_dictionary_absolute["@@startnode"+"#"+log[i][j]['concept:name']]=str(int(follower_dictionary_absolute["@@startnode"+"#"+log[i][j]['concept:name']])+1)
+
+        k=len(log[i])-1
+        if(log[i][k]['concept:name'] in end_activities):
+
+            if(log[i][k]['concept:name']+"#"+"@@endnode" not in follower_dictionary_absolute):
+                follower_dictionary_absolute[log[i][k]['concept:name']+"#"+"@@endnode"]=str(1)
+            else:
+                follower_dictionary_absolute[log[i][k]['concept:name']+"#"+"@@endnode"]=str(int(follower_dictionary_absolute[log[i][k]['concept:name']+"#"+"@@endnode"])+1)
+
+
+
+   
+   
+   
+   
     ###################
 
     # case frequency
@@ -774,6 +804,36 @@ def alledgefrequency():
                         follower_dictionary_case[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']]=str(1)
                     else:
                         follower_dictionary_case[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']]=str(int(follower_dictionary_case[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']])+1)
+        already_use_case=[]
+
+
+
+    for i in range(0, len(log)):
+        j=0
+        
+        if(log[i][j]['concept:name'] not in already_use_case):
+            already_use_case.append(log[i][j]['concept:name'])
+        
+            if(log[i][j]['concept:name'] in start_activities):
+
+                if("@@startnode"+"#"+log[i][j]['concept:name'] not in follower_dictionary_case):
+                    follower_dictionary_case["@@startnode"+"#"+log[i][j]['concept:name']]=str(1)
+                else:
+                    follower_dictionary_case["@@startnode"+"#"+log[i][j]['concept:name']]=str(int(follower_dictionary_case["@@startnode"+"#"+log[i][j]['concept:name']])+1)
+        already_use_case=[]
+                    
+            
+        if(log[i][j]['concept:name'] not in already_use_case):
+            already_use_case.append(log[i][j]['concept:name'])
+                    
+            k=len(log[i])-1
+            if(log[i][k]['concept:name'] in end_activities):
+
+                if(log[i][k]['concept:name']+"#"+"@@endnode" not in follower_dictionary_case):
+                    follower_dictionary_case[log[i][k]['concept:name']+"#"+"@@endnode"]=str(1)
+                else:
+                    follower_dictionary_case[log[i][k]['concept:name']+"#"+"@@endnode"]=str(int(follower_dictionary_case[log[i][k]['concept:name']+"#"+"@@endnode"])+1)
+
         already_use_case=[]
                         
 
@@ -1582,12 +1642,15 @@ def initialAction():
     import datetime
     import statistics
 
+    already_sum=[]
+
     # print(dfg)
     # print("\n")
     for i in range(0, len(log)):
         for j in range(0, len(log[i])-1):
             for k in range(j, len(log[i])):
-                if((log[i][j]['concept:name'],log[i][k]['concept:name']) in dfg):            
+                if((log[i][j]['concept:name'],log[i][k]['concept:name']) in dfg and j!=k and ((log[i][j]['concept:name']==log[i][k]['concept:name'] and j+1==k )or (log[i][j]['concept:name'],log[i][k]['concept:name']) not in already_sum )):  
+                    already_sum.append((log[i][j]['concept:name'],log[i][k]['concept:name']))         
                     if((log[i][j]['concept:name'],log[i][k]['concept:name']) not in follower_list):
                         follower_list.append((log[i][j]['concept:name'],log[i][k]['concept:name']))
                         follower_used_list.append(log[i][j]['concept:name']+"#"+log[i][k]['concept:name'])
@@ -1596,6 +1659,9 @@ def initialAction():
                     time_result=log[i][k]['start_timestamp']-log[i][j]['time:timestamp']
                     time_result=time_result.total_seconds()
                     follower_dictionary[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']].append(time_result)
+                    
+        already_sum=[]
+
 
    
     mean_edge_dizionario=dict.fromkeys(follower_used_list)
@@ -1713,6 +1779,31 @@ def initialAction():
                 else:
                     follower_dictionary_absolute[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']]=str(int(follower_dictionary_absolute[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']])+1)
 
+    for i in range(0, len(log)):
+        j=0
+        if(log[i][j]['concept:name'] in start_activities):
+
+            if("@@startnode"+"#"+log[i][j]['concept:name'] not in follower_dictionary_absolute):
+                follower_dictionary_absolute["@@startnode"+"#"+log[i][j]['concept:name']]=str(1)
+            else:
+                follower_dictionary_absolute["@@startnode"+"#"+log[i][j]['concept:name']]=str(int(follower_dictionary_absolute["@@startnode"+"#"+log[i][j]['concept:name']])+1)
+
+        k=len(log[i])-1
+        if(log[i][k]['concept:name'] in end_activities):
+
+            if(log[i][k]['concept:name']+"#"+"@@endnode" not in follower_dictionary_absolute):
+                follower_dictionary_absolute[log[i][k]['concept:name']+"#"+"@@endnode"]=str(1)
+            else:
+                follower_dictionary_absolute[log[i][k]['concept:name']+"#"+"@@endnode"]=str(int(follower_dictionary_absolute[log[i][k]['concept:name']+"#"+"@@endnode"])+1)
+
+
+
+   
+   
+   
+   
+   
+   
     ###################
 
     # case frequency
@@ -1735,6 +1826,35 @@ def initialAction():
                         follower_dictionary_case[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']]=str(int(follower_dictionary_case[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']])+1)
         already_use_case=[]
                         
+
+
+    for i in range(0, len(log)):
+        j=0
+        
+        if(log[i][j]['concept:name'] not in already_use_case):
+            already_use_case.append(log[i][j]['concept:name'])
+        
+            if(log[i][j]['concept:name'] in start_activities):
+
+                if("@@startnode"+"#"+log[i][j]['concept:name'] not in follower_dictionary_case):
+                    follower_dictionary_case["@@startnode"+"#"+log[i][j]['concept:name']]=str(1)
+                else:
+                    follower_dictionary_case["@@startnode"+"#"+log[i][j]['concept:name']]=str(int(follower_dictionary_case["@@startnode"+"#"+log[i][j]['concept:name']])+1)
+        already_use_case=[]
+                    
+            
+        if(log[i][j]['concept:name'] not in already_use_case):
+            already_use_case.append(log[i][j]['concept:name'])
+                    
+            k=len(log[i])-1
+            if(log[i][k]['concept:name'] in end_activities):
+
+                if(log[i][k]['concept:name']+"#"+"@@endnode" not in follower_dictionary_case):
+                    follower_dictionary_case[log[i][k]['concept:name']+"#"+"@@endnode"]=str(1)
+                else:
+                    follower_dictionary_case[log[i][k]['concept:name']+"#"+"@@endnode"]=str(int(follower_dictionary_case[log[i][k]['concept:name']+"#"+"@@endnode"])+1)
+
+        already_use_case=[]
 
     ###################
 
