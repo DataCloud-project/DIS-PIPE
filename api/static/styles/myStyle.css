@@ -232,6 +232,11 @@ body{
 #check_tabs{
 	display: none;
 }
+
+#check_conformance{
+  display: none;
+}
+
 #check_filter{
 	display: none;
 }
@@ -260,6 +265,33 @@ label #btn_tabs{
 	font-size: 23px;
 	color: #6d50e2;
 	padding: 6px 12px;
+}
+
+label #btn_conformance{
+	position: absolute;
+	cursor: pointer;
+	/* background: white; */
+	border-radius: 3px;
+	z-index: 3;
+	right: 40px;
+	top: 38px;
+  border: 3px #6d50e2;
+	font-size: 23px;
+	color: #6d50e2;
+	/* padding: 6px 12px;   */
+}
+
+label #back_button{
+  position: absolute;
+	cursor: pointer;
+	background: white;
+	border-radius: 3px;
+	z-index: 3;
+	right: 80px;
+	/* top: 25px; */
+	font-size: 23px;
+	color: #6d50e2;
+	/* padding: 6px 12px;   */
 }
 
 label #btn_filter{
@@ -319,6 +351,11 @@ label #btn_filter{
 	display: flex;
 }
 
+/* COMMENT */
+#check_conformance:checked ~ .mapContainer .mytabs {
+	display: flex;
+}
+
 #check_filter:checked ~ .mytabs {
 	display: flex;
 }
@@ -336,6 +373,23 @@ label #btn_filter{
 	z-index: 2;
 	width: 30%;
 }
+
+#mytabsConformance{
+  position:fixed;
+	display: none;
+	flex-direction: row;
+	flex-wrap: wrap;
+	/* top: 10px; */
+	padding: 25px;
+	/* background: #6d50e2; */
+  background:#dad3f8;
+	border-radius: 12px;
+	left: 57%;
+	z-index: 2;
+	width: 39%;
+}
+
+
 .mytabs input[type="radio"] {
 	display: none;
 }
@@ -641,6 +695,11 @@ li {
 	width: 100%;
 }
 
+#graphContainer2 {
+  transform-origin: 0% 0%;
+width: 100%;
+}
+
 .bottomleft {
   position:fixed;	
   bottom: 30px;
@@ -783,8 +842,8 @@ button{
   padding: 8px 0;
   position: absolute;
   /*z-index: 1;
-  bottom: 125%;
-  left: 50%;*/
+  bottom: 125%;*/
+  left: 50%; 
   margin-left: -80px;
 }
 

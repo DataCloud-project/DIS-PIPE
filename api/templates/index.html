@@ -3,6 +3,13 @@
 <head>
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myStyle.css') }}">
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/durFreqScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/initialScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/filterScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/reqListScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/cCheckingScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/mapScript.js') }}"></script>
+
     <!-- Fontawesome CDN Link -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
@@ -102,7 +109,7 @@ function checkRefresh()
 					<i class="fas fa-chart-line"></i>
 					<span class="topic">Event Log Analysis</span>
 				</label>
-				<label for="cChecking" class="cChecking"  onclick="doSomething()">
+				<label for="cChecking" class="cChecking"  onclick="cCheckingComputation()">
 					<i class="fas fa-check-double"></i>
 					<span class="topic">Conformance Checking</span>
 				</label>
@@ -545,7 +552,7 @@ function checkRefresh()
 									<div class="left_pop">
 										<span>
 											<label for="filter_by">Filter by: </label>
-											<select id= "filter_by" name="filter_by" class="dropdown" onchange="cambia()">
+											<select id= "filter_by" name="filter_by" class="dropdown" onchange="change_filter_type()">
 												<option value="activity">Activity</option>
 												<option value="resource">Resource</option>
 												<option value="costs">Costs</option>
@@ -735,6 +742,15 @@ function checkRefresh()
 					<!-- Start Conformance checking -->
 					<div class="cChecking text" id="cChecking-text">
 					 	<div class="title"> Conformance Checking</div>
+
+						
+
+						<!-- <input type="checkbox" id="check_tabs">
+						<label for="check_tabs">
+							<i class="fas fa-edit" id="btn_tabs"></i>
+						</label> -->
+
+
 						<!-- <div id="InitialMarking">Initial Marking</div>
 						<div id="FinalMarking">Final Marking</div> -->
 						<!-- <br> -->
@@ -871,8 +887,19 @@ function checkRefresh()
 											<br>
 										
 											<span id="define_length" style="color: grey;">Define length</span>
-											<textarea placeholder="min" disabled class="vmiddle" name="minlen" id="minlen" cols="4" rows="1"></textarea>
-											<textarea placeholder="max" disabled class="vmiddle" name="maxlen" id="maxlen" cols="4" rows="1"></textarea>
+											<textarea placeholder="min" disabled class="vmiddle" name="min len" id="minlen" cols="4" rows="1"></textarea>
+											<textarea placeholder="max" disabled class="vmiddle" name="max len" id="maxlen" cols="4" rows="1"></textarea>
+										
+											<br><br>
+											<input type="checkbox" id="trace_date" value="True"  onchange="trace_date_filter()">
+											<label for="trace_date"> Filter date</label>
+											<br>
+										
+											<span id="define_date" style="color: grey;">Define date</span>
+											<textarea placeholder="min" disabled class="vmiddle" name="min date" id="mindate" cols="4" rows="1"></textarea>
+											<textarea placeholder="max" disabled class="vmiddle" name="max date" id="maxdate" cols="4" rows="1"></textarea>
+										
+
 										</div>
 
 										<div class="column-col space2-center" style=" visibility:hidden">
@@ -881,11 +908,12 @@ function checkRefresh()
 
 										<div class="column-col center2-col">
 											<span>Log detail</span><br>
-											<textarea class="vmiddle" style="width:100%;" name="log_detail" id="log_detail" cols="10" rows="5" ></textarea>
+											<br>
+											<textarea class="vmiddle" style="width:100%;" name="log_detail" id="log_detail" cols="10" rows="15" >Detail 1: &#13;&#10;Detail 2: &#13;&#10;Detail 3: &#13;&#10;Detail 4: &#13;&#10;Detail 5: &#13;&#10;Detail 6: &#13;&#10;Detail 7: </textarea>
 											<br>
 											<br>
-											<span style="visibility: hidden;" >Pnml detail</span><br>
-											<textarea class="vmiddle" style="width:100%;" name="model_detail" id="model_detail" cols="10" rows="5" ></textarea>
+											<!-- <span style="visibility: hidden;" >Pnml detail</span><br>
+											<textarea class="vmiddle" style="width:100%;" name="model_detail" id="model_detail" cols="10" rows="5" ></textarea> -->
 											<br>
 											<br>
 											
@@ -913,12 +941,111 @@ function checkRefresh()
 						</div>
 						<!-- </center> -->
 
-						<div class="map-content" id="map2-content" style="display: none;">
-							<button type="button" style="font-size: 16px;" onclick="backPrecDiv()">Back</button>
-							<br><br>
-							<svg id="graphContainer2">
+						<div class="mapContainer" id="map2-content" style="display: none;">
+							<!-- <button type="button" style="font-size: 16px; float: right;" onclick="">cCheckingComputation</button>
+							<button type="button" style="font-size: 16px; float: right;" onclick="backPrecDiv()">Back</button> -->
 							
-							</svg>
+							<span style="font-size: 23px;
+								color: #6d50e2; position: absolute;
+								cursor: pointer;
+								font-size: 23px;
+								top: 35px;
+								border-radius: 3px;
+								z-index: 3;
+								border: 3px #6d50e2;
+								right: 80px;" onclick="backToPersonalize()">
+								
+								<i class="fa fa-chevron-left"></i>
+							</span>
+							
+							<!-- 
+							<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
+							<label for="check_conformance"> 
+								<i class="fa-solid fa-chevrons-left" id="btn_conformance"></i>
+							</label>  -->
+							 
+							<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
+							<label for="check_conformance"> 
+								<i class="fa fa-info" aria-hidden="true" id="btn_conformance"></i>
+							</label>
+
+							<div id="mytabsConformance">
+
+									<span class="popuptext" id="myPopupConformance">Popup text...</span>
+							
+									
+									<div id="tabTrace" style="visibility: hidden;" > 
+										<h4 style="text-align: center;">Aligned Trace</h4>
+										<br>
+
+										
+
+										<span>Event log file: </span>
+										<span id="log_name" style="color: red;"> file.xes</span>
+										<br>
+
+										<span>Search algoritm: </span>
+										<span id="search_algoritm" style="color: blue;"> Blind A* (Cost-Optimal) </span>
+										<br>
+
+										<span>Alignment time: </span>
+										<span id="alignment_time" style="color: blue;"> 110 ms. </span>
+										<br>
+
+										<span>Alignment cost: </span>
+										<span id="alignment_cost" style="color: blue;"> 7 </span>
+										<br>
+										<br>
+
+										<span>Trace selected: </span>
+										<select id="trace_selected" name="trace_selected">
+											<option value="0">Trace 0</option>
+											<option value="1">Trace 1</option>
+											<option value="2">Trace 2</option>
+											<option value="3">Trace 3</option>
+											<option value="4">Trace 4</option>
+											<option value="5">Trace 5</option>
+											<option value="6">Trace 6</option>
+											<option value="7">Trace 7</option>
+											<option value="8">Trace 8</option>
+											<option value="9">Trace 9</option>
+										</select>
+										<br>
+										<br>
+										
+
+										<span style="text-decoration: underline; font-size: 15px; color: green"> -- ALIGNMENT --</span><br>
+										<span> Activity 0 </span><br>
+										<span> Activity 1 </span><br>
+										<span style="color: blue;"> Activity 2 </span><span>[cost 0]</span><br>
+										<span> Activity 3 </span><br>
+										<span> Activity 4 </span><br>
+										<span style="text-decoration: line-through; color:red;"> Activity 5 </span><span>[cost 1]</span><br>
+										<span> Activity 6 </span><br>
+										<span> Activity 7 </span><br>
+										<span style="color: blue;"> Activity 8 </span><span>[cost 1]</span><br>
+										<span> Activity 9 </span><br>
+										
+										<br>
+
+										
+									</div>
+							
+							</div>
+								
+							<span class="popuptext" id="myPopup_cChecking">Popup text...</span>
+
+
+
+							<br>
+
+							<div class="map-content" id="map-content2">
+								<svg id="graphContainer2">
+								
+								</svg>
+							</div>
+
+
 						</div>
 								
 					</div>
@@ -933,4222 +1060,299 @@ function checkRefresh()
 	
 </body>
 
-<script type="text/javascript">
 
-	const levenshteinDistance = (str1 = '', str2 = '') => {
-		const track = Array(str2.length + 1).fill(null).map(() =>
-		Array(str1.length + 1).fill(null));
-		for (let i = 0; i <= str1.length; i += 1) {
-			track[0][i] = i;
-		}
-		for (let j = 0; j <= str2.length; j += 1) {
-			track[j][0] = j;
-		}
-		for (let j = 1; j <= str2.length; j += 1) {
-			for (let i = 1; i <= str1.length; i += 1) {
-				const indicator = str1[i - 1] === str2[j - 1] ? 0 : 1;
-				track[j][i] = Math.min(
-					track[j][i - 1] + 1, // deletion
-					track[j - 1][i] + 1, // insertion
-					track[j - 1][i - 1] + indicator, // substitution
-				);
-			}
-		}
-		return track[str2.length][str1.length];
-	};
-
-
-
-
-	var disalignment_dictionary={}
-
-	
-
-	function trace_length_filter(){
-		if($('#trace_length').is(":checked")){
-			$('#maxlen').prop('disabled', false);
-			$('#minlen').prop('disabled', false);
-			$('#define_length').css('color','black');
-		}else{
-			$('#maxlen').prop('disabled', true);
-			$('#minlen').prop('disabled', true);
-			$('#define_length').css('color','grey');
-		}
-		
-	}
-
-	function changedisalignment_select(){
-		var changed_disalign=$('#disalignment_log option:selected').val();
-		
-		
-		$("#move_model").val(disalignment_dictionary[changed_disalign][0])
-		$("#move_log").val(disalignment_dictionary[changed_disalign][1])
-
-	}
-
-	function changedisalignment_dictionary(valore){
-		if(valore=="log"){
-			
-			
-			var changed_disalign=$('#disalignment_log option:selected').val();
-			// console.log(changed_disalign)
-			// console.log($("#move_model").val())
-			// disalignment_dictionary[tr_array[i][1]]=[0,0]
-			var temp=disalignment_dictionary[changed_disalign]
-			temp[1]=parseInt($("#move_log").val())
-			disalignment_dictionary[changed_disalign]=temp
-
-		}else if(valore=="model"){
-			var changed_disalign=$('#disalignment_log option:selected').val();
-			// console.log(changed_disalign)
-			// console.log($("#move_model").val())
-			var temp=disalignment_dictionary[changed_disalign]
-			temp[0]=parseInt($("#move_model").val())
-			disalignment_dictionary[changed_disalign]=temp
-
-		}
-		// console.log(disalignment_dictionary)
-
-	}
-
-	var inizio=0
-
-	function addTransitionName(){
-		// Create text with HTML
-		// console.log(tr_name)
-		
-		var tr_array = JSON.parse(tr_name.replace(/'/g,"\"") );
-		var log_array=JSON.parse(log_name.replace(/'/g,"\"") );
-	
-		// console.log(log_array)
-		// console.log(tr_array[0][1]);
-		backDivForm();
-		
-		if(inizio==0){
-			for (let i = 0; i < tr_array.length; i++) {
-			// console.log(tr_array[i][1])
-			$("#transition_pnml").append("<p>"+tr_array[i][1]+"</p>","<br>");   // A
-			// sel.append($("<option>").attr('value',1).text(tr_array[i][1]));
-			if(i==0){
-				$('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]).attr('selected','selected'))
-			}else{
-				$('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]))
-			}
-			
-			$('#move_log').text("0")
-			$('#move_model').text("0")
-			var sel = $('<select>').attr('id',tr_array[i][1])
-
-			disalignment_dictionary[tr_array[i][1]]=[1,1]
-			if(tr_array[i][1]=='None'){
-				disalignment_dictionary[tr_array[i][1]]=[0,0]
-			}
-
-			var selected_elem=""
-			var minimo=5000
-			for (let j = 0; j < log_array.length; j++) {
-				if(levenshteinDistance(tr_array[i][1],log_array[j])<minimo){
-					minimo=levenshteinDistance(tr_array[i][1],log_array[j])
-					selected_elem=log_array[j]
-				}
-			}
-
-			for (let k = 0; k < log_array.length; k++) {
-				if(selected_elem==log_array[k]){
-
-					sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]).attr('selected','selected'));
-				}else{
-					sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]));
-				}
-				
-			}
-			$('#transition_log').append(sel,"<br>","<br>");
-			// console.log(String(i))
-			}
-
-			changedisalignment_select()
-		
-
-			// console.log(disalignment_dictionary)
-			inizio=1
-		
-		}
-		// console.log(typeof tr_array);
-		
-
-		
-		
-	}
-
-	function showResultonDFG(){
-		document.getElementById("formConformanceChecking").style.display = "none";
-		document.getElementById("formConformanceChecking2").style.display = "none";
-		document.getElementById("map2-content").style.display = "block";
-		document.getElementById('graphContainer2').innerHTML = document.getElementById('graphContainer').innerHTML
-
-	}
-
-	function backDivForm(){
-		document.getElementById("formConformanceChecking").style.display = "block";
-		document.getElementById("formConformanceChecking2").style.display = "none";
-		document.getElementById("map2-content").style.display = "none";
-	}
-
-	function backPrecDiv(){
-		document.getElementById("formConformanceChecking").style.display = "none";
-		document.getElementById("formConformanceChecking2").style.display = "block";
-		document.getElementById("map2-content").style.display = "none";
-		// document.getElementById('graphContainer2').innerHTML = document.getElementById('graphContainer').innerHTML
-
-	}
-
-	function nextDivForm(){
-		document.getElementById("formConformanceChecking").style.display = "none";
-		document.getElementById("formConformanceChecking2").style.display = "block";
-		document.getElementById("map2-content").style.display = "none";
-	}
-
-	function resetField(){
-
-	}
-
-
-
-	function cambia(){
-		event.stopImmediatePropagation();
-		if(document.getElementById("filter_by").value == "resource"){
-			var ar_Act=getAllUsedVariables("resources")
-			document.getElementById("mfa2").style.visibility = "visible";
-			document.getElementById("mode_for_attribute").style.visibility = "visible";
-			document.getElementById("attribute_text").style.visibility = "visible";
-			
-		}else if (document.getElementById("filter_by").value == "costs"){
-			var ar_Act=getAllUsedVariables("resources_cost")
-			// var ar_Act=getAllUsedVariables("activities")
-			document.getElementById("mfa2").style.visibility = "visible";
-			document.getElementById("mode_for_attribute").style.visibility = "visible";
-			document.getElementById("attribute_text").style.visibility = "visible";
-		}else if (document.getElementById("filter_by").value == "variants"){
-			var ar_Act=getAllUsedVariables("variant")
-			
-			document.getElementById("mfa2").style.visibility = "hidden";
-			document.getElementById("mode_for_attribute").style.visibility = "hidden";
-			document.getElementById("attribute_text").style.visibility = "hidden";
-
-		}else if (document.getElementById("filter_by").value == "activity"){
-			var ar_Act=getAllUsedVariables("activities")
-			document.getElementById("mfa2").style.visibility = "visible";
-			document.getElementById("mode_for_attribute").style.visibility = "visible";
-			document.getElementById("attribute_text").style.visibility = "visible";
-			
-		}else if (document.getElementById("filter_by").value == "caseID"){
-			var ar_Act=getAllUsedVariables("caseid")
-			document.getElementById("mfa2").style.visibility = "hidden";	
-			document.getElementById("mode_for_attribute").style.visibility = "hidden";
-			document.getElementById("attribute_text").style.visibility = "hidden";
-		}
-
-		$('#fieldset3').empty();
-		listToFilter=[]
-
-		for (const act of ar_Act) {
-			// console.log(act);
-			addCheckbox(act)
-		}
-		
-	}
-
-	
-	function addCheckbox(name) {
-	   var container = $('#fieldset3');
-	   var inputs = container.find('input');
-	   var id = inputs.length+1;
-	
-	//    $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
-	//    $('<label />', { 'for': 'cb'+id, text: name }).appendTo('cb'+id);
-	   $('<label><input class="boxchecked" type="checkbox" id="'+name+'" value="'+name+'" onchange="cb(this.value, this.checked)">' +name+ '</label>').appendTo(container);
-	}
-
-	
-	function cb(valore,controllo){
-		if(controllo) {
-			// console.log(this.value)
-			var valore_s=valore.replace(".", "@");
-			listToFilter.push(valore_s)
-			console.log(listToFilter)
-		}else{
-			var valore_s=valore.replace(".", "@");
-			const index = listToFilter.indexOf(valore_s);
-			if (index > -1) {
-				listToFilter.splice(index, 1); // 2nd parameter means remove one item only
-			}
-			console.log(listToFilter)
-		}
-	}
-
-
-
-	
-</script>
-
-<!--(parser -- Dario)-->
-<script>
-
-var graphTextF;
-var graphTextP;
-var graphNodesF;
-var graphNodesP;
-var graphNodes;
-var graphEdgesF;
-var graphEdgesP;
-var graphEdges;
-var dslSteps;
-var color_highlight='#8B008B';
-
-var history_crono={};
-var indice=0;
-
-
-var meanDurationFP;
-var meanEdgeDuration;
-var $total_mean=0
-		var $total_min=0
-		var $total_max=0
-		var $total_median=0
-		var $total_total=0
-var listToFilter=[]
-
-// Function to take min/max/mean/median/total duration of nodes
-function getAllDuration(variable){
-
-	var duration_dictionary=document.getElementById("allDt").innerHTML
-	// console.log(document.getElementById("allDt").innerHTML);
-
-	duration_dictionary=duration_dictionary.split("*")
-
-	var mean_duration=duration_dictionary[0];
-	var total_duration=duration_dictionary[1];
-	var median_duration=duration_dictionary[2];
-	var max_duration=duration_dictionary[3];
-	var min_duration=duration_dictionary[4];
-	
-
-	// var mDFP=document.getElementById("allDt").innerHTML;
-	var mDFP=""
-	if(variable=="mean"){
-		mDFP=JSON.parse(mean_duration.replace(/'/g,"\""));
-	}else if(variable=="total"){
-		mDFP=JSON.parse(total_duration.replace(/'/g,"\""));
-	}else if(variable=="median"){
-		mDFP=JSON.parse(median_duration.replace(/'/g,"\""));
-	}else if(variable=="max"){
-		mDFP=JSON.parse(max_duration.replace(/'/g,"\""));
-	}else if(variable=="min"){
-		mDFP=JSON.parse(min_duration.replace(/'/g,"\""));
-	}
-
-	return mDFP
-	
-}
-
-
-function getAllFrequency(variable){
-
-	var duration_dictionary=document.getElementById("allFq").innerHTML
-	// console.log(document.getElementById("allDt").innerHTML);
-
-	duration_dictionary=duration_dictionary.split("*")
-
-	var absolute_freq=duration_dictionary[0];
-	var case_freq=duration_dictionary[1];
-	var max_freq=duration_dictionary[2];
-
-
-
-	// var mDFP=document.getElementById("allDt").innerHTML;
-	var mDFP=""
-	if(variable=="absolute"){
-		mDFP=JSON.parse(absolute_freq.replace(/'/g,"\""));
-	}else if(variable=="case"){
-		mDFP=JSON.parse(case_freq.replace(/'/g,"\""));
-	}else if(variable=="max"){
-		mDFP=JSON.parse(max_freq.replace(/'/g,"\""));
-	}
-
-	return mDFP
-
-}
-
-
-function getAllEdgeDuration(variable){
-
-	var duration_dictionary=document.getElementById("allEdgeDt").innerHTML
-	// console.log(document.getElementById("allDt").innerHTML);
-
-	duration_dictionary=duration_dictionary.split("*")
-
-	var mean_duration=duration_dictionary[0];
-	var total_duration=duration_dictionary[1];
-	var median_duration=duration_dictionary[2];
-	var max_duration=duration_dictionary[3];
-	var min_duration=duration_dictionary[4];
-
-
-	// var mDFP=document.getElementById("allDt").innerHTML;
-	var mDFP=""
-	if(variable=="mean"){
-		mDFP=JSON.parse(mean_duration.replace(/'/g,"\""));
-	}else if(variable=="total"){
-		mDFP=JSON.parse(total_duration.replace(/'/g,"\""));
-	}else if(variable=="median"){
-		mDFP=JSON.parse(median_duration.replace(/'/g,"\""));
-	}else if(variable=="max"){
-		mDFP=JSON.parse(max_duration.replace(/'/g,"\""));
-	}else if(variable=="min"){
-		mDFP=JSON.parse(min_duration.replace(/'/g,"\""));
-	}
-
-	return mDFP
-
-}
-
-function getAllEdgeFrequency(variable){
-
-	var duration_dictionary=document.getElementById("allEdgeFq").innerHTML
-	// console.log(document.getElementById("allDt").innerHTML);
-
-	duration_dictionary=duration_dictionary.split("*")
-
-	var absolute_freq=duration_dictionary[0];
-	var case_freq=duration_dictionary[1];
-	var max_freq=duration_dictionary[2];
-
-
-
-	// var mDFP=document.getElementById("allDt").innerHTML;
-	var mDFP=""
-	if(variable=="absolute"){
-		mDFP=JSON.parse(absolute_freq.replace(/'/g,"\""));
-	}else if(variable=="case"){
-		mDFP=JSON.parse(case_freq.replace(/'/g,"\""));
-	}else if(variable=="max"){
-		mDFP=JSON.parse(max_freq.replace(/'/g,"\""));
-	}
-
-	return mDFP
-
-}
-
-
-function getAllUsedVariables(variable){
-	var uv_dictionary=document.getElementById("usedVariable").innerHTML
-	
-	uv_dictionary = uv_dictionary.replace("'", '"');
-	uv_dictionary=uv_dictionary.split("*")
-
-	// activities=uv_dictionary[0]
-	// resources=uv_dictionary[1]
-	// resources_cost=uv_dictionary[2]
-	// caseid=uv_dictionary[3]
-	// variant=uv_dictionary[4]
-
-	
-	var activities = Object.keys(JSON.parse(uv_dictionary[0]));
-	var resources = Object.keys(JSON.parse(uv_dictionary[1]));
-	// var resources_cost = Object.keys(JSON.parse(uv_dictionary[2]));
-	// console.log(uv_dictionary[2])
-	// var rs_cost=JSON.stringify(uv_dictionary[2]);
-	// console.log(rs_cost)
-	var resources_cost=Object.keys(JSON.parse(uv_dictionary[2]));
-	// console.log(resources_cost)
-
-	var caseid = Object.keys(JSON.parse(uv_dictionary[3]));
-	var variant = Object.keys(JSON.parse(uv_dictionary[4]));
-
-	// console.log(obj[0]);
-	// var mean_duration=duration_dictionary[0];
-	// var total_duration=duration_dictionary[1];
-	// var median_duration=duration_dictionary[2];
-	// var max_duration=duration_dictionary[3];
-	// var min_duration=duration_dictionary[4];
-
-
-	// var mDFP=document.getElementById("allDt").innerHTML;
-	// var mDFP=""
-	if(variable=="activities"){
-		result=activities
-	}else if(variable=="resources"){
-		result=resources
-	}else if(variable=="resources_cost"){
-		result=resources_cost
-	}else if(variable=="caseid"){
-		result=caseid
-	}else if(variable=="variant"){
-		result=variant
-	}
-
-	return result
-}
-
-
-function getGraphText(selector){
-	// take the graph in text form and save it 
-	// F is annotated with frequencies
-	// P is annotated with durations
-	if ( selector == 'frequency')
-		var graphText = document.getElementById("digraphF").innerHTML;
-	else
-		var graphText = document.getElementById("digraphP").innerHTML;
-	// fix formatting
-	graphText = graphText.replace(/&#34;/g, '"');
-	graphText = graphText.replace(/&gt;/g, ">");
-	// transform the string into an array, each line is an element
-	// then remove from the array the first 3 and last 2 elements which are useless
-	var graphText = graphText.split('\n\t').splice(3);
-	graphText.pop();
-	graphText.pop();
-
-	return graphText;
-}
-
-function getGraphNodes(graphText){
-	// obtain the array of nodes with parameter 
-	var graphNodes = [];
-	var j = 0;
-	// cycle throguh the graph array 
-	for (var i=0; i<graphText.length; i++){
-		// if this element has no '->' in the string, it's a node
-		if (graphText[i].search('->') == -1){
-			// if the current element is START
-			if (graphText[i].search('\"@@startnode\"') != -1){
-				// \"@@startnode\" [label=\"@@S\" fillcolor=\"#32CD32\" fontcolor=\"#32CD32\" shape=circle style=filled]"
-				graphNodes[j] = graphText[i].split('\"').splice(1,1);
-				graphNodes[j][1] = 'start';
-				graphNodes[j][2] = '';
-				graphNodes[j][3] = '';
-				j++;
-			}
-			// if the current element is END
-			else if (graphText[i].search('\"@@endnode\"') != -1){
-				graphNodes[j] = graphText[i].split('\"').splice(1,1);
-				graphNodes[j][1] = 'end';
-				graphNodes[j][2] = '';
-				graphNodes[j][3] = '';
-				j++;
-			}
-			// otherwise
-			else{
-				// save it into the nodes array, remove useless info from the string and increment j
-				// final array has two elements, (0):ID and (1):label
-				graphNodes[j] = graphText[i].split(' [');
-				graphNodes[j][1] = graphNodes[j][1].split('" ').shift().split('"').pop();
-				// if additional info about performance of frequency are not useful 
-				// add .split(' (').shift() to the previous line of code
-				graphNodes[j][2] = graphNodes[j][1].split('(').pop().split(')').shift();
-				graphNodes[j][1] = graphNodes[j][1].split('(').shift();
-				graphNodes[j][1] = graphNodes[j][1].substring(0, graphNodes[j][1].length-1);
-				j++;
-			}
-		}	
-	}
-	
-	return graphNodes;
-}
-
-function getCombinedNodes(graphNodesF, graphNodesP){
-	for (var i=0; i<graphNodesF.length; i++)
-		graphNodesF[i][3] = graphNodesP[i][2];
-	return graphNodesF;
-}
-
-function getGraphEdges(graphText, boolFreq){
-	//obtain the array of edges with parameter
-	var graphEdges = [];
-	var j = 0;
-	// cycle throguh the graph array 
-	for (var i=0; i<graphText.length; i++){
-		// if this element has '->' in the string, it's a node
-		if (graphText[i].search('->') != -1){
-			// save it into the nodes array, remove useless info from the string and increment j
-			graphEdges[j] = graphText[i].split(' f').shift().split(' [');
-			graphEdges[j][2] = graphEdges[j][1].split('=').pop();
-			graphEdges[j][0] = graphEdges[j][0].split(' -> ');
-			graphEdges[j][1] = graphEdges[j][0].pop();
-			graphEdges[j][0] = graphEdges[j][0].shift();
-			if (boolFreq){
-				graphEdges[j][2] = graphEdges[j][2].split('\"').splice(1,1);
-				graphEdges[j][2] = graphEdges[j][2].shift();
-			}
-			if (graphEdges[j][0] == '\"@@startnode\"' || graphEdges[j][1] =='\"@@endnode\"'){
-				if (graphEdges[j][0].search('\"') != -1)
-					graphEdges[j][0] = graphEdges[j][0].split('\"').splice(1,1).shift();
-				if (graphEdges[j][1].search('\"') != -1)
-					graphEdges[j][1] = graphEdges[j][1].split('\"').splice(1,1).shift();
-				graphEdges[j][2] = '';
-			}
-			j++;
-		}	
-	}
-	
-	return graphEdges;
-}
-
-function getCombinedEdges(graphEdgesF, graphEdgesP){
-	for (var i=0; i<graphEdgesF.length; i++){
-		graphEdgesF[i][3] = graphEdgesP[i][2];
-		
-	}
-	return graphEdgesF;
-}
-
-function getLabeledGraphEdges(graphNodes, graphEdges){
-	// for each couple of elements in graphEdges 
-	for (var i=0; i<graphEdges.length; i++){
-		// for each element in graphNodes
-		for (var j=0; j<graphNodes.length; j++){
-			// if they are equal, swap ID in edges for the Label in Nodes
-			if ( graphEdges[i][0] === graphNodes[j][0])
-				graphEdges[i][0] = graphNodes[j][1];
-			if ( graphEdges[i][1] === graphNodes[j][0])
-				graphEdges[i][1] = graphNodes[j][1];
-		}
-	}
-	return 1;
-}
-
-function getDslSteps(graphNodes, graphEdges){
-	// from graphNodes and graphEdges get a unique matrix ready for conversion
-	var dslSteps = [];
-	// for each node 
-	for (var i=0; i<graphNodes.length; i++){
-		// save info about the node
-		dslSteps[i] = [];
-		dslSteps[i].push([graphNodes[i][1], graphNodes[i][2], graphNodes[i][3]]);
-		// then, for each edge
-		for (var j=0; j<graphEdges.length; j++){
-			// check if the current node is the successor
-			if (graphEdges[j][1] == graphNodes[i][1]){
-				// in that case save the info about the edge
-				dslSteps[i].push([graphEdges[j][0], graphEdges[j][2], graphEdges[j][3]]);
-			}
-		}
-	}
-	return dslSteps;
-}
-
-</script>
-
-<!--(onclick exportdsl -- Dario)-->
-<script>
-
-// Function to download data to a file
-function download(data, filename, type) {
-    var file = new Blob([data], {type: type});
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-        var a = document.createElement("a"),
-                url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
-    }
-}
-
-function exportDsl(){
-
-	var predecessors = [];
-	var parameters = [];
-	var count = [];
-	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
-	var dsl = 'Pipeline ' + pipelineName +'{\n';
-	
-	for (var i=0; i<dslSteps.length; i++){
-		predecessors[i] = '';
-		count[i] = 0;
-		// get parameters of the current step in a string
-		parameters[i] = '\t\t\t\tFrequency: ' + dslSteps[i][0][1] + ',\n\t\t\t\tDuration: ' + dslSteps[i][0][2];
-		// iterate on the predecessors of the current step and save them in a string
-		for (var j=1; j<dslSteps[i].length; j++){
-			count[i]++;
-			predecessors[i] = predecessors[i] + '\t\t\t\t' + dslSteps[i][j][0].replace(' ', '_');
-			if (j<dslSteps[i].length-1)
-				predecessors[i] = predecessors[i] +',\n';	
-		}
-		// print the whole string for each step
-		dsl = dsl + '\t-\tStep Step: ' + dslSteps[i][0][0].replaceAll(' ', '_');
-		if (predecessors[i] != ''){
-			dsl = dsl + '\n\t\t\tPrevious:';
-			if (count[i]>1)
-				dsl = dsl + '[';
-			dsl = dsl + '\n' + predecessors[i];
-			if (count[i]>1)
-				dsl = dsl + '\n\t\t\t]';
-		}
-		if (dslSteps[i][0][0] == 'start' || dslSteps[i][0][0] == 'end')
-			dsl = dsl + '\n';
-		else
-			dsl = dsl + '\n\t\t\tEnvironmentParameters:\n' + parameters[i] + '\n';
-	}
-	dsl = dsl + '\}';
-	// return the dsl
-	download(dsl, pipelineName, 'txt');
-}
-
-</script>
 
 <!--(script with getMap())-->
 <script>
-var frontend = document.getElementById("path_frontend").innerHTML;
-var nodes_id_association={}
-var petri_sample
-function getMap(bool) {
-		
-		// DARIO START
-		if (bool){
-			// get graph in an array
-			graphTextF = getGraphText('frequency');
-			graphTextP = getGraphText();
-			// get nodes in an array 
-			graphNodesF = getGraphNodes(graphTextF);
-			graphNodesP = getGraphNodes(graphTextP);
-			graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
-			// get edges in an array
-			graphEdgesF = getGraphEdges(graphTextF, false);
-			graphEdgesP = getGraphEdges(graphTextP, true);
-			graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
-			getLabeledGraphEdges(graphNodes, graphEdges);
-			// get final matrix ready for dsl conversion
-			dslSteps = getDslSteps(graphNodes, graphEdges);
-
-			meanDurationFP= getAllDuration("mean");
-			meanEdgeDuration= getAllEdgeDuration("mean");
-			// getAllUsedVariables("activities")
-			var array_Activities=getAllUsedVariables("activities")
-			for (const act of array_Activities) {
-				// console.log(act);
-				addCheckbox(act)
-			}
-			$(document).ready(function(){
-				$('#filter_by').on('change', function(e) {
-					e.stopImmediatePropagation();
-					var typeD=this.value
-					// console.log(typeD)
-					
-				});
-			});
-			
-			// console.log(getAllEdgeFrequency("absolute")["register request#examine casually"]);
-			// console.log(getAllFrequency("absolute")["reject request"]);
-			// debug
-			/*console.log('GraphTextF:');
-			console.log(graphTextF);
-			console.log('GraphTextP:');
-			console.log(graphTextP);
-			console.log('GraphEdgesF:');
-			console.log(graphEdgesF);
-			console.log('GraphEdgesP:');
-			console.log(graphEdgesP);*/
-			console.log('GraphNodes:');
-			console.log(graphNodes);
-			console.log('LabeledGraphEdges:');
-			console.log(graphEdges);
-			console.log('DSL:');
-			console.log(dslSteps);
-			console.log('MeanDuration:');
-			console.log(meanDurationFP);
-			console.log('MeanEdgeDuration:');
-			console.log(meanEdgeDuration);
-		}
-		//DARIO END
-		
-		var selected = document.querySelector('input[name="mytabs"]:checked').value;
-		var sample;
-			 
-			
-			if (selected == 'frequency') {
-				sample = document.getElementById("digraphF").innerHTML;
-			}
-			else {
-				sample = document.getElementById("digraphP").innerHTML;
-			}
-		
-		//var sample = 'digraph g{ a -> b}';
-		sample = sample.replace(/&#34;/g, '"');
-		sample = sample.replace(/&gt;/g, ">");
-		sample = sample.replace(/&lt;/g, "<");
-		//sample = sample.replace(/●/g, "  &#9679;"); //9679
-		sample = sample.replace(/●/g, " ");
-		//sample = sample.replace(/■/g, '    &#9724;'); //9632
-		sample = sample.replace(/■/g, " ");
-		
-		
-		var options = {
-		  format: 'svg',
-		  ALLOW_MEMORY_GROWTH: 1,
-		  totalMemory: 537395200
-		  // format: 'png-image-element'
-		}
-
-		var image = Viz(sample, options);
-
-		var main = document.getElementById('graphContainer');
-
-		main.innerHTML = image;		// SVG
-
-		// document.getElementById('graphContainer2').innerHTML=image
-
-
-
-		
-		
-		// Optional - resize the SVG element based on the contents.
-		/*var svg = document.querySelector('#graphContainer');
-		var bbox = svg.getBBox();
-		svg.style.width = bbox.width + 10.0 + "px";
-		svg.style.height = bbox.height + 10.0 + "px";*/
-		
-		var allGs = document.getElementsByTagName('g');
-		var firstG = allGs[0];
-		
-		var figli = main.children;
-		//console.log(figli[0].attributes.width.value);
-		
-		var graph = figli[0].children[0];
-		//console.log(figli[0].children[0].children[3].children[3].innerHTML);
-		//console.log(figli[0].children[0].children[3]);
-		//console.log(figli[0]);
-		//console.log(firstG.viewBox);
-		//firstG.style.shape = "circle";
-		//console.log(firstG.style.shape);
-
-
-		var $totale = 0
-		
-		var $total_mean = 0
-		var $total_median = 0
-		var $total_max = 0
-		var $total_min = 0
-		var $total_total = 0
-
-		var $totale_edge=0
-		var $make_somma=0
-			
-		var nodes = document.getElementsByClassName("node");
-		var edges = document.getElementsByClassName("edge");
-		
-		var nodesNames = [];
-		var names;
-		
-		var pp=0;
-
-		$(document).ready(function(){
-			for(var i=0; i<nodes.length; i++){
-				
-				//console.log(nodes[i].children[2].innerHTML);
-				nodesNames[i] = nodes[i].children[2].innerHTML;
-				//console.log(nodes[i].children[2].innerHTML);
-				// console.log(nodes[i].children[0].innerHTML)
-				if(nodes[i].id!=undefined){
-					var use=nodes[i].id
-					$("#"+use).append("<label class='label_node' hidden>"+nodes[i].children[0].innerHTML+"</label>");
-				}
-
-				nodes[i].children[0].innerHTML = nodesNames[i];
-				// console.log(nodes[i].children[0].innerHTML)
-
-
-				
-
-				
-				names = nodesNames[i].split(' (')[0];
-				names = '"'+ names +'"';
-				//console.log(names);
-				
-				nodes[i].addEventListener("click", function(e) {
-					// When the user clicks call function to open the popup
-					openInfo(e);
-				}, false);
-				if(nodes[i].children[2].getAttribute("text-anchor") != "start"){
-					if(nodes[i].children[0].innerHTML != ""){
-						nodes[i].children[2].setAttribute("font-size", "10");
-					}
-					else{
-						nodes[i].children[2].setAttribute("fill", "red");
-					}
-				}
-				else{
-					nodes[i].children[1].setAttribute("fill", "green");
-				}
-				
-			}
-		});
-
-		
-
-		var selected_nodes={}  //used to memoryze the selected nodes
-
-		
-
-		lista_ora=['w','h','s','m','d','y']
-		number_selected_activity=0
-
-		// Apply functions on node*************************************************************
-		$(document).ready(function(){
-			$(".node").on('click', function(event){
-				
-				$used_id=this.id
-				$temp= ($("#"+$used_id).find("polygon").attr('stroke'))
-				$check_node=($("#"+$used_id).find("polygon")).length
-
-				
-				if($temp=="#000000" && $check_node!=0){
-					
-					var $titolo = $("#"+$used_id+" title").html(); 				
-					$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-					$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-
-					$titolo_name=$titolo.split(' (')[0].trim()
-					// console.log($titolo_name)
-
-					$titolo_time=$titolo.split(' (')[1].trim()
-					$statistica=$titolo_time.substring(0,$titolo_time.length-1)
-					// console.log($statistica)
-					
-					$myduration_mean=getAllDuration("mean");
-					$myduration_total=getAllDuration("total");
-					$myduration_min=getAllDuration("min")
-					$myduration_max=getAllDuration("max")
-					$myduration_median=getAllDuration("median");
-					// console.log($myduration_mean)
-					$myfrequency_absolute=getAllFrequency("absolute");
-					$myfrequency_case=getAllFrequency("case")
-					$myfrequency_max=getAllFrequency("max")
-					//___________________________________________________
-					
-					$resultduration_mean=$myduration_mean[$titolo_name]
-					$resultduration_total=$myduration_total[$titolo_name]
-					$resultduration_min=$myduration_min[$titolo_name]
-					$resultduration_max=$myduration_max[$titolo_name]
-					$resultduration_median=$myduration_median[$titolo_name]
-
-					$resultfrequency_absolute=$myfrequency_absolute[$titolo_name]
-					$resultfrequency_case=$myfrequency_case[$titolo_name]
-					$resultfrequency_max=$myfrequency_max[$titolo_name]
-					
-					$total_mean=$total_mean+$resultduration_mean
-					$total_min=$total_min+$resultduration_min
-					$total_max=$total_max+$resultduration_max
-					$total_median=$total_median+$resultduration_median
-					$total_total=$total_total+$resultduration_total
-
-
-
-					var t_name=$titolo_name
-
-					if(document.getElementById("tabPerf").checked==false){
-						selected_edges={}
-						selected_nodes={}
-						$(".node").find("polygon").attr('stroke', "#000000");
-							$(".node").find("text").css({"text-decoration":"revert"});
-
-							$(".edge").find("path").attr('stroke', "#000000");
-							$(".edge").find("polygon").attr('stroke', "#000000");
-							$(".edge").find("text").css({"text-decoration":"revert"});
-							
-
-							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-					}
-
-
-					selected_nodes[t_name]=$resultduration_mean
-					// console.log(selected_nodes)
-					// console.log(sum_dict(selected_nodes))
-
-
-					if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
-
-						$(".node").find("polygon").attr('stroke', "#000000");
-						$(".node").find("text").css({"text-decoration":"revert"});
-
-						$(".edge").find("path").attr('stroke', "#000000");
-						$(".edge").find("polygon").attr('stroke', "#000000");
-						$(".edge").find("text").css({"text-decoration":"revert"});
-
-						
-						
-						
-						$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-						$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-					}
-					
-
-					var bool_switch = document.getElementById("tabPerf").checked;
-					if ((bool_switch) == true){
-						
-						if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-							popup.innerHTML = "Selected values duration"+"<br /> <br />"
-									+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
-									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
-									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
-									+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
-									+"Max duration: " +  "<br />"+secondsToHms($total_max) 
-
-						}else if(Object.keys(selected_nodes).length>0){
-							popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($resultduration_mean) + "<br /> <br />" 
-									+"Median duration: " +  "<br />"+ secondsToHms($resultduration_median) + "<br /> <br />" 
-									+"Total duration: " +  "<br />"+secondsToHms($resultduration_total) + "<br /> <br />"  
-									+"Min duration: " +  "<br />"+secondsToHms($resultduration_min) + "<br /> <br />"  
-									+"Max duration: " +  "<br />"+secondsToHms($resultduration_max) 
-						}
-
-					}else if(Object.keys(selected_nodes).length>0){
-						popup.innerHTML ="Absolute frequency: "+  "<br />" + $resultfrequency_absolute + "<br /> <br />" 
-									+"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
-									+"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
-									
-					}
-					// popup.innerHTML = "Median duration: " + secondsToHms($resultduration_median) + "<br /> <br />" + "Total duration: " + secondsToHms($resultduration_total)+ "<br /> <br />"  +"Selected duration node: <br />"+ secondsToHms($totale) + "<br /> <br />" +"Selected duration edge: <br />"+ secondsToHms($totale_edge);
-					
-					
-					$("#myPopup").attr("class","popuptext show")
-
-					if(Object.keys(selected_nodes).length==0 && Object.keys(selected_edges).length==0){
-						$("#myPopup").attr("class","popuptext")
-					}
-
-					/*
-					if(Object.keys(selected_nodes).length>0){
-
-						$(".edge").find("polygon").attr('stroke', "#000000");
-						$(".edge").find("path").attr('stroke', '#000000');
-						$(".edge").find("text").css({"text-decoration":"revert"});
-						$totale_edge=0
-					}*/
-
-					
-					// if(number_selected_activity==0){
-					// 	$("#myPopup").attr("class","popuptext")
-					// }
-
-				}else if($check_node!=0){
-
-					var $titolo = $("#"+$used_id+" title").html(); 				
-					$("#"+$used_id).find("polygon").attr('stroke', "#000000");
-					$("#"+$used_id).find("text").css({"text-decoration":"revert"});
-					
-					$titolo_name=$titolo.split(' (')[0].trim()
-					// console.log($titolo_name)
-
-					
-					$titolo_time=$titolo.split(' (')[1].trim()
-					$statistica=$titolo_time.substring(0,$titolo_time.length-1)
-					// console.log($statistica)
-
-					// number_selected_activity=number_selected_activity-1
-					
-					$myduration_mean=getAllDuration("mean");
-					$myduration_total=getAllDuration("total");
-					$myduration_min=getAllDuration("min")
-					$myduration_max=getAllDuration("max")
-					$myduration_median=getAllDuration("median");
-
-					$resultduration_mean=$myduration_mean[$titolo_name]
-					$resultduration_total=$myduration_total[$titolo_name]
-					$resultduration_min=$myduration_min[$titolo_name]
-					$resultduration_max=$myduration_max[$titolo_name]
-					$resultduration_median=$myduration_median[$titolo_name]
-
-
-					// $totale=$totale-$resultduration_mean
-					$total_mean=$total_mean-$resultduration_mean
-					$total_min=$total_min-$resultduration_min
-					$total_max=$total_max-$resultduration_max
-					$total_median=$total_median-$resultduration_median
-					$total_total=$total_total-$resultduration_total
-
-					$myfrequency_absolute=getAllFrequency("absolute");
-					$myfrequency_case=getAllFrequency("case")
-					$myfrequency_max=getAllFrequency("max")
-															
-					$resultfrequency_absolute=$myfrequency_absolute[$titolo_name]
-					$resultfrequency_case=$myfrequency_case[$titolo_name]
-					$resultfrequency_max=$myfrequency_max[$titolo_name]
-
-
-
-					delete selected_nodes[$titolo_name]
-					// console.log(selected_nodes)
-					// console.log(sum_dict(selected_nodes))
-					// if(document.getElementById("tabPerf").checked==false){
-					// 	selected_edges={}
-					// 	selected_nodes={}
-					// 	$(".node").find("polygon").attr('stroke', "#000000");
-					// 		$(".node").find("text").css({"text-decoration":"revert"});
-
-					// 		$(".edge").find("path").attr('stroke', "#000000");
-					// 		$(".edge").find("polygon").attr('stroke', "#000000");
-					// 		$(".edge").find("text").css({"text-decoration":"revert"});
-							
-
-					// 		$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-					// 		$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-					// }
-
-					if(Object.keys(selected_nodes).length>1 && document.getElementById("tabPerf").checked==false){
-
-						
-						selected_nodes={}
-				
-					}
-
-					if($total_mean<0){	$total_mean=0 }
-					if($total_min<0){	$total_min=0 }
-					if($total_max<0){	$total_max=0 }
-					if($total_median<0){	$total_median=0 }
-					if($total_total<0){	$total_total=0 }
-
-					if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
-
-						$(".node").find("polygon").attr('stroke', "#000000");
-						$(".node").find("text").css({"text-decoration":"revert"});
-
-						$(".edge").find("path").attr('stroke', "#000000");
-						$(".edge").find("polygon").attr('stroke', "#000000");
-						$(".edge").find("text").css({"text-decoration":"revert"});
-
-				
-
-
-						$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-						$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-					}
-
-
-					var bool_switch = document.getElementById("tabPerf").checked;
-					if ((bool_switch) == true){
-						if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-							popup.innerHTML = "Selected values duration"+"<br /> <br />"
-									+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
-									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
-									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
-									+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
-									+"Max duration: " +  "<br />"+secondsToHms($total_max) 
-		
-
-						}else if(Object.keys(selected_nodes).length>0 || Object.keys(selected_edges).length>0){
-							popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
-									+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
-									+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
-									+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
-									+"Max duration: " +  "<br />"+secondsToHms($total_max) 
-
-						}
-						
-					}else if(Object.keys(selected_nodes).length>0){
-						popup.innerHTML ="Absolute frequency: "+  "<br />" +$resultfrequency_absolute + "<br /> <br />" 
-									+"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
-									+"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
-									
-					}
-
-
-
-					if(Object.keys(selected_nodes).length==0 && Object.keys(selected_edges).length==0){
-						$("#myPopup").attr("class","popuptext")
-					}
-					// if(number_selected_activity==0){
-					// 	$("#myPopup").attr("class","popuptext")
-					// }
-					// 
-				}else{
-					// $("#myPopup").attr("class","popuptext")
-				}
-				
-				// console.log($("#"+$used_id).html())
-				// console.log(this.id.innerHTML)
-				// console.log($totale)
-				// console.log(secondsToHms($totale))				
-			});
-		});
-		// ****************************************************************************************************
-
-		
-
-		
-
-		// analyze edge****************************************************************************************
-		$totale_edge=0
-
-		var selected_edges={}
-
-		$(document).ready(function(){
-			$(".edge").on('click', function(event){
-				
-				$used_id=this.id
-				$temp_polygon= ($("#"+$used_id).find("polygon").attr('stroke'))
-				$temp_path= ($("#"+$used_id).find("path").attr('stroke'))
-
-				$check_edge= ($("#"+$used_id).find("polygon")).length
-				var $titolo_1 = $("#"+$used_id+" text").html();
-				// if(lista_ora.includes(String($titolo_1[$titolo_1.length-1]))){
-				
-				if($temp_polygon=="#000000" && $check_edge!=0 && $titolo_1!=undefined){
-								
-					$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-					$("#"+$used_id).find("path").attr('stroke', color_highlight);
-					$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-					
-
-					$statistica=$titolo_1.substring(0,$titolo_1.length-1)
-
-					$myduration_edge_mean=getAllEdgeDuration("mean");
-					$myduration_edge_total=getAllEdgeDuration("total");
-					$myduration_edge_min=getAllEdgeDuration("min")
-					$myduration_edge_max=getAllEdgeDuration("max")
-					$myduration_edge_median=getAllEdgeDuration("median");
-
-					$myfrequency_edge_absolute=getAllEdgeFrequency("absolute");
-					$myfrequency_edge_case=getAllEdgeFrequency("case")
-					$myfrequency_edge_max=getAllEdgeFrequency("max")
-															
-
-
-					// $titolo=$titolo_1.split(' (')[0].trim()
-					var $label_title_edge= $("#"+$used_id).find("label").text();
-					
-					// console.log($label_title_edge)
-					if($label_title_edge!=undefined && $label_title_edge!=""){
-						// console.log($label_title_edge)
-						var $source_edge= $label_title_edge.split('->')[0].trim()
-						// console.log($source_edge)
-						// console.log(nodes_id_association[$source_edge])
-						var $target_edge= $label_title_edge.split('->')[1].trim()
-						// console.log($target_edge)
-						// console.log(nodes_id_association[$target_edge])
-
-						$resultduration_edge_mean=$myduration_edge_mean[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_total=$myduration_edge_total[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_min=$myduration_edge_min[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_max=$myduration_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_median=$myduration_edge_median[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-
-						// console.log(nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge])
-						// $resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						// $resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						// $resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						
-						if($source_edge=="@@startnode"){
-							$resultfrequency_edge_absolute=$myfrequency_edge_absolute["@@startnode"+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_case=$myfrequency_edge_case["@@startnode"+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						}else if($target_edge=="@@endnode"){
-							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+"@@endnode"]
-							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+"@@endnode"]
-							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						}else{
-							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						}
-
-
-						$total_mean=$total_mean+$resultduration_edge_mean
-						$total_min=$total_min+$resultduration_edge_min
-						$total_max=$total_max+$resultduration_edge_max
-						$total_median=$total_median+$resultduration_edge_median
-						$total_total=$total_total+$resultduration_edge_total
-
-						if(document.getElementById("tabPerf").checked==false){
-							selected_edges={}
-							selected_nodes={}
-							$(".node").find("polygon").attr('stroke', "#000000");
-							$(".node").find("text").css({"text-decoration":"revert"});
-
-							$(".edge").find("path").attr('stroke', "#000000");
-							$(".edge").find("polygon").attr('stroke', "#000000");
-							$(".edge").find("text").css({"text-decoration":"revert"});
-							
-							$("#"+$used_id).find("path").attr('stroke', color_highlight);
-							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-						}
-
-						var edge_extended_name=[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						selected_edges[edge_extended_name]=$resultduration_edge_mean
-
-						if(Object.keys(selected_edges).length>1 && document.getElementById("tabPerf").checked==false){
-							selected_edges={}
-						}
-
-						if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
-
-							$(".node").find("polygon").attr('stroke', "#000000");
-							$(".node").find("text").css({"text-decoration":"revert"});
-
-							$(".edge").find("path").attr('stroke', "#000000");
-							$(".edge").find("polygon").attr('stroke', "#000000");
-							$(".edge").find("text").css({"text-decoration":"revert"});
-
-
-							$("#"+$used_id).find("path").attr('stroke', color_highlight);
-							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-						}
-
-						var bool_switch = document.getElementById("tabPerf").checked;
-						if ((bool_switch) == true){
-							
-							if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-								popup.innerHTML = "Selected values duration"+"<br /> <br />"
-										+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
-										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
-										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
-										+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
-										+"Max duration: " +  "<br />"+secondsToHms($total_max) 
-
-							}else if(Object.keys(selected_edges).length>0){
-								popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($resultduration_edge_mean) + "<br /> <br />" 
-										+"Median duration: " +  "<br />"+ secondsToHms($resultduration_edge_median) + "<br /> <br />" 
-										+"Total duration: " +  "<br />"+secondsToHms($resultduration_edge_total) + "<br /> <br />"  
-										+"Min duration: " +  "<br />"+secondsToHms($resultduration_edge_min) + "<br /> <br />"  
-										+"Max duration: " +  "<br />"+secondsToHms($resultduration_edge_max) 
-							}
-
-						}else if(Object.keys(selected_edges).length>0){ //
-							
-							popup.innerHTML ="Absolute frequency: "+  "<br />" + $resultfrequency_edge_absolute + "<br /> <br />" 
-										+"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
-										+"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
-										
-						}
-
-
-						
-
-
-
-
-					}
-
-					// $statistica=$titolo_1.substring(0,$titolo_1.length-1)
-					// console.log(lista_ora.includes(String($titolo_1[$titolo_1.length-1])))
-					// console.log($statistica)
-					// console.log($titolo_1)
-					// console.log(String($titolo_1[$titolo_1.length-1]))
-					//$myduration=getAllDuration("mean");
-					//$resultduration=$myduration[$titolo]
-					// if(String($titolo_1[$titolo_1.length-1])=="m"){
-					// 	$make_somma=parseInt($statistica)*60
-					// }
-					// if(String($titolo_1[$titolo_1.length-1])=="h"){
-					// 	$make_somma=parseInt($statistica)*60*60
-					// }
-					// if(String($titolo_1[$titolo_1.length-1])=="D" || String($titolo_1[$titolo_1.length-1])=="d"){
-					// 	$make_somma=parseInt($statistica)*60*60*24
-					// }
-					// if(String($titolo_1[$titolo_1.length-1])=="s"){
-					// 	$make_somma=parseInt($statistica)
-					// }
-					
-					// $totale_edge=$totale_edge+$make_somma
-					// number_selected_activity=number_selected_activity+1
-
-					/* commento utile forse
-					if(Object.keys(selected_edges).length>0){
-						$(".node").find("polygon").attr('stroke', "#000000");
-						$(".node").find("text").css({"text-decoration":"revert"});
-						selected_nodes={}
-					}
-					*/
-					
-					// popup.innerHTML = "Selected edge duration: <br />"+ secondsToHms($totale_edge);
-					// $("#myPopup").attr("class","popuptext show")
-					// if(number_selected_activity==0){
-					// 	$("#myPopup").attr("class","popuptext")
-					// }
-					$("#myPopup").attr("class","popuptext show")
-
-					if(Object.keys(selected_edges).length==0 && Object.keys(selected_nodes).length==0){
-						$("#myPopup").attr("class","popuptext")
-					}
-					
-				}else if($check_edge!=0 && $titolo_1!=undefined){
-
-					// var $titolo = $("#"+$used_id+" title").html(); 
-					$("#"+$used_id).find("polygon").attr('stroke', "#000000");
-					$("#"+$used_id).find("path").attr('stroke', '#000000');
-					$("#"+$used_id).find("text").css({"text-decoration":"revert"});
-					// $("#"+$used_id).find("text").attr('fill',"#000000");
-					// $titolo=$titolo.split(' (')[0].trim()
-					number_selected_activity=number_selected_activity-1
-					$statistica=$titolo_1.substring(0,$titolo_1.length-1)
-					// console.log($statistica)
-
-					$myduration_edge_mean=getAllEdgeDuration("mean");
-					$myduration_edge_total=getAllEdgeDuration("total");
-					$myduration_edge_min=getAllEdgeDuration("min")
-					$myduration_edge_max=getAllEdgeDuration("max")
-					$myduration_edge_median=getAllEdgeDuration("median");
-
-					$myfrequency_edge_absolute=getAllEdgeFrequency("absolute");
-					$myfrequency_edge_case=getAllEdgeFrequency("case")
-					$myfrequency_edge_max=getAllEdgeFrequency("max")
-
-					var $label_title_edge= $("#"+$used_id).find("label").text();
-					if($label_title_edge!=undefined && $label_title_edge!=""){
-						// console.log($label_title_edge)
-						var $source_edge= $label_title_edge.split('->')[0].trim()
-						// console.log($source_edge)
-						var $target_edge= $label_title_edge.split('->')[1].trim()
-						// console.log($target_edge)
-
-						$resultduration_edge_mean=$myduration_edge_mean[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_total=$myduration_edge_total[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_min=$myduration_edge_min[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_max=$myduration_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						$resultduration_edge_median=$myduration_edge_median[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-
-						
-						$total_mean=$total_mean-$resultduration_edge_mean
-						$total_min=$total_min-$resultduration_edge_min
-						$total_max=$total_max-$resultduration_edge_max
-						$total_median=$total_median-$resultduration_edge_median
-						$total_total=$total_total-$resultduration_edge_total
-
-						
-
-
-						if($source_edge=="@@startnode"){
-							$resultfrequency_edge_absolute=$myfrequency_edge_absolute["@@startnode"+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_case=$myfrequency_edge_case["@@startnode"+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						}else if($target_edge=="@@endnode"){
-							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+"@@endnode"]
-							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+"@@endnode"]
-							$resultfrequency_edge_max=1//$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						}else{
-							$resultfrequency_edge_absolute=$myfrequency_edge_absolute[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_case=$myfrequency_edge_case[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-							$resultfrequency_edge_max=$myfrequency_edge_max[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						}
-
-
-
-						var edge_extended_name2=[nodes_id_association[$source_edge]+"#"+nodes_id_association[$target_edge]]
-						delete selected_edges[edge_extended_name2]
-
-						// if(document.getElementById("tabPerf").checked==false){
-						// selected_edges={}
-						// selected_nodes={}
-						// $(".node").find("polygon").attr('stroke', "#000000");
-						// 	$(".node").find("text").css({"text-decoration":"revert"});
-
-						// 	$(".edge").find("path").attr('stroke', "#000000");
-						// 	$(".edge").find("polygon").attr('stroke', "#000000");
-						// 	$(".edge").find("text").css({"text-decoration":"revert"});
-							
-
-						// 	$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-						// 	$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-						// }
-
-						if(Object.keys(selected_nodes).length>1 && document.getElementById("tabPerf").checked==false){							
-							// selected_nodes={}
-						}
-						if($total_mean<0){	$total_mean=0 }
-						if($total_min<0){	$total_min=0 }
-						if($total_max<0){	$total_max=0 }
-						if($total_median<0){	$total_median=0 }
-						if($total_total<0){	$total_total=0 }
-
-						if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
-		
-							$(".node").find("polygon").attr('stroke', "#000000");
-							$(".node").find("text").css({"text-decoration":"revert"});
-
-							$(".edge").find("path").attr('stroke', "#000000");
-							$(".edge").find("polygon").attr('stroke', "#000000");
-							$(".edge").find("text").css({"text-decoration":"revert"});
-							
-							$("#"+$used_id).find("path").attr('stroke', color_highlight);
-							$("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-							$("#"+$used_id).find("text").css({"text-decoration":"underline"});
-							
-						}
-
-						var bool_switch = document.getElementById("tabPerf").checked;
-						if ((bool_switch) == true){
-							if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-								popup.innerHTML = "Selected values duration"+"<br /> <br />"
-										+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
-										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
-										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
-										+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
-										+"Max duration: " +  "<br />"+secondsToHms($total_max) 
-			
-
-							}else if(Object.keys(selected_edges).length>0 || Object.keys(selected_nodes).length>0){
-								popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
-										+"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
-										+"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
-										+"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
-										+"Max duration: " +  "<br />"+secondsToHms($total_max) 
-
-							}
-							
-						}else if(Object.keys(selected_edges).length>0){ //
-							popup.innerHTML ="Absolute frequency: "+  "<br />" +$resultfrequency_edge_absolute + "<br /> <br />" 
-										+"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
-										+"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
-													}
-
-						if(Object.keys(selected_edges).length==0 && Object.keys(selected_nodes).length==0){
-							$("#myPopup").attr("class","popuptext")
-						}
-					
-					
-					// console.log($titolo_1)
-					
-					// if(String($titolo_1[$titolo_1.length-1])=="m"){
-					// 	$make_somma=parseInt($statistica)*60
-					// }
-					// if(String($titolo_1[$titolo_1.length-1])=="h"){
-					// 	$make_somma=parseInt($statistica)*60*60
-					// }
-					// if(String($titolo_1[$titolo_1.length-1])=="D" || String($titolo_1[$titolo_1.length-1])=="d"){
-					// 	$make_somma=parseInt($statistica)*60*60*24
-					// }
-					// if(String($titolo_1[$titolo_1.length-1])=="s"){
-					// 	$make_somma=parseInt($statistica)
-					// }
-					
-					// $totale_edge=$totale_edge-$make_somma
-					
-					
-					// if($totale_edge<0){
-					// 	$totale_edge=0
-					// }
-					// if($totale_edge!=0){
-					// 	popup.innerHTML = "Selected edge duration: <br />"+ secondsToHms($totale_edge);
-					// }
-					
-					// if($totale_edge==0){
-					// 	$("#myPopup").attr("class","popuptext")
-					// }
-					// if(number_selected_activity==0){
-					// 	$("#myPopup").attr("class","popuptext")
-					// }
-					}	
-				}
-					 
-				// }else{
-					// $("#myPopup").attr("class","popuptext")
-				// }
-				
-				
-			});
-		});
-		// *****************************************************************************************************
-
-		var edgesNames = [];
-		var popup = document.getElementById("myPopup");
-		$(document).ready(function(){
-   					
-
-			for( i=0; i<edges.length; i++){
-				// edgesNames[i] = edges[i].children[3].innerHTML;
-				// edges[i].children[0].innerHTML = edgesNames[i];
-				
-				if(edges[i].children[3]!= undefined){
-					
-					
-					if(edges[i].id!=undefined){
-						var use=edges[i].id
-						$("#"+use).append("<label class='label_edge' hidden>"+edges[i].children[0].innerHTML+"</label>");
-					}
-					
-					edgesNames[i] = edges[i].children[3].innerHTML;
-					edges[i].children[0].innerHTML = edgesNames[i];
-					
-
-					
-
-					edges[i].addEventListener("click", function(e) {
-					// When the user clicks call function to open the popup
-						openInfo(e);
-					}, false);
-
-					// console.log($label)
-
-
-
-				}
-			
-
-
-				// edges[i].addEventListener("click", function(e) {
-				// 	// When the user clicks call function to open the popup
-				//     openInfo(e);
-				// }, false);
-			}
-		});
-		
-		// Switch Duration**************************************************************************
-		$(document).ready(function(){
-
-			$(".dis_submit").on('click', function(event){
-				$("#myPopup").attr("class","popuptext");
-				number_selected_activity=0
-				// console.log("change-do")
-			})
-			$("#tabFreq").on('click', function(event){
-				$("#myPopup").attr("class","popuptext");
-				number_selected_activity=0
-				// console.log("change-do")
-			})
-			$("#tabPerf").on('click', function(event){
-				$("#myPopup").attr("class","popuptext");
-				number_selected_activity=0
-				// console.log("change-do")
-			})
-
-
-			// ################################################################
-	
-
-
-
-
-		
-
-			var bool_switch = document.getElementById("tabPerf").checked;
-			if ((bool_switch) == true){
-				// if($('select[name=perfs] option').filter(':selected').val()=="totDur"){
-					var typeD=$('select[name=perfs] option').filter(':selected').val()
-					var classList = $('.node');
-					
-					$.each(classList, function(index, item) {
-						var node_id=item.id
-						if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
-							
-							if(typeD=="totDur"){
-								$duration_values=getAllDuration("total");
-							}else if (typeD=="medDur"){
-								$duration_values=getAllDuration("median");
-							}else if (typeD=="meanDur"){
-								$duration_values=getAllDuration("mean");
-							}else if (typeD=="maxDur"){
-								$duration_values=getAllDuration("max");
-							}else if (typeD=="minDur"){
-								$duration_values=getAllDuration("min");
-							}
-							
-							// console.log($myduration_total)
-
-							var $title = $("#"+node_id+" title").html(); 				
-							
-							$titolo_name=$title.split(' (')[0].trim()
-							$("#"+node_id).find("text").text($titolo_name);
-							// $move_y=$clonare.attr("y")
-							// console.log($titolo_name)
-							
-							$("#"+node_id).find("text").attr("class","text_name")
-							$("#"+node_id).find("title").text($titolo_name+" ("+timeToHms($duration_values[$titolo_name])+")");
-						
-							$label_id=$("#"+node_id).find("label").text()
-							// console.log()
-							nodes_id_association[$label_id]=$titolo_name
-
-							$clonare=$("#"+node_id).find("text").clone()
-							$move_y=$clonare.attr("y")
-							$clonare.attr("y",(parseFloat($move_y)+10)+"")
-							$clonare.attr("class","stat_name")
-							$clonare.text("("+timeToHms($duration_values[$titolo_name])+")")
-							// console.log($clonare.attr("y"))
-							$("#"+node_id).find("text").attr("y",(parseFloat($move_y)-5)+"")
-							$clonare.appendTo("#"+node_id)
-							// console.log($("#"+node_id).find("text").text())
-							// console.log($duration_values[$titolo_name])
-							
-						}
-
-						if($("#"+node_id).find(".label_node").text()=="@@startnode" || $("#"+node_id).find(".label_node").text()=="@@endnode"){
-							$("#"+node_id).find("title").text(" ")
-						}
-						
-						
-						
-					});
-
-
-					var classList = $('.edge');
-					$.each(classList, function(index, item) {
-						var edge_id=item.id
-						// if(node_id!="@@S" && node_id!="@@E"){
-							
-							if(typeD=="totDur"){
-								$duration_edge_values=getAllEdgeDuration("total");
-							}else if (typeD=="medDur"){
-								$duration_edge_values=getAllEdgeDuration("median");
-							}else if (typeD=="meanDur"){
-								$duration_edge_values=getAllEdgeDuration("mean");
-							}else if (typeD=="maxDur"){
-								$duration_edge_values=getAllEdgeDuration("max");
-							}else if (typeD=="minDur"){
-								$duration_edge_values=getAllEdgeDuration("min");
-							}
-							
-							// console.log($myduration_total)
-
-							var $title = $("#"+edge_id+" title").html(); 	
-							var $label_title= $("#"+edge_id+" label").text(); 
-							// console.log($title)	
-							// console.log($label_title)
-							
-							if($label_title!=undefined && $label_title!=""){
-								var $source= $label_title.split('->')[0].trim()
-								var $target= $label_title.split('->')[1].trim()
-
-								
-								// console.log(nodes_id_association[$source])
-								// console.log(nodes_id_association[$target])
-								// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
-								// secondsToHms
-								
-								// $titolo_name=$title.split(' (')[0].trim()
-								// $("#"+node_id).find("text").text($titolo_name);
-								// // $move_y=$clonare.attr("y")
-								
-								// $("#"+node_id).find("text").attr("class","text_name")
-								$("#"+edge_id).find("text").text(edgetimeconvert($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-								// $("#"+edge_id).find("title").text(timeToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
-								$clone=$("#"+edge_id).find("text").clone()
-								$move_x=$clone.attr("x")
-								// $clonare.attr("y",(parseFloat($move_y)+10)+"")
-								// $clonare.attr("class","stat_name")
-								// $clonare.text("("+timeToHms($duration_values[$titolo_name])+")")
-								// // console.log($clonare.attr("y"))
-								$("#"+edge_id).find("text").attr("x",(parseFloat($move_x)+7)+"")
-								// $clonare.appendTo("#"+node_id)
-								// console.log($("#"+node_id).find("text").text())
-								// console.log($duration_values[$titolo_name])
-								
-							// }
-							}
-						
-						
-						
-					});
-
-					
-				// }
-			}
-			
-			
-			var bool_switch2 = document.getElementById("tabFreq").checked;
-			if(bool_switch2){
-					var typeF=$('select[name=freqs] option').filter(':selected').val()
-					
-					var classList = $('.node');
-					$.each(classList, function(index, item) {
-						var node_id=item.id
-						if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
-							
-							if(typeF=="absFreq"){
-								$frequency_values=getAllFrequency("absolute");
-							}else if (typeF=="caseFreq"){
-								$frequency_values=getAllFrequency("case");
-							}else if (typeF=="maxRep"){
-								$frequency_values=getAllFrequency("max");
-							}
-							
-							// console.log($myduration_total)
-
-							// var $title = $("#"+node_id+" title").html(); 				
-							
-							// $titolo_name=$title.split(' (')[0].trim()
-							// $("#"+node_id).find("text").text($titolo_name);
-							// // $move_y=$clonare.attr("y")
-							// // console.log($titolo_name)
-							
-							// $("#"+node_id).find("text").attr("class","text_name")
-							// $("#"+node_id).find("title").text($titolo_name+" ("+timeToHms($duration_values[$titolo_name])+")");
-						
-							
-							var $title = $("#"+node_id+" title").html(); 				
-								
-							$titolo_name=$title.split(' (')[0].trim()
-
-							$label_id=$("#"+node_id).find("label").text()
-							nodes_id_association[$label_id]=$titolo_name
-
-							$("#"+node_id).find("text").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
-							// $("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");
-			
-							$("#"+node_id).find("title").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
-
-							
-						}
-
-						if($("#"+node_id).find(".label_node").text()=="@@startnode" || $("#"+node_id).find(".label_node").text()=="@@endnode"){
-							$("#"+node_id).find("title").text(" ")
-						}
-						
-						
-						
-					});
-
-
-					var classEdge = $('.edge');
-					$.each(classEdge, function(index, item) {
-						var edge_id=item.id
-						
-						// if(node_id!="@@S" && node_id!="@@E"){
-							
-						if(typeF=="absFreq"){
-							$frequency_edge_values=getAllEdgeFrequency("absolute");
-						}else if (typeF=="caseFreq"){
-							$frequency_edge_values=getAllEdgeFrequency("case");
-						}else if (typeF=="maxRep"){
-							$frequency_edge_values=getAllEdgeFrequency("max");
-						}
-						
-
-						var $title = $("#"+edge_id+" title").html(); 
-						// console.log($title)	
-						// var $label_title= $("#"+edge_id).find("label").text(); 
-						// console.log($label_title)	
-						
-						var $title = $("#"+edge_id+" title").html(); 	
-						var $label_title= $("#"+edge_id+" label").text(); 
-						
-
-
-						
-						if($label_title!=undefined && $label_title!=""){
-							// console.log($label_title)
-							var $source= $label_title.split('->')[0].trim()
-							// console.log($source)
-							var $target= $label_title.split('->')[1].trim()
-							// console.log($target)
-							// var $source= $title.split('-&gt;')[0].trim()
-							// var $target= $title.split('-&gt;')[1].trim()
-							
-							// console.log(nodes_id_association)
-							// console.log(nodes_id_association[$source])
-							// console.log(nodes_id_association[$target])
-							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
-							
-							if($source=="@@startnode"){
-								$("#"+edge_id).find("text").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
-								$("#"+edge_id).find("title").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
-
-							}else if($target=="@@endnode"){
-								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
-								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
-							
-							}else{
-								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-							}
-							
-							// $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-							// $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
-							if($source=="@@startnode" && typeF=="maxRep"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
-								// TESTTEST
-							}
-							if($target=="@@endnode" && typeF=="maxRep"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
-								// TESTTEST
-							}
-						
-
-						}
-						
-						
-						
-					});
-
-
-			
-			}
-
-				
-				// console.log(nodes_id_association)
-
-			$('#performanceDuration').on('change', function(e) {
-				e.stopImmediatePropagation();
-
-				var typeD=this.value
-
-				var classList = $('.node');
-				// console.log(classList)
-				$.each(classList, function(index, item) {
-					var node_id=item.id
-					if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
-						if(typeD=="totDur"){
-							$duration_values=getAllDuration("total");
-						}else if (typeD=="medDur"){
-							$duration_values=getAllDuration("median");
-						}else if (typeD=="meanDur"){
-							$duration_values=getAllDuration("mean");
-						}else if (typeD=="maxDur"){
-							$duration_values=getAllDuration("max");
-						}else if (typeD=="minDur"){
-							$duration_values=getAllDuration("min");
-						}
-						
-						var $title = $("#"+node_id+" title").html(); 				
-								
-								$titolo_name=$title.split(' (')[0].trim()
-								$("#"+node_id).find(".text_name").text($titolo_name);
-								$("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");
-				
-								$("#"+node_id).find("title").text($titolo_name+" ("+timeToHms($duration_values[$titolo_name])+")");
-
-
-						if($("#"+node_id).find("title").text()=="@@E (instant)" || $("#"+node_id).find("title").text()=="@@S (instant)"){
-							$("#"+node_id).find("title").text(" ")
-						}	
-
-					}
-					
-					
-					
-				});
-
-
-				var classedge = $('.edge');
-				$.each(classedge, function(index, item) {
-					var edge_id=item.id
-					// if(node_id!="@@S" && node_id!="@@E"){
-						
-						if(typeD=="totDur"){
-							$duration_edge_values=getAllEdgeDuration("total");
-							// console.log("total")
-						}else if (typeD=="medDur"){
-							$duration_edge_values=getAllEdgeDuration("median");
-							// console.log("median")
-						}else if (typeD=="meanDur"){
-							$duration_edge_values=getAllEdgeDuration("mean");
-							// console.log("mean")
-						}else if (typeD=="maxDur"){
-							$duration_edge_values=getAllEdgeDuration("max");
-							// console.log("max")
-						}else if (typeD=="minDur"){
-							$duration_edge_values=getAllEdgeDuration("min");
-							// console.log("min")
-						}
-						
-
-						var $title = $("#"+edge_id+" title").html(); 	
-						var $label_title= $("#"+edge_id).find("label").text(); 
-						// console.log($label_title)	
-						
-						if($label_title!=undefined && $label_title!=""){
-							// console.log($label_title)
-							var $source= $label_title.split('->')[0].trim()
-							// console.log($source)
-							var $target= $label_title.split('->')[1].trim()
-							// console.log($target)
-
-							
-							// console.log(nodes_id_association)
-							// console.log(nodes_id_association[$source])
-							// console.log(nodes_id_association[$target])
-							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
-							
-						
-						
-							$("#"+edge_id).find("text").text(edgetimeconvert($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-							$("#"+edge_id).find("title").text(timeToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
-							if($source=="@@startnode"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
-							}
-							if($target=="@@endnode"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
-							}
-
-						}
-						
-						
-					// }
-					
-					
-					
-				});
-				
-			});
-
-			// nuovo nuovo
-			$('#perfromanceFrequency').on('change', function(e) {
-				e.stopImmediatePropagation();
-
-				var typeF=this.value
-
-				var classList = $('.node');
-				// console.log(classList)
-				$.each(classList, function(index, item) {
-					var node_id=item.id
-					if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
-						if(typeF=="absFreq"){
-							$frequency_values=getAllFrequency("absolute");
-						}else if (typeF=="caseFreq"){
-							$frequency_values=getAllFrequency("case");
-						}else if (typeF=="maxRep"){
-							$frequency_values=getAllFrequency("max");
-						}
-						
-						var $title = $("#"+node_id+" title").html(); 				
-								
-						$titolo_name=$title.split(' (')[0].trim()
-						$("#"+node_id).find("text").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
-						// $("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");
-		
-						$("#"+node_id).find("title").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
-
-
-						if($("#"+node_id).find("title").text()=="@@E (instant)" || $("#"+node_id).find("title").text()=="@@S (instant)"){
-							$("#"+node_id).find("title").text(" ")
-						}	
-
-					}
-					
-					
-					
-				});
-
-				
-				var classedge = $('.edge');
-				$.each(classedge, function(index, item) {
-					var edge_id=item.id
-					// if(node_id!="@@S" && node_id!="@@E"){
-						
-						
-						if(typeF=="absFreq"){
-							$frequency_edge_values=getAllEdgeFrequency("absolute");
-						}else if (typeF=="caseFreq"){
-							$frequency_edge_values=getAllEdgeFrequency("case");
-						}else if (typeF=="maxRep"){
-							$frequency_edge_values=getAllEdgeFrequency("max");
-						}
-						
-
-						var $title = $("#"+edge_id+" title").html(); 	
-						var $label_title= $("#"+edge_id).find("label").text(); 
-						// console.log($label_title)	
-						
-						if($label_title!=undefined && $label_title!=""){
-							// console.log($label_title)
-							var $source= $label_title.split('->')[0].trim()
-							// console.log($source)
-							var $target= $label_title.split('->')[1].trim()
-							// console.log($target)
-
-							
-							// console.log(nodes_id_association)
-							// console.log(nodes_id_association[$source])
-							// console.log(nodes_id_association[$target])
-							// console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
-							
-
-							if($source=="@@startnode"){
-								$("#"+edge_id).find("text").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
-								$("#"+edge_id).find("title").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
-
-							}else if($target=="@@endnode"){
-								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
-								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
-							}else{
-								$("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-								$("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
-							}
-						
-							// console.log("prova7")+
-							// $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-							// $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
-							if($source=="@@startnode" && typeF=="maxRep"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
-								// TESTTEST
-							}
-							if($target=="@@endnode" && typeF=="maxRep"){
-								$("#"+edge_id).find("text").text("");
-								$("#"+edge_id).find("title").text("")
-								// TESTTEST
-							}
-						
-
-						}
-						
-						
-					// }
-					
-					
-					
-				});
-				
-			});
-
-
-
-
-		});
-		// *******************************************************************************************************************************
-
-		// function getNode(nodeName){
-		// 	$("#"+node_id).find(".text_name").text($titolo_name);
-		// }
-
-		
-
-
-
-
-
-		
-
-
-		
-		
-
-
-	
-
-
-
-
-
-	
-		
-		
-		var median = document.getElementById('median').innerHTML;
-		var total = document.getElementById('total').innerHTML;
-		
-		function secondsToHms(d) {
-			d = Number(d);
-			
-			var result=""
-			if(d>=1){
-				var year = Math.floor(d / (3600*24*365));
-				var day = Math.floor(d % (3600*24*365) /(3600*24));
-    			var h = Math.floor(d % (3600*24*365) % (3600*24) /3600);
-    			var m = Math.floor(d % (3600*24*365) % (3600*24) % 3600 / 60);
-    			var s = Math.floor(d % (3600*24*365) % (3600*24) % 3600 % 60);
-    
-				var yearDisplay = year > 0 ? year + (year == 1 ? "year, " : "years, ") : "";
-				var dayDisplay = day > 0 ? day + (day == 1 ? " day, " : " days, ") : "";
-    			var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-    			var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    			var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    			result=yearDisplay+dayDisplay+hDisplay + mDisplay + sDisplay;
-    			
-			}else if(d>=0 && d<1){
-			    var milliDisplay= d*1000;
-			    result= Math.round(milliDisplay)+ " milliseconds"
-			}
-			if(result==""){
-    				result="instant"
-    			}
-			return result; 
-		}
-
-		//function similar to secondsToHms used inside node
-		function timeToHms(d) {
-			d = Number(d);
-		
-			var result=""
-			if(d>=1){
-				var year = Math.floor(d / (3600*24*365));
-				var day = Math.floor(d % (3600*24*365) /(3600*24));
-    			var h = Math.floor(d % (3600*24*365) % (3600*24) /3600);
-    			var m = Math.floor(d % (3600*24*365) % (3600*24) % 3600 / 60);
-    			var s = Math.floor(d % (3600*24*365) % (3600*24) % 3600 % 60);
-    
-				var yearDisplay = year > 0 ? year + (year == 1 ? "y" : "y") : "";
-				var dayDisplay = day > 0 ? day + (day == 1 ? "d" : "d") : "";
-    			var hDisplay = h > 0 ? h + (h == 1 ? "h" : "h") : "";
-    			var mDisplay = m > 0 ? m + (m == 1 ? "m" : "m") : "";
-    			var sDisplay = s > 0 ? s + (s == 1 ? "s" : "s") : "";
-    			result=yearDisplay+dayDisplay+hDisplay + mDisplay + sDisplay;
-    			
-			}else if(d>=0 && d<1){
-			    var milliDisplay= d*1000;
-			    result= Math.round(milliDisplay)+ "ms"
-			}
-			if(result==""){
-    				result="0ms"
-    			}
-			return result; 
-		}
-
-
-		function edgetimeconvert(d) {
-			d = Number(d);
-		
-			var result=""
-			if(d>=1){
-				var year= Math.floor(d/(365*24*60*60))
-				if(year>=1){ return year+"y"}
-				var w = Math.floor(d/(7*24*60*60))
-				if(w>1){ return w+"w"}
-				var days= Math.floor(d/(24*60*60))
-				if(days>1){ return days+"d"}
-    			var h = Math.floor(d / 3600);
-				if(h>1){ return h+"h"}
-    			var m = Math.floor(d / 60);
-				if(m>1){ return m+"m"}
-    			var s = Math.floor(d);
-    			result=s+"s";
-    			
-			}else if(d>=0 && d<1){
-			    var milliDisplay= d*1000;
-			    result= Math.round(milliDisplay)+ "ms"
-			}
-			// if(result==""){
-    		// 		result="instant"
-    		// 	}
-			return result; 
-		}
-
-
-
-		var x = secondsToHms(median);
-		var y = secondsToHms(total);
-		// popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y;
-		// popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y+ "<br /> <br />"  +"Selected duration node: "+ secondsToHms($totale) + "<br /> <br />" +"Selected duration edge: <br />"+ secondsToHms($totale_edge);
-		
-
-		// function to do dictionary sum
-		function sum_dict( obj ) {
-			var sum = 0;
-			for( var el in obj ) {
-				if( obj.hasOwnProperty( el ) ) {
-				sum += parseFloat( obj[el] );
-				}
-			}
-			return sum;
-		}
-
-
-
-		function openInfo(e) {
-		// When the user clicks, open the popup
-		// When the user clicks, open the popup
-		
-			// popup.classList.toggle("show");
-			// popup.style.left = e.clientX-100+200 + "px";
-			// popup.style.top = (e.clientY-280) + "px";
-			popup.style.top= "10%"
-			popup.style.left= "47%"
-			popup.style.zIndez = "15";
-			
-		}	
-}	
-</script>
-
-<script>
-var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
-var tr_name=""
-var log_name=""
-
-function petriRequest(){
-
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", petriListener);
-	oReq.open("GET", frontend+"conformanceChecking", false);
-	oReq.send();
-
-}
-
-function petriListener(){
-	var response=this.responseText.split("£")
-	// console.log(response[0])
-	// console.log(response[1])
-	// console.log(response[2])
-	// console.log(response[3])
-	// console.log(response[4])
-	tr_name=response[4]
-	log_name=response[3]
-	addTransitionName();
-	document.getElementById("stringPetriNet").innerHTML = response[0];
-	/*
-	document.getElementById("InitialMarking").innerHTML = "Initial Marking: "+response[1];
-	document.getElementById("FinalMarking").innerHTML = "Final Marking: "+response[2];
-	*/
-}
-
-
-function swipeRemoveRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", swipeRemoveListener);
-	oReq.open("GET", frontend+"swipeRemoveAction", false);
-	oReq.send();
-}
-
-function swipeRemoveListener () {
-	var response=this.responseText;
-	var arrayResponse=response.split("£")
-	document.getElementById("digraphF").innerHTML = arrayResponse[0];
-	document.getElementById("digraphP").innerHTML = arrayResponse[1];
-	var response = arrayResponse[2];
-	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
-	
-		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
-		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
-		variantsInfo = response.split("|||")[2];
-		// console.log(variantsInfo)
+	var frontend = document.getElementById("path_frontend").innerHTML;
+	// console.log(frontend)
+
+	var menu = document.getElementById("menu");
+	menu.style.display = "none";
+
+	var menuBtn = document.getElementById("check");
+	var content = document.getElementById("content");
+	var map = document.getElementById("map");
+	var elanalysis = document.getElementById("elanalysis");
+	var cChecking = document.getElementById("cChecking");
+	var mapText = document.getElementById("map-text");
+	var elanalysisText = document.getElementById("elanalysis-text");
+	var cCheckingText = document.getElementById("cChecking-text");
+
+	var sliderPF = document.getElementById("myPathF");
+	var sliderPP = document.getElementById("myPathP");
+	var sliderAF = document.getElementById("myActF");
+	var sliderAP = document.getElementById("myActP");
+	var outputPF = document.getElementById("pathF");
+	var outputPP = document.getElementById("pathP");
+	var outputAF = document.getElementById("actF");
+	var outputAP = document.getElementById("actP");
+
+	outputPF.innerHTML = sliderPF.value;
+	outputPP.innerHTML = sliderPP.value;
+	outputAF.innerHTML = sliderAF.value;
+	outputAP.innerHTML = sliderAP.value;
+
+	var perf_checked = document.getElementById("perf_checked");
+	if ((perf_checked).value == "true"){
+		(document.getElementById("tabFreq")).checked = true;
+		(document.getElementById("tabPerf")).checked = false;
 	}
-	else{
-		
-		variantsInfo = response;
-	}
-  
-	// console.log(variantsInfo)
-	json = JSON.parse(variantsInfo);
-	//console.log(json);
 
-	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
-	//allVariants.lenght = Number of variants
-	//Object.values(allVariants) = array with Variants ID
-
-	ul1 = document.getElementById("variants-ul");
-	ul2 = document.getElementById("case-ul");
-
-
-	ul1.innerHTML = "";
-	ul2.innerHTML = "";
-	document.getElementById("eventsTable").innerHTML = "";
-	Object.keys(json).forEach((key1) => {
-
-		//----For each variant I see which are the cases corresponding
-		//console.log("Variant " + String(key1));
-		allCases = json[key1];
-		//----allCases.length = Number of cases for each specific Variant (json[key])
-		//console.log("Total cases: " + String(allCases.length));
-		//console.log(allCases);
-
-
-		var li = document.createElement('li');
-		li.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Variant " + key1 + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Cases: " + String(allCases.length) + '</small>';
-		li.setAttribute("style", "cursor: pointer");
-		li.setAttribute("id", "variant"+key1);
-		//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
-		li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
-		ul1.append(li);	
-
-		// calculate min and max dates
-			
-		allCases.forEach( (c) => {
-			allEvents = Object.values(c)[0]; // all events
-			allEvents.forEach((e) => {
-				dates.push(new Date(e["time:timestamp"]));
-			});
-		});
-			
-
+	// avoid to use enter to have a new line
+	$('#pathP').keypress(function(event) {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			// $('textarea').prop('readonly', true);
+			// document.getElementById("invisibleButton2").click();
+		}
 	});
-	
-  	if(document.getElementById(selected)!=null){
-		document.getElementById(selected).click();
-	}
-	
-	
-	maxDate=new Date(Math.max.apply(null,dates));
-	minDate=new Date(Math.min.apply(null,dates));
-	maxDate = maxDate.toISOString().split(".")[0];
-	minDate = minDate.toISOString().split(".")[0];
-	
-}
-
-
-function initialRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", initialListener);
-	oReq.open("GET", frontend+"initialAction", false);
-	oReq.send();
-}
-
-function initialListener () {
-	var response=this.responseText;
-	var arrayResponse=response.split("£")
-	document.getElementById("digraphF").innerHTML = arrayResponse[0];
-	document.getElementById("digraphP").innerHTML = arrayResponse[1];
-	document.getElementById("usedVariable").innerHTML = arrayResponse[2];
-	document.getElementById("allDt").innerHTML = arrayResponse[3];
-	document.getElementById("allEdgeDt").innerHTML = arrayResponse[5];
-	document.getElementById("allFq").innerHTML = arrayResponse[6];
-	document.getElementById("allEdgeFq").innerHTML = arrayResponse[7];
-	// console.log(arrayResponse[7])
-	var response = arrayResponse[4];
-	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
-	
-		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
-		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
-		variantsInfo = response.split("|||")[2];
-		// console.log(variantsInfo)
-	}
-	else{
-		
-		variantsInfo = response;
-	}
-  
-	// console.log(variantsInfo)
-	json = JSON.parse(variantsInfo);
-	//console.log(json);
-
-	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
-	//allVariants.lenght = Number of variants
-	//Object.values(allVariants) = array with Variants ID
-
-	ul1 = document.getElementById("variants-ul");
-	ul2 = document.getElementById("case-ul");
-
-
-	ul1.innerHTML = "";
-	ul2.innerHTML = "";
-	document.getElementById("eventsTable").innerHTML = "";
-	Object.keys(json).forEach((key1) => {
-
-		//----For each variant I see which are the cases corresponding
-		//console.log("Variant " + String(key1));
-		allCases = json[key1];
-		//----allCases.length = Number of cases for each specific Variant (json[key])
-		//console.log("Total cases: " + String(allCases.length));
-		//console.log(allCases);
-
-
-		var li = document.createElement('li');
-		li.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Variant " + key1 + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Cases: " + String(allCases.length) + '</small>';
-		li.setAttribute("style", "cursor: pointer");
-		li.setAttribute("id", "variant"+key1);
-		//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
-		li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
-		ul1.append(li);	
-
-		// calculate min and max dates
-			
-		allCases.forEach( (c) => {
-			allEvents = Object.values(c)[0]; // all events
-			allEvents.forEach((e) => {
-				dates.push(new Date(e["time:timestamp"]));
-			});
-		});
-			
-
-	});
-	
-  	if(document.getElementById(selected)!=null){
-		document.getElementById(selected).click();
-	}
-	
-	
-	maxDate=new Date(Math.max.apply(null,dates));
-	minDate=new Date(Math.min.apply(null,dates));
-	maxDate = maxDate.toISOString().split(".")[0];
-	minDate = minDate.toISOString().split(".")[0];
-
-	//getMap(false);
-}
-
-
-function reqListener91 () {
-	document.getElementById("allFq").innerHTML = this.responseText;
-	// console.log(this.responseText)
-	//getMap(false);
-}
-
-function csmRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener91);
-	oReq.open("GET", frontend+"allfrequency", false);
-	oReq.send();
-}
-
-
-function reqListener92 () {
-	document.getElementById("allEdgeFq").innerHTML = this.responseText;
-	// console.log(this.responseText)
-	//getMap(false);
-}
-
-function csmEdgeRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener92);
-	oReq.open("GET", frontend+"alledgefrequency", false);
-	oReq.send();
-}
-
-
-function reqListener1 () {
-	document.getElementById("digraphF").innerHTML = this.responseText;
-
-	//getMap(false);
-}
-
-function freqRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener1);
-	oReq.open("GET", frontend+"dfgFrequency", false);
-	oReq.send();
-}
-
-
-function reqListener2 () {
-	document.getElementById("digraphP").innerHTML = this.responseText;
-	//   document.getElementById("loadingMessage").style.visibility = "hidden";	
-	// console.log("digraphP");
-  	//getMap(false);
-}
-
-function perfRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener2);
-	oReq.open("GET", frontend+"dfgPerformance", false);
-	oReq.send();
-}
-
-
-function reqListener3 () {
-   
-	var response = this.responseText;
-	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
-	
-		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
-		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
-		variantsInfo = response.split("|||")[2];
-		// console.log(variantsInfo)
-	}
-	else{
-		
-		variantsInfo = response;
-	}
-  
-	// console.log(variantsInfo)
-	json = JSON.parse(variantsInfo);
-	//console.log(json);
-
-	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
-	//allVariants.lenght = Number of variants
-	//Object.values(allVariants) = array with Variants ID
-
-	ul1 = document.getElementById("variants-ul");
-	ul2 = document.getElementById("case-ul");
-
-
-	ul1.innerHTML = "";
-	ul2.innerHTML = "";
-	document.getElementById("eventsTable").innerHTML = "";
-	Object.keys(json).forEach((key1) => {
-
-		//----For each variant I see which are the cases corresponding
-		//console.log("Variant " + String(key1));
-		allCases = json[key1];
-		//----allCases.length = Number of cases for each specific Variant (json[key])
-		//console.log("Total cases: " + String(allCases.length));
-		//console.log(allCases);
-
-
-		var li = document.createElement('li');
-		li.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Variant " + key1 + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Cases: " + String(allCases.length) + '</small>';
-		li.setAttribute("style", "cursor: pointer");
-		li.setAttribute("id", "variant"+key1);
-		//li.setAttribute("onclick", "alert('Variant "+ key1 +"')");
-		li.setAttribute("onclick", "showCases("+li.getAttribute('id')+"," +key1+")");
-		ul1.append(li);	
-
-		// calculate min and max dates
-			
-		allCases.forEach( (c) => {
-			allEvents = Object.values(c)[0]; // all events
-			allEvents.forEach((e) => {
-				dates.push(new Date(e["time:timestamp"]));
-			});
-		});
-			
-
-	});
-	
-  	if(document.getElementById(selected)!=null){
-		document.getElementById(selected).click();
-	}
-	
-	
-	maxDate=new Date(Math.max.apply(null,dates));
-	minDate=new Date(Math.min.apply(null,dates));
-	maxDate = maxDate.toISOString().split(".")[0];
-	minDate = minDate.toISOString().split(".")[0];
-  
-  //getMap(false);
-}
-
-function variantRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener3);
-	oReq.open("GET", frontend+"variants", false);
-	oReq.send();
-}
-
-
-function reqListener70 () {
-  document.getElementById("allDt").innerHTML = this.responseText;
-//   console.log(this.responseText)
-//   getMap(false);
-}
-
-function allDurationRequest(){
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener70);
-	oReq.open("GET", frontend+"allduration", false);
-	oReq.send();
-}
-
-
-function reqListener71 () {
-  document.getElementById("allEdgeDt").innerHTML = this.responseText;
-//   console.log(this.responseText)
-//   getMap(false);
-}
-
-function allEdgeDurationRequest(){
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener71);
-	oReq.open("GET", frontend+"alledgeduration", false);
-	oReq.send();
-}
-
-
-function reqListener72 () {
-  document.getElementById("usedVariable").innerHTML = this.responseText;
-//   console.log(this.responseText)
-//   getMap(false);
-}
-
-function allUsedVariable(){
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener72);
-	oReq.open("GET", frontend+"usedvariable", false);
-	oReq.send();
-}
-
-
-function pre_request(p_check){
-	document.getElementById("loadingMessage").style.visibility = "visible";	
-	request(p_check)
-}
-
-function request(p_check) {
-
-	
-    // $(document).ready(function(){
-    //     $(".dosubmit").click(function(){
-    //         $(this).css('background-color', 'red');
-    //     });
-    // });
-	document.getElementById("loadingMessage").style.visibility = "hidden";
-
-	var pf = document.getElementById("myPathF").value;
-	var af = document.getElementById("myActF").value;
-	var df = "dfgFreqReduced";
-
-	var pp = document.getElementById("myPathP").value;
-	var ap = document.getElementById("myActP").value;
-	var dp = "dfgPerfReduced"
-	//console.log(String(pf) + " " + String(af) + " " +String(pp)+ " "+String(ap) + " "+String(p_check));
-	
-	var oReq1 = new XMLHttpRequest();
-	var oReq2 = new XMLHttpRequest();
-	// var oReq12
-
-	// if (p_check == "false") {
-		oReq1.addEventListener("load", reqListener1);
-		oReq1.open("GET", frontend+df+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
-	// }
-	// else {
-		oReq2.addEventListener("load", reqListener2);
-		oReq2.open("GET", frontend+dp+"?myPathF="+String(pf)+"&myActF="+String(af)+"&myPathP="+String(pp)+"&myActP="+String(ap)+"&perf_checked="+p_check, false);
-	// }
-	
-	oReq1.send();
-	oReq2.send();
-	getMap(false);
-	$(".change_form").css("visibility", "hidden");
-	$(".dis_submit").removeClass("dosubmit");
-	$(".dis_submit").attr('disabled', true);
-
-	
-	document.getElementById("myChange").style.display = "block";
-	document.getElementById("blocker5").style.display = "block";
-}
-
-
-function swap(json){
-  var ret = {};
-  for(var key in json){
-    ret[json[key]] = key;
-  }
-  return ret;
-}
-
-function showEvents(varKey, caseKey) {
-	// console.log
-	allCases = json[varKey];
-	allCases.forEach( (c) => {
-		
-		var ck = Object.keys(c)[0]; //case key
-		// console.log(caseKey +" =?= "+ck);
-		if(caseKey == ck){
-			// console.log("yes");
-			allEvents = Object.values(c)[0]; // all events
-		}
-	 });
-	//  console.log(allEvents);
-	 
-	 var table = document.getElementById("eventsTable");
-	 //var tableHTML = "<tr><th>Activity</th><th>Resource</th><th>Date</th><th>Time</th><th>Duration</th><th>Role</th></tr>"
-	 var tableHTML = "<tr>";
-	 var i = 0;
-	 
-	//  console.log("fps")
-	//  console.log(allEvents[0]['concept:name'])
-	 var parameter_dicitionary={}
-	 var indx=0
-	 allEvents.forEach((e) => {
-		//dates.push(new Date(e["time:timestamp"]));
-	
-		var date = e["time:timestamp"].split(" ")[0];
-		var time = e["time:timestamp"].split(" ")[1];
-	 
-		
-		//console.log(e);
-		//console.log(Object.entries(e));
-		
-		if(i==0){
-			// tableHTML += "<th><h6>Activity</h6><hr><br></th><th><h6>Resource</h6><hr><br></th>" ;
-			Object.entries(e).forEach((attr) => {
-			
-				// console.log(attr) 
-				// if(attr[0] == "time:timestamp") {
-				// 	tableHTML += "<th><h6>Date</h6><hr><br></th><th><h6>Time</h6><hr><br></th>" ;
-				// } else if (attr[0] == "Activity" || attr[0] == "Resource") {
-	
-				if(attr[0] in parameter_dicitionary){
-
-				}else{
-					parameter_dicitionary[attr[0]]=indx
-					indx=indx+1
-					tableHTML += "<th><h6>"+ attr[0] +"</h6><hr><br></th>" ;
-				}
-				// }else {
-				
-				// }
-			});
-			// tableHTML += "<tr>";
-			// i++;
-		}
-		inv_map = swap(parameter_dicitionary)
-		// console.log(inv_map)
-		
-		// tableHTML += "<tr>"
-		// tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e["Activity"] + "</td>"
-		// tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e["Resource"] + "</td>"
-		
-		
-		
-		/*tableHTML += "<td>" + e["Activity"] + "</td>"
-		tableHTML += "<td>" + e["Resource"] + "</td>"
-		tableHTML += "<td>" + date + "</td>"
-		tableHTML += "<td>" + time + "</td>"
-		tableHTML += "<td>" + "Duration" + "</td>"
-		tableHTML += "<td>" + "Role" + "</td>"*/
-		// tableHTML += "</tr>"
-	 });
-	 tableHTML += "</tr>"
-
-	 allEvents.forEach((e) => {
-		//dates.push(new Date(e["time:timestamp"]));
-	
-		var date = e["time:timestamp"].split(" ")[0];
-		var time = e["time:timestamp"].split(" ")[1];
-	 
-		
-		// console.log(e)
-		for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
-			// console.log(inv_map[kf]);
-			if(e[inv_map[kf]]!=undefined){
-				tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
-				// console.log(e[inv_map[kf]]);
-			}else{
-				tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
-			}
-			
-			
-		}
-	
-		// Object.entries(e).forEach((attr) => { 
-			// if(attr[0] == "time:timestamp") {
-			// 		tableHTML += "<td class='text-table' style='border-radius: 4px;'>"+date+"</td><td class='text-table' style='border-radius: 4px;'>"+time+"</td>" ;
-			// } else if (attr[0] == "Activity" || attr[0] == "Resource") {
-	
-			// }else {
-				// console.log(attr) 
-				// tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + attr[1] + "</td>" ;
-			// }
-		// });
-		
-		
-		
-		/*tableHTML += "<td>" + e["Activity"] + "</td>"
-		tableHTML += "<td>" + e["Resource"] + "</td>"
-		tableHTML += "<td>" + date + "</td>"
-		tableHTML += "<td>" + time + "</td>"
-		tableHTML += "<td>" + "Duration" + "</td>"
-		tableHTML += "<td>" + "Role" + "</td>"*/
-		tableHTML += "</tr>"
-	 });
-	 
-	table.innerHTML = tableHTML;
-	
-	var liItems = document.getElementById("case-ul").getElementsByTagName("li"); 
-	//console.log(liItems);
-	for (i = 0; i < liItems.length; i++) {
-		//console.log(liItems[i].id == li.id);
-		if(liItems[i].id == "case"+caseKey){
-			//console.log(liItems[i].id);
-			//console.log(li.id);
-			liItems[i].setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white; border-radius: 5px;");
-			//selected = li.id;
-		}
-		else {
-			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color: black; border-radius: 5px;");
-		}
-	}
-
-}
-
-function showCases(li, key1) {
-	var liItems = document.getElementById("variants-ul").getElementsByTagName("li"); 
-	//console.log(liItems);
-	for (i = 0; i < liItems.length; i++) {
-		//console.log(liItems[i].id == li.id);
-		if(liItems[i].id == li.id){
-			//console.log(liItems[i].id);
-			//console.log(li.id);
-			li.setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white; ; border-radius: 5px;");
-			selected = li.id;
-		}
-		else {
-			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color:black; ; border-radius: 5px;");
-		}
-	}
-	//console.log(selected);
-	
-	allCases = json[key1];
-	ul2.innerHTML = "";
-	allCases.forEach( (c) => {
-		var caseKey = Object.keys(c)[0]; //case key
-		allEvents = Object.values(c)[0]; // all events
-		
-		
-		var li2 = document.createElement('li');
-		if("variant"+key1 == selected){
-			li2.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Case " + caseKey + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Events: " + allEvents.length + '</small>';
-			li2.setAttribute("style", "cursor: pointer; border-radius: 5px;");
-			li2.setAttribute("id", "case"+ caseKey);
-			//alert("ok");
-			//li2.setAttribute("onclick", "alert('Variant "+ e +"')");
-			li2.setAttribute("onclick", "showEvents("+key1+",'"+caseKey+"')");
-			ul2.append(li2);
+	$('#pathF').keypress(function(event) {
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			// $('textarea').prop('readonly', true);
+			// document.getElementById("invisibleButton2").click();
 		}
 	});
 
-
-	/*
-	
-	
+	sliderPF.oninput = function() {
+		outputPF.innerHTML = this.value;
+		outputPP.innerHTML = this.value;
+		outputPF.value = this.value;
+		outputPP.value = this.value;
+		sliderPP.value = this.value;
+		sliderPF.value = this.value;
+		$(".change_form").css("visibility", "visible");
+		$(".dis_submit").addClass("dosubmit");
+		$(".dis_submit").attr('disabled', false);
 		
-		Object.values(allEvents)[0].forEach((key3) => {
-		  //----For each event I see its details
-		  
-			//----singleEvent = allEvents[key3];
-			//console.log(singleEvent); //?
-			//console.log(key3); //Contains details regarding signle case
-			
-			//console.log("Event: " + Object.keys(singleEvent)[key]);
-			//console.log(Object.values(singleEvent)[key]);
-		});
-	  });*/
-};
 
-
-var variantsInfo, json, allVariants, ul1, ul2, allCases, allEvents, maxDate, minDate;
-
-
-var selected = "variant1";
-
-var dates = [];
-
-
-/* redesigned start part	*/
-// freqRequest();
-// perfRequest();
-// allUsedVariable();
-// allDurationRequest();
-// variantRequest();	
-// allEdgeDurationRequest();
-// csmRequest();
-// csmEdgeRequest();
-initialRequest();
-
-
-//getMap(false);
-/*
-function reqListener3 () {
-  document.getElementById("petriFreq").innerHTML = this.responseText;
-}
-
-function petriNetFreq() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener3);
-	oReq.open("GET", frontend+"petriFreq", false);
-	oReq.send();
-}
-
-function reqListener4 () {
-  document.getElementById("petriPerf").innerHTML = this.responseText;
-}
-
-function petriNetPerf() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener4);
-	oReq.open("GET", frontend+"petriPerf", false);
-	oReq.send();
-}
-
-petriNetFreq();
-petriNetPerf();
-		
-function reqListener5 () {
-  document.getElementById("bpmn").innerHTML = this.responseText;
-}
-
-function bpmnRequest() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener5);
-	oReq.open("GET", frontend+"bpmn", false);
-	oReq.send();
-}
-
-bpmnRequest();
-*/
-
-/*
-function starting(){
-	start = this.responseText;
-	start = start.match(/(?!^)".*?"/g);
-}
-function ending(){
-	end = this.responseText;
-	end = end.match(/(?!^)".*?"/g);
-}
-function startingPoint() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", starting);
-	oReq.open("GET", frontend+"start", false);
-	oReq.send();
-}
-function endingPoint() {
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", ending);
-	oReq.open("GET", frontend+"end", false);
-	oReq.send();
-}
-
-startingPoint();
-endingPoint();
-*/
-
-</script>
-
-<script>
-var perf_checked = document.getElementById("perf_checked");
-if ((perf_checked).value == "true"){
-	(document.getElementById("tabFreq")).checked = true;
-	(document.getElementById("tabPerf")).checked = false;
-}
-
-var menu = document.getElementById("menu");
-menu.style.display = "none";
+	}
+	sliderPP.oninput = function() {
+		outputPF.innerHTML = this.value;
+		outputPP.innerHTML = this.value;
+		outputPF.value = this.value;
+		outputPP.value = this.value;
+		sliderPF.value = this.value;
+		sliderPP.value = this.value;
+		$(".change_form").css("visibility", "visible");
+		$(".dis_submit").addClass("dosubmit");
+		$(".dis_submit").attr('disabled', false);
+	}
+	sliderAF.oninput = function() {
+		outputAF.innerHTML = this.value;
+		outputAP.innerHTML = this.value;
+		outputAF.value = this.value;
+		outputAP.value = this.value;
+		sliderAF.value = this.value;
+		sliderAP.value = this.value;
+		$(".change_form").css("visibility", "visible");
+		$(".dis_submit").addClass("dosubmit");
+		$(".dis_submit").attr('disabled', false);
+	}
+	sliderAP.oninput = function() {
+		outputAP.innerHTML = this.value;
+		outputAF.innerHTML = this.value;
+		outputAP.value = this.value;
+		outputAF.value = this.value;
+		sliderAF.value = this.value;
+		sliderAP.value = this.value;
+		$(".change_form").css("visibility", "visible");
+		$(".dis_submit").addClass("dosubmit");
+		$(".dis_submit").attr('disabled', false);
+	}
 
 	
+
+	var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
+	var json, ul1, ul2, allCases, allEvents, maxDate, minDate;
+	var selected = "variant1";
+
+	initialRequest();
+
 	getMap(true);
 
-window.onchange = function() {
-	var regex = new RegExp(/^[\w\.,\s-]+\.xes$/);
-
-	if (document.getElementById("file").files[0] != undefined && regex.test(document.getElementById("file").files[0]['name']) == false) {
-		// console.log(document.getElementById("file").files[0])
-		document.getElementById("file").value = ""
-		alert("File not compatible");
-		
-		//document.getElementById("loadingMessage").style.visibility = "visible";
-		// document.getElementById("updateBtn").click();
-        // document.getElementById("loadingMessage").style.visibility = "visible";
-	}else if (document.getElementById("file").files[0] != undefined) {
-		//document.getElementById("loadingMessage").style.visibility = "visible";
-		inizio=0
-		document.getElementById("updateBtn").click();
-        document.getElementById("loadingMessage").style.visibility = "visible";
-	}
-	
-
-
-	var timeframe_selected = document.getElementById("keep_timeframe").value;
-	var img = document.getElementById("img");
-	var source = "../static/images/"
-	img.src = source+timeframe_selected+".jpg";
-	
-
-	document.getElementById("starting-time").setAttribute("min", minDate);
-	document.getElementById("starting-time").setAttribute("max", maxDate);
-	document.getElementById("starting-time").setAttribute("value", minDate);
-	document.getElementById("ending-time").setAttribute("min", minDate);	
-	document.getElementById("ending-time").setAttribute("max", maxDate);
-	document.getElementById("ending-time").setAttribute("value", maxDate);
-	
-	var perf_selected = document.getElementById("filter_by_performance").value;
-	if (perf_selected == "caseDuration") {
-		document.getElementById("select_time_1").style.display = "inline-block";
-		document.getElementById("select_time_2").style.display = "inline-block";
-		document.getElementById("label_input_min").innerHTML = "Minimum duration: <small>(Use cases running longer than)</small>";
-		document.getElementById("label_input_max").innerHTML = "Maximum duration: <small>(Use cases running shorter than)</small>";
-	}
-	if (perf_selected == "eventsNumber") {
-		document.getElementById("select_time_1").style.display = "none";
-		document.getElementById("select_time_2").style.display = "none";
-		document.getElementById("label_input_min").innerHTML = "Minimum number of events";
-		document.getElementById("label_input_max").innerHTML = "Maximum number of events";
-	}
-	
-	var endpoints_selected = document.getElementById("mode_for_endpoints").value;
-	if (endpoints_selected == "discard") {
-
-		document.getElementById("endpoints_text").innerHTML = "This filter removes all cases in which the first and last events \r do not have one of the selected values.";
-	}
-	else {
-		document.getElementById("endpoints_text").innerHTML = "This filter trims all cases to the sequence between"
-																	+"the first occurence \r of a start value and the last occurrence of an end value.";
-	}
-	
-	var attribute_selected = document.getElementById("mode_for_attribute").value;
-	switch (attribute_selected) {
-		case "selected":
-			document.getElementById("attribute_text").innerHTML = "This filter removes all events that do not have one of the selected values.";
-			break;
-		case "mandatory":
-			document.getElementById("attribute_text").innerHTML = "This filter removes all cases that do not have at least one event with one of the selected values.";
-			break;
-		case "forbidden":
-			document.getElementById("attribute_text").innerHTML = "This filter removes all cases that have at least one event with one of the selected values.";
-			break;
-		default:
-			document.getElementById("attribute_text").innerHTML = "";
-	}
-	
-	var check_require = document.getElementById("require_for_follower");
-	if (check_require.checked) {
-		document.getElementById("mode_for_follower").disabled = false;
-		document.getElementById("filter_by_follower").disabled = false;
-	}
-	else {
-		document.getElementById("mode_for_follower").disabled = true;
-		document.getElementById("filter_by_follower").disabled=true;
-	}
-
-	var check_time = document.getElementById("time_for_follower");
-	if (check_time.checked) {
-		document.getElementById("mode_time_for_follower").disabled = false;
-		document.getElementById("select_time_3").disabled = false;
-		document.getElementById("input_time_follower").disabled = false;
-	}
-	else {
-		document.getElementById("mode_time_for_follower").disabled = true;
-		document.getElementById("select_time_3").disabled = true;
-		document.getElementById("input_time_follower").disabled = true;
-	}
-		
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-  document.getElementById("blocker").style.display = "none";
-  document.getElementById("check_filter").checked = false;
-}
-
-function closeLoading(){
-	document.getElementById("myLoading").style.display = "none";
-	document.getElementById("blocker2").style.display = "none";
-}
-function closeRemove(){
-	document.getElementById("myRemove").style.display = "none";
-	document.getElementById("blocker3").style.display = "none";
-}
-function closeOrder(){
-	document.getElementById("myOrder").style.display = "none";
-	document.getElementById("blocker4").style.display = "none";
-}
-function closeChangement(){
-	document.getElementById("myChange").style.display = "none";
-	document.getElementById("blocker5").style.display = "none";
-}
-
-
-
-async function asyncCall() {
-//   console.log('calling');
-//   await $("#disappear_loading").css("visibility", "visible");
-  await $("#loadingMessage").css("visibility", "visible");
-//   document.getElementById("loadingMessage").style.visibility = "visible";	
-//   const result = await applyFilter();
-
-  $("#triggerFilterSpan").click()
-  // expected output: "resolved"
-}
-
-
-
-function triggerInvisibleFunction(){
-	
-	setTimeout(() => {
-		applyFilter()
-	}, 1);
-	
-}
-
-function dateMachRegex(date) {
-	const regex = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})$/g;
-	if (date.match(regex)) {
-		return date;
-	} else if ((date+":00").match(regex)) {
-		return date+":00";
-	}
-	return "error";
-}
-
-function applyFilter() {
-	
-	
-	// let p = new Promise((resolve,reject) =>{
-	// 	document.getElementById("disappear_loading").style.visibility = "visible";	
-
-    // // setTimeout(function(){ console.log("Hello"); }, 3000);
-
-    //     resolve("Success")   
-    // }).then((message) =>  {
-	var tf_selected = document.getElementById("keep_timeframe").value;
-	var pf_selected = document.getElementById("filter_by_performance").value;
-	var af_selected = document.getElementById("filter_by").value;
-	var af_selected_mode = document.getElementById("mode_for_attribute").value;
-
-	var start_tf = document.getElementById("starting-time").value;
-	start_tf=dateMachRegex(start_tf)
-	// console.log(start_tf)
-	var end_tf = document.getElementById("ending-time").value;
-	end_tf=dateMachRegex(end_tf)
-	
-	start_tf = start_tf.replace("T", " ");
-	end_tf = end_tf.replace("T", " ");
-	// console.log(start_tf)
-	// console.log(end_tf)
-
-	
-	
-	
-	var time1 = document.getElementById("select_time_1").value;
-	var min = document.getElementById("input_min").value;
-	var min_sec;
-	switch(time1){
-		case "mills": min_sec = (min / 1000); break;
-		case "seconds": min_sec = min; break;
-		case "minutes": min_sec = (min *60); break;
-		case "hours": min_sec = (min *3600); break;
-		case "days": min_sec = (min *86400); break;
-		case "weeks": min_sec = (min *604800); break;
-		case "years": min_sec = (min *3,154e+7); break; 
-	}
-	
-	var time2 = document.getElementById("select_time_2").value;
-	var max = document.getElementById("input_max").value;
-	var max_sec;
-	switch(time2){
-		case "mills": max_sec = (max / 1000); break;
-		case "seconds": max_sec = max; break;
-		case "minutes": max_sec = (max *60); break;
-		case "hours": max_sec = (max *3600); break;
-		case "days": max_sec = (max *86400); break;
-		case "weeks": max_sec = (max *604800); break;
-		case "years": max_sec = (max *3,154e+7); break;
-	}		
-	
-	var oReq = new XMLHttpRequest();
-	//oReq.addEventListener("load", reqListenerFilter);
-	oReq.addEventListener("load", reqListener3);
-	
-	if(document.getElementById("timeframe_filter_div").style.display == "block"){
-		// document.getElementById("timeframe_filter").setAttribute("style", "background-color: #7a4791;");
-		// document.getElementById("timeframe_remove").style.visibility = "visible";
-		filtered_timeframe = true;
-		//oReq.open("GET", frontend+"filterTimeframe"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected, false);
-	}
-	
-	if(document.getElementById("perf_filter_div").style.display == "block"){		
-		// document.getElementById("perf_filter").setAttribute("style", "background-color: #7a4791;");
-		// document.getElementById("perf_remove").style.visibility = "visible";
-		filtered_perf = true;
-		//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
-	}
-
-	if(document.getElementById("attribute_filter_div").style.display == "block"){		
-		// document.getElementById("attribute_filter").setAttribute("style", "background-color: #7a4791;");
-		// document.getElementById("attribute_remove").style.visibility = "visible";
-		filtered_attribute = true;
-		//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
-	}
-	
-	
-	// console.log(end_tf)																		//min_event max_event				
-	// console.log(start_tf)
-
-	var filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
-	
-									 "&filterPerf="+filtered_perf+		"&perfFrame="+pf_selected+	"&min="+String(min_sec)+		"&max="+String(max_sec)+
-									 																"&minevent="+String(min)+		"&maxevent="+String(max)+
-																	 
-									 "&filterAttr="+filtered_attribute +	"&attrFrame="+af_selected +	"&attrFilt="+af_selected_mode+	"&listattr="+listToFilter
-	
-									 
-	history_crono[String(indice)]=filtro
-	
-	// console.log(history_crono)
-	// console.log(history_crono.length)
-	oReq.open("GET",frontend+filtro, false);
-	oReq.send();
-	getMap(false);
-
-	closeForm();
-	closeLoading();
-
-	allDurationRequest()
-	allEdgeDurationRequest()
-	csmEdgeRequest()
-	csmRequest()
-	
-	var container = $('#history_div');
-	if(filtered_timeframe){
-		$('#history_span').attr("hidden", false); 
-	   	// var inputs = container.find('input');
-	   	// var id = inputs.length+1;
-	
-	//    $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
-	//    $('<label />', { 'for': 'cb'+id, text: name }).appendTo('cb'+id);
-		var idvalue="valore"+String(indice)
-		var element=$("<div class='history_element' id="+idvalue+ "></div>")
-		element.appendTo(container)
-	   $("<span class='element_title' value="+String(indice)+">"+String(indice)+") Timeframe:     \n" +tf_selected+' '+ '</span>').appendTo(element);
-	   $('<br>').appendTo(element);
-	   $("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
-	   $('<span>&zwnj;</span>').appendTo(element);
-	   $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
-	   $('<span>&zwnj;</span>').appendTo(element);
-	   $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
-	   $('<div> &zwnj; </div>').appendTo(element);
-	
-
-	}
-	if(filtered_perf){
-		if(pf_selected=="caseDuration"){
-			$('#history_span').attr("hidden", false); 	
-			var idvalue="valore"+String(indice)
-			var element=$("<div class='history_element' id="+idvalue+ "></div>")
-			element.appendTo(container)
-			$("<span class='element_title' value="+String(indice)+">"+String(indice)+ ") Perforamance: \n" +pf_selected+ '</span>').appendTo(element);
-			$('<br>').appendTo(element);
-			$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
-			$('<span>&zwnj;</span>').appendTo(element);
-			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
-			$('<span>&zwnj;</span>').appendTo(element);
-			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
-			$('<div> &zwnj; </div>').appendTo(element);
-
-		}else if(pf_selected=="eventsNumber"){
-		
-			$('#history_span').attr("hidden", false); 
-			var idvalue="valore"+String(indice)
-			var element=$("<div class='history_element' id="+idvalue+ "></div>")
-			element.appendTo(container)
-			$("<span class='element_title' value="+String(indice)+">"+String(indice)+ ") Performance: \n" +pf_selected+ '</span>').appendTo(element);
-			$('<br>').appendTo(element);
-			$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
-			$('<span>&zwnj;</span>').appendTo(element);
-			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
-			$('<span>&zwnj;</span>').appendTo(element);
-			$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
-			$('<div> &zwnj; </div>').appendTo(element);
-
-		}
-		
-	}
-	if(filtered_attribute){
-		$('#history_span').attr("hidden", false);  
-		var idvalue="valore"+String(indice)
-		var element=$("<div class='history_element' id="+idvalue+ "></div>")
-		element.appendTo(container)
-		$("<span class='element_title' value="+String(indice)+">"+String(indice)+") Attribute:    \n " +af_selected+'\n '+"-"+ af_selected_mode+""+ '</span>').appendTo(element);
-		$('<br>').appendTo(element);
-		$("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
-		$('<span>&zwnj;</span>').appendTo(element);
-		$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
-		$('<span>&zwnj;</span>').appendTo(element);
-		$("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
-		$('<div> &zwnj; </div>').appendTo(element);
-	  
-	}
-	indice=indice+1;
-	filtered_timeframe=false
-	filtered_perf=false
-	filtered_attribute=false
-	
-
-	// // setTimeout(() => , 1000);
-	// // resolve("gtttt")
-	// }).then((message) =>  {
-	// 	console.log("this is the then "+message)
-	// 	// document.getElementById("loadingMessage").style.visibility = "hidden";	
-
-	$("#loadingMessage").css("visibility", "hidden");
-	document.getElementById("myLoading").style.display = "block";
-	document.getElementById("blocker2").style.display = "block";
-	// })
-
-	
-
-}
-
-function filterSwipeUp(id){
-
-	if(Object.keys(history_crono).length==1){
-		alert("Impossible to apply this filter")
-	}else if(parseInt(id)==0){
-		alert("Impossible to apply this filter")
-	}else{
-
-	$("#loadingMessage").css("visibility", "visible");
-	// console.log(id)
-	// console.log(history_crono)
-	setTimeout(() => {
-		var indice_up= String(parseInt(id)-1)
-		var temp=history_crono[id]
-		history_crono[id]=history_crono[indice_up]
-		history_crono[indice_up]=temp
-		// console.log(history_crono)
-
-		
-		var v1 = $('#valore'+String(id)).html(),
-			v2 = $('#valore'+(indice_up)).html();
-	
-
-		
-		// console.log(v1)
-		// console.log('#valore'+String(id))
-		
-		// console.log(v2)
-		// console.log('#valore'+(indice_up))
-
-		$('#valore'+String(id)).html(v2);
-		$('#valore'+(indice_up)).html(v1);
-
-		var classList_id = $('#valore'+String(id)+' .history_bottone');
-							
-		$.each(classList_id, function(index, item) {
-			item.value=String(id)
-		});
-
-		var classList_id_up = $('#valore'+indice_up+' .history_bottone');
-							
-		$.each(classList_id_up, function(index, item) {
-			item.value=indice_up
-		});
-
-		// var classList_title = $('#valore'+String(id)+' .element_title');
-		var classList_title = $('#valore'+String(id)+' .element_title');
-							
-		$.each(classList_title, function(index, item) {
-			$(this).value=String(id)
-			var testo=$(this).html()
-			var newtext= String(id)+") "+testo.split(")")[1].trim()
-			$(this).html(newtext)
-		});
-
-
-		var classList_title_up = $('#valore'+indice_up+' .element_title');
-							
-		$.each(classList_title_up, function(index, item) {
-			$(this).value=indice_up
-			var testo=$(this).html()
-			var newtext= indice_up+") "+testo.split(")")[1].trim()
-			$(this).html(newtext)
-		});
-		
-		/* check to redesign start part	*/
-		// freqRequest();
-		// perfRequest();
-		// variantRequest();
-		swipeRemoveRequest();
-		apply_crono()
-
-		$("#loadingMessage").css("visibility", "hidden");
-		document.getElementById("myOrder").style.display = "block";
-		document.getElementById("blocker4").style.display = "block";
-
-		allDurationRequest()
-		allEdgeDurationRequest()
-		csmEdgeRequest()
-		csmRequest()
-
-	},1);
-	}
-}
-
-function filterSwipeDown(id){
-
-	if(Object.keys(history_crono).length==1){
-		alert("Impossible to apply this filter")
-	}else if(parseInt(id)==Object.keys(history_crono).length-1){
-		alert("Impossible to apply this filter")
-	}else{
-
-
-	$("#loadingMessage").css("visibility", "visible");
-
-	setTimeout(() => {
-		var indice_up= String(parseInt(id)+1)
-		var temp=history_crono[id]
-		history_crono[id]=history_crono[indice_up]
-		history_crono[indice_up]=temp
-		// console.log(history_crono)
-
-		var v1 = $('#valore'+String(id)).html(),
-			v2 = $('#valore'+(indice_up)).html();
-	
-		$('#valore'+String(id)).html(v2);
-		$('#valore'+(indice_up)).html(v1);
-
-
-		var classList_id = $('#valore'+String(id)+' .history_bottone');
-							
-		$.each(classList_id, function(index, item) {
-			item.value=String(id)
-		});
-
-		var classList_id_up = $('#valore'+indice_up+' .history_bottone');
-							
-		$.each(classList_id_up, function(index, item) {
-			item.value=indice_up
-		});
-
-		var classList_title = $('#valore'+String(id)+' .element_title');
-							
-		$.each(classList_title, function(index, item) {
-		
-			$(this).value=String(id)
-			var testo=$(this).html()
-			var newtext= String(id)+") "+testo.split(")")[1].trim()
-			$(this).html(newtext)
-		});
-						
-		var classList_title_up = $('#valore'+indice_up+' .element_title');
-												
-		$.each(classList_title_up, function(index, item) {
-		
-			$(this).value=indice_up
-			var testo=$(this).html()
-			
-			var newtext= indice_up+") "+testo.split(")")[1].trim()
-			$(this).html(newtext)
-			
-		});
-
-		/* check to redesign start part	*/
-		// freqRequest();
-		// perfRequest();
-		// variantRequest();
-		swipeRemoveRequest();
-		apply_crono()
-
-		$("#loadingMessage").css("visibility", "hidden");
-		document.getElementById("myOrder").style.display = "block";
-		document.getElementById("blocker4").style.display = "block";
-
-		allDurationRequest()
-		allEdgeDurationRequest()
-		csmEdgeRequest()
-		csmRequest()
-
-
-	},1);
-	}
-}
-
-function filterRemove(id){
-	$("#loadingMessage").css("visibility", "visible");
-	var temp=history_crono[id]
-	// console.log(id)
-	// console.log(temp)
-	
-	setTimeout(() => {
-		var history_length=(Object.keys(history_crono).length)
-		var history_indice=id
-
-		var v1 = $('#valore'+id).html();
-
-
-		delete history_crono[id]
-		// console.log(history_crono)
-		$('#valore'+id).remove();
-		// 
-		// 
-		
-		
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		for (let i = 0; i < history_length; i += 1) {
-			if(i>history_indice){
-				var temp = history_crono[String(i)]
-				history_crono[String(i-1)]=temp
-				
-				$('#valore'+String(i)).attr("id","valore"+String(i-1));
-				
-				var classList_id_up = $('#valore'+String(i-1)+' .history_bottone');	
-				$.each(classList_id_up, function(index, item) {
-					item.value=String(i-1)
-				});
-
-
-				var classList_title_up = $('#valore'+String(i-1)+' .element_title');
-									
-				$.each(classList_title_up, function(index, item) {
-					$(this).value=String(i-1)
-					// item.value=String(i-1)
-					var testo=$(this).html()
-					var newtext= String(i-1)+") "+testo.split(")")[1].trim()
-					$(this).html(newtext)
-					// $(this).value="4"
-				});
-
-
-				delete history_crono[String(i)]
-			}
-		// 	
-		}
-
-		// console.log(history_crono)
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		
-		
-		/* check to redesign start part	*/
-		// freqRequest();	
-		// perfRequest();
-		// variantRequest();
-		swipeRemoveRequest();
-		apply_crono();
-		indice=indice-1
-
-		$("#loadingMessage").css("visibility", "hidden");
-		document.getElementById("myRemove").style.display = "block";
-		document.getElementById("blocker3").style.display = "block";
-
-		allDurationRequest()
-		allEdgeDurationRequest()
-		csmEdgeRequest()
-		csmRequest()
-		
-	}, 1);
-
-	
-}
-
-function apply_crono(){
-	redo_function=true
-	
-	var oReq = new XMLHttpRequest();
-	//oReq.addEventListener("load", reqListenerFilter);
-	oReq.addEventListener("load", reqListener3);
-	
-	
-	Object.keys(history_crono).forEach(function(key) {
-   		
-		oReq.open("GET",frontend+history_crono[key], false);
-
-		oReq.send();
-		
-	});
-
-	getMap(false);
-	redo_function=false;
-	
-	if(Object.keys(history_crono).length === 0){
-		
-		$('#history_span').attr("hidden", true); 
-	}
-
-}
-
-
-/*
-function removeFilter(id){
-	document.getElementById(id).style.visibility = "hidden";
-	id= id.split("_")[0];
-	document.getElementById(id+"_filter").setAttribute("style", "background-color: #cfa8d5;");
-	
-	var oReq = new XMLHttpRequest();
-	//oReq.addEventListener("load", reqListenerFilter);
-	oReq.addEventListener("load", reqListener3);
-	
-	switch(id){
-		case "timeframe": 
-			filtered_timeframe = false;
-			break;
-			
-		case "perf": 
-			filtered_perf = false;
-			break;
-
-		case "attribute":
-			filtered_attribute = false;
-			break;
-	}
-
-	var tf_selected = document.getElementById("keep_timeframe").value;
-	var pf_selected = document.getElementById("filter_by_performance").value;
-	var start_tf = document.getElementById("starting-time").value;
-	var end_tf = document.getElementById("ending-time").value;
-		
-	start_tf = start_tf.replace("T", " ");
-	end_tf = end_tf.replace("T", " ");
-	
-		//oReq.open("GET", frontend+"filterTimeframe"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected, false);
-		//oReq.send();
-	//filtered_timeframe = false;
-
-
-	var time1 = document.getElementById("select_time_1").value;
-	var min = document.getElementById("input_min").value;
-	var min_sec;
-	switch(time1){
-		case "mills": min_sec = (min / 1000); break;
-		case "seconds": min_sec = min; break;
-		case "minutes": min_sec = (min *60); break;
-		case "hours": min_sec = (min *3600); break;
-		case "days": min_sec = (min *86400); break;
-		case "weeks": min_sec = (min *604800); break;
-		case "years": min_sec = (min *3,154e+7); break; 
-	}
-	
-	var time2 = document.getElementById("select_time_2").value;
-	var max = document.getElementById("input_max").value;
-	var max_sec;
-	switch(time2){
-		case "mills": max_sec = (max / 1000); break;
-		case "seconds": max_sec = max; break;
-		case "minutes": max_sec = (max *60); break;
-		case "hours": max_sec = (max *3600); break;
-		case "days": max_sec = (max *86400); break;
-		case "weeks": max_sec = (max *604800); break;
-		case "years": max_sec = (max *3,154e+7); break;
-	}
-	//oReq.open("GET", frontend+"filterPerformance"+"?min="+String(min_sec)+"&max="+String(max_sec), false);
-	//oReq.send();
-	//filtered_perf = false;
-	console.log(filtered_perf);
-	console.log(filtered_timeframe);
-	
-	if(filtered_perf == false && filtered_timeframe == false && filtered_attribute == false) {
-		freqRequest();
-		perfRequest();
-		variantRequest();
-		$('#history_div').empty();
-		$('#history_span').attr("hidden", true); 
-		
-	}
-	else{
-		oReq.open("GET", frontend+"filter"+"?start="+start_tf+"&end="+end_tf+"&timeframe="+tf_selected+"&min="+String(min_sec)+"&max="+String(max_sec)+"&filterTime="+filtered_timeframe+"&filterPerf="+filtered_perf, false);
-		oReq.send();
-	}
-	//filtered = false;
-	//freqRequest();
-	//perfRequest();
-	//variantRequest();
-	getMap(false);
-	
-	closeForm();
-}
-*/		
-function update(){
-	document.getElementById('updated').value = true;
-	document.getElementById('file').click();
-	
-}
-
-function openForm(id) {
-	document.getElementById("blocker").style.display = "block";
-	switch (id) {
-	  case 'timeframe_filter':
-		document.getElementById("filter_title").innerHTML = "Timeframe";
-		document.getElementById("timeframe_filter_div").style.display = "block";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-		break;
-	  case 'perf_filter':
-		document.getElementById("filter_title").innerHTML = "Performance";
-		document.getElementById("perf_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-		break;
-	  case 'endpoints_filter':
-		document.getElementById("filter_title").innerHTML = "Endpoints";
-		document.getElementById("endpoints_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-		break;
-	  case 'attribute_filter':
-		document.getElementById("filter_title").innerHTML = "Attribute";
-		document.getElementById("attribute_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-		
-		break;
-	  case 'follower_filter':
-		document.getElementById("filter_title").innerHTML = "Follower";
-		document.getElementById("follower_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		break;
-	  default:
-		document.getElementById("filter_title").innerHTML = "Sorry, there has been an error. No filter has been applied yet.";
-	}
-  document.getElementById("myForm").style.display = "block";
-}
-
-
-
-var menuBtn = document.getElementById("check");
-var menu = document.getElementById("menu");
-var content = document.getElementById("content");
-var map = document.getElementById("map");
-var elanalysis = document.getElementById("elanalysis");
-var cChecking = document.getElementById("cChecking");
-var mapText = document.getElementById("map-text");
-var elanalysisText = document.getElementById("elanalysis-text");
-var cCheckingText = document.getElementById("cChecking-text");
-
-
-function mainMenu(){
-	if (menuBtn.checked == false) {
-		menu.style.display = "none";
-		content.style.maxWidth = "100%";
-		//console.log(document.getElementById("file").files[0]);
-	}
-	else {
-		menu.style.display = "flex";
-		content.style.maxWidth = "80%";
-	}
-}
-
-function displayContent(){
-	if (map.checked == true) {
-		mapText.style.display = "block";
-		elanalysisText.style.display = "none";
-		cCheckingText.style.display = "none";
-		menu.style.display = "none";
-		content.style.maxWidth = "100%";
-		menuBtn.checked = false;
-		
-	}
-	if (elanalysis.checked == true) {
-		mapText.style.display = "none";
-		elanalysisText.style.display = "block";
-		cCheckingText.style.display = "none";
-		menu.style.display = "none";
-		content.style.maxWidth = "100%";
-		menuBtn.checked = false;
-	}
-	if (cChecking.checked == true) {
-		mapText.style.display = "none";
-		elanalysisText.style.display = "none";
-		cCheckingText.style.display = "block";
-		menu.style.display = "none";
-		content.style.maxWidth = "100%";
-		menuBtn.checked = false;
-	}
-}
-
-
-function doSomething(){
-	$("#loadingMessage").css("visibility", "visible");
-	setTimeout(() => {
-	//
-		petriRequest();
-		petri_sample=document.getElementById("stringPetriNet").innerHTML
-		petri_sample = petri_sample.replace(/&#34;/g, '"');
-		petri_sample = petri_sample.replace(/&gt;/g, ">");
-		petri_sample = petri_sample.replace(/&lt;/g, "<");
-		//petri_sample = petri_sample.replace(/●/g, "  &#9679;"); //9679
-		petri_sample = petri_sample.replace(/●/g, " ");
-		//petri_sample = petri_sample.replace(/■/g, '    &#9724;'); //9632
-		petri_sample = petri_sample.replace(/■/g, " ");
-		console.log(petri_sample)
-
-		/*
-		var petri_options = {
-			format: 'svg',
-			ALLOW_MEMORY_GROWTH: 1,
-			totalMemory: 537395200
-			// format: 'png-image-element'
-		}
-		var petri_image = Viz(petri_sample, petri_options);
-		var petri_main = document.getElementById('petriContainer');
-
-		petri_main.innerHTML = petri_image;
-
-
-		const zvgZoom = document.getElementById("petriContainer");
-
-		//Zooming and paning with mouse
-
-		const svgContainer = document.getElementById("petrinet-content");
-		//console.log(svgContainer);
-
-		var viewBox = {x:0,y:0,w:"1920",h:"1080"};
+</script>
+
+
+<script>
+	// ZOOM MAP1
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("demo");
+	const zvgZoom = document.getElementById("graphContainer");
+
+	output.innerHTML = slider.value;
+
+
+	const svgContainer = document.getElementById("map-content");
+
+	var viewBox = {x:0,y:0,w:"1920",h:"1080"};
+	var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+	zvgZoom.setAttribute('viewBox', attr);
+
+	//console.log(zvgZoom.clientWidth);
+	//console.log(String(zvgZoom.style.width));
+	//const svgSize = {w:zvgZoom.style.width,h:zvgZoom.style.height};
+	const svgSize = {w:"1920",h:"1080"};
+	//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
+	var isPanning = false;
+	var startPoint = {x:0,y:0};
+	var endPoint = {x:0,y:0};;
+	var scale = 1;
+
+	svgContainer.onmousewheel = function(e) {
+		e.preventDefault();
+		var w = viewBox.w;
+		var h = viewBox.h;
+		var mx = e.offsetX;//mouse x  
+		var my = e.offsetY;    
+		var dw = -w*Math.sign(e.deltaY)*0.05;
+		var dh = -h*Math.sign(e.deltaY)*0.05;
+		var dx = dw*mx/svgSize.w;
+		var dy = dh*my/svgSize.h;
+		viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+		scale = svgSize.w/viewBox.w;
+		slider.value = scale*100;
+		output.innerHTML = slider.value;
+		//   zoomValue.innerText = String(Math.round(scale*100)/100);
 		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
 		zvgZoom.setAttribute('viewBox', attr);
+	}
 
 
-		const svgSize = {w:"1920",h:"1080"};
-		//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
-		var isPanning = false;
-		var startPoint = {x:0,y:0};
-		var endPoint = {x:0,y:0};;
-		var scale = 1;
+	svgContainer.onmousedown = function(e){
+		isPanning = true;
+		startPoint = {x:e.x,y:e.y};   
+	}
 
-		svgContainer.onmousewheel = function(e) {
-			e.preventDefault();
-			var w = viewBox.w;
-			var h = viewBox.h;
-			var mx = e.offsetX;//mouse x  
-			var my = e.offsetY;    
-			var dw = -w*Math.sign(e.deltaY)*0.05;
-			var dh = -h*Math.sign(e.deltaY)*0.05;
-			var dx = dw*mx/svgSize.w;
-			var dy = dh*my/svgSize.h;
-			viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
-			scale = svgSize.w/viewBox.w;
-			slider.value = scale*100;
-			output.innerHTML = slider.value;
-			//   zoomValue.innerText = String(Math.round(scale*100)/100);
-			var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+	svgContainer.onmousemove = function(e){
+		if (isPanning){
+			endPoint = {x:e.x,y:e.y};
+			var dx = (startPoint.x - endPoint.x)/scale;
+			var dy = (startPoint.y - endPoint.y)/scale;
+			var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
+			var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
 			zvgZoom.setAttribute('viewBox', attr);
 		}
+	}
 
-
-		svgContainer.onmousedown = function(e){
-			isPanning = true;
-			startPoint = {x:e.x,y:e.y};   
-		}
-
-		svgContainer.onmousemove = function(e){
-			if (isPanning){
-				endPoint = {x:e.x,y:e.y};
-				var dx = (startPoint.x - endPoint.x)/scale;
-				var dy = (startPoint.y - endPoint.y)/scale;
-				var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
-				var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
-				zvgZoom.setAttribute('viewBox', attr);
-			}
-		}
-
-		svgContainer.onmouseup = function(e){
+	svgContainer.onmouseup = function(e){
 		if (isPanning){ 
-		endPoint = {x:e.x,y:e.y};
-		var dx = (startPoint.x - endPoint.x)/scale;
-		var dy = (startPoint.y - endPoint.y)/scale;
-		viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
+			endPoint = {x:e.x,y:e.y};
+			var dx = (startPoint.x - endPoint.x)/scale;
+			var dy = (startPoint.y - endPoint.y)/scale;
+			viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
+			var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+			zvgZoom.setAttribute('viewBox', attr);
+			isPanning = false;
+		}
+	}
+
+	svgContainer.onmouseleave = function(e){
+		isPanning = false;
+	}
+
+	var lastNum = 0;
+	var v;
+	slider.oninput = function(e) {
+
+		if(lastNum < this.value) {
+				v = -500;
+		} else {
+			v = 500;
+		}
+		lastNum = this.value;
+		
+		var w = viewBox.w;
+		var h = viewBox.h;
+		var mx = 0;//mouse x  
+		var my = 0;
+		var dw = -w*Math.sign(v)*0.05;
+		var dh = -h*Math.sign(v)*0.05;
+		var dx = dw*mx/svgSize.w;
+		var dy = dh*my/svgSize.h;
+		viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+		scale = svgSize.w/viewBox.w;
+		slider.value = scale*100;
+		output.innerHTML = slider.value;
 		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
 		zvgZoom.setAttribute('viewBox', attr);
-		isPanning = false;
-		}
-		}
-
-		svgContainer.onmouseleave = function(e){
-		isPanning = false;
-		}
-		*/
-
-		$("#loadingMessage").css("visibility", "hidden");
-
-	}, 10);
-
-}
-</script>
-
-
-<script>
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-const zvgZoom = document.getElementById("graphContainer");
-
-output.innerHTML = slider.value;
-
-
-//Zooming and paning with mouse
-
-const svgContainer = document.getElementById("map-content");
-//console.log(svgContainer);
-
-var viewBox = {x:0,y:0,w:"1920",h:"1080"};
-var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-zvgZoom.setAttribute('viewBox', attr);
-
-
-
-
-
-
-//console.log(zvgZoom.clientWidth);
-//console.log(String(zvgZoom.style.width));
-//const svgSize = {w:zvgZoom.style.width,h:zvgZoom.style.height};
-const svgSize = {w:"1920",h:"1080"};
-//console.log("Initial svgSize: "+String(svgSize.w)+" "+String(svgSize.h));
-var isPanning = false;
-var startPoint = {x:0,y:0};
-var endPoint = {x:0,y:0};;
-var scale = 1;
-
-svgContainer.onmousewheel = function(e) {
-   e.preventDefault();
-   var w = viewBox.w;
-   var h = viewBox.h;
-   var mx = e.offsetX;//mouse x  
-   var my = e.offsetY;    
-   var dw = -w*Math.sign(e.deltaY)*0.05;
-   var dh = -h*Math.sign(e.deltaY)*0.05;
-   var dx = dw*mx/svgSize.w;
-   var dy = dh*my/svgSize.h;
-   viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
-   scale = svgSize.w/viewBox.w;
-   slider.value = scale*100;
-   output.innerHTML = slider.value;
-//   zoomValue.innerText = String(Math.round(scale*100)/100);
-   var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-   zvgZoom.setAttribute('viewBox', attr);
-   
-
-}
-
-
-svgContainer.onmousedown = function(e){
-   isPanning = true;
-   startPoint = {x:e.x,y:e.y};   
-}
-
-svgContainer.onmousemove = function(e){
-   if (isPanning){
-  endPoint = {x:e.x,y:e.y};
-  var dx = (startPoint.x - endPoint.x)/scale;
-  var dy = (startPoint.y - endPoint.y)/scale;
-  var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
-  var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
-  zvgZoom.setAttribute('viewBox', attr);
-   }
-}
-
-svgContainer.onmouseup = function(e){
-   if (isPanning){ 
-  endPoint = {x:e.x,y:e.y};
-  var dx = (startPoint.x - endPoint.x)/scale;
-  var dy = (startPoint.y - endPoint.y)/scale;
-  viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
-  var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-  zvgZoom.setAttribute('viewBox', attr);
-  isPanning = false;
-  }
-}
-
-svgContainer.onmouseleave = function(e){
- isPanning = false;
-}
-
-
-/*+*/
-
-const zvgZoom2 = document.getElementById("graphContainer2");
-
-// output.innerHTML = slider.value;
-
-
-//Zooming and paning with mouse
-
-const svgContainer2 = document.getElementById("map2-content");
-//console.log(svgContainer2);
-
-var viewBox2 = {x:0,y:0,w:"1920",h:"1080"};
-var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
-zvgZoom2.setAttribute('viewBox', attr);
-
-
-
-
-
-
-//console.log(zvgZoom2.clientWidth);
-//console.log(String(zvgZoom2.style.width));
-//const svgSize = {w:zvgZoom2.style.width,h:zvgZoom2.style.height};
-const svgSize2 = {w:"1920",h:"1080"};
-//console.log("Initial svgSize2: "+String(svgSize2.w)+" "+String(svgSize2.h));
-var isPanning2 = false;
-var startPoint2 = {x:0,y:0};
-var endPoint2 = {x:0,y:0};;
-var scale2 = 1;
-
-svgContainer2.onmousewheel = function(e) {
-   e.preventDefault();
-   var w = viewBox2.w;
-   var h = viewBox2.h;
-   var mx = e.offsetX;//mouse x  
-   var my = e.offsetY;    
-   var dw = -w*Math.sign(e.deltaY)*0.05;
-   var dh = -h*Math.sign(e.deltaY)*0.05;
-   var dx = dw*mx/svgSize2.w;
-   var dy = dh*my/svgSize2.h;
-   viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w-dw,h:viewBox2.h-dh};
-   scale2 = svgSize2.w/viewBox2.w;
-   slider.value = scale2*100;
-   output.innerHTML = slider.value;
-//   zoomValue.innerText = String(Math.round(scale2*100)/100);
-   var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
-   zvgZoom2.setAttribute('viewBox', attr);
-   
-
-}
-
-
-svgContainer2.onmousedown = function(e){
-   isPanning2 = true;
-   startPoint2 = {x:e.x,y:e.y};   
-}
-
-svgContainer2.onmousemove = function(e){
-   if (isPanning2){
-  endPoint2 = {x:e.x,y:e.y};
-  var dx = (startPoint2.x - endPoint2.x)/scale2;
-  var dy = (startPoint2.y - endPoint2.y)/scale2;
-  var movedViewBox = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};
-  var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
-  zvgZoom2.setAttribute('viewBox', attr);
-   }
-}
-
-svgContainer2.onmouseup = function(e){
-   if (isPanning2){ 
-  endPoint2 = {x:e.x,y:e.y};
-  var dx = (startPoint2.x - endPoint2.x)/scale2;
-  var dy = (startPoint2.y - endPoint2.y)/scale2;
-  viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};   
-  var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
-  zvgZoom2.setAttribute('viewBox', attr);
-  isPanning2 = false;
-  }
-}
-
-svgContainer2.onmouseleave = function(e){
- isPanning2 = false;
-}
-
-
-// ##############################################à
-
-
-
- 
-var lastNum = 0;
-var v;
-slider.oninput = function(e) {
-
-  if(lastNum < this.value) {
-		v = -500;
-	} else {
-		v = 500;
 	}
-	lastNum = this.value;
- 
-   var w = viewBox.w;
-   var h = viewBox.h;
-   var mx = 0;//mouse x  
-   var my = 0;
-   var dw = -w*Math.sign(v)*0.05;
-   var dh = -h*Math.sign(v)*0.05;
-   var dx = dw*mx/svgSize.w;
-   var dy = dh*my/svgSize.h;
-   viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
-   scale = svgSize.w/viewBox.w;
-   slider.value = scale*100;
-   output.innerHTML = slider.value;
-   var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
-   zvgZoom.setAttribute('viewBox', attr);
-  
-}
-</script>
-
-<script>
-var sliderPF = document.getElementById("myPathF");
-var sliderPP = document.getElementById("myPathP");
-var sliderAF = document.getElementById("myActF");
-var sliderAP = document.getElementById("myActP");
-var outputPF = document.getElementById("pathF");
-var outputPP = document.getElementById("pathP");
-var outputAF = document.getElementById("actF");
-var outputAP = document.getElementById("actP");
-
-outputPF.innerHTML = sliderPF.value;
-outputPP.innerHTML = sliderPP.value;
-outputAF.innerHTML = sliderAF.value;
-outputAP.innerHTML = sliderAP.value;
-// $('textarea').prop('readonly', true);
-
-// function used to update simultaneously the slider and the textarea
-function updateInfo(caso){
-	if(caso=="PP"){
-		sliderPP.value = outputPP.value
-		sliderPF.value = outputPP.value
-		outputPF.value =outputPP.value
-		outputPF.innerHTML =outputPP.value
-	}else if(caso=="PF"){
-		sliderPF.value = outputPF.value
-		sliderPP.value = outputPF.value
-		outputPP.value =outputPF.value
-		outputPP.innerHTML =outputPF.value
-	}else if(caso=="AF"){
-		sliderAF.value = outputAF.value
-		sliderAP.value = outputAF.value
-		outputAP.value =outputAF.value
-		outputAP.innerHTML =outputAF.value
-	}else if(caso=="AP"){
-		sliderAP.value = outputAP.value
-		sliderAF.value = outputAP.value
-		outputAF.value =outputAP.value
-		outputAF.innerHTML =outputAP.value
-	}
-
-	$(".change_form").css("visibility", "visible");
-	$(".dis_submit").addClass("dosubmit");
-	$(".dis_submit").attr('disabled', false);
-
-
-}
-
-
-
-// avoid to use enter to have a new line
-$('#pathP').keypress(function(event) {
-	if (event.keyCode == 13) {
-		event.preventDefault();
-		// $('textarea').prop('readonly', true);
-		// document.getElementById("invisibleButton2").click();
-	}
-});
-$('#pathF').keypress(function(event) {
-	if (event.keyCode == 13) {
-		event.preventDefault();
-		// $('textarea').prop('readonly', true);
-		// document.getElementById("invisibleButton2").click();
-	}
-});
-
-
-sliderPF.oninput = function() {
-	outputPF.innerHTML = this.value;
-	outputPP.innerHTML = this.value;
-	outputPF.value = this.value;
-	outputPP.value = this.value;
-	sliderPP.value = this.value;
-	sliderPF.value = this.value;
-	$(".change_form").css("visibility", "visible");
-	$(".dis_submit").addClass("dosubmit");
-	$(".dis_submit").attr('disabled', false);
 	
+</script>
 
-}
-sliderPP.oninput = function() {
-	outputPF.innerHTML = this.value;
-  	outputPP.innerHTML = this.value;
-	outputPF.value = this.value;
-  	outputPP.value = this.value;
-	sliderPF.value = this.value;
-	sliderPP.value = this.value;
-	$(".change_form").css("visibility", "visible");
-	$(".dis_submit").addClass("dosubmit");
-	$(".dis_submit").attr('disabled', false);
-}
-sliderAF.oninput = function() {
-	outputAF.innerHTML = this.value;
-	outputAP.innerHTML = this.value;
-	outputAF.value = this.value;
-	outputAP.value = this.value;
-	sliderAF.value = this.value;
-	sliderAP.value = this.value;
-	$(".change_form").css("visibility", "visible");
-	$(".dis_submit").addClass("dosubmit");
-	$(".dis_submit").attr('disabled', false);
-}
-sliderAP.oninput = function() {
-	outputAP.innerHTML = this.value;
-	outputAF.innerHTML = this.value;
-	outputAP.value = this.value;
-	outputAF.value = this.value;
-	sliderAF.value = this.value;
-	sliderAP.value = this.value;
-	$(".change_form").css("visibility", "visible");
-	$(".dis_submit").addClass("dosubmit");
-	$(".dis_submit").attr('disabled', false);
-}
+
+<script>
+	//ZOOM MAP2 
+	const zvgZoom2 = document.getElementById("graphContainer2");
+
+	const svgContainer2 = document.getElementById("map-content2");
+	//console.log(svgContainer2);
+
+	var viewBox2 = {x:0,y:0,w:"1920",h:"1080"};
+	var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+	zvgZoom2.setAttribute('viewBox', attr);
+
+
+	//const svgSize = {w:zvgZoom2.style.width,h:zvgZoom2.style.height};
+	const svgSize2 = {w:"1920",h:"1080"};
+	//console.log("Initial svgSize2: "+String(svgSize2.w)+" "+String(svgSize2.h));
+	var isPanning2 = false;
+	var startPoint2 = {x:0,y:0};
+	var endPoint2 = {x:0,y:0};;
+	var scale2 = 1;
+
+	svgContainer2.onmousewheel = function(e) {
+	e.preventDefault();
+	var w = viewBox2.w;
+	var h = viewBox2.h;
+	var mx = e.offsetX;//mouse x  
+	var my = e.offsetY;    
+	var dw = -w*Math.sign(e.deltaY)*0.05;
+	var dh = -h*Math.sign(e.deltaY)*0.05;
+	var dx = dw*mx/svgSize2.w;
+	var dy = dh*my/svgSize2.h;
+	viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w-dw,h:viewBox2.h-dh};
+	scale2 = svgSize2.w/viewBox2.w;
+	   slider.value = scale2*100;
+	   output.innerHTML = slider.value;
+	//   zoomValue.innerText = String(Math.round(scale2*100)/100);
+	var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+	zvgZoom2.setAttribute('viewBox', attr);
+	}
+
+
+	svgContainer2.onmousedown = function(e){
+	isPanning2 = true;
+	startPoint2 = {x:e.x,y:e.y};   
+	}
+
+	svgContainer2.onmousemove = function(e){
+	if (isPanning2){
+	endPoint2 = {x:e.x,y:e.y};
+	var dx = (startPoint2.x - endPoint2.x)/scale2;
+	var dy = (startPoint2.y - endPoint2.y)/scale2;
+	var movedViewBox = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};
+	var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+	zvgZoom2.setAttribute('viewBox', attr);
+	}
+	}
+
+	svgContainer2.onmouseup = function(e){
+	if (isPanning2){ 
+	endPoint2 = {x:e.x,y:e.y};
+	var dx = (startPoint2.x - endPoint2.x)/scale2;
+	var dy = (startPoint2.y - endPoint2.y)/scale2;
+	viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};   
+	var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+	zvgZoom2.setAttribute('viewBox', attr);
+	isPanning2 = false;
+	}
+	}
+
+	svgContainer2.onmouseleave = function(e){
+	isPanning2 = false;
+	}
 </script>
 
 
