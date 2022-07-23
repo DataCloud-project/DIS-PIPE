@@ -317,6 +317,7 @@ function checkRefresh()
 							</div>
 							<div class="column right">
 								<table id="eventsTable">
+							
 								</table>
 							</div>
 							<div class="column filtro">
@@ -353,7 +354,10 @@ function checkRefresh()
 								<br>
 								<br>
 								<div hidden="true" id="history_span">
-									<h5 style="text-align:center;">Filters History</h5>
+									<h4 style="text-align:center;">Filters History</h4>
+									
+									<div id="percentage_trace">Cases: 100%</div>
+									<div id="percentage_event">Events: 100%</div>
 									<hr>
 									<br>
 								</div>
@@ -895,9 +899,15 @@ function checkRefresh()
 											<label for="trace_date"> Filter date</label>
 											<br>
 										
-											<span id="define_date" style="color: grey;">Define date</span>
-											<textarea placeholder="min" disabled class="vmiddle" name="min date" id="mindate" cols="4" rows="1"></textarea>
-											<textarea placeholder="max" disabled class="vmiddle" name="max date" id="maxdate" cols="4" rows="1"></textarea>
+											<!-- <span id="define_date" style="color: grey;">Define date</span> -->
+											
+											<span class="d_date" style="color: grey; padding-right: 4px;">Min: </span>
+											<input type="datetime-local" disabled id="mindate" name="min-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
+											<br>
+											<span class="d_date" style="color: grey;">Max:</span>
+											<input type="datetime-local" disabled id="maxdate" name="max-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
+											<!-- <textarea placeholder="min" disabled class="vmiddle" name="min date" id="mindate" cols="4" rows="1"></textarea>
+											<textarea placeholder="max" disabled class="vmiddle" name="max date" id="maxdate" cols="4" rows="1"></textarea> -->
 										
 
 										</div>
@@ -909,7 +919,7 @@ function checkRefresh()
 										<div class="column-col center2-col">
 											<span>Log detail</span><br>
 											<br>
-											<textarea class="vmiddle" style="width:100%;" name="log_detail" id="log_detail" cols="10" rows="15" >Detail 1: &#13;&#10;Detail 2: &#13;&#10;Detail 3: &#13;&#10;Detail 4: &#13;&#10;Detail 5: &#13;&#10;Detail 6: &#13;&#10;Detail 7: </textarea>
+											<div class="vmiddle" style="width:100%; background-color: white;" name="log_detail" id="log_detail" cols="10" rows="15" ></div>
 											<br>
 											<br>
 											<!-- <span style="visibility: hidden;" >Pnml detail</span><br>
@@ -1167,6 +1177,13 @@ function checkRefresh()
 	var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
 	var json, ul1, ul2, allCases, allEvents, maxDate, minDate;
 	var selected = "variant1";
+
+	var total_trace_number=0
+	var total_event_number=0
+	var max_event_length=0
+	var min_event_length=Number.MAX_SAFE_INTEGER
+
+
 
 	initialRequest();
 

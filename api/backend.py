@@ -2108,7 +2108,15 @@ def conformanceChecking():
 
     from pm4py.objects.conversion.dfg import converter as dfg_mining
     # net, im, fm = dfg_mining.apply(dfg_conf)
-    net, im, fm = alpha_miner.apply(log)
+    parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
+    from pm4py.objects.conversion.log import converter as log_converter
+    static_event_stream = log_converter.apply(log, variant=log_converter.Variants.TO_EVENT_STREAM)
+    from pm4py.algo.discovery.inductive import algorithm as inductive_miner
+    tree = inductive_miner.apply_tree(log, variant=inductive_miner.Variants.IMf)
+    from pm4py.objects.conversion.process_tree import converter as pt_converter
+    net, im, fm = pt_converter.apply(tree)
+
+    # net, im, fm = alpha_miner.apply(log)
 
     gviz = pn_visualizer.apply(net, im, fm)
     # pn_visualizer.view(gviz)

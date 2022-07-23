@@ -15,6 +15,7 @@ body{
   /*align-items: center;*/
   /*justify-content: center;*/
   background: #dad3f8;
+  overflow-x: hidden;
 }
 
 ::selection{
@@ -562,7 +563,7 @@ width: 100%;
 }
 /* Create three unequal columns that floats next to each other */
 .column {
-  
+  padding: 8px;
   /* padding: 10px; */
 }
 .column-col {
@@ -601,7 +602,7 @@ width: 100%;
 .left {
   float: left;
   width: 12%;
-  padding: 10px;
+  /* padding: 8px; */
   /* border-style: solid */
 
 }
@@ -615,10 +616,14 @@ width: 100%;
 .middle {
   float: left;
   width: 12%;
-  padding: 10px;
+  
   /* border-style: solid */
   /* height: 100%; */
   
+}
+
+.az{
+  color: rgb(38, 38, 38);
 }
 
 #case-ul{
@@ -638,7 +643,10 @@ width: 100%;
   float: left;
   /* padding-right: 10px; */
   white-space: nowrap;
-  padding: 10px;
+  /* padding: 10px; */
+
+  padding-right: 10px;
+  
   /* padding: 10px; */
   /* border-style: solid */
   
@@ -647,7 +655,8 @@ width: 100%;
 .filtro {
   width: 21%;
   float:right;
-  padding: 10px;
+  /* padding: 8px; */
+  white-space: nowrap;
   /* border-style: solid */
 
 }
@@ -835,7 +844,8 @@ button{
   display: inline-block;
   /**/
   width: 300px;
-  background-color: #555;
+  background-color: #cfa8d5;/*#dad3f8;*/
+  border: 3px solid #6d50e2; /*#7a4791;*/
   color: #fff;
   text-align: center;
   border-radius: 6px;

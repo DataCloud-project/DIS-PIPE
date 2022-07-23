@@ -1,6 +1,6 @@
 var variantsInfo;
 var allVariants;
-var dates = [];
+
 
 function swipeRemoveRequest() {
 	var oReq = new XMLHttpRequest();
@@ -10,6 +10,7 @@ function swipeRemoveRequest() {
 }
 
 function swipeRemoveListener () {
+	var dates = [];
 	var response=this.responseText;
 	var arrayResponse=response.split("£")
 	document.getElementById("digraphF").innerHTML = arrayResponse[0];
@@ -29,12 +30,61 @@ function swipeRemoveListener () {
   
 	// console.log(variantsInfo)
 	json = JSON.parse(variantsInfo);
-	//console.log(json);
+	// console.log("Total response log: "+json);
 
 	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
+	// console.log("Total variants: " +String(allVariants.length));
 	//allVariants.lenght = Number of variants
 	//Object.values(allVariants) = array with Variants ID
+
+	var partial_trace_number=0
+	var partial_event_number=0
+	var partial_max_event_length=0
+	var partial_min_event_length=Number.MAX_SAFE_INTEGER
+
+	for(var i=0; i<allVariants.length; i++){
+		console.log(allVariants[i])
+		partial_trace_number=partial_trace_number+json[allVariants[i]].length
+
+		for(var j=0; j<json[allVariants[i]].length; j++){
+			var chiave=Object.keys(json[allVariants[i]][j])
+			// console.log(chiave)
+			// console.log(json[allVariants[i]][j][chiave].length)
+			partial_event_number=partial_event_number+json[allVariants[i]][j][chiave].length
+			
+			if(partial_max_event_length<json[allVariants[i]][j][chiave].length){
+				partial_max_event_length=json[allVariants[i]][j][chiave].length
+			}
+
+			if(partial_min_event_length>json[allVariants[i]][j][chiave].length){
+				partial_min_event_length=json[allVariants[i]][j][chiave].length
+			}
+		}
+	}
+
+	var partial_avarage_trace_length=partial_event_number/partial_trace_number;
+	
+	$("#log_detail").text("");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of traces: "+"<span style='color:blue;'>"+partial_trace_number +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of events: "+"<span style='color:blue;'>"+partial_event_number +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Avarage trace length: "+"<span style='color:blue;'>"+partial_avarage_trace_length.toFixed(2) +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Max trace length: "+"<span style='color:blue;'>"+partial_max_event_length+"</span>"+"</div> <br>");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Min trace length: "+"<span style='color:blue;'>"+partial_min_event_length+"</span>"+"</div> <br>");
+	// $("#log_detail").append("Number of activities involved: "+"&#13;&#10;" +"&#13;&#10;");
+	
+	// console.log("number of trace: "+partial_trace_number)
+	// console.log("number of event: "+partial_event_number)
+	// console.log("max event: "+partial_max_event_length)
+	// console.log("min event: "+partial_min_event_length)
+
+	
+	var percentage__trace=partial_trace_number*100/total_trace_number
+	// console.log(percentage__trace)
+	$("#percentage_trace").text("Cases: "+percentage__trace.toFixed(2)+"%")
+	var percentage__event=partial_event_number*100/total_event_number
+	// console.log(percentage__event)
+	$("#percentage_event").text("Event: "+percentage__event.toFixed(2)+"%")
+
 
 	ul1 = document.getElementById("variants-ul");
 	ul2 = document.getElementById("case-ul");
@@ -78,10 +128,15 @@ function swipeRemoveListener () {
 	}
 	
 	
-	maxDate=new Date(Math.max.apply(null,dates));
-	minDate=new Date(Math.min.apply(null,dates));
+	maxDate = new Date(Math.max.apply(null,dates));
+	minDate = new Date(Math.min.apply(null,dates));
 	maxDate = maxDate.toISOString().split(".")[0];
 	minDate = minDate.toISOString().split(".")[0];
+
+
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Minimun date: "+"<br> <span style='color:blue;'>"+minDate.replace("T", " ")+"</span>"+"</div> <br>");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Maximun date: "+"<br> <span style='color:blue;'>"+maxDate.replace("T", " ")+"</span>"+"</div>");
+	
 	
 }
 
@@ -94,6 +149,7 @@ function initialRequest() {
 }
 
 function initialListener () {
+	var dates = [];
 	var response=this.responseText;
 	var arrayResponse=response.split("£")
 	document.getElementById("digraphF").innerHTML = arrayResponse[0];
@@ -119,10 +175,56 @@ function initialListener () {
   
 	// console.log(variantsInfo)
 	json = JSON.parse(variantsInfo);
-	//console.log(json);
+	// console.log("Total response log: "+variantsInfo.length);
 
 	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
+	// console.log("Total variants: " +String(allVariants.length));
+	// console.log("tutte varianti: "+allVariants)
+
+	total_trace_number=0
+	total_event_number=0
+	max_event_length=0
+	min_event_length=Number.MAX_SAFE_INTEGER
+
+	for(var i=0; i<allVariants.length; i++){
+		// console.log(allVariants[i])
+		total_trace_number=total_trace_number+json[allVariants[i]].length
+
+		for(var j=0; j<json[allVariants[i]].length; j++){
+			var chiave=Object.keys(json[allVariants[i]][j])
+			// console.log(chiave)
+			// console.log(json[allVariants[i]][j][chiave].length)
+			total_event_number=total_event_number+json[allVariants[i]][j][chiave].length
+			
+			if(max_event_length<json[allVariants[i]][j][chiave].length){
+				max_event_length=json[allVariants[i]][j][chiave].length
+			}
+
+			if(min_event_length>json[allVariants[i]][j][chiave].length){
+				min_event_length=json[allVariants[i]][j][chiave].length
+			}
+		}
+	}
+	avarage_trace_length=total_event_number/total_trace_number;
+	
+	// $("#log_detail").val("");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of traces: "+"<span style='color:blue;'>"+total_trace_number +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of events: "+"<span style='color:blue;'>"+total_event_number +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Avarage trace length: "+"<span style='color:blue;'>"+avarage_trace_length.toFixed(2) +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Max trace length: "+"<span style='color:blue;'>"+max_event_length+"</span>"+"</div> <br>");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Min trace length: "+"<span style='color:blue;'>"+min_event_length+"</span>"+"</div> <br>");
+	// $("#log_detail").append("Number of activities involved: "+"&#13;&#10;" +"&#13;&#10;");
+	// $('#log_detail').prop('readonly', true);
+
+
+	// console.log("number of trace: "+total_trace_number)
+	// console.log("number of event: "+total_event_number)
+	// console.log("max event: "+max_event_length)
+	// console.log("min event: "+min_event_length)
+
+	// console.log("variant 1: " +(json[2].length));
+	// console.log("variant 2: " +(json[1]).length);
+	// console.log((json[1][0]['190'].length));
 	//allVariants.lenght = Number of variants
 	//Object.values(allVariants) = array with Variants ID
 
@@ -172,6 +274,12 @@ function initialListener () {
 	minDate=new Date(Math.min.apply(null,dates));
 	maxDate = maxDate.toISOString().split(".")[0];
 	minDate = minDate.toISOString().split(".")[0];
+
+	// console.log("max date: "+maxDate)
+	// console.log("min date: "+ minDate)
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Minimun date: "+"<br> <span style='color:blue;'>"+minDate.replace("T", " ")+"</span>"+"</div> <br>");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Maximun date: "+"<br> <span style='color:blue;'>"+maxDate.replace("T", " ")+"</span>"+"</div>");
+	// $('#log_detail').prop('readonly', true);
 
 	//getMap(false);
 }
@@ -235,7 +343,7 @@ function perfRequest() {
 
 
 function reqListener3 () {
-   
+	var dates = [];
 	var response = this.responseText;
 	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
 	
@@ -251,10 +359,59 @@ function reqListener3 () {
   
 	// console.log(variantsInfo)
 	json = JSON.parse(variantsInfo);
-	//console.log(json);
+	// console.log("Total response log: "+json.length);
 
 	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
+
+	var partial_trace_number=0
+	var partial_event_number=0
+	var partial_max_event_length=0
+	var partial_min_event_length=Number.MAX_SAFE_INTEGER
+
+	for(var i=0; i<allVariants.length; i++){
+		// console.log(allVariants[i])
+		partial_trace_number=partial_trace_number+json[allVariants[i]].length
+
+		for(var j=0; j<json[allVariants[i]].length; j++){
+			var chiave=Object.keys(json[allVariants[i]][j])
+			// console.log(chiave)
+			// console.log(json[allVariants[i]][j][chiave].length)
+			partial_event_number=partial_event_number+json[allVariants[i]][j][chiave].length
+			
+			if(partial_max_event_length<json[allVariants[i]][j][chiave].length){
+				partial_max_event_length=json[allVariants[i]][j][chiave].length
+			}
+
+			if(partial_min_event_length>json[allVariants[i]][j][chiave].length){
+				partial_min_event_length=json[allVariants[i]][j][chiave].length
+			}
+		}
+	}
+
+	var partial_avarage_trace_length=partial_event_number/partial_trace_number;
+	
+	$("#log_detail").text("");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of traces: "+"<span style='color:blue;'>"+partial_trace_number +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of events: "+"<span style='color:blue;'>"+partial_event_number +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Avarage trace length: "+"<span style='color:blue;'>"+partial_avarage_trace_length.toFixed(2) +"</span>"+"</div> <br> ");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Max trace length: "+"<span style='color:blue;'>"+partial_max_event_length+"</span>"+"</div> <br>");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Min trace length: "+"<span style='color:blue;'>"+partial_min_event_length+"</span>"+"</div> <br>");
+	
+	// $("#log_detail").append("Number of activities involved: "+"&#13;&#10;" +"&#13;&#10;");
+	
+	// console.log("number of trace: "+partial_trace_number)
+	// console.log("number of event: "+partial_event_number)
+	// console.log("max event: "+partial_max_event_length)
+	// console.log("min event: "+partial_min_event_length)
+
+	
+	var percentage__trace=partial_trace_number*100/total_trace_number
+	// console.log(percentage__trace)
+	$("#percentage_trace").text("Cases: "+percentage__trace.toFixed(2)+"%")
+	var percentage__event=partial_event_number*100/total_event_number
+	// console.log(percentage__event)
+	$("#percentage_event").text("Event: "+percentage__event.toFixed(2)+"%")
+	// console.log("Total variants: " +String(allVariants.length));
 	//allVariants.lenght = Number of variants
 	//Object.values(allVariants) = array with Variants ID
 
@@ -304,6 +461,10 @@ function reqListener3 () {
 	minDate=new Date(Math.min.apply(null,dates));
 	maxDate = maxDate.toISOString().split(".")[0];
 	minDate = minDate.toISOString().split(".")[0];
+
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Minimun date: "+"<br> <span style='color:blue;'>"+minDate.replace("T", " ")+"</span>"+"</div> <br>");
+	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Maximun date: "+"<br> <span style='color:blue;'>"+maxDate.replace("T", " ")+"</span>"+"</div>");
+	
   
   //getMap(false);
 }

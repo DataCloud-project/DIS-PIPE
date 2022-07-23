@@ -445,7 +445,7 @@ function getMap(bool) {
                 if ((bool_switch) == true){
                     
                     if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                        popup.innerHTML = "Selected values duration"+"<br /> <br />"
+                        popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+" <br />"
                                 +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -453,7 +453,7 @@ function getMap(bool) {
                                 +"Max duration: " +  "<br />"+secondsToHms($total_max) 
 
                     }else if(Object.keys(selected_nodes).length>0){
-                        popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($resultduration_mean) + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($resultduration_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($resultduration_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($resultduration_total) + "<br /> <br />"  
                                 +"Min duration: " +  "<br />"+secondsToHms($resultduration_min) + "<br /> <br />"  
@@ -461,7 +461,7 @@ function getMap(bool) {
                     }
 
                 }else if(Object.keys(selected_nodes).length>0){
-                    popup.innerHTML ="Absolute frequency: "+  "<br />" + $resultfrequency_absolute + "<br /> <br />" 
+                    popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" + $resultfrequency_absolute + "<br /> <br />" 
                                 +"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
                                 +"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
                                 
@@ -586,7 +586,7 @@ function getMap(bool) {
                 var bool_switch = document.getElementById("tabPerf").checked;
                 if ((bool_switch) == true){
                     if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                        popup.innerHTML = "Selected values duration"+"<br /> <br />"
+                        popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+" <br />"
                                 +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -595,7 +595,7 @@ function getMap(bool) {
     
 
                     }else if(Object.keys(selected_nodes).length>0 || Object.keys(selected_edges).length>0){
-                        popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
                                 +"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
@@ -604,7 +604,7 @@ function getMap(bool) {
                     }
                     
                 }else if(Object.keys(selected_nodes).length>0){
-                    popup.innerHTML ="Absolute frequency: "+  "<br />" +$resultfrequency_absolute + "<br /> <br />" 
+                    popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" +$resultfrequency_absolute + "<br /> <br />" 
                                 +"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
                                 +"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
                                 
@@ -758,7 +758,7 @@ function getMap(bool) {
                     if ((bool_switch) == true){
                         
                         if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                            popup.innerHTML = "Selected values duration"+"<br /> <br />"
+                            popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+" <br />"
                                     +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -766,7 +766,7 @@ function getMap(bool) {
                                     +"Max duration: " +  "<br />"+secondsToHms($total_max) 
 
                         }else if(Object.keys(selected_edges).length>0){
-                            popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($resultduration_edge_mean) + "<br /> <br />" 
+                            popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($resultduration_edge_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($resultduration_edge_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($resultduration_edge_total) + "<br /> <br />"  
                                     +"Min duration: " +  "<br />"+secondsToHms($resultduration_edge_min) + "<br /> <br />"  
@@ -775,7 +775,7 @@ function getMap(bool) {
 
                     }else if(Object.keys(selected_edges).length>0){ //
                         
-                        popup.innerHTML ="Absolute frequency: "+  "<br />" + $resultfrequency_edge_absolute + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" + $resultfrequency_edge_absolute + "<br /> <br />" 
                                     +"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
                                     +"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
                                     
@@ -938,7 +938,7 @@ function getMap(bool) {
                     var bool_switch = document.getElementById("tabPerf").checked;
                     if ((bool_switch) == true){
                         if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                            popup.innerHTML = "Selected values duration"+"<br /> <br />"
+                            popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+"<br />"
                                     +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -947,7 +947,7 @@ function getMap(bool) {
         
 
                         }else if(Object.keys(selected_edges).length>0 || Object.keys(selected_nodes).length>0){
-                            popup.innerHTML ="Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+                            popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
                                     +"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
@@ -956,7 +956,7 @@ function getMap(bool) {
                         }
                         
                     }else if(Object.keys(selected_edges).length>0){ //
-                        popup.innerHTML ="Absolute frequency: "+  "<br />" +$resultfrequency_edge_absolute + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" +$resultfrequency_edge_absolute + "<br /> <br />" 
                                     +"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
                                     +"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
                                                 }

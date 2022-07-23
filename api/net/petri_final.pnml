@@ -2,107 +2,132 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
     <page id="n0">
-      <place id="({'decide'}, {'reject request', 'reinitiate request', 'pay compensation'})">
+      <place id="p_4">
         <name>
-          <text>({'decide'}, {'reject request', 'reinitiate request', 'pay compensation'})</text>
+          <text>p_4</text>
         </name>
       </place>
-      <place id="({'examine thoroughly', 'examine casually'}, {'decide'})">
+      <place id="p_10">
         <name>
-          <text>({'examine thoroughly', 'examine casually'}, {'decide'})</text>
+          <text>p_10</text>
         </name>
       </place>
-      <place id="start">
+      <place id="source">
         <name>
-          <text>start</text>
+          <text>source</text>
         </name>
         <initialMarking>
           <text>1</text>
         </initialMarking>
       </place>
-      <place id="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})">
+      <place id="p_5">
         <name>
-          <text>({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})</text>
+          <text>p_5</text>
         </name>
       </place>
-      <place id="({'check ticket'}, {'decide'})">
+      <place id="sink">
         <name>
-          <text>({'check ticket'}, {'decide'})</text>
+          <text>sink</text>
         </name>
       </place>
-      <place id="end">
+      <place id="p_6">
         <name>
-          <text>end</text>
+          <text>p_6</text>
         </name>
       </place>
-      <place id="({'register request', 'reinitiate request'}, {'check ticket'})">
+      <place id="p_8">
         <name>
-          <text>({'register request', 'reinitiate request'}, {'check ticket'})</text>
+          <text>p_8</text>
         </name>
       </place>
-      <transition id="reject request">
+      <place id="p_9">
         <name>
-          <text>reject request</text>
+          <text>p_9</text>
         </name>
-      </transition>
-      <transition id="register request">
+      </place>
+      <place id="p_11">
+        <name>
+          <text>p_11</text>
+        </name>
+      </place>
+      <transition id="f6727062-371b-4320-8993-38da8ce1bfe4">
         <name>
           <text>register request</text>
         </name>
       </transition>
-      <transition id="check ticket">
+      <transition id="6b425370-b785-40b6-ac0c-ac4e1e15c10e">
         <name>
           <text>check ticket</text>
         </name>
       </transition>
-      <transition id="examine casually">
+      <transition id="e6f2ff18-aa47-4fce-a043-17f9f47e7b2b">
         <name>
           <text>examine casually</text>
         </name>
       </transition>
-      <transition id="reinitiate request">
+      <transition id="627a315a-a80d-4440-b639-e0f7db51f698">
         <name>
-          <text>reinitiate request</text>
+          <text>reject request</text>
         </name>
       </transition>
-      <transition id="pay compensation">
+      <transition id="25a46f44-94d5-42b7-ab77-59f51e76c1cf">
         <name>
           <text>pay compensation</text>
         </name>
       </transition>
-      <transition id="examine thoroughly">
+      <transition id="tauSplit_3">
+        <name>
+          <text>tauSplit_3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="03a8a9ee-80f9-426b-b50b-11a361cf0584"/>
+      </transition>
+      <transition id="be4cb341-bffa-4b8d-bdc5-d3b0ace843fc">
         <name>
           <text>examine thoroughly</text>
         </name>
       </transition>
-      <transition id="decide">
+      <transition id="ae11c364-8a2d-4c3a-8545-9250bc513f49">
         <name>
           <text>decide</text>
         </name>
       </transition>
-      <arc id="2210563624720" source="({'decide'}, {'reject request', 'reinitiate request', 'pay compensation'})" target="reinitiate request"/>
-      <arc id="2210565341968" source="({'examine thoroughly', 'examine casually'}, {'decide'})" target="decide"/>
-      <arc id="2210565970576" source="reinitiate request" target="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})"/>
-      <arc id="2210565970960" source="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})" target="examine casually"/>
-      <arc id="2210563624864" source="register request" target="({'register request', 'reinitiate request'}, {'check ticket'})"/>
-      <arc id="2210565968944" source="start" target="register request"/>
-      <arc id="2210565970096" source="({'check ticket'}, {'decide'})" target="decide"/>
-      <arc id="2210565969328" source="reject request" target="end"/>
-      <arc id="2210563624240" source="reinitiate request" target="({'register request', 'reinitiate request'}, {'check ticket'})"/>
-      <arc id="2210565344704" source="examine casually" target="({'examine thoroughly', 'examine casually'}, {'decide'})"/>
-      <arc id="2210563624528" source="({'register request', 'reinitiate request'}, {'check ticket'})" target="check ticket"/>
-      <arc id="2210565345232" source="examine thoroughly" target="({'examine thoroughly', 'examine casually'}, {'decide'})"/>
-      <arc id="2210565970384" source="register request" target="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})"/>
-      <arc id="2210565970768" source="({'register request', 'reinitiate request'}, {'examine thoroughly', 'examine casually'})" target="examine thoroughly"/>
-      <arc id="2210563624288" source="({'decide'}, {'reject request', 'reinitiate request', 'pay compensation'})" target="reject request"/>
-      <arc id="2210563623904" source="({'decide'}, {'reject request', 'reinitiate request', 'pay compensation'})" target="pay compensation"/>
-      <arc id="2210565969904" source="check ticket" target="({'check ticket'}, {'decide'})"/>
-      <arc id="2210565969520" source="pay compensation" target="end"/>
-      <arc id="2210563623280" source="decide" target="({'decide'}, {'reject request', 'reinitiate request', 'pay compensation'})"/>
+      <transition id="406e61f2-9212-41d7-a38b-b211f889a61a">
+        <name>
+          <text>reinitiate request</text>
+        </name>
+      </transition>
+      <transition id="skip_5">
+        <name>
+          <text>skip_5</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="1bbbba5b-bcc6-46c3-8f24-1a4bb4843fef"/>
+      </transition>
+      <arc id="2103549250816" source="25a46f44-94d5-42b7-ab77-59f51e76c1cf" target="sink"/>
+      <arc id="2103549249424" source="ae11c364-8a2d-4c3a-8545-9250bc513f49" target="p_6"/>
+      <arc id="2103548247824" source="source" target="f6727062-371b-4320-8993-38da8ce1bfe4"/>
+      <arc id="2103549249040" source="p_10" target="e6f2ff18-aa47-4fce-a043-17f9f47e7b2b"/>
+      <arc id="2103549248032" source="p_8" target="6b425370-b785-40b6-ac0c-ac4e1e15c10e"/>
+      <arc id="2103549248416" source="tauSplit_3" target="p_10"/>
+      <arc id="2103549248944" source="be4cb341-bffa-4b8d-bdc5-d3b0ace843fc" target="p_11"/>
+      <arc id="2103549250096" source="skip_5" target="p_4"/>
+      <arc id="2103549250480" source="406e61f2-9212-41d7-a38b-b211f889a61a" target="p_5"/>
+      <arc id="2103549251008" source="p_9" target="ae11c364-8a2d-4c3a-8545-9250bc513f49"/>
+      <arc id="2103549250624" source="p_4" target="25a46f44-94d5-42b7-ab77-59f51e76c1cf"/>
+      <arc id="2103549247696" source="tauSplit_3" target="p_8"/>
+      <arc id="2103549249232" source="e6f2ff18-aa47-4fce-a043-17f9f47e7b2b" target="p_11"/>
+      <arc id="2103549249616" source="p_6" target="406e61f2-9212-41d7-a38b-b211f889a61a"/>
+      <arc id="2103549250000" source="p_6" target="skip_5"/>
+      <arc id="2103549250384" source="p_4" target="627a315a-a80d-4440-b639-e0f7db51f698"/>
+      <arc id="2103549248224" source="6b425370-b785-40b6-ac0c-ac4e1e15c10e" target="p_9"/>
+      <arc id="2103549250528" source="627a315a-a80d-4440-b639-e0f7db51f698" target="sink"/>
+      <arc id="2103549250912" source="f6727062-371b-4320-8993-38da8ce1bfe4" target="p_5"/>
+      <arc id="2103549272560" source="p_5" target="tauSplit_3"/>
+      <arc id="2103549248752" source="p_10" target="be4cb341-bffa-4b8d-bdc5-d3b0ace843fc"/>
+      <arc id="2103552384112" source="p_11" target="ae11c364-8a2d-4c3a-8545-9250bc513f49"/>
     </page>
     <finalmarkings>
       <marking>
-        <place idref="end">
+        <place idref="sink">
           <text>1</text>
         </place>
       </marking>

@@ -504,6 +504,7 @@ function applyFilter() {
         $('<span>&zwnj;</span>').appendTo(element);
         $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
         $('<div> &zwnj; </div>').appendTo(element);
+        $('#'+idvalue).prop('title', start_tf +  "\n"+ end_tf);
 
 
     }
@@ -521,6 +522,7 @@ function applyFilter() {
             $('<span>&zwnj;</span>').appendTo(element);
             $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
             $('<div> &zwnj; </div>').appendTo(element);
+            $('#'+idvalue).prop('title', min_sec +  "\n"+ max_sec);
 
         }else if(pf_selected=="eventsNumber"){
         
@@ -536,6 +538,7 @@ function applyFilter() {
             $('<span>&zwnj;</span>').appendTo(element);
             $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
             $('<div> &zwnj; </div>').appendTo(element);
+            $('#'+idvalue).prop('title', min +  "\n"+ max);
 
         }
         
@@ -553,6 +556,8 @@ function applyFilter() {
         $('<span>&zwnj;</span>').appendTo(element);
         $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
         $('<div> &zwnj; </div>').appendTo(element);
+        $('#'+idvalue).prop('title', listToFilter);
+        
         
     }
     indice=indice+1;
@@ -595,7 +600,9 @@ function filterSwipeUp(id){
 		history_crono[indice_up]=temp
 		// console.log(history_crono)
 
-		
+		console.log(id)
+        console.log(indice_up)
+
 		var v1 = $('#valore'+String(id)).html(),
 			v2 = $('#valore'+(indice_up)).html();
 	
@@ -627,6 +634,7 @@ function filterSwipeUp(id){
 							
 		$.each(classList_title, function(index, item) {
 			$(this).value=String(id)
+            console.log(String(id))
 			var testo=$(this).html()
 			var newtext= String(id)+") "+testo.split(")")[1].trim()
 			$(this).html(newtext)
@@ -637,11 +645,22 @@ function filterSwipeUp(id){
 							
 		$.each(classList_title_up, function(index, item) {
 			$(this).value=indice_up
+            console.log(indice_up)
 			var testo=$(this).html()
 			var newtext= indice_up+") "+testo.split(")")[1].trim()
 			$(this).html(newtext)
 		});
 		
+        // $('#valore'+String(id)).html(v2);
+        // $('#valore'+String(id)).html(v2);
+
+        var temp = $('#valore'+String(id)).attr('title');
+        console.log(temp)
+        var temp2 = $('#valore'+indice_up).attr('title');
+        console.log(temp2)
+
+        $('#valore'+indice_up).attr('title',temp);
+        $('#valore'+String(id)).attr('title',temp2);
 		/* check to redesign start part	*/
 		// freqRequest();
 		// perfRequest();
@@ -722,6 +741,14 @@ function filterSwipeDown(id){
 			
 		});
 
+
+        var temp = $('#valore'+String(id)).attr('title');
+        console.log(temp)
+        var temp2 = $('#valore'+indice_up).attr('title');
+        console.log(temp2)
+
+        $('#valore'+indice_up).attr('title',temp);
+        $('#valore'+String(id)).attr('title',temp2);
 		/* check to redesign start part	*/
 		// freqRequest();
 		// perfRequest();

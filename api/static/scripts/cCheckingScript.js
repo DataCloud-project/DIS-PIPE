@@ -6,12 +6,18 @@ var inizio=0
 var tr_name=""
 var log_name=""
 
+function textareaInsert(){
+    
+}
+
 function backDivForm(){
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "block";
     document.getElementById("formConformanceChecking2").style.display = "none";
     document.getElementById("map2-content").style.display = "none";
 }
 function backPrecDiv(){
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
     document.getElementById("formConformanceChecking2").style.display = "block";
     document.getElementById("map2-content").style.display = "none";
@@ -20,12 +26,14 @@ function backPrecDiv(){
 }
 
 function nextDivForm(){
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
     document.getElementById("formConformanceChecking2").style.display = "block";
     document.getElementById("map2-content").style.display = "none";
 }
 
 function backToPersonalize(){
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
     document.getElementById("formConformanceChecking2").style.display = "block";
     document.getElementById("map2-content").style.display = "none";
@@ -133,6 +141,7 @@ function addTransitionName(){
 }
 
 function showResultonDFG(){
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
     document.getElementById("formConformanceChecking2").style.display = "none";
     document.getElementById("map2-content").style.display = "block";
@@ -186,6 +195,8 @@ function showResultonDFG(){
       // 	console.log("edge");
     // };
     
+    var color_node_highlight={}
+
     var classList = prova3.find('.node');
     // console.log(classList)
                 
@@ -193,6 +204,21 @@ function showResultonDFG(){
         var node_id=item.id
         // console.log(node_id)
         item.id=node_id+"_"
+
+        $("#"+item.id).find("polygon").attr('stroke-width',4)
+        var node_number = item.id
+        var node_number = node_number.replace("node","");
+        // console.log(node_number)
+        var node_number= node_number.replace("_","");
+
+        if(parseInt(node_number)%2==0){
+            $("#"+item.id).find("polygon").attr('stroke',"green")
+            color_node_highlight[item.id]="green"
+        }else{
+            $("#"+item.id).find("polygon").attr('stroke',"red")
+            color_node_highlight[item.id]="red"
+        }
+        // console.log(node_number)
         // console.log(item.id)
         $('#'+item.id).click(function() {
             // alert('ho ho ho1');
@@ -200,16 +226,50 @@ function showResultonDFG(){
             $temp= ($("#"+item.id).find("polygon").attr('stroke'))
             $check_node=($("#"+item.id).find("polygon")).length
 
-            if($temp=="#000000" && $check_node!=0){
-                $("#"+item.id).find("polygon").attr('stroke', color_highlight);
+            if(($temp=="#000000" || $temp=="red" || $temp=="green") && $check_node!=0){
+
+                
+
+                // for (const element in Object.keys(color_node_highlight)) {
+                //     $("#"+element).find("polygon").attr('stroke', color_node_highlight[element]);
+                //     console.log(element)
+                // }
+
+                for (var i=0;i<Object.keys(color_node_highlight).length;i++) {
+                    var id_node=Object.keys(color_node_highlight)[i]
+                    $("#"+id_node).find("polygon").attr('stroke', color_node_highlight[id_node]);
+                    console.log(id_node)
+                    console.log(color_node_highlight[id_node])
+                }
+
+                
+
+                // $(".node").find("polygon").attr('stroke', color_node_highlight[item.id]);
+
+                $(".node").find("text").css({"text-decoration":"revert"});
+
+                $(".edge").find("path").attr('stroke', "#000000");
+                $(".edge").find("polygon").attr('stroke', "#000000");
+                $(".edge").find("text").css({"text-decoration":"revert"});
+
+
+                if($temp=="red"){
+                    $("#"+item.id).find("polygon").attr('stroke', '#f57e07');
+                }else if($temp=="green"){
+                    $("#"+item.id).find("polygon").attr('stroke', '#23f507');
+                }
+                
                 $("#"+item.id).find("text").css({"text-decoration":"underline"});
 
-                document.getElementById("myPopup_cChecking").innerHTML="You have selected a node"
+                document.getElementById("myPopup_cChecking").innerHTML= "<i class='fa-solid fa-square-pen'></i> Detail" +"<hr> <br>"+"Move log + model: "+"<br /> <br />"+
+                                                                        "Traces where move log + model occur: " +"<br /> <br />"+
+                                                                        "Move model only (in all traces): " +"<br /> <br />"+
+                                                                        "Traces where move model only occur: "
                 $("#myPopup_cChecking").attr("class","popuptext show")
                 // console.log("you have selected a node")
 
-            }else if($temp==color_highlight && $check_node!=0){
-                $("#"+item.id).find("polygon").attr('stroke', "#000000");
+            }else if(($temp==color_highlight || $temp=='#23f507' || $temp=='#f57e07') && $check_node!=0){
+                $("#"+item.id).find("polygon").attr('stroke', color_node_highlight[item.id]);
                 $("#"+item.id).find("text").css({"text-decoration":"revert"});
                 $("#myPopup_cChecking").attr("class","popuptext")
                 // console.log("you have deselected a node")
@@ -220,6 +280,7 @@ function showResultonDFG(){
         // $("#"+node_id).attr("id","ciao")
     })
 
+    console.log(color_node_highlight)
 
     var classList = prova3.find('.edge');
     // console.log(classList)
@@ -239,6 +300,13 @@ function showResultonDFG(){
     
 
             if($temp_polygon=="#000000" && $check_edge!=0 && $titolo_1!=undefined){
+
+                $(".node").find("polygon").attr('stroke', "#000000");
+                $(".node").find("text").css({"text-decoration":"revert"});
+
+                $(".edge").find("path").attr('stroke', "#000000");
+                $(".edge").find("polygon").attr('stroke', "#000000");
+                $(".edge").find("text").css({"text-decoration":"revert"});
 
                 $("#"+item.id).find("polygon").attr('stroke', color_highlight);
                 $("#"+item.id).find("path").attr('stroke', color_highlight);
@@ -295,11 +363,13 @@ function trace_date_filter(){
     if($('#trace_date').is(":checked")){
         $('#maxdate').prop('disabled', false);
         $('#mindate').prop('disabled', false);
-        $('#define_date').css('color','black');
+        // $('#define_date').css('color','black');
+        $('.d_date').css('color','black');
     }else{
         $('#maxdate').prop('disabled', true);
         $('#mindate').prop('disabled', true);
-        $('#define_date').css('color','grey');
+        // $('#define_date').css('color','grey');
+        $('.d_date').css('color','grey');
     }
     
 }
@@ -357,7 +427,7 @@ window.onchange = function() {
 		document.getElementById("file").value = ""
 		alert("File not compatible");
 		
-		//document.getElementById("loadingMessage").style.visibility = "visible";
+		// document.getElementById("loadingMessage").style.visibility = "visible";
 		// document.getElementById("updateBtn").click();
         // document.getElementById("loadingMessage").style.visibility = "visible";
 	}else if (document.getElementById("file").files[0] != undefined) {
