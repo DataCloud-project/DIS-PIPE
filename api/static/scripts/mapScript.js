@@ -1,6 +1,6 @@
 var color_highlight='#8B008B';
 
-var nodes_id_association={}
+// var nodes_id_association={}
 
 var graphTextF;
 var graphTextP;
@@ -152,6 +152,26 @@ function exportDsl(){
 	download(dsl, pipelineName, 'txt');
 }
 
+function closePP(){
+    $("#myPopup").attr("class","popuptext")
+    $(".node").find("polygon").attr('stroke', "#000000");
+    $(".node").find("text").css({"text-decoration":"revert"});
+
+    $(".edge").find("path").attr('stroke', "#000000");
+    $(".edge").find("polygon").attr('stroke', "#000000");
+    $(".edge").find("text").css({"text-decoration":"revert"});
+
+    selected_nodes={}
+    selected_edges={}
+
+    $total_mean=0
+    $total_min=0 
+    $total_max=0 
+    $total_median=0 
+    $total_total=0
+}
+
+
 
 
 function getMap(bool) {
@@ -278,11 +298,7 @@ function getMap(bool) {
 
     var $totale = 0
     
-    var $total_mean = 0
-    var $total_median = 0
-    var $total_max = 0
-    var $total_min = 0
-    var $total_total = 0
+
 
     var $totale_edge=0
     var $make_somma=0
@@ -445,7 +461,7 @@ function getMap(bool) {
                 if ((bool_switch) == true){
                     
                     if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                        popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+" <br />"
+                        popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+" <br />"
                                 +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -453,7 +469,7 @@ function getMap(bool) {
                                 +"Max duration: " +  "<br />"+secondsToHms($total_max) 
 
                     }else if(Object.keys(selected_nodes).length>0){
-                        popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($resultduration_mean) + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($resultduration_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($resultduration_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($resultduration_total) + "<br /> <br />"  
                                 +"Min duration: " +  "<br />"+secondsToHms($resultduration_min) + "<br /> <br />"  
@@ -461,7 +477,7 @@ function getMap(bool) {
                     }
 
                 }else if(Object.keys(selected_nodes).length>0){
-                    popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" + $resultfrequency_absolute + "<br /> <br />" 
+                    popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" + $resultfrequency_absolute + "<br /> <br />" 
                                 +"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
                                 +"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
                                 
@@ -586,7 +602,7 @@ function getMap(bool) {
                 var bool_switch = document.getElementById("tabPerf").checked;
                 if ((bool_switch) == true){
                     if(Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                        popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+" <br />"
+                        popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+" <br />"
                                 +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -595,7 +611,7 @@ function getMap(bool) {
     
 
                     }else if(Object.keys(selected_nodes).length>0 || Object.keys(selected_edges).length>0){
-                        popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                 +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                 +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
                                 +"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
@@ -604,7 +620,7 @@ function getMap(bool) {
                     }
                     
                 }else if(Object.keys(selected_nodes).length>0){
-                    popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" +$resultfrequency_absolute + "<br /> <br />" 
+                    popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" +$resultfrequency_absolute + "<br /> <br />" 
                                 +"Case frequency: " +  "<br />"+ $resultfrequency_case + "<br /> <br />" 
                                 +"Max repetitions: " +  "<br />"+ $resultfrequency_max + "<br /> <br />"  
                                 
@@ -758,7 +774,7 @@ function getMap(bool) {
                     if ((bool_switch) == true){
                         
                         if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                            popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+" <br />"
+                            popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+" <br />"
                                     +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -766,7 +782,7 @@ function getMap(bool) {
                                     +"Max duration: " +  "<br />"+secondsToHms($total_max) 
 
                         }else if(Object.keys(selected_edges).length>0){
-                            popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($resultduration_edge_mean) + "<br /> <br />" 
+                            popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($resultduration_edge_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($resultduration_edge_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($resultduration_edge_total) + "<br /> <br />"  
                                     +"Min duration: " +  "<br />"+secondsToHms($resultduration_edge_min) + "<br /> <br />"  
@@ -775,7 +791,7 @@ function getMap(bool) {
 
                     }else if(Object.keys(selected_edges).length>0){ //
                         
-                        popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" + $resultfrequency_edge_absolute + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" + $resultfrequency_edge_absolute + "<br /> <br />" 
                                     +"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
                                     +"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
                                     
@@ -938,7 +954,7 @@ function getMap(bool) {
                     var bool_switch = document.getElementById("tabPerf").checked;
                     if ((bool_switch) == true){
                         if(Object.keys(selected_edges).length>1 || Object.keys(selected_nodes).length>1 || (Object.keys(selected_nodes).length>0 && Object.keys(selected_edges).length>0)){
-                            popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<hr>"+"<br />"
+                            popup.innerHTML = "<i class='fas fa-clock'></i> Selected values duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br />"
                                     +"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
@@ -947,7 +963,7 @@ function getMap(bool) {
         
 
                         }else if(Object.keys(selected_edges).length>0 || Object.keys(selected_nodes).length>0){
-                            popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
+                            popup.innerHTML ="<i class='fas fa-stopwatch'></i> Duration"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Mean duration: "+  "<br />" +secondsToHms($total_mean) + "<br /> <br />" 
                                     +"Median duration: " +  "<br />"+ secondsToHms($total_median) + "<br /> <br />" 
                                     +"Total duration: " +  "<br />"+secondsToHms($total_total) + "<br /> <br />"  
                                     +"Min duration: " +  "<br />"+secondsToHms($total_min) + "<br /> <br />"  
@@ -956,7 +972,7 @@ function getMap(bool) {
                         }
                         
                     }else if(Object.keys(selected_edges).length>0){ //
-                        popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" +$resultfrequency_edge_absolute + "<br /> <br />" 
+                        popup.innerHTML ="<i class='fa fa-signal' aria-hidden='true'></i> Frequency"+"<span class='close_pp' onclick='closePP()'>❌</span>"+"<hr>"+"<br>"+"Absolute frequency: "+  "<br />" +$resultfrequency_edge_absolute + "<br /> <br />" 
                                     +"Case frequency: " +  "<br />"+ $resultfrequency_edge_case + "<br /> <br />" 
                                     +"Max repetitions: " +  "<br />"+ $resultfrequency_edge_max + "<br /> <br />"  
                                                 }
@@ -1009,6 +1025,9 @@ function getMap(bool) {
     });
     // *****************************************************************************************************
 
+    
+
+
     var edgesNames = [];
     var popup = document.getElementById("myPopup");
     var popup_cChecking=document.getElementById("myPopup_cChecking");
@@ -1052,6 +1071,8 @@ function getMap(bool) {
             // }, false);
         }
     });
+
+    
     
     // Switch Duration**************************************************************************
     $(document).ready(function(){
@@ -1707,10 +1728,10 @@ function getMap(bool) {
     // When the user clicks, open the popup
     
         // popup.classList.toggle("show");
-        // popup.style.left = e.clientX-100+200 + "px";
-        // popup.style.top = (e.clientY-280) + "px";
-        popup.style.top= "10%"
-        popup.style.left= "47%"
+        popup.style.left = e.clientX-100+200 + "px";
+        popup.style.top = (e.clientY-280) + "px";
+        //popup.style.top= "10%"
+        //popup.style.left= "47%"
         popup.style.zIndez = "15";
         
     }	

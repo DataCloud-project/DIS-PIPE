@@ -1,0 +1,8 @@
+(movesync#registerrequest#ev1 )
+(moveinthelog#checkticket#ev2-ev3 )
+(moveinthemodel#tausplit_3 )
+(movesync#examinecasually#ev3 )
+(moveinthemodel#examinethoroughly )
+(movesync#decide#ev4 )
+(moveinthemodel#skip_5 )
+(movesync#paycompensation#ev5 )

@@ -7,6 +7,8 @@ import os
 import sys
 from jinja2 import Undefined
 import requests
+import subprocess
+
 import json
 import re
 
@@ -77,8 +79,16 @@ f.close()
 import platform
 if platform.system() == "Windows":
         log_path = 'event logs\\running-example.xes'
+        pnml_path="net\\petri_final.pnml"
+        xes_path="net\\petri_log.xes"
+        marking_path="net\\marking.txt"
+        cost_file_path="jar\\cost_file"
 if platform.system() == "Linux":
         log_path = 'event logs/running-example.xes'
+        pnml_path="net/petri_final.pnml"
+        xes_path="net/petri_log.xes"
+        marking_path="net/marking.txt"
+        cost_file_path="jar/cost_file"
 
 def home(file):
     global nomeupload 
@@ -93,6 +103,7 @@ def home(file):
     return render_template("index.html", \
         stringF = "", \
         stringP = "", \
+        traceDt = "", \
         stringDuration = "", \
         stringUsedVarible = "", \
         stringEdgeDuration = "", \
@@ -2106,6 +2117,24 @@ def conformanceChecking():
     else:
         dfg_conf = dfg
 
+    
+
+
+
+    import os
+
+    # Print the current working directory
+    working_dir=os.getcwd()
+    print("Current working directory: {0}".format(os.getcwd()))
+    os.chdir(working_dir+'/jar')
+    
+
+    # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
+    
+    # subprocess.call(['bash', './run_SYMBA_all'])
+
+    os.chdir(working_dir)
+
     from pm4py.objects.conversion.dfg import converter as dfg_mining
     # net, im, fm = dfg_mining.apply(dfg_conf)
     parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
@@ -2117,7 +2146,7 @@ def conformanceChecking():
     net, im, fm = pt_converter.apply(tree)
 
     # net, im, fm = alpha_miner.apply(log)
-
+ 
     gviz = pn_visualizer.apply(net, im, fm)
     # pn_visualizer.view(gviz)
     places = net.places
@@ -2134,16 +2163,408 @@ def conformanceChecking():
 
 
 
-    pnml_exporter.apply(net, im, "net\\petri_final.pnml", final_marking=fm)
-    with open('net\\marking.txt', 'w') as f:
+
+    pnml_exporter.apply(net, im, pnml_path, final_marking=fm)
+    with open(marking_path, 'w') as f:
         f.write(str(im))
         f.write('\n')
         f.write(str(fm))
 
     from pm4py.objects.log.exporter.xes import exporter as xes_exporter
-    xes_exporter.apply(log, 'net\\petri_log.xes')
+    xes_exporter.apply(log, xes_path)
+
+    
+
+    with open(cost_file_path, "w") as f:
+        for index in trst:
+            if(index[1].lower().replace(" ", "")=="none"):
+                f.write(index[0].lower().replace(" ", "")+" 0 0")
+            else:
+                f.write(index[1].lower().replace(" ", "")+" 1 1")    
+            f.write('\n')
+        f.close()
 
     return str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst)
+
+
+
+@app.route('/jarCalling', methods=['GET', 'POST'])
+def jarCalling():
+
+
+    minLen = str(request.args.get('minLen'))
+    # print(minLen)
+    maxLen = str(request.args.get('maxLen'))
+    # print(maxLen)
+    planner = str(request.args.get('planner'))
+    # print(planner)
+    duplicate = str(request.args.get('duplicate'))
+    # print("duplicate: "+duplicate)
+
+
+    import os
+
+    # Print the current working directory
+    working_dir=os.getcwd()
+    print("Current working directory: {0}".format(os.getcwd()))
+    os.chdir(working_dir+'/jar')
+    pnmlPath="../net/petri_final_remap.pnml"
+    xesPath="../net/petri_log.xes"
+    costPath="cost_file"
+
+    os.system("java -jar traceAligner.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate)
+    print("  \n")
+    global plans_path
+    
+    if(planner=="FD"):    
+        plans_path="./jar/fast-downward/src/plans"
+        subprocess.call(['bash', './run_FD_all'])
+    elif(planner=="SYMBA"):
+        plans_path="./jar/seq-opt-symba-2/plans"
+        subprocess.call(['bash', './run_SYMBA_all'])
+    else:
+        plans_path="./jar/fast-downward/src/plans"
+        subprocess.call(['bash', './run_FD_all'])
+
+ 
+    
+
+    os.chdir(working_dir)
+
+    return "done"
+
+
+@app.route('/costFile', methods=['POST'])
+def costFile():
+
+    #   print("update cost file")
+    costHeader=request.headers.get('Contenuto')
+    # print(costHeader)
+    costJson = json.loads(costHeader)
+
+    # for singleCost in costJson:
+        # print("singleCost: "+singleCost)
+        # print(costJson[singleCost])
+    # the result is a Python dictionary:
+    # print(y["age"])
+
+    with open(cost_file_path, "w") as f:
+        for singleCost in costJson:
+        
+            f.write(singleCost.lower().replace(" ", "")+" "+str(costJson[singleCost][0])+" "+str(costJson[singleCost][1]))    
+            f.write('\n')
+        f.close()
+
+    return "done"
+
+
+@app.route('/traceDetail', methods=['GET'])
+def traceDetail():
+
+    allTraceName=""
+
+    import glob, os
+
+    working_dir=os.getcwd()
+    print("Current working directory: {0}".format(os.getcwd()))
+
+    global plans_path
+
+    os.chdir(plans_path)
+    for fileName in glob.glob("*.txt"):
+        # print(fileName)
+        traceIndex=(fileName.replace("out","").replace(".txt",""))
+        allTraceName=allTraceName+traceIndex+"#"
+        
+    
+    allTraceName = allTraceName[:-1]
+    os.chdir(working_dir)
+    return allTraceName
+
+
+@app.route('/updateTraceDetail', methods=['GET'])
+def updateTraceDetail():
+
+    nameTrace = str(request.args.get('nameTrace'))
+    # print(nameTrace)
+
+    import os
+
+    global plans_path
+  
+
+    file_name = os.path.basename(plans_path+'/'+nameTrace)
+    with open(plans_path+'/'+nameTrace) as f:
+        trace = f.readlines()
+
+    start_index=len(trace)
+    start_string="Actual search time:"
+
+    end_index=len(trace)
+    end_string="Plan length:"
+
+    plan_cost_string="Plan cost:"
+    
+    plan_cost=""
+    plan_length=""
+    search_time=""
+
+
+    alignment=""
+    i=0
+
+    while(i<len(trace)-1):
+        # print(trace[i].strip())
+        if(start_string in trace[i].strip()):
+            # print("\ninizio: ")
+            start_index=i
+            search_time=trace[i].strip().split(" [",1)[1].replace("t=","").replace("]","")
+
+        if(end_string in trace[i+1].strip()):
+            # print("fine: \n")
+            end_index=i+1
+            plan_length=trace[i+1].strip().split("Plan length: ",1)[1].replace(".","").strip()
+
+        
+        if(plan_cost_string in trace[i+1].strip()):
+            plan_cost=trace[i+1].strip().split("Plan cost:",1)[1].strip()
+        
+        if(i>start_index and i<end_index):
+            alignment=alignment+trace[i].strip()+"\n"
+        
+        i=i+1
+
+    # print(i)
+    # print("\n ALIGNMENT \n")
+    # print(alignment)
+    # print(search_time)
+    # print(plan_length)
+    # print(plan_cost)
+
+    # print(os.path.splitext(file_name)[0])
+    # traceIndex=(os.path.splitext(file_name)[0]).replace("out","")
+    # searchAlgorithm=""
+    # nameLogFile=""
+    # print(traceIndex)
+    # print(search_time)
+    # print(plan_length)
+    # print(plan_cost)
+
+
+    
+    return alignment+"$"+search_time+"$"+plan_length+"$"+plan_cost
+
+@app.route('/generalTraceInfo', methods=['GET'])
+def generalTraceInfo():
+
+    import glob, os
+    dict_event = {}
+    dict_trace = {} 
+    temp_array = [] 
+  
+
+    dict_skip_ins ={} 
+
+    working_dir=os.getcwd()
+
+
+    os.chdir("./jar/fast-downward/src/plans")
+    for fileName in glob.glob("*.txt"):
+        # print(fileName)
+        traceIndex=(fileName.replace("out","").replace(".txt",""))
+        # print(traceIndex)
+
+        with open('./'+str(fileName)) as f:
+            trace = f.readlines()
+
+        start_index=len(trace)
+        start_string="Actual search time:"
+
+        end_index=len(trace)
+        end_string="Plan length:"
+
+        alignment=""
+        i=0
+
+        while(i<len(trace)-1):
+            # print(trace[i].strip())
+            trace_to_add=trace[i].strip()
+            if(start_string in trace_to_add):
+                # print("\ninizio: ")
+                start_index=i
+
+            if(end_string in trace[i+1].strip()):
+                # print("fine: \n")
+                end_index=i+1
+            
+            if(i>start_index and i<end_index):
+                alignment=alignment+trace_to_add+"\n"
+
+            trace_to_analyse=trace_to_add.split("#")
+
+            
+
+
+            if(trace_to_analyse[0]=="movesync"):
+                if trace_to_analyse[1].split("  ")[0].strip() not in dict_event:
+                    dict_event[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
+                    # print("this will execute")
+
+                if (trace_to_analyse[1].split("  ")[0].strip()) not in dict_trace:
+                    dict_trace[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
+                    # print("this will execute")
+
+                if  trace_to_analyse[1].split("  ")[0].strip() not in temp_array:
+                    # temp_array.append(trace_to_analyse[1].split("  ")[0].strip())
+                    dict_trace[trace_to_analyse[1].split("  ")[0].strip()][0]= dict_trace[trace_to_analyse[1].split("  ")[0].strip()][0]+1
+
+                
+                dict_event[trace_to_analyse[1].split("  ")[0].strip()][0]= dict_event[trace_to_analyse[1].split("  ")[0].strip()][0]+1
+                #print("nessuna mossa: "+trace_to_analyse[1] )
+                #print(dict_event)
+                #print(dict_trace)    
+
+
+
+            elif(trace_to_analyse[0]=="moveinthemodel"):
+                if trace_to_analyse[1].split("  ")[0].strip() not in dict_event:
+                    dict_event[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
+                    # print("this will execute")
+
+                if (trace_to_analyse[1].split("  ")[0].strip()) not in dict_trace:
+                    dict_trace[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
+                    # print("this will execute")
+
+                if  trace_to_analyse[1].split("  ")[0].strip() not in temp_array:
+                    temp_array.append(trace_to_analyse[1].split("  ")[0].strip())
+                    dict_trace[trace_to_analyse[1].split("  ")[0].strip()][1]= dict_trace[trace_to_analyse[1].split("  ")[0].strip()][1]+1
+                
+            
+                dict_event[trace_to_analyse[1].split("  ")[0].strip()][1]= dict_event[trace_to_analyse[1].split("  ")[0].strip()][1]+1
+                #print("mossa nel modello: "+trace_to_analyse[1].split("  ")[0].strip() )
+                #print(trace_to_analyse[1].split("  ")[0].strip())
+
+                if (trace_to_analyse[1].split("  ")[0].strip() not in dict_skip_ins):
+                    dict_skip_ins[trace_to_analyse[1].split("  ")[0].strip()]=[[],[]] 
+                
+                if(('Trace '+str(traceIndex)) not in dict_skip_ins[trace_to_analyse[1].split("  ")[0].strip()][1]):
+                    dict_skip_ins[trace_to_analyse[1].split("  ")[0].strip()][1].append('Trace '+str(traceIndex))
+
+            
+            elif(trace_to_analyse[0]=="moveinthelog"):
+                if trace_to_analyse[1].split("  ")[0].strip() not in dict_event:
+                    dict_event[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
+                    # print("this will execute")
+
+                if (trace_to_analyse[1].split("  ")[0].strip()) not in dict_trace:
+                    dict_trace[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
+                    # print("this will execute")
+
+                if  trace_to_analyse[1].split("  ")[0].strip() not in temp_array:
+                    temp_array.append(trace_to_analyse[1].split("  ")[0].strip())
+                    dict_trace[trace_to_analyse[1].split("  ")[0].strip()][2]= dict_trace[trace_to_analyse[1].split("  ")[0].strip()][2]+1
+
+                #print(trace_to_analyse[1].split("  ")[0].strip())
+                dict_event[trace_to_analyse[1].split("  ")[0].strip()][2]= dict_event[trace_to_analyse[1].split("  ")[0].strip()][2]+1
+                #print("mossa nel log: "+trace_to_analyse[1].split("  ")[0].strip() )
+                #print(dict_event)
+                #print(dict_trace)
+
+                if (trace_to_analyse[1].split("  ")[0].strip() not in dict_skip_ins):
+                    dict_skip_ins[trace_to_analyse[1].split("  ")[0].strip()]=[[],[]] 
+                
+                if(('Trace '+str(traceIndex)) not in dict_skip_ins[trace_to_analyse[1].split("  ")[0].strip()][0]):
+                    dict_skip_ins[trace_to_analyse[1].split("  ")[0].strip()][0].append('Trace '+str(traceIndex))
+            
+            
+            i=i+1
+        temp_array=[]
+    
+    os.chdir(working_dir)
+    print(dict_event)
+    print("-----------------------------------------------") 
+    print(dict_trace)
+    print("---------------------------------------------------##########################-")
+    print(dict_skip_ins)
+
+
+    return str(dict_event)+"#"+str(dict_trace)+"#"+str(dict_skip_ins)
+
+
+@app.route('/mapPnml', methods=['POST'])
+def mapPnml():
+    import os
+
+    costHeader=request.headers.get('Replace_content')
+    # print(costHeader)
+    replace_array=costHeader.split("#")
+    # costJson = json.loads(costHeader)
+
+    x=replace_array[0] 
+    y=replace_array[1] 
+
+    with open('./net/petri_final.pnml') as f:
+        trace = f.readlines()
+
+    response=""
+
+    for line in trace:
+        if "<text>"+x+"</text>" in line:
+            substi=line.replace(x,y)
+        else:
+            substi=line
+           # print(pro)
+        response=response+substi
+
+    # print(response)
+
+    f = open("./net/petri_final_remap.pnml", "w")
+    f.write(response)
+    f.close()
+    
+    return "prova"
+
+@app.route('/getPnmlExistence', methods=['GET'])
+def getPnmlExistence():
+    from os.path import exists
+
+    file_exists = exists("./net/petri_final_remap.pnml")
+
+    return str(file_exists)
+
+
+
+@app.route('/createRemap', methods=['POST'])
+def createRemap():
+
+    with open('./net/petri_final.pnml') as f:
+        trace = f.readlines()
+
+    response=""
+
+    for line in trace:
+        substi=line
+        # print(pro)
+        response=response+substi
+
+    f = open("./net/petri_final_remap.pnml", "w")
+    f.write(response)
+    f.close()
+
+    return "prova"
+    
+
+@app.route('/deleteRemap', methods=['POST'])
+def deleteRemap():
+
+    from os.path import exists
+    import os
+    file_exists = exists("./net/petri_final_remap.pnml")
+
+    if(file_exists):
+        os.remove("./net/petri_final_remap.pnml")    
+
+    return "prova"
 
 
 app.run(host=path_f, port=int(port_n))

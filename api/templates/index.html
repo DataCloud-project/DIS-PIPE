@@ -69,6 +69,12 @@ function checkRefresh()
 		if (document.readyState == "complete") { 
 			document.getElementById("loadingMessage").style.visibility = "hidden";	
 		}	
+		console.log("doing reload")
+		var oReq = new XMLHttpRequest();
+
+    	//oReq.addEventListener("load", jarListener);
+		oReq.open("POST", frontend+"deleteRemap", true);
+    	oReq.send()
 		// You may want to add code here special for
 		// fresh page loads
 
@@ -150,6 +156,7 @@ function checkRefresh()
 						<p id='mapTitle' style="text-align: center;">{{ nameupload }}</p>
 						<p id='median' style='display:none'>{{ median }}</p>
 						<p id='total' style='display:none'>{{ total }}</p>
+						<p id='traceDt' style='display:none'>{{ traceDt }}</p>
 						
 						<div class="slidecontainer">
 						  <input type="range" min="1" max="500" value="100" class="sliderZoom" id="myRange">
@@ -165,7 +172,9 @@ function checkRefresh()
 						<!-- First page - Map Content -->
 						<div class="mapContainer">
 						
-							<span class="popuptext" id="myPopup">Popup text...</span>
+							<span class="popuptext" id="myPopup">Popup text...
+								
+							</span>
 							
 							<!-- graph container -->
 							<div class="map-content" id="map-content">
@@ -747,6 +756,24 @@ function checkRefresh()
 					<div class="cChecking text" id="cChecking-text">
 					 	<div class="title"> Conformance Checking</div>
 
+						<span id="back_slide_conf" style="font-size: 23px;
+							color: #6d50e2; position: absolute;
+							cursor: pointer;
+							font-size: 23px;
+							top: 35px;
+							border-radius: 3px;
+							z-index: 3;
+							border: 3px #6d50e2;
+							right: 130px; visibility: hidden;" onclick="backToPersonalize()">
+						 
+							<i style="border: 3px #1e7524;" class="fa fa-chevron-left"></i>
+					 	</span>
+
+						 <input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
+						 <label for="check_conformance"> 
+							 <i class="fa fa-info" aria-hidden="true" id="btn_conformance" style="visibility: hidden;"></i>
+						 </label>
+
 						
 
 						<!-- <input type="checkbox" id="check_tabs">
@@ -772,7 +799,19 @@ function checkRefresh()
 								<div class="conformance-title">Map transitions to Event classes</div>
 								
 								<hr>
+								<br>
+								<br>
 								
+								<table id="pnml_log_table" style="border-spacing: 0 15px;">
+									<tr style="padding: 70px">
+										<th>Pnml transitions</th>
+										<th style="width: 40%;"> </th>
+										<th>Log Activities</th>
+									</tr>
+									
+								
+								</table>
+
 								
 								<div id="attribute_filter_div">
 									<!-- <div class="row">
@@ -790,39 +829,7 @@ function checkRefresh()
 									</div>		 -->
 									
 									
-									<div class="row">
-										<div class="column-col space" style=" visibility:hidden">
-										  
-										</div>
-										<div id="transition_pnml" class="column-col left-col">
-											<span class="conformance-under-title" style="text-decoration: underline">pnml transitions</span>
-											<span class="conformance-under-title">  &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj;</span>
-											
-											<br>
-											<p>&zwnj; </p>
-											
-										
-											
-											
-										</div>
-										<div class="column-col center-col" style=" visibility:hidden">
-										  
-										</div>
-										<div id="transition_log" class="column-col right-col">
-											<span class="conformance-under-title" style="text-decoration: underline">Log Activities</span><br>
-											<span class="conformance-under-title">  &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj;</span>
-											
-											
-											<br>
-											<p>&zwnj; </p>
-											
-											
-
-										</div>
-											<div class="column-col space" style=" visibility:hidden">
-										  
-										</div>
-									</div>
+									
 								
 								</div>
 							
@@ -866,8 +873,8 @@ function checkRefresh()
 											<select id="disalignment_log" onchange="changedisalignment_select()">
 												
 											</select>
-											<textarea class="vmiddle" name="move_log" id="move_log" cols="3" rows="1" onchange="changedisalignment_dictionary('log')"></textarea>
 											<textarea class="vmiddle" name="move_model" id="move_model" cols="3" rows="1" onchange="changedisalignment_dictionary('model')"></textarea>
+											<textarea class="vmiddle" name="move_log" id="move_log" cols="3" rows="1" onchange="changedisalignment_dictionary('log')"></textarea>
 											<br>
 											<br>
 											<input type="checkbox" id="discard_check" name="" value="True">
@@ -875,12 +882,12 @@ function checkRefresh()
 											<br>
 											<br>
 											<span>Planner list</span><br>
-											<input type="radio" id="Planner1" name="planner_list" value="Planner 1">
-											<label for="Planner1">Planner 1</label><br>
-											<input type="radio" id="Planner2" name="planner_list" value="Planner 2">
-											<label for="Planner2">Planner 2</label><br>
-											<input type="radio" id="Planner3" name="planner_list" value="Planner 3">
-											<label for="Planner3">Planner 3</label><br>
+											<input type="radio" id="FD" name="planner_list" value="FD">
+											<label for="FD">fast-downward</label><br>
+											<input type="radio" id="SYMBA" name="planner_list" value="SYMBA">
+											<label for="SYMBA">seq-opt-symba-2</label><br>
+											<input style="visibility: hidden;" type="radio" id="Planner3" name="planner_list" value="Planner 3">
+											<label style="visibility: hidden;" for="Planner3">Planner 3</label><br>
 											<input style="visibility: hidden;" type="radio" id="Planner4" name="planner_list" value="Planner 4">
 											<label style="visibility: hidden;" for="Planner4">Add a planner</label>
 											<br>
@@ -955,18 +962,7 @@ function checkRefresh()
 							<!-- <button type="button" style="font-size: 16px; float: right;" onclick="">cCheckingComputation</button>
 							<button type="button" style="font-size: 16px; float: right;" onclick="backPrecDiv()">Back</button> -->
 							
-							<span style="font-size: 23px;
-								color: #6d50e2; position: absolute;
-								cursor: pointer;
-								font-size: 23px;
-								top: 35px;
-								border-radius: 3px;
-								z-index: 3;
-								border: 3px #6d50e2;
-								right: 80px;" onclick="backToPersonalize()">
-								
-								<i class="fa fa-chevron-left"></i>
-							</span>
+							
 							
 							<!-- 
 							<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
@@ -974,10 +970,7 @@ function checkRefresh()
 								<i class="fa-solid fa-chevrons-left" id="btn_conformance"></i>
 							</label>  -->
 							 
-							<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
-							<label for="check_conformance"> 
-								<i class="fa fa-info" aria-hidden="true" id="btn_conformance"></i>
-							</label>
+							
 
 							<div id="mytabsConformance">
 
@@ -991,51 +984,42 @@ function checkRefresh()
 										
 
 										<span>Event log file: </span>
-										<span id="log_name" style="color: red;"> file.xes</span>
+										<span id="log_name" style="color: red;">{{ nameupload }}</span>
 										<br>
 
-										<span>Search algoritm: </span>
-										<span id="search_algoritm" style="color: blue;"> Blind A* (Cost-Optimal) </span>
-										<br>
-
-										<span>Alignment time: </span>
-										<span id="alignment_time" style="color: blue;"> 110 ms. </span>
+										<span style="display: none;">Alignment time: </span>
+										<span id="alignment_time" style="color: blue; display: none;"> 110 ms. </span>
 										<br>
 
 										<span>Alignment cost: </span>
 										<span id="alignment_cost" style="color: blue;"> 7 </span>
 										<br>
+
+										<span>Plan length: </span>
+										<span id="plan_length" style="color: blue;"> 0 </span>
+										<br>
 										<br>
 
 										<span>Trace selected: </span>
-										<select id="trace_selected" name="trace_selected">
-											<option value="0">Trace 0</option>
-											<option value="1">Trace 1</option>
-											<option value="2">Trace 2</option>
-											<option value="3">Trace 3</option>
-											<option value="4">Trace 4</option>
-											<option value="5">Trace 5</option>
-											<option value="6">Trace 6</option>
-											<option value="7">Trace 7</option>
-											<option value="8">Trace 8</option>
-											<option value="9">Trace 9</option>
+										<select id="trace_selected" name="trace_selected" onchange="updateTraceRequest()">
+
 										</select>
+										<br>
+										<br>
+										<span>Highlight trace: </span>
+										<select id="highlight_trace" name="highlight_trace" onchange="highlightTrace()">
+											<option value="yes">Yes</option>
+											<option value="no" selected>No</option>
+										</select>
+
 										<br>
 										<br>
 										
 
-										<span style="text-decoration: underline; font-size: 15px; color: green"> -- ALIGNMENT --</span><br>
-										<span> Activity 0 </span><br>
-										<span> Activity 1 </span><br>
-										<span style="color: blue;"> Activity 2 </span><span>[cost 0]</span><br>
-										<span> Activity 3 </span><br>
-										<span> Activity 4 </span><br>
-										<span style="text-decoration: line-through; color:red;"> Activity 5 </span><span>[cost 1]</span><br>
-										<span> Activity 6 </span><br>
-										<span> Activity 7 </span><br>
-										<span style="color: blue;"> Activity 8 </span><span>[cost 1]</span><br>
-										<span> Activity 9 </span><br>
-										
+										<div id="aligner_space"> 
+											<span style="text-decoration: underline; font-size: 15px; color: green">-- ALIGNMENT --</span><br>
+											
+										</div>
 										<br>
 
 										
@@ -1074,6 +1058,7 @@ function checkRefresh()
 
 <!--(script with getMap())-->
 <script>
+	var nodes_id_association={}
 	var frontend = document.getElementById("path_frontend").innerHTML;
 	// console.log(frontend)
 

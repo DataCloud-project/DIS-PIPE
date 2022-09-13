@@ -148,6 +148,8 @@ function initialRequest() {
 	oReq.send();
 }
 
+
+
 function initialListener () {
 	var dates = [];
 	var response=this.responseText;

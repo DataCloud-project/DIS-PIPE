@@ -1,0 +1,59 @@
+This is a nonunit task.
+reading input... [t=0s]
+Simplifying transitions... done!
+done reading input! [t=0s]
+building causal graph...done! [t=0s]
+packing state variables...Variables: 11
+Bytes per state: 4
+done! [t=0s]
+done initalizing global data [t=0s]
+Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+Initializing blind search heuristic...
+f = 0 [1 evaluated, 0 expanded, t=0s, 3756 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3756 KB]
+f = 1 [11 evaluated, 4 expanded, t=0s, 3756 KB]
+f = 2 [26 evaluated, 14 expanded, t=0s, 3756 KB]
+f = 3 [50 evaluated, 32 expanded, t=0s, 3756 KB]
+f = 4 [75 evaluated, 56 expanded, t=0s, 3756 KB]
+f = 5 [107 evaluated, 84 expanded, t=0s, 3756 KB]
+f = 6 [131 evaluated, 112 expanded, t=0s, 3756 KB]
+Solution found!
+Actual search time: 0s [t=0s]
+movesync#registerrequest#ev1  (0)
+moveinthemodel#tausplit_3  (0)
+movesync#examinecasually#ev2  (0)
+moveinthelog#checkticket#ev3-ev4  (1)
+moveinthemodel#examinethoroughly  (1)
+movesync#decide#ev4  (0)
+movesync#reinitiaterequest#ev5  (0)
+moveinthelog#checkticket#ev6-ev7  (1)
+moveinthemodel#tausplit_3  (0)
+movesync#examinecasually#ev7  (0)
+moveinthemodel#examinethoroughly  (1)
+movesync#decide#ev8  (0)
+movesync#reinitiaterequest#ev9  (0)
+moveinthemodel#tausplit_3  (0)
+movesync#examinecasually#ev10  (0)
+moveinthelog#checkticket#ev11-ev12  (1)
+moveinthemodel#examinethoroughly  (1)
+movesync#decide#ev12  (0)
+moveinthemodel#skip_5  (0)
+movesync#rejectrequest#ev13  (0)
+Plan length: 20 step(s).
+Plan cost: 6
+Initial state h value: 0.
+Expanded 136 state(s).
+Reopened 0 state(s).
+Evaluated 151 state(s).
+Evaluations: 151
+Generated 255 state(s).
+Dead ends: 0 state(s).
+Expanded until last jump: 112 state(s).
+Reopened until last jump: 0 state(s).
+Evaluated until last jump: 131 state(s).
+Generated until last jump: 212 state(s).
+Number of registered states: 151
+Search time: 0s
+Total time: 0s
+Solution found.
+Peak memory: 3760 KB

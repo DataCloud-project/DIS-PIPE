@@ -1,0 +1,29 @@
+#!/bin/bash
+cd seq-opt-symba-2
+date1=$(date +%s%N | cut -b1-13)
+searchtime=0
+traces=0
+length=0
+for f in Conformance_Checking/domain*.pddl
+do
+
+# traces=$(($traces+1))
+length=$(($length+1))
+
+f_index=${f//Conformance_Checking\/domain/};
+
+f_index_2=${f_index//.pddl/}
+
+traces=$f_index_2
+
+f2="${f/domain/problem}"
+echo $f2
+
+./plan $f $f2 out.txt 
+done
+date2=$(date +%s%N | cut -b1-13)
+diff=$(($date2-$date1))
+echo $date1
+echo $date2
+echo "the duration is: $diff ms. for $length traces"
+#>/dev/null

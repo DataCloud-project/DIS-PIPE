@@ -33,7 +33,7 @@ body{
 	color: white;
 	opacity: 0.8;
 	width:100%;
-	height: 100%;
+	height: 200%;
 	text-align: center;
 	font-size: 10px;
 	padding-top: 15%;
@@ -274,11 +274,12 @@ label #btn_conformance{
 	/* background: white; */
 	border-radius: 3px;
 	z-index: 3;
-	right: 40px;
+	right: 60px;
 	top: 38px;
   border: 3px #6d50e2;
 	font-size: 23px;
 	color: #6d50e2;
+ 
 	/* padding: 6px 12px;   */
 }
 
@@ -388,7 +389,14 @@ label #btn_filter{
 	left: 57%;
 	z-index: 2;
 	width: 39%;
+  
 }
+
+#aligner_space{
+  max-height: 250px;
+  overflow: auto;
+}
+
 
 
 .mytabs input[type="radio"] {
@@ -728,6 +736,13 @@ button{
   /* margin-bottom: 5px; */
   width: 265px;
 }
+
+button:hover {
+  background-color: #7a4791;
+  /*background-color: #9b0d85; 
+  color: white;*/
+}
+
 .menu_button{
   padding: 5px;
   font-size: 12px;
@@ -851,10 +866,38 @@ button{
   border-radius: 6px;
   padding: 8px 0;
   position: absolute;
-  /*z-index: 1;
+  z-index: 3;
+  /*
   bottom: 125%;*/
   left: 50%; 
   margin-left: -80px;
+}
+
+.close_pp{
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 3px solid #a18df0;
+  border-radius: 6px;
+  cursor: pointer;
+} 
+
+.close_pp_before{
+  position: absolute;
+  right: 0;
+  top: 0;
+  /*border: 3px solid #a18df0;
+  border-radius: 6px;
+  cursor: pointer;*/
+} 
+
+.close_pp_inside{
+  /*position: absolute;
+  right: 0;
+  top: 0;*/
+  border: 3px solid #a18df0;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* Popup arrow */
