@@ -12,9 +12,43 @@
 (total-cost)
 )
 
+(:action moveSync#registerrequest#ev1
+:precondition (and (token source) (tracePointer ev1))
+:effect (and (allowed) (not (token source)) (token p_5) (not (tracePointer ev1)) (tracePointer ev2))
+)
+
+(:action moveInTheModel#registerrequest
+:precondition (token source)
+:effect (and (not (allowed)) (not (token source)) (token p_5) (increase (total-cost) 1)
+)
+)
+
+(:action moveInTheModel#skip_5
+:precondition (token p_6)
+:effect (and (not (allowed)) (not (token p_6)) (token p_4) (increase (total-cost) 0)
+)
+)
+
+(:action moveSync#rejectrequest#ev13
+:precondition (and (token p_4) (tracePointer ev13))
+:effect (and (allowed) (not (token p_4)) (token sink) (not (tracePointer ev13)) (tracePointer evEND))
+)
+
+(:action moveInTheModel#rejectrequest
+:precondition (token p_4)
+:effect (and (not (allowed)) (not (token p_4)) (token sink) (increase (total-cost) 1)
+)
+)
+
+(:action moveInTheModel#paycompensation
+:precondition (token p_4)
+:effect (and (not (allowed)) (not (token p_4)) (token sink) (increase (total-cost) 1)
+)
+)
+
 (:action moveInTheModel#tausplit_3
 :precondition (token p_5)
-:effect (and (not (allowed)) (not (token p_5)) (token p_8) (token p_10) (increase (total-cost) 0)
+:effect (and (not (allowed)) (not (token p_5)) (token p_10) (token p_8) (increase (total-cost) 0)
 )
 )
 
@@ -72,23 +106,6 @@
 )
 )
 
-(:action moveInTheModel#paycompensation
-:precondition (token p_4)
-:effect (and (not (allowed)) (not (token p_4)) (token sink) (increase (total-cost) 1)
-)
-)
-
-(:action moveSync#registerrequest#ev1
-:precondition (and (token source) (tracePointer ev1))
-:effect (and (allowed) (not (token source)) (token p_5) (not (tracePointer ev1)) (tracePointer ev2))
-)
-
-(:action moveInTheModel#registerrequest
-:precondition (token source)
-:effect (and (not (allowed)) (not (token source)) (token p_5) (increase (total-cost) 1)
-)
-)
-
 (:action moveSync#reinitiaterequest#ev5
 :precondition (and (token p_6) (tracePointer ev5))
 :effect (and (allowed) (not (token p_6)) (token p_5) (not (tracePointer ev5)) (tracePointer ev6))
@@ -102,23 +119,6 @@
 (:action moveInTheModel#reinitiaterequest
 :precondition (token p_6)
 :effect (and (not (allowed)) (not (token p_6)) (token p_5) (increase (total-cost) 1)
-)
-)
-
-(:action moveInTheModel#skip_5
-:precondition (token p_6)
-:effect (and (not (allowed)) (not (token p_6)) (token p_4) (increase (total-cost) 0)
-)
-)
-
-(:action moveSync#rejectrequest#ev13
-:precondition (and (token p_4) (tracePointer ev13))
-:effect (and (allowed) (not (token p_4)) (token sink) (not (tracePointer ev13)) (tracePointer evEND))
-)
-
-(:action moveInTheModel#rejectrequest
-:precondition (token p_4)
-:effect (and (not (allowed)) (not (token p_4)) (token sink) (increase (total-cost) 1)
 )
 )
 

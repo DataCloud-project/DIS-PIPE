@@ -1,14 +1,14 @@
 (define (problem Align) (:domain Mining)
 (:objects
-source - place
 p_4 - place
-p_5 - place
-sink - place
-p_6 - place
 p_8 - place
 p_9 - place
 p_10 - place
 p_11 - place
+source - place
+p_5 - place
+sink - place
+p_6 - place
 ev1 - event
 ev2 - event
 ev3 - event
@@ -24,15 +24,15 @@ evEND - event
 )
 (:goal
 (and
-(not (token source))
 (not (token p_4))
-(not (token p_5))
-(token sink)
-(not (token p_6))
 (not (token p_8))
 (not (token p_9))
 (not (token p_10))
 (not (token p_11))
+(not (token source))
+(not (token p_5))
+(token sink)
+(not (token p_6))
 (tracePointer evEND)
 ))
 (:metric minimize (total-cost))

@@ -19,7 +19,7 @@ traces=$f_index_2
 f2="${f/domain/problem}"
 echo $f2
 
-./plan $f $f2 out.txt 
+./plan $f $f2 out.txt >plans/out$traces.txt
 done
 date2=$(date +%s%N | cut -b1-13)
 diff=$(($date2-$date1))
