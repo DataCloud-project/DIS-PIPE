@@ -24,6 +24,23 @@ body{
   
 }
 
+.conf_check_button {
+  width: 20%;
+}
+
+
+.applycancel {
+  width: 27%;
+}
+
+.performance_drop {
+  width: 20%;
+}
+
+.attribute_drop {
+  width: 70%;
+}
+
 #loadingMessage {
 	position: absolute;
 	top:0;
@@ -113,7 +130,7 @@ body{
 
 .menu .list label{
   height: 60px;
-  width: 260px;
+  /* width: 260px; */
   /*background: red;*/
   border-radius: 12px;
   margin: 5px 0;
@@ -130,11 +147,22 @@ body{
 .menu .slider{
   position: absolute;
   top: 0;
-  width: 265px;
+  /* width: 265px; */
+  width: 100%;
   height: 60px;
   border-radius: 12px;
   background: #6d50e2;
   transition: all 0.4s ease;
+}
+
+#mean_skip_act{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#mean_ins_act{
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 #map:checked ~ .list label.map,
@@ -554,6 +582,23 @@ width: 100%;
   border: none;
   cursor: pointer;
   border-radius: 12px;
+  
+}
+
+.dropdown_width {
+  width: 65%;
+}
+
+.dropdown_width_timeframe {
+  width: 50%;
+}
+
+.dropdown_width_performance {
+  width: 77%;
+}
+
+.dropdown_width_performance_ms {
+  width: 20%;
 }
 
 .dosubmit:hover{
@@ -653,7 +698,7 @@ width: 100%;
   white-space: nowrap;
   /* padding: 10px; */
 
-  padding-right: 10px;
+  /*padding-right: 10px;*/
   
   /* padding: 10px; */
   /* border-style: solid */
@@ -720,7 +765,7 @@ width: 100%;
 .bottomleft {
   position:fixed;	
   bottom: 30px;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 12px;
   width: 20%;
 }
@@ -734,7 +779,7 @@ button{
   cursor: pointer;
   border-radius: 12px;
   /* margin-bottom: 5px; */
-  width: 265px;
+  /* width: 265px; */
 }
 
 button:hover {
@@ -747,12 +792,14 @@ button:hover {
   padding: 5px;
   font-size: 12px;
   margin-bottom: 5px;
+  width: 100%;
 }
 
 .dis_submit{
   padding: 5px;
   font-size: 12px;
   margin-bottom: 2px;
+  width: 100%;
 }
 
 
@@ -798,7 +845,7 @@ button:hover {
   cursor: pointer;
   border-radius: 12px;
   /* margin-bottom: 5px; */
-  width: 150px;
+  width: 100%;
 }
 
 .history_bottone{

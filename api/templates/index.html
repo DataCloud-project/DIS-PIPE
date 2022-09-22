@@ -225,7 +225,7 @@ function checkRefresh()
 											
 											<br />
 											
-											<select id="perfromanceFrequency" name="freqs" class="dropdown">
+											<select id="perfromanceFrequency" name="freqs" class="dropdown dropdown_width">
 											  <option value="absFreq">Absolute frequency</option>
 											  <option value="caseFreq">Case Frequency</option>
 											  <option value="maxRep">Max. repetition</option>
@@ -273,7 +273,7 @@ function checkRefresh()
 											
 											<br />
 											
-											<select id="performanceDuration" name="perfs" class="dropdown">
+											<select id="performanceDuration" name="perfs" class="dropdown dropdown_width">
 												<option selected value="totDur">Total duration</option>
 												<option value="medDur">Median duration</option>
 												<option value="meanDur">Mean duration</option>
@@ -329,10 +329,13 @@ function checkRefresh()
 							
 								</table>
 							</div>
+							
 							<div class="column filtro">
+								
 								<h4 style="text-align:center;">Filters</h4>
-								<!-- <ul id="variants-filters">
-								</ul> -->
+								<ul id="variants-filters">
+								</ul>
+							
 								<hr>
 
 								<center>
@@ -380,6 +383,7 @@ function checkRefresh()
 								
 						
 							</div>
+							
 						</div>
 
 						<input type="checkbox" id="check_filter">
@@ -465,7 +469,7 @@ function checkRefresh()
 								<br />
 								<br />
 								<text>Keep cases by:</text>
-								<select name="keep_timeframe" id="keep_timeframe" class="dropdown">
+								<select name="keep_timeframe" id="keep_timeframe" class="dropdown dropdown_width_timeframe">
 									<option value="contained">Contained in timeframe</option>
 									<option value="intersecting">Intersecting timeframe</option>
 									<option value="started">Started in timeframe</option>
@@ -481,7 +485,7 @@ function checkRefresh()
 							<!-- FILTER FOR PERFORMANCE -->	
 							<div id="perf_filter_div" style="display:none">
 								<label for="filter_by_performance">Filter by: </label>
-								<select id="filter_by_performance" name="filter_by_performance" class="dropdown">
+								<select id="filter_by_performance" name="filter_by_performance" class="performance_drop dropdown dropdown_width_performance">
 									<option value="caseDuration">Case duration</option>
 									<option value="eventsNumber">Number of events</option>
 								</select>
@@ -490,7 +494,7 @@ function checkRefresh()
 								<label id="label_input_min" for="input_min">Minimum duration: <small>(Use cases running longer than)</small></label>
 								<br />
 								<input type="number" id="input_min" name="input_min" step="any" />
-								<select id="select_time_1" name="select_time_1" class="dropdown" style="padding: 3px">
+								<select id="select_time_1" name="select_time_1" class="dropdown dropdown_width_performance_ms" style="padding: 3px">
 									<option value="mills">Milliseconds</option>
 									<option value="seconds">Seconds</option>
 									<option value="minutes">Minutes</option>
@@ -503,7 +507,7 @@ function checkRefresh()
 								<label id="label_input_max" for="input_max">Maximum duration: <small>(Use cases running shorter than)</small></label>
 								<br />
 								<input type="number" id="input_max" name="input_max" step="any" />
-								<select id= "select_time_2" name="select_time_2" class="dropdown" style="padding: 3px">
+								<select id= "select_time_2" name="select_time_2" class="dropdown dropdown_width_performance_ms" style="padding: 3px">
 									<option value="mills">Milliseconds</option>
 									<option value="seconds">Seconds</option>
 									<option value="minutes">Minutes</option>
@@ -518,7 +522,7 @@ function checkRefresh()
 							<!-- FILTER FOR ENDPOINTS -->
 							<div id="endpoints_filter_div" style="display:none">
 								<label for="filter_by_2">Filter by: </label>
-								<select id= "filter_by_2" name="filter_by" class="dropdown">
+								<select id= "filter_by_2" name="filter_by" class="dropdown dropdown_width">
 									<option selected value="activity">Activity</option>
 									<option value="resource">Resource</option>
 									<option value="costs">Costs</option>
@@ -526,7 +530,7 @@ function checkRefresh()
 									<option value="variants" style="display:none">Variants</option>
 								</select>
 								<label for="mode_for_endpoints" style="margin-left: 10px;">Mode: </label>
-								<select id="mode_for_endpoints" name="mode_for_endpoints" class="dropdown">
+								<select id="mode_for_endpoints" name="mode_for_endpoints" class="dropdown dropdown_width">
 									<option value="discard">Discard cases</option>
 									<option value="trimLongest">Trim Longest</option>
 									<option value="trimFirst">Trim First</option>
@@ -565,7 +569,7 @@ function checkRefresh()
 									<div class="left_pop">
 										<span>
 											<label for="filter_by">Filter by: </label>
-											<select id= "filter_by" name="filter_by" class="dropdown" onchange="change_filter_type()">
+											<select id= "filter_by" name="filter_by" class="dropdown dropdown_width" onchange="change_filter_type()">
 												<option value="activity">Activity</option>
 												<option value="resource">Resource</option>
 												<option value="costs">Costs</option>
@@ -577,7 +581,7 @@ function checkRefresh()
 									<div class="left_pop">
 										<span>
 											<label id="mfa2" for="mode_for_attribute"style="margin-left: 10px;">Mode: </label>
-											<select id="mode_for_attribute" name="mode_for_attribute" class="dropdown">
+											<select id="mode_for_attribute" name="mode_for_attribute" class="dropdown attribute_drop">
 												<option value="selected">Keep selected</option>
 												<option value="mandatory">Mandatory</option>
 												<option value="forbidden">Forbidden</option>
@@ -606,7 +610,7 @@ function checkRefresh()
 							<!-- FILTER FOR FOLLOWER -->
 							<div id="follower_filter_div" style="display:none">
 								<label for="filter_by_2">Filter by:  </label>
-								<select id= "filter_by_2" name="filter_by" class="dropdown">
+								<select id= "filter_by_2" name="filter_by" class="dropdown dropdown_width">
 									<option value="activity">Activity</option>
 									<option value="resource">Resource</option>
 									<option value="costs">Costs</option>
@@ -615,7 +619,7 @@ function checkRefresh()
 								</select>
 								<br />
 								<label for="reference_for_follower">Reference event must be </label>
-								<select id="reference_for_follower" name="reference_for_follower" class="dropdown" style="padding: 3px">
+								<select id="reference_for_follower" name="reference_for_follower" class="dropdown dropdown_width" style="padding: 3px">
 									<option value="even_follow">eventually followed</option>
 									<option value="dir_follow">directly followed</option>
 									<option value="nev_even_follow">never eventually followed</option>
@@ -653,12 +657,12 @@ function checkRefresh()
 								<div style="font-size:12px">
 									<input type="checkbox" id="require_for_follower">
 									<label for="require_for_follower"> Require </label>
-									<select id="mode_for_follower" name="mode_for_follower" class="dropdown" style="padding: 3px" disabled>
+									<select id="mode_for_follower" name="mode_for_follower" class="dropdown dropdown_width" style="padding: 3px" disabled>
 										<option value="same">same value</option>
 										<option value="different">different values</option>
 									</select>
 									<label for="require_for_follower"> of</label>
-									<select id= "filter_by_follower" name="filter_by" class="dropdown" style="padding: 3px" disabled>
+									<select id= "filter_by_follower" name="filter_by" class="dropdown dropdown_width" style="padding: 3px" disabled>
 										<option value="activity">Activity</option>
 										<option value="resource">Resource</option>
 										<option value="costs">Costs</option>
@@ -670,13 +674,13 @@ function checkRefresh()
 									<br />
 									<input type="checkbox" id="time_for_follower">
 									<label for="time_for_follower">Time between matching events must be </label>
-									<select id="mode_time_for_follower" name="mode_time_for_follower" class="dropdown" style="padding: 3px" disabled>
+									<select id="mode_time_for_follower" name="mode_time_for_follower" class="dropdown dropdown_width" style="padding: 3px" disabled>
 										<option value="shorter">shorter</option>
 										<option value="longer">longer</option>
 									</select>
 									<label for="require_for_follower"> than </label>
 									<input type="number" id="input_time_follower" name="input_time" step="any" disabled />
-									<select id= "select_time_3" name="select_time_3" class="dropdown" style="padding: 3px" disabled>
+									<select id= "select_time_3" name="select_time_3" class="dropdown dropdown_width" style="padding: 3px" disabled>
 										<option value="mills">Milliseconds</option>
 										<option value="seconds">Seconds</option>
 										<option value="minutes">Minutes</option>
@@ -702,8 +706,8 @@ function checkRefresh()
 							<div style="text-align:center">
 								
 								<!-- <button type="submit" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button> -->
-								<button type="button" class="btn" style="margin-right:10px; font-size:13px" onclick="asyncCall()">Apply</button>
-								<button type="button" class="btn" style="font-size:13px" onclick="closeForm()">Cancel</button>
+								<button type="button" class="btn applycancel" style="margin-right:10px; font-size:13px" onclick="asyncCall()">Apply</button>
+								<button type="button" class="btn applycancel" style="font-size:13px" onclick="closeForm()">Cancel</button>
 							</div>
 							
 							</form>
@@ -838,7 +842,7 @@ function checkRefresh()
 								<div style="text-align:center">
 									<br>
 									<button type="button" style="font-size: 16px; visibility: hidden" onclick="resetField()">Reset</button>
-									<button type="button" style="font-size: 16px;" onclick="nextDivForm()">Next</button>
+									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="nextDivForm()">Next</button>
 									
 								</div>
 							
@@ -949,8 +953,8 @@ function checkRefresh()
 							
 								<div style="text-align:center">
 									<br>
-									<button type="button" style="font-size: 16px;" onclick="backDivForm()">Back</button>
-									<button type="button" style="font-size: 16px;" onclick="showResultonDFG()">Next</button>
+									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="backDivForm()">Back</button>
+									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="showResultonDFG()">Next</button>
 									
 								</div>
 							

@@ -272,7 +272,7 @@ function getMap(bool) {
     // document.getElementById('graphContainer2').innerHTML=image
 
 
-
+    
     
     
     // Optional - resize the SVG element based on the contents.
@@ -310,6 +310,8 @@ function getMap(bool) {
     var names;
     
     var pp=0;
+
+
 
     $(document).ready(function(){
         for(var i=0; i<nodes.length; i++){

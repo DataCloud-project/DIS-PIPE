@@ -1,5 +1,6 @@
 var color_highlight='#8B008B';
-
+//##FFD23F
+//#e9_ca1b
 var disalignment_dictionary={}
 var inizio=0
 
@@ -193,7 +194,7 @@ function highlightTraceNode(){
             var titolo=title_id.replaceAll(" ","").toLowerCase()
     
             if(array_complete_activity.includes(titolo)) {
-                $("#"+item.id).find("polygon").attr('stroke',"#e9ca1b")
+                $("#"+item.id).find("polygon").attr('stroke',"#FFD23F")
             }else{
                 $("#"+item.id).find("polygon").attr('stroke',"#686868")
             }      
@@ -210,16 +211,16 @@ function highlightTraceNode(){
             var target= title_id.split('-&gt;')[1].trim()
 
             if(source=="@@startnode"){
-                $("#"+item.id).find("path").attr('stroke', "#e9ca1b");
-                $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                $("#"+item.id).find("path").attr('stroke', "#FFD23F");
+                $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
             } 
 
             //console.log(array_complete_activity[array_complete_activity.length-1])
             //console.log(nodes_id_association[source])
 
             if(nodes_id_association[source]!=undefined && array_complete_activity[array_complete_activity.length-1]==nodes_id_association[source].replaceAll(" ","").toLowerCase() && target=="@@endnode"){
-                $("#"+item.id).find("path").attr('stroke', "#e9ca1b");
-                $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                $("#"+item.id).find("path").attr('stroke', "#FFD23F");
+                $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
             }
 
             if(nodes_id_association[source]!=undefined && nodes_id_association[target]!=undefined){
@@ -227,11 +228,11 @@ function highlightTraceNode(){
                 var index_array=(array_complete_activity.indexOf(nodes_id_association[source].replaceAll(" ","").toLowerCase()))
 
                 if(index_array!=-1 && nodes_id_association[target].replaceAll(" ","").toLowerCase()==array_complete_activity[index_array+1]){
-                    $("#"+item.id).find("path").attr('stroke', "#e9ca1b");
-                    $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                    $("#"+item.id).find("path").attr('stroke', "#FFD23F");
+                    $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
                 }else if(index_array!=-1 && array_moveinthemodel.includes(nodes_id_association[target].replaceAll(" ","").toLowerCase()) && nodes_id_association[target].replaceAll(" ","").toLowerCase()==array_complete_activity[index_array+2]){
-                    $("#"+item.id).find("path").attr('stroke', "#e9ca1b");
-                    $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                    $("#"+item.id).find("path").attr('stroke', "#FFD23F");
+                    $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
                 } 
             } 
 
@@ -239,11 +240,11 @@ function highlightTraceNode(){
 
                 if(nodes_id_association[source]!=undefined && nodes_id_association[source].replaceAll(" ","").toLowerCase()==array_complete_activity[i]  && nodes_id_association[target]!=undefined ){
                     if(i!=-1 && nodes_id_association[target].replaceAll(" ","").toLowerCase()==array_complete_activity[i+1]){
-                        $("#"+item.id).find("path").attr('stroke', "#e9ca1b");
-                        $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                        $("#"+item.id).find("path").attr('stroke', "#FFD23F");
+                        $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
                     }else if(i!=-1 && array_moveinthemodel.includes(array_complete_activity[i+1]) && nodes_id_association[target].replaceAll(" ","").toLowerCase()==array_complete_activity[i+2]){
-                        $("#"+item.id).find("path").attr('stroke', "#e9ca1b");
-                        $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                        $("#"+item.id).find("path").attr('stroke', "#FFD23F");
+                        $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
                     }
                 } 
             } 
@@ -784,7 +785,7 @@ function showResultonDFG(){
             $temp= ($("#"+item.id).find("polygon").attr('stroke'))
             $check_node=($("#"+item.id).find("polygon")).length
 
-            if(($temp=="#686868" || $temp=="#e9ca1b" || $temp=="#000000" || $temp=="#187F00" || $temp=="#FF9292" || $temp=="#FF5C5C" || $temp=="#FF3838" || $temp=="#E20000") && $check_node!=0){
+            if(($temp=="#686868" || $temp=="#FFD23F" || $temp=="#000000" || $temp=="#187F00" || $temp=="#FF9292" || $temp=="#FF5C5C" || $temp=="#FF3838" || $temp=="#E20000") && $check_node!=0){
 
                 
 
@@ -793,7 +794,7 @@ function showResultonDFG(){
                 //     console.log(element)
                 // }
 
-                if(($temp=="#e9ca1b" || $temp=="#686868")  && ($("#highlight_trace option:selected").val()=="yes")){
+                if(($temp=="#FFD23F" || $temp=="#686868")  && ($("#highlight_trace option:selected").val()=="yes")){
 
                     highlightTraceNode();
                     $("#"+item.id).find("polygon").attr('stroke', color_highlight);
@@ -855,7 +856,7 @@ function showResultonDFG(){
                 var titolo2=title_id2.replaceAll(" ","").toLowerCase()
     
                 if(array_complete_activity.includes(titolo2)) {
-                    $("#"+item.id).find("polygon").attr('stroke', "#e9ca1b");
+                    $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
                 }else{
                     $("#"+item.id).find("polygon").attr('stroke', "#686868");
                 } 

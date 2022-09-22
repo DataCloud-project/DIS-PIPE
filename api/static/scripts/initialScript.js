@@ -30,6 +30,11 @@ function displayContent(){
 		menu.style.display = "none";
 		content.style.maxWidth = "100%";
 		menuBtn.checked = false;
+		$("#highlight_trace").val('no').change();
+		$(".edge").find("path").attr('stroke', "#000000");
+		$(".edge").find("polygon").attr('stroke', "#000000");
+		// $(".edge").find("text").css({"text-decoration":"revert"});
+
 		
 	}
 	if (elanalysis.checked == true) {
