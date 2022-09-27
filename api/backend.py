@@ -1298,13 +1298,13 @@ def filter():
     # f = createGraphFReduced(log)
     # p = createGraphPReduced(log)
     variants = variants_filter.get_variants(log)
-    text_file = open('C:\\Users\\jacop\\Desktop\\xp2.txt', "w")
+    # text_file = open('C:\\Users\\jacop\\Desktop\\xp2.txt', "w")
         
     #write string to file
-    text_file.write(str(log))
+    # text_file.write(str(log))
     
     #close file
-    text_file.close()
+    # text_file.close()
 
     # prova f
     # if(start_case==False):
