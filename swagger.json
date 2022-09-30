@@ -11,15 +11,15 @@
     }
   ],
   "paths": {
-    "/exportPipeline/{id}": {
+    "/exportPipeline/{pipelineID}": {
       "get": {
         "tags": [
-          "exportPipeline"
+          "Export"
         ],
-        "summary": "Transfer from DIS-PIPE storage the DSL with identified id to DEF-PIPE remote storage",
+        "summary": "Transfer from DIS-PIPE storage the DSL with pipelineID to DEF-PIPE remote storage",
         "parameters": [
           {
-            "name": "id",
+            "name": "pipelineID",
             "in": "path",
             "required": true,
             "schema": {
