@@ -1112,6 +1112,10 @@ svg {
   fill: none;
 }
 
+#myPopup_cChecking{
+  max-height: 400px;
+}
+
 
 /* ####################################### */
 .col-first{
