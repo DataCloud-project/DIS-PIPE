@@ -164,15 +164,6 @@ moveinthelog#rejectrequest#ev5-evend
 1
 end_operator
 begin_operator
-moveinthemodel#checkticket 
-0
-3
-0 0 -1 1
-0 6 0 1
-0 7 -1 0
-1
-end_operator
-begin_operator
 moveinthemodel#decide 
 0
 4
@@ -198,6 +189,15 @@ moveinthemodel#examinethoroughly
 0 0 -1 1
 0 1 0 1
 0 2 -1 0
+1
+end_operator
+begin_operator
+moveinthemodel#examinethoroughly 
+0
+3
+0 0 -1 1
+0 6 0 1
+0 7 -1 0
 1
 end_operator
 begin_operator
@@ -256,16 +256,6 @@ moveinthemodel#tausplit_3
 0
 end_operator
 begin_operator
-movesync#checkticket#ev2 
-0
-4
-0 0 -1 0
-0 6 0 1
-0 7 -1 0
-0 10 1 2
-0
-end_operator
-begin_operator
 movesync#decide#ev4 
 0
 5
@@ -283,6 +273,16 @@ movesync#examinethoroughly#ev3
 0 0 -1 0
 0 1 0 1
 0 2 -1 0
+0 10 2 3
+0
+end_operator
+begin_operator
+movesync#examinethoroughly#ev3 
+0
+4
+0 0 -1 0
+0 6 0 1
+0 7 -1 0
 0 10 2 3
 0
 end_operator

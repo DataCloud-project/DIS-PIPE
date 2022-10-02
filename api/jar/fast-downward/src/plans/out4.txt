@@ -9,35 +9,32 @@ done! [t=0s]
 done initalizing global data [t=0s]
 Conducting best first search with reopening closed nodes, (real) bound = 2147483647
 Initializing blind search heuristic...
-f = 0 [1 evaluated, 0 expanded, t=0s, 3756 KB]
-Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3756 KB]
-f = 1 [11 evaluated, 4 expanded, t=0s, 3756 KB]
-f = 2 [26 evaluated, 14 expanded, t=0s, 3756 KB]
+f = 0 [1 evaluated, 0 expanded, t=0.01s, 3756 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0.01s, 3756 KB]
 Solution found!
-Actual search time: 0s [t=0s]
+Actual search time: 0s [t=0.01s]
 movesync#registerrequest#ev1  (0)
 moveinthemodel#tausplit_3  (0)
 movesync#examinecasually#ev2  (0)
-moveinthelog#checkticket#ev3-ev4  (1)
-moveinthemodel#examinethoroughly  (1)
+movesync#checkticket#ev3  (0)
 movesync#decide#ev4  (0)
 moveinthemodel#skip_5  (0)
 movesync#paycompensation#ev5  (0)
-Plan length: 8 step(s).
-Plan cost: 2
+Plan length: 7 step(s).
+Plan cost: 0
 Initial state h value: 0.
-Expanded 31 state(s).
+Expanded 8 state(s).
 Reopened 0 state(s).
-Evaluated 46 state(s).
-Evaluations: 46
-Generated 63 state(s).
+Evaluated 20 state(s).
+Evaluations: 20
+Generated 21 state(s).
 Dead ends: 0 state(s).
-Expanded until last jump: 14 state(s).
+Expanded until last jump: 0 state(s).
 Reopened until last jump: 0 state(s).
-Evaluated until last jump: 26 state(s).
-Generated until last jump: 31 state(s).
-Number of registered states: 46
+Evaluated until last jump: 1 state(s).
+Generated until last jump: 0 state(s).
+Number of registered states: 20
 Search time: 0s
-Total time: 0s
+Total time: 0.01s
 Solution found.
 Peak memory: 3760 KB

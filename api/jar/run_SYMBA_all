@@ -17,7 +17,7 @@ f_index_2=${f_index//.pddl/}
 traces=$f_index_2
 
 f2="${f/domain/problem}"
-echo $f2
+
 
 ./plan $f $f2 out.txt >plans/out$traces.txt
 done

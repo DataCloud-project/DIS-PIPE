@@ -1,25 +1,25 @@
 1. Running translator
 Second argument is a file name: use two translator arguments.
 Parsing...
-Parsing: [0.000s CPU, 0.011s wall-clock]
+Parsing: [0.010s CPU, 0.010s wall-clock]
 Normalizing task... [0.000s CPU, 0.001s wall-clock]
 Instantiating...
-Generating Datalog program... [0.010s CPU, 0.001s wall-clock]
+Generating Datalog program... [0.000s CPU, 0.001s wall-clock]
 Normalizing Datalog program...
-Normalizing Datalog program: [0.000s CPU, 0.022s wall-clock]
+Normalizing Datalog program: [0.010s CPU, 0.017s wall-clock]
 Preparing model... [0.000s CPU, 0.001s wall-clock]
-Generated 76 rules.
+Generated 72 rules.
 Computing model... [0.000s CPU, 0.001s wall-clock]
-106 relevant atoms
+105 relevant atoms
 0 auxiliary atoms
-106 final queue length
-136 total queue pushes
+105 final queue length
+132 total queue pushes
 Completing instantiation... [0.000s CPU, 0.002s wall-clock]
-Instantiating: [0.010s CPU, 0.028s wall-clock]
+Instantiating: [0.010s CPU, 0.025s wall-clock]
 Computing fact groups...
 Finding invariants...
 5 initial candidates
-Finding invariants: [0.010s CPU, 0.002s wall-clock]
+Finding invariants: [0.000s CPU, 0.003s wall-clock]
 Checking invariant weight... [0.000s CPU, 0.000s wall-clock]
 Instantiating groups... [0.000s CPU, 0.000s wall-clock]
 Collecting mutex groups... [0.000s CPU, 0.000s wall-clock]
@@ -27,7 +27,7 @@ Choosing groups...
 10 uncovered facts
 Choosing groups: [0.000s CPU, 0.000s wall-clock]
 Building translation key... [0.000s CPU, 0.000s wall-clock]
-Computing fact groups: [0.010s CPU, 0.006s wall-clock]
+Computing fact groups: [0.000s CPU, 0.008s wall-clock]
 Building STRIPS to SAS dictionary... [0.000s CPU, 0.000s wall-clock]
 Building dictionary for full mutex groups... [0.000s CPU, 0.000s wall-clock]
 Building mutex information...
@@ -36,9 +36,9 @@ Translating task...
 Processing axioms...
 Simplifying axioms... [0.000s CPU, 0.000s wall-clock]
 Processing axioms: [0.000s CPU, 0.001s wall-clock]
-Translating task: [0.000s CPU, 0.004s wall-clock]
+Translating task: [0.010s CPU, 0.003s wall-clock]
 0 implied effects removed
-32 effect conditions simplified
+31 effect conditions simplified
 0 implied preconditions added
 Detecting unreachable propositions...
 0 operators removed
@@ -49,18 +49,18 @@ Translator derived variables: 0
 Translator facts: 30
 Translator mutex groups: 1
 Translator total mutex groups size: 10
-Translator operators: 28
-Translator task size: 217
-Translator peak memory: 27604 KB
+Translator operators: 27
+Translator task size: 210
+Translator peak memory: 27536 KB
 Writing output... [0.000s CPU, 0.004s wall-clock]
-Done! [0.020s CPU, 0.059s wall-clock]
+Done! [0.030s CPU, 0.056s wall-clock]
 
 2. Running preprocessor
 Building causal graph...
 The causal graph is not acyclic.
 11 variables of 11 necessary
 0 of 1 mutex groups necessary.
-28 of 28 operators necessary.
+27 of 27 operators necessary.
 0 of 0 axiom rules necessary.
 Initializing mutex computation...
 Mutex computation initialized with 30 fluents.
@@ -72,65 +72,65 @@ Computing mutexes...
 Mutex computation finished with reached=722, notReached=68, spurious=110
 0 operators are spurious because were not triggered
 H^2 mutexes added fw: 68, unreachable: 0
-0 of 28 operators detected as spurious
+0 of 27 operators detected as spurious
 iteration for mutex detection and operator pruning
 Initialize m_index bw
 Init values regression
 Initialized mvalues backward: reached=142, notReached=580, spurious=178
 Initialize m_ops bw
 Computing mutexes...
-Mutex computation finished with reached=718, notReached=4, spurious=178
+Mutex computation finished with reached=710, notReached=12, spurious=178
 0 operators are spurious because were not triggered
-H^2 mutexes added bw: 4, unreachable: 0
-0 of 28 operators detected as spurious
+H^2 mutexes added bw: 12, unreachable: 0
+0 of 27 operators detected as spurious
 iteration for mutex detection and operator pruning
 Initialize m_index fw
-Initialized mvalues forward: reached=121, notReached=597, spurious=182
+Initialized mvalues forward: reached=121, notReached=589, spurious=190
 Initialize m_ops fw
 Computing mutexes...
-Mutex computation finished with reached=702, notReached=16, spurious=182
+Mutex computation finished with reached=694, notReached=16, spurious=190
 0 operators are spurious because were not triggered
 H^2 mutexes added fw: 16, unreachable: 0
-0 of 28 operators detected as spurious
+0 of 27 operators detected as spurious
 iteration for mutex detection and operator pruning
 Initialize m_index bw
 Init values regression
-Initialized mvalues backward: reached=142, notReached=560, spurious=198
+Initialized mvalues backward: reached=142, notReached=552, spurious=206
 Initialize m_ops bw
 Computing mutexes...
-Mutex computation finished with reached=702, notReached=0, spurious=198
+Mutex computation finished with reached=694, notReached=0, spurious=206
 0 operators are spurious because were not triggered
 H^2 mutexes added bw: 0, unreachable: 0
-0 of 28 operators detected as spurious
-Total mutex and disambiguation time: 0
-44 of 44 mutex groups necessary.
-28 of 28 operators necessary.
+0 of 27 operators detected as spurious
+Total mutex and disambiguation time: 0.01
+48 of 48 mutex groups necessary.
+27 of 27 operators necessary.
 0 of 0 axiom rules necessary.
-Change id of operators: 28
+Change id of operators: 27
 Change id of axioms: 0
 Change id of mutexes
 Change id of goals
 Change id of initial state
 Remove unreachable facts from variables: 11
-44 of 44 mutex groups necessary.
-28 of 28 operators necessary.
+48 of 48 mutex groups necessary.
+27 of 27 operators necessary.
 0 of 0 axiom rules necessary.
 Updating causal graph and pruning unnecessary facts
 11 variables of 11 of 11 necessary
 The causal graph is not acyclic.
-44 of 44 mutex groups necessary.
-28 of 28 operators necessary.
+48 of 48 mutex groups necessary.
+27 of 27 operators necessary.
 0 of 0 axiom rules necessary.
 Ordering: 11
-previous variable order: var0 - var9 - var3 - var1 - var6 - var4 - var2 - var7 - var5 - var10 - var8 - : 745
+previous variable order: var0 - var9 - var3 - var6 - var1 - var4 - var7 - var2 - var5 - var10 - var8 - : 745
 New value: 325
-new variable order: var8 - var3 - var5 - var2 - var7 - var10 - var0 - var1 - var4 - var6 - var9 - : 325
+new variable order: var8 - var3 - var5 - var7 - var2 - var10 - var0 - var6 - var4 - var1 - var9 - : 325
 Building domain transition graphs...
 solveable in poly time 0
 Building successor generator...
 Preprocessor facts: 30
 Preprocessor derived variables: 0
-Preprocessor task size: 295
+Preprocessor task size: 296
 Writing output...
 Number of vars: 11
 weighted 11
@@ -313,37 +313,51 @@ SMAS [10, 1]size after shrink 2, target 2
 SMAS [10, 1]computing distances using general-cost algorithm
 SMAS [10, 1]shrink from size 2 (threshold: 1)
 SMAS [10, 1]size after shrink 2, target 2
-TRs cost=0 (1):  170
-TRs cost=1 (1):  243
+TRs cost=0 (1):  175
+TRs cost=1 (1):  273
 >> Step: original fw f=0, g=0
 >> Step: original bw f=0, g=0
 >> Step: original fw f=0, g=0
 >> Step: original fw f=0, g=0
 >> Step: original fw f=0, g=0
 >> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
-Solution found with cost 0 total time: 0.13s
-BOUND: 0 < 0, total time: 0.13s
-Actual search time: 0s [t=0.13s]
+BOUND: 1 < 2147483647, total time: 0.12s
+>> Step: original fw f=1, g=1
+>> Step: original fw f=1, g=1
+>> Step: original fw f=1, g=1
+BOUND: 2 < 2147483647, total time: 0.12s
+>> Step: original fw f=2, g=2
+>> Step: original fw f=2, g=2
+>> Step: original fw f=2, g=2
+>> Step: original fw f=2, g=2
+>> Step: original fw f=2, g=2
+>> Step: original fw f=2, g=2
+BOUND: 3 < 2147483647, total time: 0.12s
+>> Step: original fw f=3, g=3
+>> Step: original fw f=3, g=3
+>> Step: original fw f=3, g=3
+BOUND: 4 < 2147483647, total time: 0.12s
+>> Step: original fw f=4, g=4
+>> Step: original fw f=4, g=4
+Solution found with cost 4 total time: 0.12s
+BOUND: 4 < 4, total time: 0.12s
+Actual search time: 0s [t=0.12s]
 movesync#registerrequest#ev1  (0)
 moveinthemodel#tausplit_3  (0)
+moveinthemodel#examinethoroughly  (1)
 movesync#examinecasually#ev2  (0)
-movesync#checkticket#ev3  (0)
+moveinthelog#checkticket#ev3-ev4  (1)
 movesync#decide#ev4  (0)
 movesync#reinitiaterequest#ev5  (0)
 moveinthemodel#tausplit_3  (0)
+moveinthemodel#examinethoroughly  (1)
 movesync#examinethoroughly#ev6  (0)
-movesync#checkticket#ev7  (0)
+moveinthelog#checkticket#ev7-ev8  (1)
 movesync#decide#ev8  (0)
 moveinthemodel#skip_5  (0)
 movesync#paycompensation#ev9  (0)
-Plan length: 12 step(s).
-Plan cost: 0
+Plan length: 14 step(s).
+Plan cost: 4
 Expanded 0 state(s).
 Reopened 0 state(s).
 Evaluated 0 state(s).
@@ -352,8 +366,8 @@ Generated 0 state(s).
 Dead ends: 0 state(s).
 Search space hash size: 0
 Search space hash bucket count: 193
-Search time: 0.01s
-Total time: 0.13s
+Search time: 0s
+Total time: 0.12s
 Solution found.
-Peak memory: 255996 KB
+Peak memory: 255992 KB
 

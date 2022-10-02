@@ -1,12 +1,12 @@
 1. Running translator
 Second argument is a file name: use two translator arguments.
 Parsing...
-Parsing: [0.000s CPU, 0.010s wall-clock]
+Parsing: [0.000s CPU, 0.008s wall-clock]
 Normalizing task... [0.000s CPU, 0.001s wall-clock]
 Instantiating...
 Generating Datalog program... [0.000s CPU, 0.001s wall-clock]
 Normalizing Datalog program...
-Normalizing Datalog program: [0.010s CPU, 0.013s wall-clock]
+Normalizing Datalog program: [0.010s CPU, 0.018s wall-clock]
 Preparing model... [0.000s CPU, 0.001s wall-clock]
 Generated 52 rules.
 Computing model... [0.000s CPU, 0.001s wall-clock]
@@ -15,7 +15,7 @@ Computing model... [0.000s CPU, 0.001s wall-clock]
 82 final queue length
 100 total queue pushes
 Completing instantiation... [0.000s CPU, 0.001s wall-clock]
-Instantiating: [0.010s CPU, 0.017s wall-clock]
+Instantiating: [0.010s CPU, 0.024s wall-clock]
 Computing fact groups...
 Finding invariants...
 5 initial candidates
@@ -26,8 +26,8 @@ Collecting mutex groups... [0.000s CPU, 0.000s wall-clock]
 Choosing groups...
 10 uncovered facts
 Choosing groups: [0.000s CPU, 0.000s wall-clock]
-Building translation key... [0.000s CPU, 0.000s wall-clock]
-Computing fact groups: [0.000s CPU, 0.005s wall-clock]
+Building translation key... [0.000s CPU, 0.001s wall-clock]
+Computing fact groups: [0.000s CPU, 0.008s wall-clock]
 Building STRIPS to SAS dictionary... [0.000s CPU, 0.000s wall-clock]
 Building dictionary for full mutex groups... [0.000s CPU, 0.000s wall-clock]
 Building mutex information...
@@ -36,7 +36,7 @@ Translating task...
 Processing axioms...
 Simplifying axioms... [0.000s CPU, 0.000s wall-clock]
 Processing axioms: [0.000s CPU, 0.001s wall-clock]
-Translating task: [0.000s CPU, 0.002s wall-clock]
+Translating task: [0.000s CPU, 0.003s wall-clock]
 0 implied effects removed
 27 effect conditions simplified
 0 implied preconditions added
@@ -51,9 +51,9 @@ Translator mutex groups: 1
 Translator total mutex groups size: 6
 Translator operators: 20
 Translator task size: 163
-Translator peak memory: 27540 KB
-Writing output... [0.010s CPU, 0.003s wall-clock]
-Done! [0.020s CPU, 0.042s wall-clock]
+Translator peak memory: 27536 KB
+Writing output... [0.000s CPU, 0.006s wall-clock]
+Done! [0.020s CPU, 0.056s wall-clock]
 
 2. Running preprocessor
 Building causal graph...
@@ -79,31 +79,31 @@ Init values regression
 Initialized mvalues backward: reached=142, notReached=416, spurious=118
 Initialize m_ops bw
 Computing mutexes...
-Mutex computation finished with reached=554, notReached=4, spurious=118
+Mutex computation finished with reached=550, notReached=8, spurious=118
 0 operators are spurious because were not triggered
-H^2 mutexes added bw: 4, unreachable: 0
+H^2 mutexes added bw: 8, unreachable: 0
 0 of 20 operators detected as spurious
 iteration for mutex detection and operator pruning
 Initialize m_index fw
-Initialized mvalues forward: reached=121, notReached=433, spurious=122
+Initialized mvalues forward: reached=121, notReached=429, spurious=126
 Initialize m_ops fw
 Computing mutexes...
-Mutex computation finished with reached=538, notReached=16, spurious=122
+Mutex computation finished with reached=522, notReached=28, spurious=126
 0 operators are spurious because were not triggered
-H^2 mutexes added fw: 16, unreachable: 0
+H^2 mutexes added fw: 28, unreachable: 0
 0 of 20 operators detected as spurious
 iteration for mutex detection and operator pruning
 Initialize m_index bw
 Init values regression
-Initialized mvalues backward: reached=142, notReached=396, spurious=138
+Initialized mvalues backward: reached=142, notReached=380, spurious=154
 Initialize m_ops bw
 Computing mutexes...
-Mutex computation finished with reached=538, notReached=0, spurious=138
+Mutex computation finished with reached=522, notReached=0, spurious=154
 0 operators are spurious because were not triggered
 H^2 mutexes added bw: 0, unreachable: 0
 0 of 20 operators detected as spurious
 Total mutex and disambiguation time: 0
-44 of 44 mutex groups necessary.
+52 of 52 mutex groups necessary.
 20 of 20 operators necessary.
 0 of 0 axiom rules necessary.
 Change id of operators: 20
@@ -112,13 +112,13 @@ Change id of mutexes
 Change id of goals
 Change id of initial state
 Remove unreachable facts from variables: 11
-44 of 44 mutex groups necessary.
+52 of 52 mutex groups necessary.
 20 of 20 operators necessary.
 0 of 0 axiom rules necessary.
 Updating causal graph and pruning unnecessary facts
 11 variables of 11 of 11 necessary
 The causal graph is not acyclic.
-44 of 44 mutex groups necessary.
+52 of 52 mutex groups necessary.
 20 of 20 operators necessary.
 0 of 0 axiom rules necessary.
 Ordering: 11
@@ -130,7 +130,7 @@ solveable in poly time 0
 Building successor generator...
 Preprocessor facts: 26
 Preprocessor derived variables: 0
-Preprocessor task size: 245
+Preprocessor task size: 261
 Writing output...
 Number of vars: 11
 weighted 11
@@ -244,8 +244,8 @@ SymBA*
    Time force original: 1500 seconds
 Conducting symbolic search Operator cost: 0 (real) bound = 2147483647
 Initialize abstraction hierarchy
-Mutex BDD BW Size(100000): 46
-Mutex BDD FW Size(100000): 9
+Mutex BDD BW Size(100000): 50
+Mutex BDD FW Size(100000): 7
 Initializing symbolic merge-and-shrink heuristic...
   Max num abstractions: 1
    Abs TRs Strategy: shrink_after_img
@@ -313,27 +313,33 @@ SMAS [10, 1]size after shrink 2, target 2
 SMAS [10, 1]computing distances using general-cost algorithm
 SMAS [10, 1]shrink from size 2 (threshold: 1)
 SMAS [10, 1]size after shrink 2, target 2
-TRs cost=0 (1):  127
+TRs cost=0 (1):  123
 TRs cost=1 (1):  204
 >> Step: original fw f=0, g=0
 >> Step: original bw f=0, g=0
 >> Step: original fw f=0, g=0
 >> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
->> Step: original fw f=0, g=0
-Solution found with cost 0 total time: 0.11s
-BOUND: 0 < 0, total time: 0.11s
-Actual search time: 0s [t=0.11s]
+BOUND: 1 < 2147483647, total time: 0.14s
+>> Step: original fw f=1, g=1
+>> Step: original fw f=1, g=1
+>> Step: original fw f=1, g=1
+>> Step: original fw f=1, g=1
+BOUND: 2 < 2147483647, total time: 0.14s
+>> Step: original fw f=2, g=2
+>> Step: original fw f=2, g=2
+Solution found with cost 2 total time: 0.14s
+BOUND: 2 < 2, total time: 0.14s
+Actual search time: 0s [t=0.14s]
 movesync#registerrequest#ev1  (0)
+moveinthelog#checkticket#ev2-ev3  (1)
 moveinthemodel#tausplit_3  (0)
-movesync#checkticket#ev2  (0)
 movesync#examinethoroughly#ev3  (0)
+moveinthemodel#examinecasually  (1)
 movesync#decide#ev4  (0)
 moveinthemodel#skip_5  (0)
 movesync#rejectrequest#ev5  (0)
-Plan length: 7 step(s).
-Plan cost: 0
+Plan length: 8 step(s).
+Plan cost: 2
 Expanded 0 state(s).
 Reopened 0 state(s).
 Evaluated 0 state(s).
@@ -342,8 +348,8 @@ Generated 0 state(s).
 Dead ends: 0 state(s).
 Search space hash size: 0
 Search space hash bucket count: 193
-Search time: 0.01s
-Total time: 0.11s
+Search time: 0.02s
+Total time: 0.14s
 Solution found.
 Peak memory: 247788 KB
 

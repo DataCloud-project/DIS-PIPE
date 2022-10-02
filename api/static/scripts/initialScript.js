@@ -29,6 +29,7 @@ function displayContent(){
 		cCheckingText.style.display = "none";
 		menu.style.display = "none";
 		content.style.maxWidth = "100%";
+		scanText.style.display = "none"
 		menuBtn.checked = false;
 		$("#highlight_trace").val('no').change();
 		$(".edge").find("path").attr('stroke', "#000000");
@@ -42,6 +43,7 @@ function displayContent(){
 		elanalysisText.style.display = "block";
 		cCheckingText.style.display = "none";
 		menu.style.display = "none";
+		scanText.style.display = "none"
 		content.style.maxWidth = "100%";
 		menuBtn.checked = false;
 	}
@@ -49,6 +51,16 @@ function displayContent(){
 		mapText.style.display = "none";
 		elanalysisText.style.display = "none";
 		cCheckingText.style.display = "block";
+		menu.style.display = "none";
+		scanText.style.display = "none"
+		content.style.maxWidth = "100%";
+		menuBtn.checked = false;
+	}
+	if (scan.checked == true) {
+		mapText.style.display = "none";
+		elanalysisText.style.display = "none";
+		cCheckingText.style.display = "none";
+		scanText.style.display = "block"
 		menu.style.display = "none";
 		content.style.maxWidth = "100%";
 		menuBtn.checked = false;

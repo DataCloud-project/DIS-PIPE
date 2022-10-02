@@ -125,7 +125,8 @@ body{
   transition: all .5s ease;
   background: transparent;
   border-radius: 12px;
-  height: 200px;
+  /* height: 200px; */
+  height: 267px;
 }
 
 .menu .list label{
@@ -165,6 +166,7 @@ body{
   text-decoration: underline;
 }
 
+#scan:checked ~ .list label.scan,
 #map:checked ~ .list label.map,
 #elanalysis:checked ~ .list label.elanalysis,
 #cChecking:checked ~ .list label.cChecking{
@@ -182,6 +184,9 @@ body{
 }
 #cChecking:checked ~ .list .slider{
   top: 135px;
+}
+#scan:checked ~ .list .slider{
+  top: 202px;
 }
 
 .content .text-content{
@@ -1105,4 +1110,292 @@ svg {
   stroke: #333;
   stroke-width: 1.5px;
   fill: none;
+}
+
+
+/* ####################################### */
+.col-first{
+  width: 70%;
+  /* border:2px solid black; */
+  float: left;
+}
+.col-second{
+  width: 30%;
+  /* border:2px solid black; */
+  float:left;
+}
+.container-fluid{
+  width: 100%;
+}
+
+#hideShowBtn {
+  width: 25%;
+  /* height: 10%; */
+  font-size: 13px;
+  text-align: center;
+}
+
+#sortBtn{
+  width: 35%;
+  font-size: 13px;
+  text-align: center;
+}
+
+#buttons-container{
+  /* width: 98%;
+  height: 20%;
+  margin-top: 0.5%; */
+}
+
+#deleteButton{
+  width: 10%;
+
+}
+
+#b-container{
+  /* width: 98%;
+  height: 30%;
+  margin-top: 1%; */
+}
+
+.form-control{
+  width: 10%;
+}
+
+#segment-container{
+  width: 98%;
+  height: 280px;
+  /* margin-top: -1%; */
+  /* border:2px solid black; */
+  /* border-right-style: outset; */
+  /* background-color: rgb(35, 36, 37); */
+  /* opacity: 0.85; */
+}
+
+#scroll-seg{
+  font-size: 16px;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+  width: 99%;
+  height: 234px;
+  margin-left: 1%;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: nowrap;
+  color:rgb(35, 36, 37);
+  /* color:rgb(228, 228, 228); */
+}
+
+#deleted-segment-container{
+  width: 98%;
+  height: 280px;
+  margin-bottom:1.5%;
+  /* border:2px solid black; */
+  /* border-right-style: outset; */
+  font-size: 18px;
+  /* font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: rgb(35, 36, 37); */
+  /* opacity: 0.85; */
+}
+
+#scroll-del-seg{
+  font-size: 16px;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+  width: 99%;
+  height: 234px;
+  margin-left: 1%;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: nowrap;
+  color:rgb(35, 36, 37);
+  /* color:rgb(228, 228, 228); */
+}
+
+.title_file{
+  width: 100%;
+  height: 32px;
+  margin-left: 1%;
+  margin-top: 1.5%;
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+}
+
+/* .title{
+  width: 100%;
+  height: 30px;
+  margin-left: 1%;
+  margin-top: 1.5%;
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: oblique;
+  font-weight: bold;
+  color:rgb(228, 228, 228);
+} */
+
+.title-rule{
+  width: 100%;
+  height: 30px;
+  margin-left: 1%;
+  margin-top: 3.5%;
+  font-size: 19px;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+  /* font-style: oblique; */
+  /* font-weight: bold; */
+  /* color:rgb(35, 36, 37); */
+}
+
+.sub-title{
+  font-size: 16px;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+  /* font-weight: bold; */
+  color:rgb(35, 36, 37);
+}
+
+#new_rule{
+  width: 100%;
+  height: 45%;
+  justify-content: center;
+  background-color: rgb(225, 236, 248);
+  opacity: 0.85;
+  margin-top: 4%;
+  border-radius: 4px;
+}
+
+.combobox{
+  width: 60%;
+  height: 20%;
+  margin-top: 2%;
+  margin-left:20%;
+  justify-content: center;
+}
+
+#button-apply{
+  margin-left: 25%;
+  margin-top: 8%;
+  width: 50%;
+  font-size: 13px;
+
+}
+
+#ruleId{
+  height: 290px;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+#rules{
+  height: 50%;
+  background-color: rgb(225, 236, 248);
+  opacity: 0.85;
+  margin-top: 5%;
+  border-radius: 4px;
+}
+
+.showDiv{
+  width: 300px;
+  height: 350px;
+  border:2px solid black;
+  border-right-style: outset; 
+  background-color:rgb(225, 236, 248);
+  opacity: 0.92;
+  position: absolute;
+  z-index: 3;
+  top: 250px;
+  left: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.showInfo{
+  width: 20%; /*80*/
+  height: 30%;
+  border:2px solid rgb(149, 172, 247);
+  background-color:rgb(180, 210, 241);
+  position: absolute;
+  z-index: 10;
+  top: 50px;
+  right: 40px;
+}
+
+ul.no-bullets {
+  list-style-type: none; 
+  padding: 0;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+#divSegBtn{
+  float: right;
+  margin-top: 2px;
+  margin-right: 1.5px;
+}
+
+#infoBtn{
+  float: right;
+  margin-top: 0.5px;
+  margin-right: 1.5px;
+}
+
+.alert{
+  position: absolute;
+  z-index: 3;
+  justify-content:center;
+}
+
+
+.table-hover tbody tr:hover td{
+  background-color: rgb(3, 160, 165);
+  opacity: 0.8;
+}
+
+.col-occ { 
+  width: 15%; 
+  /* text-align: center; */
+  font-size: 15px;  
+}
+
+.col-seg{
+  width: 85%;
+  text-align: left;
+  font-size: 15px;
+  padding-left: 25px;
+}
+
+#groupConstraints{
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+#nameConstraint{
+  font-style: oblique;
+  font-size: 14px;
+  margin-left: 8px;
+  margin-top: 15px;
+
+}
+
+#examples{
+  margin-top: 10px;
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+#explanation{
+  font-style: normal;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+#infoId{
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
 }

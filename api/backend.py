@@ -12,6 +12,10 @@ import subprocess
 import json
 import re
 
+from collections import Counter
+from utilities import *
+from rule import *
+import glob
 
 #IMAGES_FOLDER = os.path.join('static', 'images')
 LOGS_FOLDER = "/event logs"
@@ -75,7 +79,7 @@ with open('../properties.txt') as f:
     
 f.close()
 
-
+TIMESTAMP_FOLDER = 'timestamp/'
 import platform
 if platform.system() == "Windows":
         log_path = 'event logs\\running-example.xes'
@@ -1452,7 +1456,7 @@ def filter():
         info = (list(variants.values())[j][0])
         info = info.__getattribute__('attributes')
         # print(info)
-        #Apri la variante
+        
         if("variant-index" in info):
             # print(str(info['variant-index']))
             if(info['variant-index'] in varianti_array):
@@ -2367,8 +2371,10 @@ def generalTraceInfo():
 
     working_dir=os.getcwd()
 
-
-    os.chdir("./jar/fast-downward/src/plans")
+    # plans_path="./jar/fast-downward/src/plans" 
+    # plans_path="./jar/seq-opt-symba-2/plans"
+    global plans_path
+    os.chdir(plans_path)
     for fileName in glob.glob("*.txt"):
         # print(fileName)
         traceIndex=(fileName.replace("out","").replace(".txt",""))
@@ -2454,11 +2460,11 @@ def generalTraceInfo():
             elif(trace_to_analyse[0]=="moveinthelog"):
                 if trace_to_analyse[1].split("  ")[0].strip() not in dict_event:
                     dict_event[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
-                    # print("this will execute")
+                    
 
                 if (trace_to_analyse[1].split("  ")[0].strip()) not in dict_trace:
                     dict_trace[trace_to_analyse[1].split("  ")[0].strip()]=[0,0,0]  
-                    # print("this will execute")
+                    
 
                 if  trace_to_analyse[1].split("  ")[0].strip() not in temp_array:
                     temp_array.append(trace_to_analyse[1].split("  ")[0].strip())
@@ -2481,11 +2487,11 @@ def generalTraceInfo():
         temp_array=[]
     
     os.chdir(working_dir)
-    print(dict_event)
-    print("-----------------------------------------------") 
-    print(dict_trace)
-    print("---------------------------------------------------##########################-")
-    print(dict_skip_ins)
+    # print(dict_event)
+    # print("-----------------------------------------------") 
+    # print(dict_trace)
+    # print("-----------------------------------------------")
+    # print(dict_skip_ins)
 
 
     return str(dict_event)+"#"+str(dict_trace)+"#"+str(dict_skip_ins)
@@ -2496,7 +2502,7 @@ def mapPnml():
     import os
 
     costHeader=request.headers.get('Replace_content')
-    # print(costHeader)
+    
     replace_array=costHeader.split("#")
     # costJson = json.loads(costHeader)
 
@@ -2513,10 +2519,10 @@ def mapPnml():
             substi=line.replace(x,y)
         else:
             substi=line
-           # print(pro)
+           
         response=response+substi
 
-    # print(response)
+    
 
     f = open("./net/petri_final_remap.pnml", "w")
     f.write(response)
@@ -2544,7 +2550,7 @@ def createRemap():
 
     for line in trace:
         substi=line
-        # print(pro)
+        
         response=response+substi
 
     f = open("./net/petri_final_remap.pnml", "w")
@@ -2566,5 +2572,246 @@ def deleteRemap():
 
     return "prova"
 
+
+@app.route('/scan', methods=['POST'])
+def scan():
+
+    log = pm4py.read_xes(log_path)  
+    allXESActivities = []
+    for trace in log:
+        activities = []
+        for event in trace:
+            activities.append(event["concept:name"])
+        allXESActivities.append(activities)           
+    allActivities = []
+    actWithOccurence = []
+    c = Counter()
+    for act in allXESActivities:
+        c[tuple(act)] += 1
+        if act not in allActivities:
+            allActivities.append(act)        
+    listActivity = takeActions(allActivities) 
+    for elem in c:
+        list = [c[elem], elem]
+        actWithOccurence.append(list)    
+    clear()  
+    actWithOccurence = sortFirstAscendentOrder(actWithOccurence)
+    with open('segments.txt', 'w') as f:
+        i = 0
+        for line in actWithOccurence:
+            f.write(str(line))
+            f.write("segment_"+str(i))
+            f.write('\n')
+            i += 1
+    f.close()
+    replaceInFile("segments.txt")
+    fileHandle = open("segments.txt", "r")
+    texts = fileHandle.readlines()
+    fileHandle.close()
+    fileHandle = open("trace.txt", "w")
+    for s in texts:
+        fileHandle.write(s)
+    fileHandle.close()
+    timestamp = takeTimestamp()
+    with open(os.path.join(TIMESTAMP_FOLDER, 'log_' + timestamp + '.txt'), 'w+') as file:
+        file.write("UPLOAD: " + timestamp + "\n")
+    file.close()
+    # flash("Successfully loaded", "success")       
+    result = takeSegmentFromFile()
+    print(result)
+    print("start scan")
+    global nomeupload
+    return jsonify({"activity": listActivity, "nameFile": "ciaomare", "segments": result}) 
+
+
+@app.route('/scan/start_activity', methods=['POST'])
+def start_activity():
+    result, removeSegment = rule_start_activity()
+    return jsonify({"result": result, "remove": removeSegment}) 
+
+@app.route('/scan/end_activity', methods=['POST'])
+def end_activity():
+    result, removeSegment = rule_end_activity()
+    return jsonify({"result": result, "remove": removeSegment}) 
+          
+@app.route('/scan/existence', methods=['POST'])
+def existence():
+    result, removeSegment = rule_existence()
+    return jsonify({"result": result, "remove": removeSegment})  
+
+@app.route('/scan/absence', methods=['POST'])
+def absence():
+    result, removeSegment = rule_absence()
+    return jsonify({"result": result, "remove": removeSegment})               
+   
+@app.route('/scan/choice', methods=['POST'])
+def choice():
+    result, removeSegment = rule_choice()
+    return jsonify({"result": result, "remove": removeSegment})  
+
+@app.route('/scan/exclusive_choice', methods=['POST'])
+def exclusive_choice():
+    result, removeSegment = rule_exclusive_choice()
+    return jsonify({"result": result, "remove": removeSegment}) 
+
+@app.route('/scan/responded_existence', methods=['POST'])
+def responded_existence():
+    result, removeSegment = rule_responded_existence()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/response', methods=['POST'])
+def response():
+    result, removeSegment = rule_response()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/alternate_response', methods=['POST'])
+def alternate_response():
+    result, removeSegment = rule_alternate_response()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/chain_response', methods=['POST'])
+def chain_response():
+    result, removeSegment = rule_chain_response()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/precedence', methods=['POST'])
+def precedence():
+    result, removeSegment = rule_precedence()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/alternate_precedence', methods=['POST'])
+def alternate_precedence():
+    result, removeSegment = rule_alternate_precedence()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/chain_precedence', methods=['POST'])
+def chain_precedence():
+    result, removeSegment = rule_chain_precedence()
+    return jsonify({"result": result, "remove": removeSegment})  
+
+@app.route('/scan/co_existence', methods=['POST'])
+def co_existence():
+    result, removeSegment = rule_co_existence()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/succession', methods=['POST'])
+def succession():
+    result, removeSegment = rule_succession()
+    return jsonify({"result": result, "remove": removeSegment})     
+ 
+@app.route('/scan/alternate_succession', methods=['POST'])
+def alternate_succession():
+    result, removeSegment = rule_alternate_succession()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/chain_succession', methods=['POST'])
+def chain_succession():
+    result, removeSegment = rule_chain_succession()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/not_co_existence', methods=['POST'])
+def not_co_existence():
+    result, removeSegment = rule_not_co_existence()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/not_succession', methods=['POST'])
+def not_succession():
+    result, removeSegment = rule_not_succession()
+    return jsonify({"result": result, "remove": removeSegment})
+
+@app.route('/scan/not_chain_succession', methods=['POST'])
+def not_chain_succession():
+    result, removeSegment = rule_not_chain_succession()
+    return jsonify({"result": result, "remove": removeSegment})     
+
+@app.route('/scan/del_rule', methods=['POST'])
+def delete_rule():
+    result, removeSegment = del_rule()
+    order = request.form["order"]
+    if order == "ascending": result = sortDescendentOrder(result)
+    else: result = sortAscendentOrder(result)
+    writeOnSegmentFile(result)
+    return jsonify({"result": result, "remove": removeSegment}) 
+
+@app.route('/scan/write_apply', methods=['POST'])
+def write_apply():
+    fun = request.form["fun"]
+    act1 = request.form["act1"]
+    act2 = request.form["act2"]
+    list_of_files = glob.glob(TIMESTAMP_FOLDER + '/*') 
+    latest_file = max(list_of_files, key=os.path.getctime)
+    with open(latest_file, 'a') as file:
+        timestamp = takeTimestamp()
+        file.write("APPLY: " + timestamp + "," + fun + "," + act1 + "," + act2 + "\n")
+    file.close()
+    return render_template('index.html');
+
+@app.route('/scan/write_delete', methods=['POST'])
+def write_delete():
+    fun = request.form["fun"]
+    act1 = request.form["act1"]
+    act2 = request.form["act2"]
+    list_of_files = glob.glob(TIMESTAMP_FOLDER + '/*') 
+    latest_file = max(list_of_files, key=os.path.getctime)
+    with open(latest_file, 'a') as file:
+        timestamp = takeTimestamp()
+        file.write("DELETE: " + timestamp + "," + fun + "," + act1 + "," + act2 + "\n")
+    file.close()
+    return render_template('index.html');
+
+
+@app.route('/scan/show_trace', methods=['POST'])
+def show_trace():      
+    order = request.form["order"]
+    result = takeSegmentFromTrace()
+    removeSegment = []
+    if(order == "ascending"): result = sortDescendentOrder(result)
+    else: result = sortAscendentOrder(result)
+    writeOnSegmentFile(result)     
+    return jsonify({"result": result, "remove": removeSegment}) 
+    
+          
+@app.route('/scan/ascending_order', methods=['POST'])
+def ascending_order():
+    segments = takeSegmentFromFile()
+    remove = takeRemoveSegmentFromFile()
+    seg_ord = sortAscendentOrder(segments)
+    rem_ord = sortAscendentOrder(remove)
+    writeOnSegmentFile(seg_ord)
+    writeOnRemoveSegmentFile(rem_ord)
+    return jsonify({"result": seg_ord, "remove": rem_ord}) 
+
+@app.route('/scan/descending_order', methods=['POST'])
+def descending_order():
+    segments = takeSegmentFromFile()
+    remove = takeRemoveSegmentFromFile()
+    seg_ord = sortDescendentOrder(segments)
+    rem_ord = sortDescendentOrder(remove)
+    writeOnSegmentFile(seg_ord)
+    writeOnRemoveSegmentFile(rem_ord)
+    return jsonify({"result": seg_ord, "remove": rem_ord}) 
+          
+@app.route('/scan/download_file')      
+def download():
+    downloadFile()
+    list_of_files = glob.glob(TIMESTAMP_FOLDER + '/*') 
+    latest_file = max(list_of_files, key=os.path.getctime)
+    with open(latest_file, 'a') as file:
+        timestamp = takeTimestamp()
+        file.write("EXPORT: " + timestamp + "\n")
+    file.close()
+    return render_template('index.html');  
+
+@app.route('/scan/clear')
+def clearDiv():
+    clear()
+    list_of_files = glob.glob(TIMESTAMP_FOLDER + '/*') 
+    latest_file = max(list_of_files, key=os.path.getctime)
+    with open(latest_file, 'a') as file:
+        timestamp = takeTimestamp()
+        file.write("CLEAR: " + timestamp + "\n")
+    file.close()
+    return render_template('index.html');
+    
 
 app.run(host=path_f, port=int(port_n))
