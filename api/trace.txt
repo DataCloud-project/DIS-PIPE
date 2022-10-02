@@ -1,0 +1,36 @@
+1, 'Casting', 'Testing', 'Finishing',segment_0
+1, 'Baking', 'Baking',segment_1
+1, 'Glazing',),segment_2
+1, 'Finishing', 'Testing',segment_3
+1, 'Finishing',),segment_4
+2, 'Finishing', 'Testing', 'Baking',segment_5
+2, 'Casting', 'Testing', 'Glazing', 'Baking', 'Baking', 'Baking',segment_6
+3, 'Casting', 'Baking', 'Baking', 'Baking',segment_7
+3, 'Finishing', 'Testing', 'Glazing',segment_8
+5, 'Casting', 'Testing', 'Baking', 'Baking', 'Baking', 'Baking',segment_9
+8, 'Casting', 'Finishing', 'Baking', 'Baking',segment_10
+9, 'Casting', 'Baking', 'Baking',segment_11
+12, 'Testing', 'Baking', 'Baking',segment_12
+12, 'Testing', 'Glazing', 'Baking', 'Baking',segment_13
+13, 'Casting', 'Finishing', 'Baking',segment_14
+13, 'Testing', 'Glazing',segment_15
+14, 'Casting', 'Finishing', 'Testing', 'Baking', 'Baking', 'Baking',segment_16
+14, 'Glazing', 'Baking',segment_17
+20, 'Testing', 'Glazing', 'Baking',segment_18
+26, 'Casting', 'Glazing', 'Baking',segment_19
+29, 'Casting', 'Testing', 'Glazing', 'Baking', 'Baking',segment_20
+37, 'Casting', 'Testing', 'Baking', 'Baking', 'Baking',segment_21
+47, 'Casting', 'Finishing', 'Testing',segment_22
+53, 'Baking',),segment_23
+95, 'Casting', 'Finishing', 'Testing', 'Baking', 'Baking',segment_24
+103, 'Testing',),segment_25
+107, 'Casting', 'Testing', 'Glazing',segment_26
+119, 'Casting', 'Baking',segment_27
+255, 'Casting',),segment_28
+317, 'Casting', 'Testing', 'Baking', 'Baking',segment_29
+356, 'Casting', 'Finishing',segment_30
+359, 'Testing', 'Baking',segment_31
+449, 'Casting', 'Finishing', 'Testing', 'Baking',segment_32
+630, 'Casting', 'Testing', 'Glazing', 'Baking',segment_33
+793, 'Casting', 'Testing',segment_34
+5448, 'Casting', 'Testing', 'Baking',segment_35
