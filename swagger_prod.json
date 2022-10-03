@@ -1,0 +1,287 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DIS-PIPE",
+    "description": "For the protected end points, you need to genereate an access token (e.g. using postman) and provide it by opening \"Authorize\"",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://94.177.218.70:7779/"
+    }
+  ],
+  "paths": {
+    "/exportPipeline/{pipelineID}": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "summary": "Transfer from DIS-PIPE storage the DSL with pipelineID to DEF-PIPE remote storage",
+        "parameters": [
+          {
+            "name": "pipelineID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List workflow in the user's repository",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemplateListApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemplateListApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemplateListApiResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BooleanApiResult": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Canvas": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasElement"
+            },
+            "nullable": true
+          },
+          "resourceProviders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasProvider"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CanvasElement": {
+        "type": "object",
+        "properties": {
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JToken"
+            },
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/CanvasElementType"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CanvasElementType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "CanvasProvider": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "providerLocation": {
+            "type": "string",
+            "nullable": true
+          },
+          "mappingLocation": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JToken": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/JToken"
+        }
+      },
+      "ObjectId": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "machine": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "deprecated": true
+          },
+          "pid": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "deprecated": true
+          },
+          "increment": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "deprecated": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PublicRepoListApiResult": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Template": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sourceTemplateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "canvasTemplate": {
+            "nullable": true
+          },
+          "resourceProviders": {
+            "nullable": true
+          },
+          "public": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TemplateApiResult": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TemplateListApiResult": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Enter you your Keyclaok bearer token in the format bellow (don't forget the \"Bearer\")\n\n Bearer YOUR_ACCESS_TOKEN",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
