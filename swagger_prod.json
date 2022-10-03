@@ -5,6 +5,11 @@
     "description": "For the protected end points, you need to genereate an access token (e.g. using postman) and provide it by opening \"Authorize\"",
     "version": "v1"
   },
+  "servers": [
+    {
+      "url": "http://94.177.218.70:7779/"
+    }
+  ],
   "paths": {
     "/exportPipeline/{pipelineID}": {
       "get": {
