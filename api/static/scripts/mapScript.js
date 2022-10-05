@@ -31,30 +31,64 @@ var copia_sample
 // function used to update simultaneously the slider and the textarea
 function updateInfo(caso){
 	if(caso=="PP"){
-		sliderPP.value = outputPP.value
-		sliderPF.value = outputPP.value
-		outputPF.value =outputPP.value
-		outputPF.innerHTML =outputPP.value
+        if(!($.isNumeric(outputPP.value) && (parseInt(outputPP.value)>=1 && parseInt(outputPP.value)<=100))){
+            alert("The value inserted is not valid! Insert a number between 1 and 100")
+        }else{
+            sliderPP.value = outputPP.value
+            sliderPF.value = outputPP.value
+            outputPF.value =outputPP.value
+            outputPF.innerHTML =outputPP.value
+
+            $(".change_form").css("visibility", "visible");
+            $(".dis_submit").addClass("dosubmit");
+            $(".dis_submit").attr('disabled', false);
+        }
+
 	}else if(caso=="PF"){
-		sliderPF.value = outputPF.value
-		sliderPP.value = outputPF.value
-		outputPP.value =outputPF.value
-		outputPP.innerHTML =outputPF.value
+        if(!($.isNumeric(outputPF.value) && (parseInt(outputPF.value)>=1 && parseInt(outputPF.value)<=100))){
+            alert("The value inserted is not valid! Insert a number between 1 and 100")
+        }else{
+            sliderPF.value = outputPF.value
+            sliderPP.value = outputPF.value
+            outputPP.value =outputPF.value
+            outputPP.innerHTML =outputPF.value
+
+            $(".change_form").css("visibility", "visible");
+            $(".dis_submit").addClass("dosubmit");
+            $(".dis_submit").attr('disabled', false);
+        }
+
 	}else if(caso=="AF"){
-		sliderAF.value = outputAF.value
-		sliderAP.value = outputAF.value
-		outputAP.value =outputAF.value
-		outputAP.innerHTML =outputAF.value
+        if(!($.isNumeric(outputAF.value) && (parseInt(outputAF.value)>=1 && parseInt(outputAF.value)<=100))){
+            alert("The value inserted is not valid! Insert a number between 1 and 100")
+        }else{
+            sliderAF.value = outputAF.value
+            sliderAP.value = outputAF.value
+            outputAP.value =outputAF.value
+            outputAP.innerHTML =outputAF.value
+
+            $(".change_form").css("visibility", "visible");
+            $(".dis_submit").addClass("dosubmit");
+            $(".dis_submit").attr('disabled', false);
+        }
+
 	}else if(caso=="AP"){
-		sliderAP.value = outputAP.value
-		sliderAF.value = outputAP.value
-		outputAF.value =outputAP.value
-		outputAF.innerHTML =outputAP.value
+        if(!($.isNumeric(outputAP.value) && (parseInt(outputAP.value)>=1 && parseInt(outputAP.value)<=100))){
+            alert("The value inserted is not valid! Insert a number between 1 and 100")
+        }else{
+            sliderAP.value = outputAP.value
+            sliderAF.value = outputAP.value
+            outputAF.value =outputAP.value
+            outputAF.innerHTML =outputAP.value
+
+            $(".change_form").css("visibility", "visible");
+            $(".dis_submit").addClass("dosubmit");
+            $(".dis_submit").attr('disabled', false);
+        }
+        
 	}
 
-	$(".change_form").css("visibility", "visible");
-	$(".dis_submit").addClass("dosubmit");
-	$(".dis_submit").attr('disabled', false);
+
 
 
 }

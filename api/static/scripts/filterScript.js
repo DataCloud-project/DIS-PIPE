@@ -359,14 +359,22 @@ function dateMachRegex(date) {
 }
 
 async function asyncCall() {
-//   console.log('calling');
-//   await $("#disappear_loading").css("visibility", "visible");
-    await $("#loadingMessage").css("visibility", "visible");
-//   document.getElementById("loadingMessage").style.visibility = "visible";	
-//   const result = await applyFilter();
-
-    $("#triggerFilterSpan").click()
-    // expected output: "resolved"
+    if(document.getElementById("perf_filter_div").style.display == "block" && (!($.isNumeric($("#input_max").val())) || !($.isNumeric($("#input_min").val())))){
+        if(!($.isNumeric($("#input_max").val()))){
+            alert("The max value inserted is not valid! Insert a number")
+        }
+        if(!($.isNumeric($("#input_min").val()))){
+            alert("The min value inserted is not valid! Insert a number")
+        }
+    }else{
+        //console.log('calling');
+        //await $("#disappear_loading").css("visibility", "visible");
+        await $("#loadingMessage").css("visibility", "visible");
+        //document.getElementById("loadingMessage").style.visibility = "visible";	
+        //const result = await applyFilter();
+        $("#triggerFilterSpan").click()
+        // expected output: "resolved"
+    }
 }
 
 function triggerInvisibleFunction(){
@@ -461,6 +469,7 @@ function applyFilter() {
     // console.log(end_tf)																		//min_event max_event				
     // console.log(start_tf)
 
+
     var filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
 
                                         "&filterPerf="+filtered_perf+		"&perfFrame="+pf_selected+	"&min="+String(min_sec)+		"&max="+String(max_sec)+
@@ -509,6 +518,7 @@ function applyFilter() {
 
     }
     if(filtered_perf){
+
         if(pf_selected=="caseDuration"){
             $('#history_span').attr("hidden", false); 	
             var idvalue="valore"+String(indice)
@@ -561,6 +571,7 @@ function applyFilter() {
         
     }
     indice=indice+1;
+    
     filtered_timeframe=false
     filtered_perf=false
     filtered_attribute=false

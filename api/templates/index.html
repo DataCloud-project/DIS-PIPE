@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/cCheckingScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/mapScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/scanScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/checkScript.js') }}"></script>
 
     <!-- Fontawesome CDN Link -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
@@ -122,8 +123,8 @@ function checkRefresh()
 					<span class="topic">Conformance Checking</span>
 				</label>
 				<label for="scan" class="scan" onclick="scanRequest()">
-					<i class="fas fa-check-double"></i>
-					<span class="topic">Scan section</span>
+					<i class="fa-solid fa-sliders"></i>
+					<span class="topic">Scan</span>
 				</label>
 				<div class="slider"></div>
 			</div>
@@ -216,13 +217,13 @@ function checkRefresh()
 											<center>
 											<input type="hidden" id='tabTypeFreq' name='tabType' value="frequency">
 											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF">
-											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2"  id="pathF"></textarea>%
+											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2"  id="pathF" onchange="checkPercentage('PF')"></textarea>%
 											<button class="setPath" type="button" style="width: 70px; " id="setPathF" onclick="updateInfo('PF')">set Path</button>
 											
 											<br><br>
 
 											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF">
-											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actF"></textarea>%
+											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
 											<button type="button" style="width: 95px; " id="setActF" onclick="updateInfo('AF')">set Activities</button>
 											<br>
 											
@@ -265,13 +266,13 @@ function checkRefresh()
 											<center>
 											<input type="hidden" id='tabTypePerf' name='tabType' value="performance">
 											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP'>
-											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="pathP"></textarea>% 
+											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="pathP" onchange="checkPercentage('PP')"></textarea>% 
 											<button class="setPath" type="button" style="width: 70px; " id="setPathP" onclick="updateInfo('PP')">set Path</button>
 											<br><br>
 											
 											
 											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP'>
-											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actP"></textarea>%
+											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
 											<button type="button" style="width: 95px; " id="setActP" onclick="updateInfo('AP')">set Activities</button>
 											<br>
 											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
@@ -500,7 +501,7 @@ function checkRefresh()
 								<br />
 								<label id="label_input_min" for="input_min">Minimum duration: <small>(Use cases running longer than)</small></label>
 								<br />
-								<input type="number" id="input_min" name="input_min" step="any" />
+								<input type="number" id="input_min" name="input_min" step="any" onchange="checkPerformanceFilter('min')"/>
 								<select id="select_time_1" name="select_time_1" class="dropdown dropdown_width_performance_ms" style="padding: 3px">
 									<option value="mills">Milliseconds</option>
 									<option value="seconds">Seconds</option>
@@ -513,7 +514,7 @@ function checkRefresh()
 								<br />
 								<label id="label_input_max" for="input_max">Maximum duration: <small>(Use cases running shorter than)</small></label>
 								<br />
-								<input type="number" id="input_max" name="input_max" step="any" />
+								<input type="number" id="input_max" name="input_max" step="any" onchange="checkPerformanceFilter('max')"/>
 								<select id= "select_time_2" name="select_time_2" class="dropdown dropdown_width_performance_ms" style="padding: 3px">
 									<option value="mills">Milliseconds</option>
 									<option value="seconds">Seconds</option>
@@ -731,7 +732,7 @@ function checkRefresh()
 								<br>
 								<span>Filter Applied</span>
 								<br>
-								<button type="button" class="btn" onclick="closeLoading()">Close</button>
+								<button type="button" class="btn closeButton"  onclick="closeLoading()">Close</button>
 								</center>
 							</div>
 						</div>
@@ -742,7 +743,7 @@ function checkRefresh()
 								<br>
 								<span>Filter Removed</span>
 								<br>
-								<button type="button" class="btn" onclick="closeRemove()">Close</button>
+								<button type="button" class="btn closeButton" onclick="closeRemove()">Close</button>
 								</center>
 							</div>
 						</div>
@@ -767,24 +768,23 @@ function checkRefresh()
 					<div class="cChecking text" id="cChecking-text">
 					 	<div class="title"> Conformance Checking</div>
 
-						<span id="back_slide_conf" style="font-size: 23px;
-							color: #6d50e2; position: absolute;
-							cursor: pointer;
-							font-size: 23px;
-							top: 35px;
-							border-radius: 3px;
-							z-index: 3;
-							border: 3px #6d50e2;
-							right: 130px; visibility: hidden;" onclick="backToPersonalize()">
+						<button id="back_slide_conf" style="position: absolute; top: 35px; 
+						right: 12%; font-size: 16px; width: 7%; cursor: pointer; z-index: 3; visibility: hidden;" onclick="backToPersonalize()">
+							Back🔙
+					 	</button>
+						<button id="info_check_conformance" style="position: absolute; top: 35px;
+						right: 4%; font-size: 16px; width: 7%; cursor: pointer; z-index: 3; visibility: hidden;" onclick="do_check_conformance()">
+							Detailsℹ️
+						</button>
+
+						<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
+						
+						<!-- <button id="check_conformance" onchange="displayTracePopUp()">Details</button> -->
 						 
-							<i style="border: 3px #1e7524;" class="fa fa-chevron-left"></i>
-					 	</span>
-
-						 <input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
-						 <label for="check_conformance"> 
-							 <i class="fa fa-info" aria-hidden="true" id="btn_conformance" style="visibility: hidden;"></i>
-						 </label>
-
+						<!-- <button id="check_conformance" style="position: absolute; 
+						right: 30%; font-size: 16px; width: 7%; cursor: pointer;" onclick="displayTracePopUp()">
+							Details
+					 	</button> -->
 						
 
 						<!-- <input type="checkbox" id="check_tabs">
@@ -877,15 +877,24 @@ function checkRefresh()
 
 										<div class="column-col center2-col" >
 											
-										
-								
 											<span>Cost for disalignment activities</span><br>
 											<!-- <span>Cost to add/remove activities in/from trace</span><br> -->
 											<select id="disalignment_log" onchange="changedisalignment_select()">
 												
 											</select>
-											<textarea class="vmiddle" name="move_model" id="move_model" cols="3" rows="1" onchange="changedisalignment_dictionary('model')"></textarea>
-											<textarea class="vmiddle" name="move_log" id="move_log" cols="3" rows="1" onchange="changedisalignment_dictionary('log')"></textarea>
+											<table>
+												<tr>
+												  <td style="border: none; background-color: #dad3f8;">Model</td>
+												  <td style="border: none; background-color: #dad3f8;">&zwnj; &zwnj; &zwnj; &zwnj; </td>
+												  <td style="border: none; background-color: #dad3f8;"><textarea class="vmiddle" name="move_model" id="move_model" cols="3" rows="1" onchange="changedisalignment_dictionary('model')"></textarea></td>
+												</tr>
+												<tr>
+												  <td style="border: none; background-color: #dad3f8;">Log</td>
+												  <td style="border: none; background-color: #dad3f8;">&zwnj; &zwnj; &zwnj; &zwnj;</td>
+												  <td style="border: none; background-color: #dad3f8;"><textarea class="vmiddle" name="move_log" id="move_log" cols="3" rows="1" onchange="changedisalignment_dictionary('log')"></textarea></td>
+												</tr>
+											</table>
+										
 											<br>
 											<br>
 											<input type="checkbox" id="discard_check" name="" value="True">
@@ -913,17 +922,17 @@ function checkRefresh()
 											<textarea placeholder="max" disabled class="vmiddle" name="max len" id="maxlen" cols="4" rows="1"></textarea>
 										
 											<br><br>
-											<input type="checkbox" id="trace_date" value="True"  onchange="trace_date_filter()">
-											<label for="trace_date"> Filter date</label>
+											<input style="display: none;" type="checkbox" id="trace_date" value="True"  onchange="trace_date_filter()">
+											<label style="display: none;" for="trace_date"> Filter date</label>
 											<br>
 										
 											<!-- <span id="define_date" style="color: grey;">Define date</span> -->
 											
-											<span class="d_date" style="color: grey; padding-right: 4px;">Min: </span>
-											<input type="datetime-local" disabled id="mindate" name="min-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
+											<span class="d_date" style="display: none; color: grey; padding-right: 4px;">Min: </span>
+											<input style="display: none;" type="datetime-local" disabled id="mindate" name="min-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
 											<br>
-											<span class="d_date" style="color: grey;">Max:</span>
-											<input type="datetime-local" disabled id="maxdate" name="max-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
+											<span class="d_date" style="display: none; color: grey;">Max:</span>
+											<input style="display: none;" type="datetime-local" disabled id="maxdate" name="max-time" value="2018-06-07T00:00:00" min="2010-01-01T00:00:00" max="2021-12-31T00:00:00" step="1">
 											<!-- <textarea placeholder="min" disabled class="vmiddle" name="min date" id="mindate" cols="4" rows="1"></textarea>
 											<textarea placeholder="max" disabled class="vmiddle" name="max date" id="maxdate" cols="4" rows="1"></textarea> -->
 										
@@ -1168,9 +1177,9 @@ function checkRefresh()
 										<div class="title-rule" style="text-align:center">Add new constraint</div>
 										<div id="first-combobox" class="combobox">
 											<div class="sub-title">Select constraint
-												<button id="infoId" onclick ="showInfo();" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+												<!-- <button id="infoId" onclick ="showInfo();" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
 													<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-												</svg></button>
+												</svg></button> -->
 											</div>
 											<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="selectFun" onclick="selectFunction();" disabled>                          
 												<option value="Start">Start(a)</option>
@@ -1223,8 +1232,8 @@ function checkRefresh()
 									</div>
 									<div id="rules">
 										<div class="title-rule" style="text-align:center">List of constraints</div>
-										<button type="button" class="btn btn-danger btn btn-default" float="right" style="margin-left:85%; margin-top:-12%; display: inline-block" data-toggle="confirmation" data-placement="bottom"
-										onclick="deleteBtn();" id="deleteBtnId" disabled><label><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+										<button type="button" class="btn btn-danger btn btn-default" float="right" style="margin-left:85%; margin-top:-12%; display: inline-block; cursor: pointer;" data-toggle="confirmation" data-placement="bottom"
+										onclick="deleteBtn();" id="deleteBtnId" disabled><label style="cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 13">
 											<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 										  </svg></label></button>
 										<div class="alert alert-danger alert-dismissible fade show" id="error_no_rule" style="display:none" role="alert">
@@ -1402,7 +1411,7 @@ function checkRefresh()
 	var endPoint = {x:0,y:0};;
 	var scale = 1;
 
-	svgContainer.onmousewheel = function(e) {
+	svgContainer.onwheel = function(e) {
 		e.preventDefault();
 		var w = viewBox.w;
 		var h = viewBox.h;
@@ -1504,7 +1513,7 @@ function checkRefresh()
 	var endPoint2 = {x:0,y:0};;
 	var scale2 = 1;
 
-	svgContainer2.onmousewheel = function(e) {
+	svgContainer2.onwheel = function(e) {
 	e.preventDefault();
 	var w = viewBox2.w;
 	var h = viewBox2.h;

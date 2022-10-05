@@ -449,6 +449,7 @@ function backToPersonalize(){
     document.getElementById("map2-content").style.display = "none";
 
     $("#back_slide_conf").css('visibility','hidden');
+    $("#info_check_conformance").css('visibility','hidden');
     $("#btn_conformance").css('visibility','hidden');
 
 }
@@ -497,11 +498,13 @@ function addTransitionName(){
         log_array.push("None");
         for (let i = 0; i < tr_array.length; i++) {
 
+            
             if(tr_array[i][1]=="None"){
-                $("#pnml_log_table").append("<tr style='background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][0]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][0].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
+                $("#pnml_log_table").append("<tr style=' display: none; background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][0]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][0].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
             }else{
                 $("#pnml_log_table").append("<tr style='background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][1]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][1].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
             } 
+            
             
 
             // console.log(tr_array[i][1])
@@ -683,10 +686,15 @@ function closePP2(){
 
 
 function showResultonDFG(){
+ 
+
+    if(checkPlannerChosen() && checkDisalignmentMove() && checkTraceLengthFilter()) {
 
     $("#loadingMessage").css("visibility", "visible");
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 	setTimeout(() => {
+
+    $('#trace_selected').find('option').remove()
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
@@ -696,6 +704,7 @@ function showResultonDFG(){
 
     $("#btn_conformance").css('visibility', 'visible');
     $("#back_slide_conf").css('visibility', 'visible');
+    $("#info_check_conformance").css('visibility','visible');
     
     
     var response2 = document.getElementById("digraphF").innerHTML
@@ -1038,7 +1047,7 @@ function showResultonDFG(){
 
 	}, 10);
 
-
+    
 }
 
 function openInfoCc(e) {
@@ -1051,7 +1060,7 @@ function openInfoCc(e) {
     //popup.style.top= "10%"
     //popup.style.left= "47%"
     pop.style.zIndez = "15";
-    
+    }
 }	
 
 

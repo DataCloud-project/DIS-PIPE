@@ -599,12 +599,23 @@ width: 100%;
 }
 
 .dropdown_width_performance {
-  width: 77%;
+  width: 80%;
 }
 
 .dropdown_width_performance_ms {
-  width: 20%;
+  width: 30%;
 }
+#input_min {
+  width: 50%;
+}
+#input_max {
+  width: 50%
+}
+.closeButton{
+  width: 50%;
+  font-size: 13px;
+}
+
 
 .dosubmit:hover{
   background-color: #7a4791;

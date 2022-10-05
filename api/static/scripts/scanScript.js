@@ -19,8 +19,7 @@ function scanListener(){
             if(j==response["segments"][i].length-1) {
                 hideRes = $('<tr class="hideAll" style="display: none;" onclick="seeDiv(this)" id="hideResult'+response["segments"][i][j]+'"><td class="col-occ">'+ response["segments"][i][0] + '</td><td class="col-seg">' + response["segments"][i][j] + '</td></tr>');  
                 hideRes.id = 'hideResult'+ response["segments"][i][j]; 
-            }
-            if(j==response["segments"][i].length-2){
+            }else if(j==response["segments"][i].length-2){
                 risp=risp+response["segments"][i][j]
             }else{
                 risp=risp+response["segments"][i][j]+", "
@@ -29,7 +28,7 @@ function scanListener(){
             
         }
         document.getElementById("table-seg-body").innerHTML=document.getElementById("table-seg-body").innerHTML+
-         "<tr class='all'><td>"+response["segments"][i][0]+"</td><td>"+risp+"</td></tr>"
+         "<tr class='all'><td class='col-occ'>"+response["segments"][i][0]+"</td><td class='col-seg'>"+risp+"</td></tr>"
         $('#table-seg-body').append(hideRes);
     }
 
