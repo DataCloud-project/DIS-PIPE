@@ -1,0 +1,40 @@
+This is a nonunit task.
+reading input... [t=0.01s]
+Simplifying transitions... done!
+done reading input! [t=0.01s]
+building causal graph...done! [t=0.01s]
+packing state variables...Variables: 11
+Bytes per state: 4
+done! [t=0.01s]
+done initalizing global data [t=0.01s]
+Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+Initializing blind search heuristic...
+f = 0 [1 evaluated, 0 expanded, t=0.01s, 3756 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0.01s, 3756 KB]
+Solution found!
+Actual search time: 0s [t=0.01s]
+movesync#registerrequest#ev1  (0)
+moveinthemodel#tausplit_3  (0)
+movesync#checkticket#ev2  (0)
+movesync#examinethoroughly#ev3  (0)
+movesync#decide#ev4  (0)
+moveinthemodel#skip_5  (0)
+movesync#rejectrequest#ev5  (0)
+Plan length: 7 step(s).
+Plan cost: 0
+Initial state h value: 0.
+Expanded 8 state(s).
+Reopened 0 state(s).
+Evaluated 20 state(s).
+Evaluations: 20
+Generated 22 state(s).
+Dead ends: 0 state(s).
+Expanded until last jump: 0 state(s).
+Reopened until last jump: 0 state(s).
+Evaluated until last jump: 1 state(s).
+Generated until last jump: 0 state(s).
+Number of registered states: 20
+Search time: 0s
+Total time: 0.01s
+Solution found.
+Peak memory: 3760 KB

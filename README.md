@@ -19,9 +19,8 @@ In particular, the functionalities provided by DIS-PIPE include:
 
 <!--- The architecture of the DIS-PIPE consists of two software components referred to as [DIS-PIPE-Event-Log-Manager](https://github.com/DataCloud-project/DIS-PIPE-Event-Log-Manager) and [DIS-PIPE-Discovery-And-Visualization](https://github.com/DataCloud-project/DIS-PIPE-Discovery-And-Visualization) as shown in the figure below. -->
 
-DIS-PIPE consists of two Web APIs implemented using Python and **Flask**[^1]:
-  - **backend.py**: uses the PM4PY library[^2] and Process Discovery algorithms to find a suitable process model that describes the order of events/activities of a given event log. In particular, for Process Discovery it has been used the DFG[^3] algorithm, that, together with some input parameters, returns a Digraph in DOT language format.  
-  - **frontend.py**: exposes a web application implemented using **html, css and javascript** and communicates with **backend.py** to receive the results of Process Discovery on the base of user inputs. In particular, it uses the Viz.js[^4] library to represents the DOT language format. 
+DIS-PIPE consists of a Web API implemented using Python and **Flask**[^1]:
+  - **backend.py**: uses the PM4PY library[^2] and Process Discovery algorithms to find a suitable process model that describes the order of events/activities of a given event log. In particular, for Process Discovery it has been used the DFG[^3] algorithm, that, together with some input parameters, returns a Digraph in DOT language format. It also exposes a web application implemented using **html, css and javascript**. It uses the Viz.js[^4] library to represents the DOT language format. 
 
 Specifically, it provides a graphical user interface for importing event logs in the IEEE Standard for eXtensible Event Stream (XES) format and executing the functionalities by leveraging a drag-and-drop workbench. The architecture of DIS-PIPE can be summarized in the figure below. 
 
@@ -77,12 +76,11 @@ or
 conda info --envs.
 ```
 ## To use the code
-1. Open two different terminals or Anaconda Prompts.
-2. Activate "pm4py_env" in both of them.
+1. Open terminal or Anaconda Prompt.
+2. Activate "pm4py_env".
 3. Change directory to go in the "api" folder downloaded.
-4. Run: ```python backend.py``` in one terminal or prompt;
-5. Run: ```python frontend.py``` in the other one.
-6. Go to your browser on http://127.0.0.1:8080/
+4. Run: ```python backend.py``` in terminal or prompt;
+5. Go to your browser on http://127.0.0.1:8080/
 
 ## NOTE
 If there is an error saying <br />
