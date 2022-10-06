@@ -104,7 +104,7 @@ The DIS-PIPE tool is deployed on a single host as shown in the figure below. Fro
 The ```exportPipeline(pipelineID)``` REST-API can be invoked at: http://94.177.218.70:7780/
 
 ## User Guide
-Work in Progress.
+See the [example](https://github.com/DataCloud-project/DIS-PIPE/tree/main/example) folder for instructions on how to run your first data pipeline discovery.
 
 ## Contributing
 
