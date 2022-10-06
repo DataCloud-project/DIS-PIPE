@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}">
+	<!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myStyle.css') }}">
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/durFreqScript.js') }}"></script>
@@ -16,7 +18,7 @@
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<title>Index</title>
+	<title>DIS-PIPE</title>
 </head>
 
 <!-- Da sconosciuto
@@ -778,6 +780,11 @@ function checkRefresh()
 					<div class="cChecking text" id="cChecking-text">
 					 	<div class="title"> Conformance Checking</div>
 
+						<div class="slidecontainer">
+							<input type="range" min="1" max="500" value="100" class="sliderZoom" id="myRange2">
+							<p style="font-size: 10px;">Zoom: <span id="demo2"></span>%</p>
+						</div>
+
 						<button id="back_slide_conf" style="position: absolute; top: 35px; 
 						right: 12%; font-size: 16px; width: 7%; cursor: pointer; z-index: 3; visibility: hidden;" onclick="backToPersonalize()">
 							Back🔙
@@ -1505,14 +1512,19 @@ function checkRefresh()
 
 <script>
 	//ZOOM MAP2 
+	var slider2 = document.getElementById("myRange2");
+	var output2 = document.getElementById("demo2");
 	const zvgZoom2 = document.getElementById("graphContainer2");
+	
+
+	output2.innerHTML = slider2.value;
 
 	const svgContainer2 = document.getElementById("map-content2");
 	//console.log(svgContainer2);
 
 	var viewBox2 = {x:0,y:0,w:"1920",h:"1080"};
-	var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
-	zvgZoom2.setAttribute('viewBox', attr);
+	var attr2 = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+	zvgZoom2.setAttribute('viewBox', attr2);
 
 
 	//const svgSize = {w:zvgZoom2.style.width,h:zvgZoom2.style.height};
@@ -1524,55 +1536,82 @@ function checkRefresh()
 	var scale2 = 1;
 
 	svgContainer2.onwheel = function(e) {
-	e.preventDefault();
-	var w = viewBox2.w;
-	var h = viewBox2.h;
-	var mx = e.offsetX;//mouse x  
-	var my = e.offsetY;    
-	var dw = -w*Math.sign(e.deltaY)*0.05;
-	var dh = -h*Math.sign(e.deltaY)*0.05;
-	var dx = dw*mx/svgSize2.w;
-	var dy = dh*my/svgSize2.h;
-	viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w-dw,h:viewBox2.h-dh};
-	scale2 = svgSize2.w/viewBox2.w;
-	   slider.value = scale2*100;
-	   output.innerHTML = slider.value;
-	//   zoomValue.innerText = String(Math.round(scale2*100)/100);
-	var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
-	zvgZoom2.setAttribute('viewBox', attr);
+		e.preventDefault();
+		var w = viewBox2.w;
+		var h = viewBox2.h;
+		var mx = e.offsetX;//mouse x  
+		var my = e.offsetY;    
+		var dw = -w*Math.sign(e.deltaY)*0.05;
+		var dh = -h*Math.sign(e.deltaY)*0.05;
+		var dx = dw*mx/svgSize2.w;
+		var dy = dh*my/svgSize2.h;
+		viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w-dw,h:viewBox2.h-dh};
+		scale2 = svgSize2.w/viewBox2.w;
+		slider2.value = scale2*100;
+		output2.innerHTML = slider2.value;
+		//   zoomValue.innerText = String(Math.round(scale2*100)/100);
+		var attr2 = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+		zvgZoom2.setAttribute('viewBox', attr2);
 	}
 
 
 	svgContainer2.onmousedown = function(e){
-	isPanning2 = true;
-	startPoint2 = {x:e.x,y:e.y};   
+		isPanning2 = true;
+		startPoint2 = {x:e.x,y:e.y};   
 	}
 
 	svgContainer2.onmousemove = function(e){
-	if (isPanning2){
-	endPoint2 = {x:e.x,y:e.y};
-	var dx = (startPoint2.x - endPoint2.x)/scale2;
-	var dy = (startPoint2.y - endPoint2.y)/scale2;
-	var movedViewBox = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};
-	var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
-	zvgZoom2.setAttribute('viewBox', attr);
-	}
+		if (isPanning2){
+			endPoint2 = {x:e.x,y:e.y};
+			var dx = (startPoint2.x - endPoint2.x)/scale2;
+			var dy = (startPoint2.y - endPoint2.y)/scale2;
+			var movedViewBox = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};
+			var attr2 = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+			zvgZoom2.setAttribute('viewBox', attr2);
+		}
 	}
 
 	svgContainer2.onmouseup = function(e){
-	if (isPanning2){ 
-	endPoint2 = {x:e.x,y:e.y};
-	var dx = (startPoint2.x - endPoint2.x)/scale2;
-	var dy = (startPoint2.y - endPoint2.y)/scale2;
-	viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};   
-	var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
-	zvgZoom2.setAttribute('viewBox', attr);
-	isPanning2 = false;
-	}
+		if (isPanning2){ 
+			endPoint2 = {x:e.x,y:e.y};
+			var dx = (startPoint2.x - endPoint2.x)/scale2;
+			var dy = (startPoint2.y - endPoint2.y)/scale2;
+			viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w,h:viewBox2.h};   
+			var attr = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+			zvgZoom2.setAttribute('viewBox', attr);
+			isPanning2 = false;
+		}
 	}
 
 	svgContainer2.onmouseleave = function(e){
-	isPanning2 = false;
+		isPanning2 = false;
+	}
+
+	var lastNum2 = 0;
+	var v2;
+	slider2.oninput = function(e) {
+
+		if(lastNum2 < this.value) {
+				v2 = -500;
+		} else {
+			v2 = 500;
+		}
+		lastNum2 = this.value;
+		
+		var w = viewBox2.w;
+		var h = viewBox2.h;
+		var mx = 0;//mouse x  
+		var my = 0;
+		var dw = -w*Math.sign(v2)*0.05;
+		var dh = -h*Math.sign(v2)*0.05;
+		var dx = dw*mx/svgSize2.w;
+		var dy = dh*my/svgSize2.h;
+		viewBox2 = {x:viewBox2.x+dx,y:viewBox2.y+dy,w:viewBox2.w-dw,h:viewBox2.h-dh};
+		scale2 = svgSize2.w/viewBox2.w;
+		slider2.value = scale2*100;
+		output2.innerHTML = slider2.value;
+		var attr2 = String(viewBox2.x)+" "+String(viewBox2.y)+" "+String(viewBox2.w)+" "+String(viewBox2.h);
+		zvgZoom2.setAttribute('viewBox', attr2);
 	}
 </script>
 
