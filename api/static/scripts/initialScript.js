@@ -69,6 +69,11 @@ function displayContent(){
 
 function cCheckingComputation(){
 	$("#loadingMessage").css("visibility", "visible");
+
+	$("#back_slide_conf").css('visibility','hidden');
+    $("#info_check_conformance").css('visibility','hidden');
+    $("#btn_conformance").css('visibility','hidden');
+
 	setTimeout(() => {
 	//
 		petriRequest();

@@ -167,6 +167,13 @@ function getAllUsedVariables(variable){
 
 	var caseid = Object.keys(JSON.parse(uv_dictionary[3]));
 	var variant = Object.keys(JSON.parse(uv_dictionary[4]));
+	document.getElementById("variants_original").innerHTML=String(variant.length)
+	
+	if(variant.length==0){
+		console.log("inside")
+		variant=document.getElementById("variants_alternative").innerHTML.replace("[","").replace("]","").split(",")
+	}
+	//console.log(variant)
 
 	// console.log(obj[0]);
 	// var mean_duration=duration_dictionary[0];

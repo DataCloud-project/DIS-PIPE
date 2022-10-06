@@ -94,6 +94,9 @@ if platform.system() == "Linux":
         marking_path="net/marking.txt"
         cost_file_path="jar/cost_file"
 
+app.config["CACHE_TYPE"] = "null"
+
+
 def home(file):
     global nomeupload 
     # global first
@@ -103,11 +106,11 @@ def home(file):
     # first=1
     # global start_case
     # start_case=False
- 
-    return render_template("index.html", \
+    return (render_template("index.html", \
         stringF = "", \
         stringP = "", \
         traceDt = "", \
+        varalternative ="",\
         stringDuration = "", \
         stringUsedVarible = "", \
         stringEdgeDuration = "", \
@@ -123,7 +126,8 @@ def home(file):
         perf_checked = "false" , \
         path = http, \
         filename = file, \
-        nameupload = nomeupload     ) 
+        nameupload = nomeupload     ) )
+
 
 
 
@@ -946,6 +950,9 @@ def variants():
     variantsDict = variantsDict.replace('True','"True"')
     variantsDict = variantsDict.replace('False','"False"')
 
+    print("vediamo se funziona")
+    print(variantsDict)
+
     return variantsDict
 
 
@@ -986,6 +993,7 @@ def filter():
         attrFrameFilt = request.args.get('attrFilt') #
 
         list_attr= request.args.get('listattr') #
+        plusMode= request.args.get('plusmode')
 
     list_attr=list_attr.replace("@",".")
               
@@ -1173,10 +1181,11 @@ def filter():
     resource_list=[]
     cost_list=[]
     cost_list_2=[]
-    variant_list=[]
+    
     caseId_list=[]
     resource_list=list_attr.split(",")
    
+    variant_list=[]
 
     if filterAttr == "true":
 
@@ -1275,7 +1284,13 @@ def filter():
             variant_list=list_attr.split(",")
             # log = xes_importer.apply(log_path)
             variants = variants_filter.get_variants(log) 
-            filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "variant", attributes_filter.Parameters.POSITIVE: True})
+            print(plusMode)
+            if(plusMode=="1"):
+                print("sonoinplusmode")
+                filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "concept:name", attributes_filter.Parameters.POSITIVE: True})
+            else:
+                print("sonoinmodenormale")
+                filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "variant", attributes_filter.Parameters.POSITIVE: True})
             log = filtered_log
 
 
@@ -1443,7 +1458,7 @@ def filter():
     '''
 
 
-
+    alternative_variants_array=[]
     varianti_array=[]
     variants = variants_filter.get_variants(log)
     variantsDict = '{'
@@ -1462,11 +1477,14 @@ def filter():
             if(info['variant-index'] in varianti_array):
                 variantsDict = variantsDict + '"' + str(max(varianti_array)+1) + '": ['
                 varianti_array.append(max(varianti_array)+1)
+                alternative_variants_array.append(max(varianti_array)+1)
             else:
                 variantsDict = variantsDict + '"' + str(info['variant-index']) + '": ['
                 varianti_array.append(info['variant-index'])
+                alternative_variants_array.append(info['variant-index'])
         else:
             # print("else  "+str(j))
+            alternative_variants_array.append(j)
             variantsDict = variantsDict + '"' + str(j) + '": ['
         
         for i in range(0, cases):
@@ -1513,7 +1531,7 @@ def filter():
     # result=str(variantsDict)
     # print(variantsDict)
     # start_case=True
-    return result   
+    return result+"£"+str(alternative_variants_array)   
 
     # ******************************************************************************
     # ******************************************************************************
@@ -1528,7 +1546,7 @@ def usedvariable():
     resources = attributes_filter.get_attribute_values(log, "org:resource")
     resources_cost = json.dumps(attributes_filter.get_attribute_values(log, "resourceCost")) 
     caseid = attributes_filter.get_trace_attribute_values(log, "concept:name")
-    variant = attributes_filter.get_trace_attribute_values(log, "variant")
+    variant = attributes_filter.get_trace_attribute_values(log, "Variant")
 
     stringX = str(str(activities)+"*"+str(resources)+"*"+str(resources_cost)+"*"+str(caseid)+"*"+str(variant)).replace("'",'"')
 
@@ -1912,7 +1930,9 @@ def initialAction():
     variants = variants_filter.get_variants(log)
     # global start_case
     # start_case= False
-
+    
+    alternative_variants_array=[]
+    
     
     variantsDict = '{'
 
@@ -1925,8 +1945,17 @@ def initialAction():
         info = info.__getattribute__('attributes')
         #Apri la variante
         if("variant-index" in info):
+            print(str(info['variant-index']))
+            var_ind=(info['variant-index'])
+            
+
+            alternative_variants_array.append(var_ind)
             variantsDict = variantsDict + '"' + str(info['variant-index']) + '": ['
+            
         else:
+            
+            alternative_variants_array.append(j)
+
             variantsDict = variantsDict + '"' + str(j) + '": ['
         
         for i in range(0, cases):
@@ -1975,6 +2004,7 @@ def initialAction():
     variantsDict = variantsDict.replace('False','"False"')
 
     varianti=(variantsDict)
+
     #variants fine_______________________________________________________________________________________________________________________
 
 
@@ -1983,7 +2013,7 @@ def initialAction():
 
     #___________________________________________________________________________
 
-    return grafo_frequency+"£"+grafo_performance+"£"+variabili_usare+"£"+activity_durata+"£"+varianti+"£"+durata_edge+"£"+activity_frequency+"£"+frequency_edge
+    return grafo_frequency+"£"+grafo_performance+"£"+variabili_usare+"£"+activity_durata+"£"+varianti+"£"+durata_edge+"£"+activity_frequency+"£"+frequency_edge+"£"+str(alternative_variants_array)
 
 
 @app.route('/swipeRemoveAction', methods=['GET', 'POST'])
@@ -2037,7 +2067,7 @@ def swipeRemoveAction():
     # global start_case
     # start_case= False
 
-    
+    alternative_variants_array=[]
     variantsDict = '{'
 
     j=0
@@ -2050,8 +2080,10 @@ def swipeRemoveAction():
         #Apri la variante
         if("variant-index" in info):
             variantsDict = variantsDict + '"' + str(info['variant-index']) + '": ['
+            alternative_variants_array.append(info['variant-index'])
         else:
             variantsDict = variantsDict + '"' + str(j) + '": ['
+            alternative_variants_array.append(j)
         
         for i in range(0, cases):
             info = (list(variants.values())[j][i])
@@ -2102,7 +2134,7 @@ def swipeRemoveAction():
 
 
 
-    return grafo_frequency+"£"+grafo_performance+"£"+varianti
+    return grafo_frequency+"£"+grafo_performance+"£"+varianti+"£"+str(alternative_variants_array)
 
 
 
@@ -2186,6 +2218,7 @@ def conformanceChecking():
             else:
                 f.write(index[1].lower().replace(" ", "")+" 1 1")    
             f.write('\n')
+        #f.write("none"+" 0 0") remove comment to consider invisible transitions
         f.close()
 
     return str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst)

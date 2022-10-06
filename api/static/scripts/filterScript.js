@@ -18,7 +18,6 @@ function change_filter_type(){
         document.getElementById("attribute_text").style.visibility = "visible";
     }else if (document.getElementById("filter_by").value == "variants"){
         var ar_Act=getAllUsedVariables("variant")
-        
         document.getElementById("mfa2").style.visibility = "hidden";
         document.getElementById("mode_for_attribute").style.visibility = "hidden";
         document.getElementById("attribute_text").style.visibility = "hidden";
@@ -98,6 +97,7 @@ function showEvents(varKey, caseKey) {
     //  console.log(allEvents[0]['concept:name'])
         var parameter_dicitionary={}
         var indx=0
+        var remove_index
         allEvents.forEach((e) => {
         //dates.push(new Date(e["time:timestamp"]));
 
@@ -107,6 +107,7 @@ function showEvents(varKey, caseKey) {
         
         //console.log(e);
         //console.log(Object.entries(e));
+        
         
         if(i==0){
             // tableHTML += "<th><h6>Activity</h6><hr><br></th><th><h6>Resource</h6><hr><br></th>" ;
@@ -122,7 +123,14 @@ function showEvents(varKey, caseKey) {
                 }else{
                     parameter_dicitionary[attr[0]]=indx
                     indx=indx+1
-                    tableHTML += "<th><h6>"+ attr[0] +"</h6><hr><br></th>" ;
+                    if(attr[0]=="Activity"){
+                        remove_index=indx
+                    }else if(attr[0]=="concept:name"){
+                        tableHTML += "<th><h6>"+ "step" +"</h6><hr><br></th>" ;
+                    }else{
+                        tableHTML += "<th><h6>"+ attr[0] +"</h6><hr><br></th>" ;
+                    }
+                    
                 }
                 // }else {
                 
@@ -160,12 +168,15 @@ function showEvents(varKey, caseKey) {
         // console.log(e)
         for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
             // console.log(inv_map[kf]);
-            if(e[inv_map[kf]]!=undefined){
-                tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
-                // console.log(e[inv_map[kf]]);
-            }else{
-                tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
+            if(inv_map[kf]!="Activity"){
+                if(e[inv_map[kf]]!=undefined){
+                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
+                    // console.log(e[inv_map[kf]]);
+                }else{
+                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
+                }                
             }
+
             
             
         }
@@ -468,18 +479,54 @@ function applyFilter() {
 
     // console.log(end_tf)																		//min_event max_event				
     // console.log(start_tf)
+    var listToFilter_plus=[]
+    var plus_mode="0"
+    var filtro=""
+
+    if(af_selected=='variants' && document.getElementById("variants_original").innerHTML==String(0)){
+        plus_mode="1"
+        var real_filter=document.getElementById("variants_info").innerHTML
+        data_filter_attr = JSON.parse(real_filter);
+        
+        for(var key_variant in listToFilter) {
+            console.log("la variante considerata è "+listToFilter[key_variant])
+            console.log("insieme dati in variante ")
+            var key_variant_used=listToFilter[key_variant].trim()
+            console.log(data_filter_attr[key_variant_used])
+            
+            for(var index in data_filter_attr[key_variant_used]){
+
+                console.log("indice dati variante ")
+                console.log(data_filter_attr[key_variant_used][index])
+                console.log(String(Object.keys(data_filter_attr[key_variant_used][index])))
+                listToFilter_plus.push(String(Object.keys(data_filter_attr[key_variant_used][index])))
+                //console.log(listToFilter_plus)
+            }
+        }
+        
+        filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
+
+        "&filterPerf="+filtered_perf+		"&perfFrame="+pf_selected+	"&min="+String(min_sec)+		"&max="+String(max_sec)+
+                                                                    "&minevent="+String(min)+		"&maxevent="+String(max)+
+                                        
+        "&filterAttr="+filtered_attribute +	"&attrFrame="+af_selected +	"&attrFilt="+af_selected_mode+	"&listattr="+listToFilter_plus + "&plusmode="+plus_mode
 
 
-    var filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
+        
+    }else{
+
+    filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
 
                                         "&filterPerf="+filtered_perf+		"&perfFrame="+pf_selected+	"&min="+String(min_sec)+		"&max="+String(max_sec)+
                                                                                                     "&minevent="+String(min)+		"&maxevent="+String(max)+
                                                                         
-                                        "&filterAttr="+filtered_attribute +	"&attrFrame="+af_selected +	"&attrFilt="+af_selected_mode+	"&listattr="+listToFilter
-
-                                        
+                                        "&filterAttr="+filtered_attribute +	"&attrFrame="+af_selected +	"&attrFilt="+af_selected_mode+	"&listattr="+listToFilter + "&plusmode="+plus_mode
+                                    }
+                                  
     history_crono[String(indice)]=filtro
 
+    listToFilter=[]
+    listToFilter_plus=[]
     // console.log(history_crono)
     // console.log(history_crono.length)
     oReq.open("GET",frontend+filtro, false);

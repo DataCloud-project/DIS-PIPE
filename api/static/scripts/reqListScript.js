@@ -16,6 +16,8 @@ function swipeRemoveListener () {
 	document.getElementById("digraphF").innerHTML = arrayResponse[0];
 	document.getElementById("digraphP").innerHTML = arrayResponse[1];
 	var response = arrayResponse[2];
+	document.getElementById("variants_alternative").innerHTML = arrayResponse[3];
+	change_filter_type()
 	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
 	
 		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
@@ -161,6 +163,7 @@ function initialListener () {
 	document.getElementById("allEdgeDt").innerHTML = arrayResponse[5];
 	document.getElementById("allFq").innerHTML = arrayResponse[6];
 	document.getElementById("allEdgeFq").innerHTML = arrayResponse[7];
+	document.getElementById("variants_alternative").innerHTML = arrayResponse[8];
 	// console.log(arrayResponse[7])
 	var response = arrayResponse[4];
 	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
@@ -169,19 +172,21 @@ function initialListener () {
 		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
 		variantsInfo = response.split("|||")[2];
 		// console.log(variantsInfo)
+		document.getElementById("variants_info").innerHTML=variantsInfo
 	}
 	else{
 		
 		variantsInfo = response;
+		document.getElementById("variants_info").innerHTML=variantsInfo
 	}
   
-	// console.log(variantsInfo)
+	console.log(variantsInfo)
 	json = JSON.parse(variantsInfo);
-	// console.log("Total response log: "+variantsInfo.length);
+	console.log("Total response log: "+variantsInfo.length);
 
 	allVariants = Object.keys(json);
-	// console.log("Total variants: " +String(allVariants.length));
-	// console.log("tutte varianti: "+allVariants)
+	console.log("Total variants: " +String(allVariants.length));
+	console.log("tutte varianti: "+allVariants)
 
 	total_trace_number=0
 	total_event_number=0
@@ -347,16 +352,24 @@ function perfRequest() {
 function reqListener3 () {
 	var dates = [];
 	var response = this.responseText;
+	
+	var arrayResponse=this.responseText.split("£")
+	var response=arrayResponse[0]
+	document.getElementById("variants_alternative").innerHTML = arrayResponse[1];
+	change_filter_type()
+
 	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
 	
 		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
 		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
 		variantsInfo = response.split("|||")[2];
 		// console.log(variantsInfo)
+		document.getElementById("variants_info").innerHTML=variantsInfo
 	}
 	else{
 		
 		variantsInfo = response;
+		document.getElementById("variants_info").innerHTML=variantsInfo
 	}
   
 	// console.log(variantsInfo)

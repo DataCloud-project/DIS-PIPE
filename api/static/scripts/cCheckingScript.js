@@ -38,10 +38,16 @@ function backPopUp(){
         console.log(r3[name_activity][1]) 
         
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
+        var temp1=(r3[name_activity][1]).sort(function(a,b){
+                a=a.replace("Trace ","")
+                b=b.replace("Trace ","")
+                return parseInt(a)-parseInt(b)})
         
+        console.log(temp1)
     
-        for (var i = 0; i < r3[name_activity][1].length; i++) {
-            innerHTMLcode=innerHTMLcode+"<div>"+r3[name_activity][1][i]+"</div>" 
+        for (var i = 0; i < temp1.length; i++) {
+            
+            innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
         }
 
         document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
@@ -53,9 +59,15 @@ function backPopUp(){
         
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
         
-    
-        for (var i = 0; i < r3[name_activity][0].length; i++) {
-            innerHTMLcode=innerHTMLcode+"<div>"+r3[name_activity][0][i]+"</div>" 
+        temp2=(r3[name_activity][0]).sort(function(a,b){
+            a=a.replace("Trace ","")
+            b=b.replace("Trace ","")
+            return parseInt(a)-parseInt(b)})
+        console.log(temp2)
+
+        for (var i = 0; i < temp2.length; i++) {
+            
+            innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
         }
 
         document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
@@ -82,6 +94,9 @@ function updateInfoListener(){
 
     r3 = response[2]
     r3 = JSON.parse(r3.replace(/'/g,"\""));
+
+    console.log("allora r3?")
+    console.log(r3);
 
     
 
@@ -116,9 +131,13 @@ function updateInfoListener(){
                 
                 innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
                 
+                var temp1=(r3[name_activity][1]).sort(function(a,b){
+                    a=a.replace("Trace ","")
+                    b=b.replace("Trace ","")
+                    return parseInt(a)-parseInt(b)})
             
-                for (var i = 0; i < r3[name_activity][1].length; i++) {
-                    innerHTMLcode=innerHTMLcode+"<div>"+r3[name_activity][1][i]+"</div>" 
+                for (var i = 0; i < temp1.length; i++) {
+                    innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
                 }
 
                 document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
@@ -129,10 +148,13 @@ function updateInfoListener(){
                 //console.log(r3[name_activity][0]) 
                 
                 innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
-                
+                temp2=(r3[name_activity][0]).sort(function(a,b){
+                    a=a.replace("Trace ","")
+                    b=b.replace("Trace ","")
+                    return parseInt(a)-parseInt(b)})
             
-                for (var i = 0; i < r3[name_activity][0].length; i++) {
-                    innerHTMLcode=innerHTMLcode+"<div>"+r3[name_activity][0][i]+"</div>" 
+                for (var i = 0; i < temp2.length; i++) {
+                    innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
                 }
 
                 document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
@@ -353,13 +375,14 @@ function traceListener() {
 	document.getElementById("traceDt").innerHTML = this.responseText;
     var traceNameList=this.responseText.split("#")
     
-    listSort=traceNameList.sort()
+    var listSort=traceNameList.sort(function(a,b){
+        return parseInt(a)-parseInt(b)})
 
-    $('#selectBox').append($('<option>').val("out"+traceNameList[0]+".txt").text("out"+traceNameList[0]+".txt"))
+    $('#selectBox').append($('<option>').val("out"+listSort[0]+".txt").text("out"+listSort[0]+".txt"))
    
-    for (let i = 0; i < traceNameList.length; i++) {
+    for (let i = 0; i < listSort.length; i++) {
           
-        $('#trace_selected').append($('<option>').attr('value',"out"+traceNameList[i]+".txt").text("Trace "+traceNameList[i]))
+        $('#trace_selected').append($('<option>').attr('value',"out"+listSort[i]+".txt").text("Trace "+listSort[i]))
     }
     
     
@@ -495,7 +518,7 @@ function addTransitionName(){
     backDivForm();
     
     if(inizio==0){
-        log_array.push("None");
+        //log_array.push("None"); REMOVE COMMENT to have possibility to map to invisible
         for (let i = 0; i < tr_array.length; i++) {
 
             
@@ -1055,8 +1078,8 @@ function openInfoCc(e) {
 // When the user clicks, open the popup
     var pop=document.getElementById("myPopup_cChecking")
     // popup.classList.toggle("show");
-    pop.style.left = e.clientX-100+200 + "px";
-    pop.style.top = (e.clientY-280) + "px";
+    pop.style.left = e.clientX+50 + "px";
+    pop.style.top = (e.clientY-150) + "px";
     //popup.style.top= "10%"
     //popup.style.left= "47%"
     pop.style.zIndez = "15";

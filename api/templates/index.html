@@ -67,11 +67,18 @@ window.onload = function () {
 function checkRefresh()
 {
 		// This is a fresh page load
+		
+
 		document.refreshForm.visited.value = "1";
 		if (document.readyState == "complete") { 
 			document.getElementById("loadingMessage").style.visibility = "hidden";	
 		}	
 		console.log("doing reload")
+		
+		$('input,textarea').attr('autocomplete', 'off');
+
+		
+		
 		var oReq = new XMLHttpRequest();
 
     	//oReq.addEventListener("load", jarListener);
@@ -165,6 +172,9 @@ function checkRefresh()
 						<p id='total' style='display:none'>{{ total }}</p>
 						<p id='traceDt' style='display:none'>{{ traceDt }}</p>
 						<p id='segmenti' style='display:none'>{{ segments }}</p>
+						<p id='variants_alternative' style='display:none'>{{ varalternative }}</p>
+						<p id='variants_original' style='display:none'></p>
+						<p id='variants_info' style='display:none'> </p>
 						
 						<div class="slidecontainer">
 						  <input type="range" min="1" max="500" value="100" class="sliderZoom" id="myRange">
@@ -1006,10 +1016,10 @@ function checkRefresh()
 										<span>Event log file: </span>
 										<span id="log_name" style="color: red;">{{ nameupload }}</span>
 										<br>
-
+										 
 										<span style="display: none;">Alignment time: </span>
 										<span id="alignment_time" style="color: blue; display: none;"> 110 ms. </span>
-										<br>
+										<!--<br> -->
 
 										<span>Alignment cost: </span>
 										<span id="alignment_cost" style="color: blue;"> 7 </span>
@@ -1025,7 +1035,7 @@ function checkRefresh()
 
 										</select>
 										<br>
-										<br>
+										
 										<span>Highlight trace: </span>
 										<select id="highlight_trace" name="highlight_trace" onchange="highlightTrace()">
 											<option value="yes">Yes</option>

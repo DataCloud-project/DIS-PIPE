@@ -15,7 +15,7 @@ body{
   /*align-items: center;*/
   /*justify-content: center;*/
   background: #dad3f8;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 ::selection{
@@ -707,7 +707,8 @@ width: 100%;
 }
 
 .right {
-  width: 55%;
+  max-width: 52%;
+  max-height:80vh;
   overflow: auto;
   float: left;
   /* padding-right: 10px; */
@@ -1125,6 +1126,12 @@ svg {
 
 #myPopup_cChecking{
   max-height: 400px;
+}
+
+#history_div{
+  max-height: 45vh;
+  overflow: auto;
+  
 }
 
 
