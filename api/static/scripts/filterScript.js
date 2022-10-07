@@ -1,5 +1,5 @@
 var history_crono={};
-var indice=0;
+
 var listToFilter=[]
 
 function change_filter_type(){
@@ -296,6 +296,8 @@ function openForm(id) {
 		document.getElementById("endpoints_filter_div").style.display = "none";
 		document.getElementById("attribute_filter_div").style.display = "none";
 		document.getElementById("follower_filter_div").style.display = "none";
+        document.getElementById("all_filters_button").style.display = "block";
+        $("#myForm").removeClass("form-popup-scan");
 		break;
 	  case 'perf_filter':
 		document.getElementById("filter_title").innerHTML = "Performance";
@@ -304,6 +306,8 @@ function openForm(id) {
 		document.getElementById("endpoints_filter_div").style.display = "none";
 		document.getElementById("attribute_filter_div").style.display = "none";
 		document.getElementById("follower_filter_div").style.display = "none";
+        document.getElementById("all_filters_button").style.display = "block";
+        $("#myForm").removeClass("form-popup-scan");
 		break;
 	  case 'endpoints_filter':
 		document.getElementById("filter_title").innerHTML = "Endpoints";
@@ -312,6 +316,8 @@ function openForm(id) {
 		document.getElementById("perf_filter_div").style.display = "none";
 		document.getElementById("attribute_filter_div").style.display = "none";
 		document.getElementById("follower_filter_div").style.display = "none";
+        document.getElementById("all_filters_button").style.display = "block";
+        $("#myForm").removeClass("form-popup-scan");
 		break;
 	  case 'attribute_filter':
 		document.getElementById("filter_title").innerHTML = "Attribute";
@@ -320,15 +326,21 @@ function openForm(id) {
 		document.getElementById("perf_filter_div").style.display = "none";
 		document.getElementById("endpoints_filter_div").style.display = "none";
 		document.getElementById("follower_filter_div").style.display = "none";
+        document.getElementById("all_filters_button").style.display = "block";
+        $("#myForm").removeClass("form-popup-scan");
 		
 		break;
 	  case 'follower_filter':
-		document.getElementById("filter_title").innerHTML = "Follower";
+		document.getElementById("filter_title").innerHTML = "Rule";
 		document.getElementById("follower_filter_div").style.display = "block";
 		document.getElementById("timeframe_filter_div").style.display = "none";
 		document.getElementById("perf_filter_div").style.display = "none";
 		document.getElementById("endpoints_filter_div").style.display = "none";
 		document.getElementById("attribute_filter_div").style.display = "none";
+        document.getElementById("all_filters_button").style.display = "none";
+        $("#myForm").addClass("form-popup-scan");
+
+        scanRequest();
 		break;
 	  default:
 		document.getElementById("filter_title").innerHTML = "Sorry, there has been an error. No filter has been applied yet.";
@@ -337,6 +349,7 @@ function openForm(id) {
 }
 
 function closeForm() {
+    deleteBtn()
     document.getElementById("myForm").style.display = "none";
     document.getElementById("blocker").style.display = "none";
     document.getElementById("check_filter").checked = false;
@@ -633,6 +646,24 @@ function applyFilter() {
     $("#loadingMessage").css("visibility", "hidden");
     document.getElementById("myLoading").style.display = "block";
     document.getElementById("blocker2").style.display = "block";
+
+    $("#myPathP").val("100");
+    $("#myActP").val("100");
+    $("#myPathF").val("100");
+    $("#myActF").val("100");
+    document.getElementById("pathP").innerHTML="100"
+    document.getElementById("actP").innerHTML="100"
+    document.getElementById("pathF").innerHTML="100"
+    document.getElementById("actF").innerHTML="100"
+    outputPF.innerHTML = sliderPF.value;
+    outputPP.innerHTML = sliderPP.value;
+    outputAF.innerHTML = sliderAF.value;
+    outputAP.innerHTML = sliderAP.value;
+
+    outputPF.value = sliderPF.value;
+    outputPP.value = sliderPP.value;
+    outputAF.value = sliderAF.value;
+    outputAP.value = sliderAP.value;
     // })
 
 

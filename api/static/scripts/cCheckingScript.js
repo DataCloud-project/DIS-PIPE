@@ -31,43 +31,64 @@ function backPopUp(){
                                                         "</table>"
 
                                                         
-    $("#skip_act").text(r1[name_activity][1] )
-    $("#ins_act").text(r1[name_activity][2] )
-    $("#mean_skip_act").text(r2[name_activity][1] ).click(function(){
+
+
+    if(name_activity in r1){
+        $("#skip_act").text(r1[name_activity][1] )
+        $("#ins_act").text(r1[name_activity][2] )
+    }else{
+        $("#skip_act").text("0" )
+        $("#ins_act").text("0" )
+    }
+
+    if(name_activity in r2){
+        var r2_name_Act_1=r2[name_activity][1]
+        var r2_name_Act_2=r2[name_activity][2]
+    }else{
+        var r2_name_Act_1="0"
+        var r2_name_Act_2="0"
+    }
+
+    $("#mean_skip_act").text(r2_name_Act_1 ).click(function(){
         
         console.log(r3[name_activity][1]) 
         
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
-        var temp1=(r3[name_activity][1]).sort(function(a,b){
-                a=a.replace("Trace ","")
-                b=b.replace("Trace ","")
-                return parseInt(a)-parseInt(b)})
         
-        console.log(temp1)
-    
-        for (var i = 0; i < temp1.length; i++) {
+        if(name_activity in r2){
+            var temp1=(r3[name_activity][1]).sort(function(a,b){
+                    a=a.replace("Trace ","")
+                    b=b.replace("Trace ","")
+                    return parseInt(a)-parseInt(b)})
             
-            innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
+            console.log(temp1)
+        
+            for (var i = 0; i < temp1.length; i++) {
+                
+                innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
+            }
         }
 
         document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
     
     });
-    $("#mean_ins_act").text(r2[name_activity][2] ).click(function(){ 
+    $("#mean_ins_act").text(r2_name_Act_2 ).click(function(){ 
         
         console.log(r3[name_activity][0]) 
         
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
         
-        temp2=(r3[name_activity][0]).sort(function(a,b){
-            a=a.replace("Trace ","")
-            b=b.replace("Trace ","")
-            return parseInt(a)-parseInt(b)})
-        console.log(temp2)
+        if(name_activity in r2){
+            temp2=(r3[name_activity][0]).sort(function(a,b){
+                a=a.replace("Trace ","")
+                b=b.replace("Trace ","")
+                return parseInt(a)-parseInt(b)})
+            console.log(temp2)
 
-        for (var i = 0; i < temp2.length; i++) {
-            
-            innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
+            for (var i = 0; i < temp2.length; i++) {
+                
+                innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
+            }
         }
 
         document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
@@ -121,40 +142,58 @@ function updateInfoListener(){
             //console.log(element_id);
             var selected_element=$(this).find("text").text().trim()
             name_activity=selected_element.replaceAll(" ","").toLowerCase()
-            //console.log(name_activity)
-            //console.log(r1[name_activity])
-            $("#skip_act").text(r1[name_activity][1] )
-            $("#ins_act").text(r1[name_activity][2] )
-            $("#mean_skip_act").text(r2[name_activity][1] ).click(function(){
+            console.log(name_activity)
+            console.log(r1[name_activity])
+            if(name_activity in r1){
+                $("#skip_act").text(r1[name_activity][1] )
+                $("#ins_act").text(r1[name_activity][2] )
+            }else{
+                $("#skip_act").text("0" )
+                $("#ins_act").text("0" )
+            }
+
+            if(name_activity in r2){
+                var r2_name_Act_1=r2[name_activity][1]
+                var r2_name_Act_2=r2[name_activity][2]
+            }else{
+                var r2_name_Act_1="0"
+                var r2_name_Act_2="0"
+            }
+            $("#mean_skip_act").text(r2_name_Act_1 ).click(function(){
                 
                 //console.log(r3[name_activity][1]) 
                 
                 innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
+                if(name_activity in r2){
+                    var temp1=(r3[name_activity][1]).sort(function(a,b){
+                        a=a.replace("Trace ","")
+                        b=b.replace("Trace ","")
+                        return parseInt(a)-parseInt(b)})
                 
-                var temp1=(r3[name_activity][1]).sort(function(a,b){
-                    a=a.replace("Trace ","")
-                    b=b.replace("Trace ","")
-                    return parseInt(a)-parseInt(b)})
-            
-                for (var i = 0; i < temp1.length; i++) {
-                    innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
+                    for (var i = 0; i < temp1.length; i++) {
+                        innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
+                    }
                 }
+
 
                 document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
             
             });
-            $("#mean_ins_act").text(r2[name_activity][2] ).click(function(){ 
+            $("#mean_ins_act").text(r2_name_Act_2 ).click(function(){ 
                 
                 //console.log(r3[name_activity][0]) 
                 
                 innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
-                temp2=(r3[name_activity][0]).sort(function(a,b){
-                    a=a.replace("Trace ","")
-                    b=b.replace("Trace ","")
-                    return parseInt(a)-parseInt(b)})
-            
-                for (var i = 0; i < temp2.length; i++) {
-                    innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
+                
+                if(name_activity in r2){
+                    temp2=(r3[name_activity][0]).sort(function(a,b){
+                        a=a.replace("Trace ","")
+                        b=b.replace("Trace ","")
+                        return parseInt(a)-parseInt(b)})
+                
+                    for (var i = 0; i < temp2.length; i++) {
+                        innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
+                    }
                 }
 
                 document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
@@ -466,6 +505,8 @@ function nextDivForm(){
 }
 
 function backToPersonalize(){
+    document.getElementById("slidercontainer_cChecking").style.display = "none"
+
     $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
     document.getElementById("formConformanceChecking2").style.display = "block";
@@ -685,7 +726,11 @@ function closePP2(){
         //console.log(titolo)
         //console.log(color_dictionary[titolo])
 
-        if(color_dictionary[titolo]==0){
+        if(!(titolo in color_dictionary)){
+            $("#"+item.id).find("polygon").attr('stroke',"#187F00")
+            color_node_highlight[item.id]="#187F00"
+
+        }else if(color_dictionary[titolo]==0){
             $("#"+item.id).find("polygon").attr('stroke',"#187F00")
             color_node_highlight[item.id]="#187F00"
         }else if(color_dictionary[titolo]<=0.1){
@@ -716,6 +761,8 @@ function showResultonDFG(){
     $("#loadingMessage").css("visibility", "visible");
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 	setTimeout(() => {
+
+    document.getElementById("slidercontainer_cChecking").style.display = "block"
 
     $('#trace_selected').find('option').remove()
 
@@ -1240,6 +1287,7 @@ window.onchange = function() {
 			document.getElementById("attribute_text").innerHTML = "";
 	}
 	
+    /*
 	var check_require = document.getElementById("require_for_follower");
 	if (check_require.checked) {
 		document.getElementById("mode_for_follower").disabled = false;
@@ -1261,5 +1309,5 @@ window.onchange = function() {
 		document.getElementById("select_time_3").disabled = true;
 		document.getElementById("input_time_follower").disabled = true;
 	}
-		
+	*/
 }

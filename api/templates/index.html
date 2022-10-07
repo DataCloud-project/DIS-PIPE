@@ -69,13 +69,33 @@ window.onload = function () {
 function checkRefresh()
 {
 		// This is a fresh page load
-		
+		$("#firstpagemap").click();
+		$("#myRange").val("100");
+		$("#myPathP").val("100");
+		$("#myActP").val("100");
+		$("#myPathF").val("100");
+		$("#myActF").val("100");
+		document.getElementById("pathP").innerHTML="100"
+		document.getElementById("actP").innerHTML="100"
+		document.getElementById("pathF").innerHTML="100"
+		document.getElementById("actF").innerHTML="100"
+		outputPF.innerHTML = sliderPF.value;
+		outputPP.innerHTML = sliderPP.value;
+		outputAF.innerHTML = sliderAF.value;
+		outputAP.innerHTML = sliderAP.value;
+
+		outputPF.value = sliderPF.value;
+		outputPP.value = sliderPP.value;
+		outputAF.value = sliderAF.value;
+		outputAP.value = sliderAP.value;
+		$("#check_tabs").prop("checked", false);
+		document.getElementById("demo").innerHTML="100"
 
 		document.refreshForm.visited.value = "1";
 		if (document.readyState == "complete") { 
 			document.getElementById("loadingMessage").style.visibility = "hidden";	
 		}	
-		console.log("doing reload")
+		
 		
 		$('input,textarea').attr('autocomplete', 'off');
 
@@ -119,7 +139,7 @@ function checkRefresh()
 			<input type="radio" name="slider" id="cChecking" onclick="displayContent()">
 			<input type="radio" name="slider" id="scan" onclick="displayContent()">
 			<div class="list" id="list">
-				<label for="map" class="map">
+				<label id="firstpagemap" for="map" class="map">
 					<i class="fas fa-sitemap"></i>
 					<span class="topic">Map</span>
 				</label>
@@ -131,7 +151,7 @@ function checkRefresh()
 					<i class="fas fa-check-double"></i>
 					<span class="topic">Conformance Checking</span>
 				</label>
-				<label for="scan" class="scan" onclick="scanRequest()">
+				<label style="display: none;" for="scan" class="scan" onclick="scanRequest()">
 					<i class="fa-solid fa-sliders"></i>
 					<span class="topic">Scan</span>
 				</label>
@@ -379,8 +399,8 @@ function checkRefresh()
 								</button>
 								<br>
 
-								<button style="text-align:center; visibility: hidden;" class=" filtro_bottone legend text-table" id="follower_filter" onclick="openForm(this.id)">
-									➡️ Folower
+								<button style="text-align:center;" class=" filtro_bottone legend text-table" id="follower_filter" onclick="openForm(this.id)">
+									➡️ Rule
 								</button>
 		
 								<br>
@@ -629,90 +649,216 @@ function checkRefresh()
 							
 							<!-- FILTER FOR FOLLOWER -->
 							<div id="follower_filter_div" style="display:none">
-								<label for="filter_by_2">Filter by:  </label>
-								<select id= "filter_by_2" name="filter_by" class="dropdown dropdown_width">
-									<option value="activity">Activity</option>
-									<option value="resource">Resource</option>
-									<option value="costs">Costs</option>
-									<option value="caseID" style="display:none">CaseID</option>
-									<option value="variants" style="display:none">Variants</option>
-								</select>
-								<br />
-								<label for="reference_for_follower">Reference event must be </label>
-								<select id="reference_for_follower" name="reference_for_follower" class="dropdown dropdown_width" style="padding: 3px">
-									<option value="even_follow">eventually followed</option>
-									<option value="dir_follow">directly followed</option>
-									<option value="nev_even_follow">never eventually followed</option>
-									<option value="nev_dir_follow">never directly followed</option>
-								</select>
-								<label for="mode_for_follower"> by a follower event.</label> 
-								<br />
-								<br />
-								<div style="width: 45%; float:left">
-									<text style="font-size:12px; float:left;">Reference event values: </text>
-									<br />
-									<fieldset id="fieldset4" class="checkboxgroup">
-										<label><input type="checkbox"> checkbox 1</label>
-										<label><input type="checkbox"> checkbox 2</label>
-										<label><input type="checkbox"> checkbox 3</label>
-										<label><input type="checkbox"> checkbox 4</label>
-									</fieldset>
+								<!-- <label for="filter_by_2">Filter by:  </label> -->
+								<div class="row">
+									<!-- <div class="row"> -->
+										<div >
+											<div>
+												<div style="text-align: center;">
+													<button type="button" onclick="hideShow();" id="hideShowBtn" value="Hide" disabled style="display:none">HIDE</button>
+													<!-- <button type="button" onclick="clearDiv();" id="clearBtn" disabled>CLEAR</button> -->
+													<!-- <button type="button" onclick="exportFile();" id="exportBtn" download disabled>EXPORT &nbsp;</button> -->
+													<button id="sortBtn" type="button" value="descending" onclick="changeSort();" disabled style="display:none">DESCENDING</button>
+												</div>
+											</div>
+											<div id="divInfo" class="showInfo" style="display:none">
+												<button class="btn-close" id="infoBtn" onclick="close_infoBtn()"></button>
+												<div id="groupConstraints"></div>
+												<div id="nameConstraint"></div>
+												<div id="explanation"></div>
+												<div id="examples"></div>
+												<div style="display: inline-block;">
+													<div id="rightExample1" style="float:left; margin-left:8px">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+															<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+														</svg>
+														<div id="re1" style="float:right;"></div>
+													</div>
+													<div id="rightExample2" style="float:left; margin-left:20px">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+															<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+														</svg>
+														<div id="re2" style="float:right;"></div>
+													</div>
+												</div>    
+												<div style="display:inline-block; margin-top:8%">
+													<div id="wrongExample1" style="float:left;margin-left:8px">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+															<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+														</svg>
+														<div id="we1" style="float:right;"></div>
+													</div>
+													<div id="wrongExample2" style="float:left; margin-left:20px">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+															<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+														</svg>
+														<div id="we2" style="float:right;"></div>
+													</div> 
+												</div>    
+											</div>
+											<div id="new_rule">
+												<span class="title-rule" style="text-align:center">Define a constraint</span>
+												<br>
+												<table>
+													<thead>
+														<tr>
+														<th>
+													<span id="first-combobox" class="combobox2">
+													<span class="sub-title">Select constraint
+														<!-- <button id="infoId" onclick ="showInfo();" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+															<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+														</svg></button> -->
+													</span>
+													<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="selectFun" onclick="selectFunction();" disabled>                          
+														<option value="Start">Start(a)</option>
+														<option value="End">End(a)</option>
+														<option value="Existence">Existence(a)</option>
+														<option value="Absence">Absence(a)</option>
+														<option value="Choice">Choice(a,b)</option>
+														<option value="ExclusiveChoice">ExclusiveChoice(a,b)</option>
+														<option value="RespondedExistence">RespondedExistence(a,b)</option>
+														<option value="Response">Response(a,b)</option>
+														<option value="AlternateResponse">AlternateResponse(a,b)</option>
+														<option value="ChainResponse">ChainResponse(a,b)</option>
+														<option value="Precedence">Precedence(a,b)</option>
+														<option value="AlternatePrecedence">AlternatePrecedence(a,b)</option>
+														<option value="ChainPrecedence">ChainPrecedence(a,b)</option>
+														<option value="CoExistence">CoExistence(a,b)</option>
+														<option value="Succession">Succession(a,b)</option>
+														<option value="AlternateSuccession">AlternateSuccession(a,b)</option>
+														<option value="ChainSuccession">ChainSuccession(a,b)</option>
+														<option value="NotCoExistence">NotCoExistence(a,b)</option>
+														<option value="NotSuccession">NotSuccession(a,b)</option>
+														<option value="NotChainSuccession">NotChainSuccession(a,b)</option>
+													</select>
+												</span> 
+
+														</th>
+														<th><span id="second-combobox" class="combobox2">
+													<span class="sub-title">Select step 1</span>
+													<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act1" disabled>
+														
+													</select>
+												</span>
+
+														</th>
+														<th>
+															<span id="third-combobox" class="combobox2">
+													<span class="sub-title">Select step 2</span>
+													<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act2" disabled>
+														
+													</select>													
+												</span>
+														</th>
+														</tr>
+													</thead>
+												</table>
+												
+												
+												
+												<button id="button-apply" type="button" onclick="takeFunction();" disabled>Check</button>
+												<button style="visibility: hidden;"id="button-reset" type="button" onclick="deleteBtn();">Reset</button>
+											</div>
+											<div class="alert alert-danger alert-dismissible fade show" id="error_adding_rule" style="display:none" role="alert">
+												<strong>Error!</strong> It is not possible to use the same activity twice.
+												<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_adding_rule();"></button>
+											</div>
+											<div class="alert alert-danger alert-dismissible fade show" id="error_duplicate_rule" style="display:none" role="alert">
+												<strong>Error!</strong> The rule already exists.
+												<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_duplicate_rule();"></button>
+											</div>
+											<div class="alert alert-danger alert-dismissible fade show" id="error_opposite_rule" style="display:none" role="alert">
+												<strong>Error!</strong> The rule is in contrast with an existing one.
+												<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_opposite_rule();"></button>
+											</div>
+											<div id="rules" style="display:none">
+												<div class="title-rule" style="text-align:center">List of constraints</div>
+												<button type="button" class="btn btn-danger btn btn-default" float="right" style="margin-left:85%; margin-top:-12%; display: inline-block; cursor: pointer;" data-toggle="confirmation" data-placement="bottom"
+												onclick="deleteBtn();" id="deleteBtnId" disabled><label style="cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 13">
+													<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+												  </svg></label></button>
+												<div class="alert alert-danger alert-dismissible fade show" id="error_no_rule" style="display:none" role="alert">
+													<strong>Error!</strong> There are no rules to delete.
+													<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_no_rule();"></button>
+												</div>
+												<div class="alert alert-danger alert-dismissible fade show" id="error_no_check_rule" style="display:none" role="alert">
+													<strong>Error!</strong> Select the rule to delete.
+													<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_no_check_rule();"></button>
+												</div> 
+												<ul class="divRule no-bullets" id="ruleId"></ul>  
+											</div>
+										</div>
+										<br>
+										<div ><!--class="column col-first"-->
+		
+											<div id="buttons-container" style="display: none;">
+												<div class="row">
+													
+		
+													<div class="col-md-6" height="10px">
+														<div class="alert alert-info alert-dismissible fade show" id="info_clear" style="display:none" role="alert">
+															<strong>Info!</strong> Select a new XES file to analyze.
+															<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_info_clear();"></button>
+														</div>
+														<div class="alert alert-info alert-dismissible fade show" id="download_info" style="display:none" role="alert">
+															<strong>Info!</strong> Downloading file...
+															<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_download_info();"></button>
+														</div> 
+														{% with messages = get_flashed_messages(with_categories=true) %}
+															{% if messages %}
+																{% for category, message in messages %}
+																	<div class="alert alert-{{ category }} alert-dismissible fade show" id="error_flash">
+																		<span>{{ message }}</span>
+																		<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_flash();"></button>
+																	</div>
+																{% endfor %}
+															{% endif %}
+														{% endwith %} 
+													</div> 
+		
+												</div>
+											</div>
+											
+											<div id="segment-container">
+												<div style="display:none" class="title" style="margin-top:1%">Segments' list</div> 
+												<div id="scroll-seg" class="Divtext">
+													<table class="table table-hover table-dark table" >
+														<thead id="table-seg">
+															<tr><th class="col-occ">Occurrence</th><th class="col-seg">Pipeline traces list</th></tr>
+														</thead>
+														<tbody id="table-seg-body">
+															
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div id="divSeg" class="showDiv" style="display:none"></div>
+		
+											<div id="deleted-segment-container" style="display:none">
+												<div class="title" style="margin-top:1%">Not accepted segments' list</div>
+												<div id="scroll-del-seg" class="DivtextDel">
+													<table class="table table-hover table-dark">
+														<thead id="table-del-seg">
+															<tr><th class="col-occ">Occurrence</th><th class="col-seg">Segment</th></tr>
+														</thead>
+														<tbody id="table-del-seg-body"></tbody>
+													</table>
+												</div>
+											</div>
+		
+										</div>
+										<div style="text-align:center">
+											<button type="button" class="btn applycancel" style="font-size:13px; margin-right:10px;" onclick="closeForm()">Cancel</button>	
+											<button id="aplly-scan" type="button" class="btn applycancel" style="visibility: hidden; font-size:13px" onclick="applyfilterScan()">Apply</button>
+											
+										</div>
+										
+									<!-- </div> -->
 								</div>
-								<div style="width: 45%; float:right">
-									<text style="font-size:12px; float:left;">Follower event values: </text>
-									<br />
-									<fieldset id="fieldset5" class="checkboxgroup">
-										<label><input type="checkbox"> checkbox 1</label>
-										<label><input type="checkbox"> checkbox 2</label>
-										<label><input type="checkbox"> checkbox 3</label>
-										<label><input type="checkbox"> checkbox 4</label>
-									</fieldset>
-								</div>
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<div style="font-size:12px">
-									<input type="checkbox" id="require_for_follower">
-									<label for="require_for_follower"> Require </label>
-									<select id="mode_for_follower" name="mode_for_follower" class="dropdown dropdown_width" style="padding: 3px" disabled>
-										<option value="same">same value</option>
-										<option value="different">different values</option>
-									</select>
-									<label for="require_for_follower"> of</label>
-									<select id= "filter_by_follower" name="filter_by" class="dropdown dropdown_width" style="padding: 3px" disabled>
-										<option value="activity">Activity</option>
-										<option value="resource">Resource</option>
-										<option value="costs">Costs</option>
-										<option value="caseID" style="display:none">CaseID</option>
-										<option value="variants" style="display:none">Variants</option>
-									</select>
-									<label for="filter_by_follower"> for each pair of events matched above.</label>
-									<br />
-									<br />
-									<input type="checkbox" id="time_for_follower">
-									<label for="time_for_follower">Time between matching events must be </label>
-									<select id="mode_time_for_follower" name="mode_time_for_follower" class="dropdown dropdown_width" style="padding: 3px" disabled>
-										<option value="shorter">shorter</option>
-										<option value="longer">longer</option>
-									</select>
-									<label for="require_for_follower"> than </label>
-									<input type="number" id="input_time_follower" name="input_time" step="any" disabled />
-									<select id= "select_time_3" name="select_time_3" class="dropdown dropdown_width" style="padding: 3px" disabled>
-										<option value="mills">Milliseconds</option>
-										<option value="seconds">Seconds</option>
-										<option value="minutes">Minutes</option>
-										<option value="hours">Hours</option>
-										<option value="days">Days</option>
-										<option value="weeks">Weeks</option>
-										<option value="years">Years</option>
-									</select>
-								</div>
+								
 							
 							</div>
-							<div class="disapper_space">
+							<div class="disapper_space" style="display: none;">
 								<br />
 								<br />
 							</div>
@@ -723,11 +869,12 @@ function checkRefresh()
 							
 							<span id="triggerFilterSpan" style="visibility: hidden;" onclick="triggerInvisibleFunction()">Invisible</span>
 							
-							<div style="text-align:center">
+							<div id="all_filters_button" style="text-align:center">
 								
 								<!-- <button type="submit" class="btn" style="margin-right:10px" onclick="applyFilter()">Apply</button> -->
-								<button type="button" class="btn applycancel" style="margin-right:10px; font-size:13px" onclick="asyncCall()">Apply</button>
-								<button type="button" class="btn applycancel" style="font-size:13px" onclick="closeForm()">Cancel</button>
+								<button type="button" class="btn applycancel" style="margin-right:10px; font-size:13px" onclick="closeForm()">Cancel</button>
+								<button type="button" class="btn applycancel" style="font-size:13px" onclick="asyncCall()">Apply</button>
+								
 							</div>
 							
 							</form>
@@ -780,7 +927,7 @@ function checkRefresh()
 					<div class="cChecking text" id="cChecking-text">
 					 	<div class="title"> Conformance Checking</div>
 
-						<div class="slidecontainer">
+						<div id="slidercontainer_cChecking" class="slidecontainer" style="display: none;">
 							<input type="range" min="1" max="500" value="100" class="sliderZoom" id="myRange2">
 							<p style="font-size: 10px;">Zoom: <span id="demo2"></span>%</p>
 						</div>
@@ -824,7 +971,7 @@ function checkRefresh()
 							<br>
 							<br>
 							<div class="conformance-container">
-								<div class="conformance-title">Map transitions to Event classes</div>
+								<div class="conformance-title">Map steps</div>
 								
 								<hr>
 								<br>
@@ -832,7 +979,7 @@ function checkRefresh()
 								
 								<table id="pnml_log_table" style="border-spacing: 0 15px;">
 									<tr style="padding: 70px">
-										<th>Pnml transitions</th>
+										<th>Steps</th>
 										<th style="width: 40%;"> </th>
 										<th>Log Activities</th>
 									</tr>
@@ -894,7 +1041,7 @@ function checkRefresh()
 
 										<div class="column-col center2-col" >
 											
-											<span>Cost for disalignment activities</span><br>
+											<span>Cost for disalignment steps</span><br>
 											<!-- <span>Cost to add/remove activities in/from trace</span><br> -->
 											<select id="disalignment_log" onchange="changedisalignment_select()">
 												
@@ -1086,186 +1233,7 @@ function checkRefresh()
 						
 						
 
-						<div class="row">
-							<!-- <div class="row"> -->
-								<div class="column col-first">
-
-									<div id="buttons-container">
-										<div class="row">
-											
-
-											<div class="col-md-6" height="10px">
-												<div class="alert alert-info alert-dismissible fade show" id="info_clear" style="display:none" role="alert">
-													<strong>Info!</strong> Select a new XES file to analyze.
-													<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_info_clear();"></button>
-												</div>
-												<div class="alert alert-info alert-dismissible fade show" id="download_info" style="display:none" role="alert">
-													<strong>Info!</strong> Downloading file...
-													<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_download_info();"></button>
-												</div> 
-												{% with messages = get_flashed_messages(with_categories=true) %}
-													{% if messages %}
-														{% for category, message in messages %}
-															<div class="alert alert-{{ category }} alert-dismissible fade show" id="error_flash">
-																<span>{{ message }}</span>
-																<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_flash();"></button>
-															</div>
-														{% endfor %}
-													{% endif %}
-												{% endwith %} 
-											</div> 
-
-										</div>
-									</div>
-									
-									<div id="segment-container">
-										<div class="title" style="margin-top:1%">Segments' list</div> 
-										<div id="scroll-seg" class="Divtext">
-											<table class="table table-hover table-dark table" >
-												<thead id="table-seg">
-													<tr><th class="col-occ">Occurrence</th><th class="col-seg">Segment</th></tr>
-												</thead>
-												<tbody id="table-seg-body">
-													
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="divSeg" class="showDiv" style="display:none"></div>
-
-									<div id="deleted-segment-container">
-										<div class="title" style="margin-top:1%">Not accepted segments' list</div>
-										<div id="scroll-del-seg" class="DivtextDel">
-											<table class="table table-hover table-dark">
-												<thead id="table-del-seg">
-													<tr><th class="col-occ">Occurrence</th><th class="col-seg">Segment</th></tr>
-												</thead>
-												<tbody id="table-del-seg-body"></tbody>
-											</table>
-										</div>
-									</div>
-
-								</div>
-								<div class="column col-second">
-									<div>
-										<div style="text-align: center;">
-											<button type="button" onclick="hideShow();" id="hideShowBtn" value="Hide" disabled>HIDE</button>
-											<!-- <button type="button" onclick="clearDiv();" id="clearBtn" disabled>CLEAR</button> -->
-											<!-- <button type="button" onclick="exportFile();" id="exportBtn" download disabled>EXPORT &nbsp;</button> -->
-											<button id="sortBtn" type="button" value="descending" onclick="changeSort();" disabled>DESCENDING</button>
-										</div>
-									</div>
-									<div id="divInfo" class="showInfo" style="display:none">
-										<button class="btn-close" id="infoBtn" onclick="close_infoBtn()"></button>
-										<div id="groupConstraints"></div>
-										<div id="nameConstraint"></div>
-										<div id="explanation"></div>
-										<div id="examples"></div>
-										<div style="display: inline-block;">
-											<div id="rightExample1" style="float:left; margin-left:8px">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-													<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-												</svg>
-												<div id="re1" style="float:right;"></div>
-											</div>
-											<div id="rightExample2" style="float:left; margin-left:20px">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-													<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-												</svg>
-												<div id="re2" style="float:right;"></div>
-											</div>
-										</div>    
-										<div style="display:inline-block; margin-top:8%">
-											<div id="wrongExample1" style="float:left;margin-left:8px">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-													<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-												</svg>
-												<div id="we1" style="float:right;"></div>
-											</div>
-											<div id="wrongExample2" style="float:left; margin-left:20px">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-													<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-												</svg>
-												<div id="we2" style="float:right;"></div>
-											</div> 
-										</div>    
-									</div>
-									<div id="new_rule">
-										<div class="title-rule" style="text-align:center">Add new constraint</div>
-										<div id="first-combobox" class="combobox">
-											<div class="sub-title">Select constraint
-												<!-- <button id="infoId" onclick ="showInfo();" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-													<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-												</svg></button> -->
-											</div>
-											<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="selectFun" onclick="selectFunction();" disabled>                          
-												<option value="Start">Start(a)</option>
-												<option value="End">End(a)</option>
-												<option value="Existence">Existence(a)</option>
-												<option value="Absence">Absence(a)</option>
-												<option value="Choice">Choice(a,b)</option>
-												<option value="ExclusiveChoice">ExclusiveChoice(a,b)</option>
-												<option value="RespondedExistence">RespondedExistence(a,b)</option>
-												<option value="Response">Response(a,b)</option>
-												<option value="AlternateResponse">AlternateResponse(a,b)</option>
-												<option value="ChainResponse">ChainResponse(a,b)</option>
-												<option value="Precedence">Precedence(a,b)</option>
-												<option value="AlternatePrecedence">AlternatePrecedence(a,b)</option>
-												<option value="ChainPrecedence">ChainPrecedence(a,b)</option>
-												<option value="CoExistence">CoExistence(a,b)</option>
-												<option value="Succession">Succession(a,b)</option>
-												<option value="AlternateSuccession">AlternateSuccession(a,b)</option>
-												<option value="ChainSuccession">ChainSuccession(a,b)</option>
-												<option value="NotCoExistence">NotCoExistence(a,b)</option>
-												<option value="NotSuccession">NotSuccession(a,b)</option>
-												<option value="NotChainSuccession">NotChainSuccession(a,b)</option>
-											</select>
-										</div>
-										<div id="second-combobox" class="combobox">
-											<div class="sub-title">Select activity 1</div>
-											<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act1" disabled>
-												
-											</select>
-										</div>
-										<div id="third-combobox" class="combobox">
-											<div class="sub-title">Select activity 2</div>
-											<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act2" disabled>
-												
-											</select>
-											<button id="button-apply" type="button" style="justify-content:center;" onclick="takeFunction();" disabled>APPLY</button>
-										</div>
-									</div>
-									<div class="alert alert-danger alert-dismissible fade show" id="error_adding_rule" style="display:none" role="alert">
-										<strong>Error!</strong> It is not possible to use the same activity twice.
-										<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_adding_rule();"></button>
-									</div>
-									<div class="alert alert-danger alert-dismissible fade show" id="error_duplicate_rule" style="display:none" role="alert">
-										<strong>Error!</strong> The rule already exists.
-										<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_duplicate_rule();"></button>
-									</div>
-									<div class="alert alert-danger alert-dismissible fade show" id="error_opposite_rule" style="display:none" role="alert">
-										<strong>Error!</strong> The rule is in contrast with an existing one.
-										<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_opposite_rule();"></button>
-									</div>
-									<div id="rules">
-										<div class="title-rule" style="text-align:center">List of constraints</div>
-										<button type="button" class="btn btn-danger btn btn-default" float="right" style="margin-left:85%; margin-top:-12%; display: inline-block; cursor: pointer;" data-toggle="confirmation" data-placement="bottom"
-										onclick="deleteBtn();" id="deleteBtnId" disabled><label style="cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 13">
-											<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-										  </svg></label></button>
-										<div class="alert alert-danger alert-dismissible fade show" id="error_no_rule" style="display:none" role="alert">
-											<strong>Error!</strong> There are no rules to delete.
-											<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_no_rule();"></button>
-										</div>
-										<div class="alert alert-danger alert-dismissible fade show" id="error_no_check_rule" style="display:none" role="alert">
-											<strong>Error!</strong> Select the rule to delete.
-											<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="close_error_no_check_rule();"></button>
-										</div> 
-										<ul class="divRule no-bullets" id="ruleId"></ul>  
-									</div>
-								</div>
-							<!-- </div> -->
-						</div>	
+							
 
 					</div>
 
@@ -1383,8 +1351,8 @@ function checkRefresh()
 		$(".dis_submit").attr('disabled', false);
 	}
 
-	
-
+	var indice=0;
+	var filtered_scan= false;
 	var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
 	var json, ul1, ul2, allCases, allEvents, maxDate, minDate;
 	var selected = "variant1";
