@@ -354,15 +354,23 @@ function updateTraceListener(){
         
 
         if(movetype=="moveinthemodel"){
-            $('#aligner_space').append($('<span>').attr('style',"color: blue;").text(activity_name)) 
+               
             matchbis = regex.exec(activity_name);
+            var check_word
             if (matchbis) {
                 response_matchbis=matchbis[1];
                 //console.log(response_matchbis)
                 //console.log(activity_name.replaceAll("("+response_matchbis+")", "").trim())
                 array_complete_activity.push(activity_name.replaceAll("("+response_matchbis+")", "").trim())
                 array_moveinthemodel.push(activity_name.replaceAll("("+response_matchbis+")", "").trim())
+                check_word=activity_name.replaceAll("("+response_matchbis+")", "").trim()
             }
+            if(!(invisible_steps.includes(check_word))){
+                console.log(check_word)
+                $('#aligner_space').append($('<span>').attr('style',"color: blue;").text(activity_name)) 
+                $('#aligner_space').append($('<br>'))
+            } 
+            
         }else if(movetype=="moveinthelog"){
             array_complete_activity.push(activity_name)
             array_moveinthelog.push(activity_name)
@@ -370,18 +378,24 @@ function updateTraceListener(){
             if (match) {
                 response_match=match[1];
             }
-
-            $('#aligner_space').append($('<span>').attr('style',"text-decoration: line-through; color:red;").text(activity_name+" ("+response_match+")" ) )
-            
+            if(!(invisible_steps.includes(activity_name))){
+                console.log(activity_name)
+                $('#aligner_space').append($('<span>').attr('style',"text-decoration: line-through; color:red;").text(activity_name+" ("+response_match+")" ) )
+                $('#aligner_space').append($('<br>'))
+            }
         
         }else if(movetype=="movesync"){
             array_complete_activity.push(activity_name)
-            $('#aligner_space').append($('<span>').text(activity_name))
+            if(!(invisible_steps.includes(activity_name))){
+                console.log(activity_name)
+                $('#aligner_space').append($('<span>').text(activity_name))
+                $('#aligner_space').append($('<br>'))
+            }
         } 
 
           
 
-        $('#aligner_space').append($('<br>'))
+        
     }
 
     highlightTraceNode();
@@ -545,7 +559,7 @@ function petriListener(){
 }
 
 
-    
+var invisible_steps=[]
 
 function addTransitionName(){
     // Create text with HTML
@@ -565,6 +579,8 @@ function addTransitionName(){
             
             if(tr_array[i][1]=="None"){
                 $("#pnml_log_table").append("<tr style=' display: none; background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][0]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][0].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
+                invisible_steps.push(tr_array[i][0].replaceAll(" ","").toLowerCase())
+                console.log(invisible_steps)
             }else{
                 $("#pnml_log_table").append("<tr style='background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][1]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][1].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
             } 
@@ -583,13 +599,13 @@ function addTransitionName(){
             // sel.append($("<option>").attr('value',1).text(tr_array[i][1]));
             if(i==0){
                 if(tr_array[i][1]=="None"){
-                    $('#disalignment_log').append($("<option>").attr('value',tr_array[i][0]).text(tr_array[i][0]).attr('selected','selected'))
+                    //$('#disalignment_log').append($("<option>").attr('value',tr_array[i][0]).text(tr_array[i][0]).attr('selected','selected'))
                 }else{
                     $('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]).attr('selected','selected'))
                 } 
             }else{
                 if(tr_array[i][1]=="None"){
-                    $('#disalignment_log').append($("<option>").attr('value',tr_array[i][0]).text(tr_array[i][0]))
+                    //$('#disalignment_log').append($("<option>").attr('value',tr_array[i][0]).text(tr_array[i][0]))
                 }else{
                     $('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]))
                 } 
