@@ -18,3 +18,7 @@ The Map View is the first visualisation shown by default when DIS-PIPE is invoke
 **(v) View Switcher**: it allows to switch the view of DIS-PIPE among the **Map** view, the **Event Log Analysis** view, or the **Conformance Checking** view.
 
 **(vi) I/O Options**: it allows to import a XES event log within DIS-PIPE or export a DSL model of a data pipeline locally (or remotely).  
+
+## The Event Log Analysis View
+
+While the Map view gives an understanding of the pipeline flow, the Event Log Analysis view goes down to the individual case level, shows the raw data and allows the possibility to apply different kinds of filters. To inspect individual cases is important to verify findings and see concrete examples of “strange” behavior that can be discovered during the pipeline analysis. Often, things that are hard to believe can be analysed by drilling them down to a particular example case, noting their case number, and verifying that this is indeed what happened in the system(s) under analysis. Furthermore, looking at individual cases with their history and attributes can give additional context (like a comment field) that sometimes explains why something happened. Finally, the ability to drill down to individual cases is important to act on an analysis. For example, it can be used to find deviations from the described pipelines or violations of an important business rule, get a list of these cases, and prepare a fix. This view can be divided into three main areas, as can be seen in the following figure:
