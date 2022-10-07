@@ -3,4 +3,6 @@ In the following we provide a walkthrough of the various steps required to execu
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Map-View.png)
 
-Work in Progress.
+When a data scientist is interested in analyzing the behaviour of the JOT data pipeline, she can import in DIS-PIPE an event log in XES from the I/O Options panel, cf. the bottom-left part of the GUI in the Figure above, box (vi). Since the current version of the tool does not still implement the Segmentation, Preprocessing and Event Abstraction functionalities, we suppose that the input event log is already well-structured to represent the single execution traces related to the past pipeline executions.
+
+Once an event log is imported, DIS-PIPE automatically runs the implemented discovery algorithm and produces an understandable flowchart view of the discovered pipeline in the form of a Directly-Follows Graph (DFG), which is visualized in the Map View, cf. the central part of the GUI, box (ii). The name of the log file from which the pipeline model is extracted is shown in the top part of the GUI, box (i). In the case the data scientist wants to obtain more targeted information on the frequency or performance values related to a node/edge of the DFG, she can directly click on the specific node/edge of interest. A pop-up appears in the GUI showing the requested information.
