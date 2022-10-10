@@ -21,10 +21,23 @@ The Map View is the first visualisation shown by default when DIS-PIPE is invoke
 
 ## The Event Log Analysis View
 
-While the Map view gives an understanding of the pipeline flow, the Event Log Analysis view goes down to the individual case level, shows the raw data and allows the possibility to apply different kinds of filters. To inspect individual cases is important to verify findings and see concrete examples of “strange” behavior that can be discovered during the pipeline analysis. Often, things that are hard to believe can be analysed by drilling them down to a particular example case, noting their case number, and verifying that this is indeed what happened in the system(s) under analysis. Furthermore, looking at individual cases with their history and attributes can give additional context (like a comment field) that sometimes explains why something happened. 
+While the **Map** view gives an understanding of the pipeline flow, the **Event Log Analysis** view goes down to the individual case level, shows the raw data and allows the possibility to apply different kinds of filters. To inspect individual cases is important to verify findings and see concrete examples of “strange” behavior that can be discovered during the pipeline analysis. Often, things that are hard to believe can be analysed by drilling them down to a particular example case, noting their case number, and verifying that this is indeed what happened in the system(s) under analysis. Furthermore, looking at individual cases with their history and attributes can give additional context (like a comment field) that sometimes explains why something happened. 
 
 Finally, the ability to drill down to individual cases is important to act on an analysis. For example, it can be used to find deviations from the described pipelines or violations of an important business rule, get a list of these cases, and prepare a fix.
 
 This view can be divided into three main areas, as can be seen in the following figure:
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Event-Log-Analysis.png)
+
+**(i)	List of variants and cases**: a list of all the variants appearing in the log, with an ID and the number of included cases. By selecting a variant, the list of cases will show all the included cases and the number of contained events. 
+
+**(ii) Individual case view**: by selecting a case, DIS-PIPE shows the relative entry as it appears in the event log with each field. 
+
+**(iii)	Filtering**: DIS-PIPE allows to zoom into the pipelines to address analysis questions by using four kinds of filters: 
+  * **Timeframe filters** enable to focus on a certain time window with different usage modes (e.g., contained in a timeframe, intersecting timeframe). 
+  *	**Performance filters** enable to focus on cases in the data according to certain performance criteria (e.g., all the cases exceeding a specific throughput time). 
+  *	**Attribute filters** allow for removal from the trace events that contain specific values for specific attributes. Multiple filters can be applied at once to the event log, so a filters queue will appear at the bottom right corner of the event log analysis view. 
+  *	**Rule filters** enable users to specify complex rules between pipeline steps as recorded in the event log employing the Declare constraints. This knowledge allows users to identify and remove those constraints that should not comply with any pipeline behaviour observed in the event log. Detecting and removing these constraints means filtering out all the unwanted behaviors from the event log toward a more focused analysis.
+  
+These filters can be applied in sequence to obtain event logs where the undesired behaviour is filtered out from the original log. The filtered log can then be used to obtain an updated map of the pipeline structure. It is also possible to remove the filters one by one or to rearrange the order in which they are applied.
+
