@@ -1017,6 +1017,10 @@ button:hover {
   /* margin-top:-250px;   negative half of height above */
 }
 
+.form-popup-scan{
+  width: 1000px;
+}
+
 .form-loading {
   display: none;
   border: 3px solid #cfa8d5;
@@ -1137,12 +1141,14 @@ svg {
 
 /* ####################################### */
 .col-first{
-  width: 70%;
+  width: 50vw;
+  overflow: auto;
   /* border:2px solid black; */
   float: left;
 }
 .col-second{
-  width: 30%;
+  width: 20vw;
+  /*min-width: 200px;*/
   /* border:2px solid black; */
   float:left;
 }
@@ -1185,7 +1191,7 @@ svg {
 }
 
 #segment-container{
-  width: 98%;
+  width: 100%;
   height: 280px;
   /* margin-top: -1%; */
   /* border:2px solid black; */
@@ -1197,7 +1203,7 @@ svg {
 #scroll-seg{
   font-size: 16px;
   /* font-family: Georgia, 'Times New Roman', Times, serif; */
-  width: 99%;
+  /* width: 80%; */
   height: 234px;
   margin-left: 1%;
   overflow-y: auto;
@@ -1267,7 +1273,7 @@ svg {
 }
 
 .sub-title{
-  font-size: 16px;
+  font-size: 13px;
   /* font-family: Georgia, 'Times New Roman', Times, serif; */
   /* font-weight: bold; */
   color:rgb(35, 36, 37);
@@ -1290,13 +1296,25 @@ svg {
   margin-left:20%;
   justify-content: center;
 }
+.combobox2{
+  width: 33%;
+  margin-top: 2%;
+  margin-left:1%;
+}
 
 #button-apply{
-  margin-left: 25%;
-  margin-top: 8%;
-  width: 50%;
+  margin-left: 30%;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  width: 20%;
   font-size: 13px;
 
+}
+#button-reset{
+  width: 20%;
+  font-size: 13px;
+  margin-top: 2%;
+  margin-bottom: 1%;
 }
 
 #ruleId{
@@ -1369,7 +1387,7 @@ ul.no-bullets {
 
 
 .table-hover tbody tr:hover td{
-  background-color: rgb(3, 160, 165);
+  /* background-color: rgb(3, 160, 165); */
   opacity: 0.8;
 }
 
@@ -1380,7 +1398,7 @@ ul.no-bullets {
 }
 
 .col-seg{
-  width: 85%;
+  /* width: 85%; */
   text-align: left;
   font-size: 15px;
   padding-left: 25px;
