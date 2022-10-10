@@ -49,11 +49,11 @@ It allows to check the conformance between an event log and a pipeline model dis
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Map-Steps.JPG)
 
-The menu asks to map the steps found in the log, on the left-hand side, with the steps of the chosen model, on the right-hand side. When the mapping is completed, it is possible to customize the alignment in the “Alignment Configuration Panel” and look at details about the chosen log in the “Log Details Panel”, as can be seen here:
+The menu asks to map the steps found in the log, on the right-hand side, with the steps of the chosen model, on the left-hand side. When the mapping is completed, it is possible to customize the alignment and look at details about the chosen log, as can be seen here:
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Alignment-Settings.JPG)
 
-When the configuration is completed, the pipeline map in the “Map Panel" is presented, with each step highlighted either in green, if there were no misalignments during the conformance checking, or in red, if some misalignments were found. In the “Trace Panel” it is possible to look at details about the alignment for each individual trace of the chosen log and highlight in yellow the selected trace by setting “Highlight Trace” to “Yes”. By clicking on the box of a step in the pipeline map, it is possible to see how many times the planner produced a misalignment, and the list of the traces in which that happened. An example of the interface showing the result of conformance checking can be seen in the following picture:
+When the configuration is completed, the pipeline map is presented, with each step highlighted either in green, if there were no misalignments during the conformance process, or in red, if some misalignments were found. it is also possible to look at details about the alignment for each individual trace of the chosen log and highlight in yellow the selected trace by setting “Highlight Trace” to “Yes”. By clicking on the box of a step in the pipeline map, it is possible to see how many times a misalignment has been produced, and the list of the traces in which that misalignment happened. An example of the interface showing the result of conformance checking can be seen in the following picture:
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Alignment.JPG)
 
