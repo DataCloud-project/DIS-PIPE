@@ -950,14 +950,234 @@ def variants():
     variantsDict = variantsDict.replace('True','"True"')
     variantsDict = variantsDict.replace('False','"False"')
 
-    print("vediamo se funziona")
-    print(variantsDict)
+    #print(variantsDict)
 
     return variantsDict
 
 
 
 #****************************************************************************************************************************************
+
+@app.route('/filterScan', methods=['GET'])
+def filterScan():
+    variant_list= request.args.get('variantList') #
+    #variant_list=request.headers.get('variantList')
+    variant_list_array=json.loads(variant_list)
+    #print(variant_list_array)
+    global log
+
+    global boolean_case
+    boolean_case=False
+    #variants = variants_filter.get_variants(log)
+    filtered_log = pm4py.filter_variants(log,variant_list_array)
+    log = filtered_log
+
+    boolean_case=True
+
+    # start_case=True
+    #print(type(request.args.get('myPahtF')))
+    
+    # GET
+    #print(type(request.args.get('myPathF')))
+    #x = request.args.get('myPathF')
+    
+    #print("Freq: "+str(act)+" "+str(path))
+
+    dfg_f, sa_f, ea_f = pm4py.discover_directly_follows_graph(log)
+    parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
+    activities_count_f = pm4py.get_event_attribute_values(log, "concept:name")
+    # dfg_f, sa_f, ea_f, activities_count_f = dfg_filtering.filter_dfg_on_activities_percentage(dfg_f, sa_f, ea_f, activities_count_f, act/100)
+    # dfg_f, sa_f, ea_f, activities_count_f = dfg_filtering.filter_dfg_on_paths_percentage(dfg_f, sa_f, ea_f, activities_count_f, path/100)
+
+    gviz_f = dfg_visualization.apply(dfg_f, log=log,
+                                            parameters={parameters.FORMAT: "svg", parameters.START_ACTIVITIES: sa_f,
+                                                parameters.END_ACTIVITIES: ea_f})
+    f=str(gviz_f)
+
+
+    dfg_p, sa_p, ea_p = pm4py.discover_directly_follows_graph(log)
+    # dfg_p = dfg_discovery.apply(log, variant=dfg_discovery.Variants.PERFORMANCE)
+    parameters = dfg_visualization.Variants.PERFORMANCE.value.Parameters
+    activities_count_p = pm4py.get_event_attribute_values(log, "concept:name")
+    # dfg_p, sa_p, ea_p, activities_count_p = dfg_filtering.filter_dfg_on_activities_percentage(dfg_p, sa_p, ea_p, activities_count_p, act/100)
+    # dfg_p, sa_p, ea_p, activities_count_p = dfg_filtering.filter_dfg_on_paths_percentage(dfg_p, sa_p, ea_p, activities_count_p, path/100)
+    
+    gviz_p = dfg_visualization.apply(dfg_p, log=log,  
+                                            parameters={parameters.FORMAT: "svg", parameters.START_ACTIVITIES: sa_p,
+                                                parameters.END_ACTIVITIES: ea_p})
+
+    p=gviz_p
+    
+    '''
+    variantsDict = '{'
+
+    cases = len(filtered_log)
+    print(cases)
+    j=0
+    for i in range(0, cases):
+        j=j+1
+        info = filtered_log[i].__getattribute__('attributes')
+        caseName = info['concept:name']
+        if ("variant-index" in info):
+            varIndex = info['variant-index']
+            if (i == 0):
+                variantsDict = variantsDict + '"' + str(varIndex) + '": ['
+        else:
+            variantsDict = variantsDict + '"' + str(j) + '": ['
+        
+        variantsDict = variantsDict + '{"' + str(caseName) + '":['
+
+        for x in filtered_log[i]:
+            timestamp = x['time:timestamp']
+            x['time:timestamp'] = str(timestamp)
+            stringX = str(x).replace("'", '"')
+            variantsDict = variantsDict + '' + stringX  # +', '
+        
+        variantsDict = variantsDict + ']}'  # chiude ogni caso
+        if ("variant-index" not in info):
+            variantsDict = variantsDict + ']' # chiude ogni variante
+    if ("variant-index" in info):
+        variantsDict = variantsDict + ']' # chiude ogni variante
+    variantsDict = variantsDict + '}' # chiude tutto
+
+    variantsDict = variantsDict.replace("][","],[")
+    variantsDict = variantsDict.replace("}{","},{")
+    variantsDict = variantsDict.replace(']"','],"')
+    '''
+    '''
+    variantsDict = '{'
+
+    j=-1
+    for var, trace in variants.items():
+
+        j =j+1
+        cases = len(trace)
+        print("Numero cases var "+str(j)+": "+str(cases))
+        varEmpty = True
+        for i in range(0, cases):
+            info = (list(variants.values())[j][i])
+            info = info.__getattribute__('attributes')
+            #print("info: "+str(info))
+            caseName = info['concept:name']
+            print()
+            #print(trace[i])
+            inFilter = False
+            for k in range(0,len(filtered_log)):
+                infoFiltered = filtered_log[k].__getattribute__('attributes')
+                filteredCaseName = infoFiltered['concept:name']
+                if(filteredCaseName == caseName):
+                    inFilter = True
+                    break
+
+            if(inFilter == False):
+                break
+            if(i==0):
+                varEmpty = False
+                if("variant-index" in info):
+                    variantsDict = variantsDict + '"' + str(info['variant-index']) + '": ['
+                else:
+                    variantsDict = variantsDict + '"' + str(j) + '": ['
+                #variantsDict = variantsDict + '"' + str(j) + '": ['
+            variantsDict = variantsDict + '{"'+str(caseName)+'":['
+            #print("Trac i len: "+str(len(trace[i])))
+            for x in trace[i]:
+                timestamp = x['time:timestamp']
+                x['time:timestamp'] = str(timestamp)
+                stringX = str(x).replace("'",'"')
+                variantsDict = variantsDict + '' + stringX #+', '
+            variantsDict = variantsDict + ']}' # chiude ogni caso
+        if(varEmpty == False):
+            variantsDict = variantsDict + ']' # chiude ogni variante
+
+    variantsDict = variantsDict + '}' # chiude tutto
+
+    variantsDict = variantsDict.replace("][","],[")
+    variantsDict = variantsDict.replace("}{","},{")
+    variantsDict = variantsDict.replace(']"','],"')
+    #variantsDict = variantsDict.replace('}"','},"')
+    variantsDict = variantsDict.replace('True','"True"')
+    variantsDict = variantsDict.replace('False','"False"')
+    '''
+
+
+    alternative_variants_array=[]
+    varianti_array=[]
+    variants = variants_filter.get_variants(log)
+    variantsDict = '{'
+
+    j=0
+    for var, trace in variants.items():
+
+        
+        cases = len(trace)
+        info = (list(variants.values())[j][0])
+        info = info.__getattribute__('attributes')
+        # print(info)
+        
+        if("variant-index" in info):
+            # print(str(info['variant-index']))
+            if(info['variant-index'] in varianti_array):
+                variantsDict = variantsDict + '"' + str(max(varianti_array)+1) + '": ['
+                varianti_array.append(max(varianti_array)+1)
+                alternative_variants_array.append(max(varianti_array)+1)
+            else:
+                variantsDict = variantsDict + '"' + str(info['variant-index']) + '": ['
+                varianti_array.append(info['variant-index'])
+                alternative_variants_array.append(info['variant-index'])
+        else:
+            # print("else  "+str(j))
+            alternative_variants_array.append(j)
+            variantsDict = variantsDict + '"' + str(j) + '": ['
+        
+        for i in range(0, cases):
+            info = (list(variants.values())[j][i])
+            info = info.__getattribute__('attributes')
+            caseName = info['concept:name']
+            
+            
+            variantsDict = variantsDict + '{"'+str(caseName)+'":['
+
+            for x in trace[i]:
+                timestamp = x['time:timestamp']
+                timestamp_back=timestamp
+              
+                # print(timestamp)
+                # print(type(timestamp))
+                x['time:timestamp'] = str(timestamp)
+
+                # if(boolean_case):
+            
+                start_timestamp = x['start_timestamp']
+                start_timestamp_back=start_timestamp
+                x['start_timestamp'] = str(start_timestamp)
+
+                stringX = str(x).replace("'",'"')
+                variantsDict = variantsDict + '' + stringX #+', '
+                
+                x['time:timestamp']=timestamp_back
+                x['start_timestamp'] = start_timestamp_back
+
+
+            variantsDict = variantsDict + ']}' # chiude ogni caso
+        variantsDict = variantsDict + ']' # chiude ogni variante
+        j =j+1
+    variantsDict = variantsDict + '}' # chiude tutto
+
+    variantsDict = variantsDict.replace("][","],[")
+    variantsDict = variantsDict.replace("}{","},{")
+    variantsDict = variantsDict.replace(']"','],"')        
+    variantsDict = variantsDict.replace('True','"True"')
+    variantsDict = variantsDict.replace('False','"False"')
+    
+    result = str(f)+"|||"+str(p)+"|||"+str(variantsDict)
+    # result=str(variantsDict)
+    # print(variantsDict)
+    # start_case=True
+    return result+"£"+str(alternative_variants_array)   
+ 
+
+
+
 
 
 @app.route('/filter', methods=['GET', 'POST'])
@@ -1284,12 +1504,11 @@ def filter():
             variant_list=list_attr.split(",")
             # log = xes_importer.apply(log_path)
             variants = variants_filter.get_variants(log) 
-            print(plusMode)
+            #print(plusMode)
             if(plusMode=="1"):
-                print("sonoinplusmode")
+                #print("plusmode")
                 filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "concept:name", attributes_filter.Parameters.POSITIVE: True})
             else:
-                print("sonoinmodenormale")
                 filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "variant", attributes_filter.Parameters.POSITIVE: True})
             log = filtered_log
 
@@ -1945,7 +2164,7 @@ def initialAction():
         info = info.__getattribute__('attributes')
         #Apri la variante
         if("variant-index" in info):
-            print(str(info['variant-index']))
+            #print(str(info['variant-index']))
             var_ind=(info['variant-index'])
             
 
@@ -2608,8 +2827,8 @@ def deleteRemap():
 
 @app.route('/scan', methods=['POST'])
 def scan():
-
-    log = pm4py.read_xes(log_path)  
+    global log
+    #log = pm4py.read_xes(log_path)  
     allXESActivities = []
     for trace in log:
         activities = []
@@ -2651,10 +2870,10 @@ def scan():
     file.close()
     # flash("Successfully loaded", "success")       
     result = takeSegmentFromFile()
-    print(result)
-    print("start scan")
+    #print(result)
+    #print("start scan")
     global nomeupload
-    return jsonify({"activity": listActivity, "nameFile": "ciaomare", "segments": result}) 
+    return jsonify({"activity": listActivity, "nameFile": nomeupload, "segments": result}) 
 
 
 @app.route('/scan/start_activity', methods=['POST'])

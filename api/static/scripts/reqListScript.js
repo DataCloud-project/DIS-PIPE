@@ -45,7 +45,7 @@ function swipeRemoveListener () {
 	var partial_min_event_length=Number.MAX_SAFE_INTEGER
 
 	for(var i=0; i<allVariants.length; i++){
-		console.log(allVariants[i])
+		//console.log(allVariants[i])
 		partial_trace_number=partial_trace_number+json[allVariants[i]].length
 
 		for(var j=0; j<json[allVariants[i]].length; j++){
@@ -180,13 +180,13 @@ function initialListener () {
 		document.getElementById("variants_info").innerHTML=variantsInfo
 	}
   
-	console.log(variantsInfo)
+	//console.log(variantsInfo)
 	json = JSON.parse(variantsInfo);
-	console.log("Total response log: "+variantsInfo.length);
+	//console.log("Total response log: "+variantsInfo.length);
 
 	allVariants = Object.keys(json);
-	console.log("Total variants: " +String(allVariants.length));
-	console.log("tutte varianti: "+allVariants)
+	//console.log("Total variants: " +String(allVariants.length));
+	//console.log("tutte varianti: "+allVariants)
 
 	total_trace_number=0
 	total_event_number=0
@@ -351,14 +351,16 @@ function perfRequest() {
 
 function reqListener3 () {
 	var dates = [];
-	var response = this.responseText;
+	//var response = this.responseText;
 	
 	var arrayResponse=this.responseText.split("£")
 	var response=arrayResponse[0]
+	//console.log(response)
 	document.getElementById("variants_alternative").innerHTML = arrayResponse[1];
+	//console.log(arrayResponse[1])
 	change_filter_type()
 
-	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true) { // 
+	if (redo_function==true|| filtered_timeframe == true || filtered_perf == true || filtered_attribute == true || filtered_scan == true) { // 
 	
 		document.getElementById("digraphF").innerHTML = response.split("|||")[0];
 		document.getElementById("digraphP").innerHTML = response.split("|||")[1];
@@ -372,7 +374,7 @@ function reqListener3 () {
 		document.getElementById("variants_info").innerHTML=variantsInfo
 	}
   
-	// console.log(variantsInfo)
+	//console.log(variantsInfo)
 	json = JSON.parse(variantsInfo);
 	// console.log("Total response log: "+json.length);
 
@@ -474,11 +476,27 @@ function reqListener3 () {
 	
 	maxDate=new Date(Math.max.apply(null,dates));
 	minDate=new Date(Math.min.apply(null,dates));
-	maxDate = maxDate.toISOString().split(".")[0];
-	minDate = minDate.toISOString().split(".")[0];
 
-	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Minimun date: "+"<br> <span style='color:blue;'>"+minDate.replace("T", " ")+"</span>"+"</div> <br>");
-	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Maximun date: "+"<br> <span style='color:blue;'>"+maxDate.replace("T", " ")+"</span>"+"</div>");
+	
+	if(maxDate instanceof Date && !isNaN(maxDate.valueOf())){
+		maxDate = maxDate.toISOString().split(".")[0];
+		$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Maximun date: "+"<br> <span style='color:blue;'>"+maxDate.replace("T", " ")+"</span>"+"</div>");
+	
+	}else{
+		console.log("invalid date")
+	}
+	if(minDate instanceof Date && !isNaN(minDate.valueOf())){
+		minDate = minDate.toISOString().split(".")[0];
+		$("#log_detail").append("<div style='color: rgb(38, 38, 38);'>"+"Minimun date: "+"<br> <span style='color:blue;'>"+minDate.replace("T", " ")+"</span>"+"</div> <br>");
+	}else{
+		console.log("invalid date")
+	}
+
+	
+	
+	
+
+	
 	
   
   //getMap(false);

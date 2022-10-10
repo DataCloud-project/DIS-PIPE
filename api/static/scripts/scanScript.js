@@ -8,6 +8,7 @@ function scanRequest(){
 
 function scanListener(){
     var response=JSON.parse(this.responseText)
+    //console.log(response)
     document.getElementById("table-seg-body").innerHTML=""
     document.getElementById("act1").innerHTML=""
     document.getElementById("act2").innerHTML
@@ -15,7 +16,13 @@ function scanListener(){
 
     for (var i = 0; i < response["segments"].length ; i++) {
         var risp=""
+        if(response["segments"][i].length==4 && response["segments"][i][2]==")"){
+            hideRes = $('<tr class="hideAll" style="display: none;" onclick="seeDiv(this)" id="hideResult'+response["segments"][i][3]+'"><td class="col-occ">'+ response["segments"][i][0] + '</td><td class="col-seg">' + response["segments"][i][3] + '</td></tr>');  
+            hideRes.id = 'hideResult'+ response["segments"][i][3]; 
+            risp=risp+response["segments"][i][1]
+        }else{
         for(var j = 1; j < response["segments"][i].length ; j++) {
+            
             if(j==response["segments"][i].length-1) {
                 hideRes = $('<tr class="hideAll" style="display: none;" onclick="seeDiv(this)" id="hideResult'+response["segments"][i][j]+'"><td class="col-occ">'+ response["segments"][i][0] + '</td><td class="col-seg">' + response["segments"][i][j] + '</td></tr>');  
                 hideRes.id = 'hideResult'+ response["segments"][i][j]; 
@@ -23,14 +30,14 @@ function scanListener(){
                 risp=risp+response["segments"][i][j]
             }else{
                 risp=risp+response["segments"][i][j]+", "
-            }
-
-            
+            }    
+        }
         }
         document.getElementById("table-seg-body").innerHTML=document.getElementById("table-seg-body").innerHTML+
          "<tr class='all'><td class='col-occ'>"+response["segments"][i][0]+"</td><td class='col-seg'>"+risp+"</td></tr>"
         $('#table-seg-body').append(hideRes);
     }
+    
 
     for (var i = 0; i < response["activity"].length ; i++) {
         document.getElementById("act1").innerHTML=document.getElementById("act1").innerHTML+
@@ -83,6 +90,9 @@ function selectFunction(){
 
 //take the rule inserted and check if it is valid
 function takeFunction(){
+    document.getElementById("button-reset").style.visibility = "visible";
+    document.getElementById("button-apply").style.visibility = "hidden";
+    document.getElementById("aplly-scan").style.visibility = "visible";
     var fun = document.getElementById("selectFun").value;
     var act1 = document.getElementById("act1").value;
     var activity2 = document.getElementById("act2");
@@ -265,6 +275,8 @@ function applyDelFunction(act1, act2, url){
 
 //show list of rules applied
 var list_checkbox = []
+var li_description_rule;
+var li_description_acts;
 function showRule(act1, act2, rule){
     var li = document.createElement("li")
     var label = document.createElement("label");
@@ -275,6 +287,8 @@ function showRule(act1, act2, rule){
     checkbox.name = "radio-btn"; 
     checkbox.className = "radio";
     if(act2 != null){
+        li_description_rule=String(rule)
+        li_description_acts=String(act1 + "," + act2)
         var description = document.createTextNode(" " + rule + "(" + act1 + "," + act2 + ")");
         checkbox.id = String(rule + "-" + act1 + "-" + act2);
         label.id = "label" + rule + "-" + act1 + "-" + act2;
@@ -283,6 +297,9 @@ function showRule(act1, act2, rule){
         list_checkbox.push(checkbox.id) 
     } 
     else {
+        li_description_rule=String(rule)
+        li_description_acts=String(act1)
+
         var description = document.createTextNode(" " + rule + "(" + act1 + ")");
         checkbox.id = String(rule + "-" + act1); 
         label.id = "label" + rule + "-" + act1;
@@ -293,19 +310,31 @@ function showRule(act1, act2, rule){
     label.appendChild(checkbox);   
     label.appendChild(description);
     li.append(label)
+    li_description=description
     
     document.getElementById('ruleId').append(li);
 }
 
 //show result of rule in segments and not accepted segments
+var all_result_array=[]
 function showResponse(response){
+    filtered_scan= true;
     var result = response.result
+    //console.log(result)
+    all_result_array=[]
     var remove = response.remove
+    //console.log(remove)
     var button = document.getElementById("hideShowBtn");
     createFirstRowTable("table-seg");
     for(var i=0; i < result.length; i++){   
         var res = '<tr class="all"><td class="col-occ">'+ result[i][0] + '</td><td class="col-seg">';
         arr = result[i][1]
+        
+        var cloned = JSON.parse(JSON.stringify(result[i][1]));
+        var deleted = cloned.pop()
+        all_result_array.push(cloned) 
+        
+        
         resId = ""
         for(e = 0; e < arr.length; e++){
             if(e == arr.length-1) {
@@ -352,7 +381,83 @@ function showResponse(response){
     else{
         $(".all").hide();
         $(".hideAll").show();
-    }        
+    }  
+    //console.log(all_result_array)    
+
+    
+
+}
+
+function applyfilterScan(){
+
+    $("#loadingMessage").css("visibility", "visible");
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+	setTimeout(() => {
+
+    var oReq = new XMLHttpRequest();
+	//oReq.addEventListener("load", scanListener);
+    var filtroScan="filterScan?variantList="+JSON.stringify(all_result_array)
+    oReq.addEventListener("load",reqListener3)
+	oReq.open("GET", frontend+filtroScan, false);
+	//oReq.setRequestHeader('variantList', JSON.stringify(all_result_array));
+    
+
+
+    oReq.send();  
+    history_crono[String(indice)]=filtroScan
+
+    getMap(false);
+
+    closeForm();
+    closeLoading();
+
+    allDurationRequest()
+    allEdgeDurationRequest()
+    csmEdgeRequest()
+    csmRequest()
+    
+
+    var container = $('#history_div');
+    $('#history_span').attr("hidden", false);  
+    var idvalue="valore"+String(indice)
+    var element=$("<div class='history_element' id="+idvalue+ "></div>")
+    element.appendTo(container)
+    $("<span style='display: inline-block;' class='element_title' value="+String(indice)+">"+String(indice)+") Scan variants:    \n " +li_description_rule+'\n '+ '</span>').appendTo(element);
+    $('<br>').appendTo(element);
+    $("<button class='history_bottone' value="+String(indice)+' onclick="filterRemove(this.value)"'+'> ❌' +' '+ '</button>').appendTo(element);
+    $('<span>&zwnj;</span>').appendTo(element);
+    $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeUp(this.value)"'+'>⬆️' + '</button>').appendTo(element);
+    $('<span>&zwnj;</span>').appendTo(element);
+    $("<button class='history_bottone' value="+String(indice)+' onclick="filterSwipeDown(this.value)"'+'>⬇️' + '</button>').appendTo(element);
+    $('<div> &zwnj; </div>').appendTo(element);
+    $('#'+idvalue).prop('title', li_description_rule+'\n '+"- ("+ li_description_acts+")");
+
+    indice=indice+1
+    filtered_scan= false;
+
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+    $("#loadingMessage").css("visibility", "hidden");
+
+    $("#myPathP").val("100");
+    $("#myActP").val("100");
+    $("#myPathF").val("100");
+    $("#myActF").val("100");
+    document.getElementById("pathP").innerHTML="100"
+    document.getElementById("actP").innerHTML="100"
+    document.getElementById("pathF").innerHTML="100"
+    document.getElementById("actF").innerHTML="100"
+    outputPF.innerHTML = sliderPF.value;
+    outputPP.innerHTML = sliderPP.value;
+    outputAF.innerHTML = sliderAF.value;
+    outputAP.innerHTML = sliderAP.value;
+
+    outputPF.value = sliderPF.value;
+    outputPP.value = sliderPP.value;
+    outputAF.value = sliderAF.value;
+    outputAP.value = sliderAP.value;
+
+    },10)
+
 }
 
 function firstTimeSegments(){
@@ -393,16 +498,25 @@ function firstTimeSegments(){
 function createFirstRowTable(tableId){
     $("#"+tableId+"-body").empty()
     $("#"+tableId).empty()
-    var row = $('<tr><th class="col-occ">Occurrence</th><th class="col-seg">Segment<th></tr>');   
+    var row = $('<tr><th class="col-occ">Occurrence</th><th class="col-seg">Pipeline traces list<th></tr>');   
     $('#'+tableId).append(row);
 }
 
 //when click delete button 
 function deleteBtn(){
-    console.log("delete")
+    //console.log("delete")
+    document.getElementById("button-reset").style.visibility = "hidden";
+    document.getElementById("button-apply").style.visibility = "visible";
+    document.getElementById("aplly-scan").style.visibility = "hidden";
     error_no_rule = document.getElementById("error_no_rule");
     error_no_check_rule = document.getElementById("error_no_check_rule");
     var selectedCount = 0;
+    //
+    $('.radio').each(function(){
+        ($(this).prop("checked", true));
+    })
+    
+    //
     $('.radio').each(function(){
         if ($(this).is(":checked")){
             selectedCount++;
@@ -499,6 +613,7 @@ function showStartSituation(){
         success: function(response) {
             showResponse(response);}
     });  
+    scanRequest()
 }
 
 

@@ -255,6 +255,7 @@ function getMap(bool) {
         console.log(graphEdgesF);
         console.log('GraphEdgesP:');
         console.log(graphEdgesP);*/
+        /*
         console.log('GraphNodes:');
         console.log(graphNodes);
         console.log('LabeledGraphEdges:');
@@ -265,6 +266,7 @@ function getMap(bool) {
         console.log(meanDurationFP);
         console.log('MeanEdgeDuration:');
         console.log(meanEdgeDuration);
+        */
     }
     //DARIO END
     
