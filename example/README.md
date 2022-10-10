@@ -39,5 +39,22 @@ This view can be divided into three main areas, as can be seen in the following 
   *	**Attribute filters** allow for removal from the trace events that contain specific values for specific attributes. Multiple filters can be applied at once to the event log, so a filters queue will appear at the bottom right corner of the event log analysis view. 
   *	**Rule filters** enable users to specify complex rules between pipeline steps as recorded in the event log employing the Declare constraints. This knowledge allows users to identify and remove those constraints that should not comply with any pipeline behaviour observed in the event log. Detecting and removing these constraints means filtering out all the unwanted behaviors from the event log toward a more focused analysis.
   
-These filters can be applied in sequence to obtain event logs where the undesired behaviour is filtered out from the original log. The filtered log can then be used to obtain an updated map of the pipeline structure. It is also possible to remove the filters one by one or to rearrange the order in which they are applied.
+These filters can be applied in sequence to obtain event logs where the undesired behaviour is filtered out from the original log. The filtered log can then be used to obtain an updated map of the pipeline structure. It is also possible to remove the filters one by one or to rearrange the order in which they are applied. An example of the Filtering Tab in DIS-PIPE is shown the following figure:
+
+![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Filter-Log.JPG)
+
+## The Conformance Checking View
+
+It allows to check the conformance between an event log and a pipeline model discovered from a different event log or modeled trough DEF-PIPE. After having chosen the input, the following menu appears:
+
+![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Map-Steps.JPG)
+
+The menu asks to map the steps found in the log, on the left-hand side, with the steps of the chosen model, on the right-hand side. When the mapping is completed, it is possible to customize the alignment in the “Alignment Configuration Panel” and look at details about the chosen log in the “Log Details Panel”, as can be seen here:
+
+![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Alignment-Settings.JPG)
+
+When the configuration is completed, the pipeline map in the “Map Panel" is presented, with each step highlighted either in green, if there were no misalignments during the conformance checking, or in red, if some misalignments were found. In the “Trace Panel” it is possible to look at details about the alignment for each individual trace of the chosen log and highlight in yellow the selected trace by setting “Highlight Trace” to “Yes”. By clicking on the box of a step in the pipeline map, it is possible to see how many times the planner produced a misalignment, and the list of the traces in which that happened. An example of the interface showing the result of conformance checking can be seen in the following picture:
+
+![alt text](https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/example/images/DIS-PIPE-Alignment.JPG)
+
 
