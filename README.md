@@ -108,7 +108,7 @@ See the [example](https://github.com/DataCloud-project/DIS-PIPE/tree/main/exampl
 
 ## Contributing
 
-Before raising a pull request, please read our contributing guide.
+Before raising a pull request, please read our [contributing guide](https://github.com/DataCloud-project/DIS-PIPE/blob/main/CONTRIBUTING.MD).
 
 ## Core development team
 
