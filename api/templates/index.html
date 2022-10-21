@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}">
+	<!-- <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}"> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myStyle.css') }}">
@@ -42,7 +42,7 @@
 <!-- Da codice sorgente
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://dagrejs.github.io/project/graphlib-dot/v0.6.4/graphlib-dot.min.js"></script>
-<!--<script src="https://dagrejs.github.io/project/dagre-d3/v0.5.0/dagre-d3.min.js"></script>
+<script src="https://dagrejs.github.io/project/dagre-d3/v0.5.0/dagre-d3.min.js"></script>
 <script src="https://dagrejs.github.io/project/dagre-d3/latest/dagre-d3.js"></script> -->
 
 <!-- Dot parser
@@ -68,7 +68,8 @@ window.onload = function () {
 */
 function checkRefresh()
 {
-		// This is a fresh page load
+		 // This is a fresh page load
+		
 		$("#firstpagemap").click();
 		$("#myRange").val("100");
 		$("#myPathP").val("100");
@@ -90,14 +91,11 @@ function checkRefresh()
 		outputAP.value = sliderAP.value;
 		$("#check_tabs").prop("checked", false);
 		document.getElementById("demo").innerHTML="100"
-
+		
 		document.refreshForm.visited.value = "1";
 		if (document.readyState == "complete") { 
 			document.getElementById("loadingMessage").style.visibility = "hidden";	
 		}	
-		
-		
-		$('input,textarea').attr('autocomplete', 'off');
 
 		
 		
@@ -255,8 +253,8 @@ function checkRefresh()
 											<br><br>
 
 											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF">
-											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
-											<button type="button" style="width: 95px; " id="setActF" onclick="updateInfo('AF')">set Activities</button>
+											Steps: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
+											<button type="button" style="width: 95px; " id="setActF" onclick="updateInfo('AF')">set Steps</button>
 											<br>
 											
 											<input type="hidden" min="0" max="100" value="{{myPathP_init}}" name="myPathP">
@@ -304,8 +302,8 @@ function checkRefresh()
 											
 											
 											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP'>
-											Activities: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
-											<button type="button" style="width: 95px; " id="setActP" onclick="updateInfo('AP')">set Activities</button>
+											Steps: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
+											<button type="button" style="width: 95px; " id="setActP" onclick="updateInfo('AP')">set Steps</button>
 											<br>
 											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
 											<input type="hidden" min="0" max="100" value="{{myActF_init}}"  name="myActF">
@@ -1355,16 +1353,21 @@ function checkRefresh()
 	var filtered_scan= false;
 	var filtered_timeframe = false, filtered_perf = false, filtered_attribute=false,  redo_function=false;
 	var json, ul1, ul2, allCases, allEvents, maxDate, minDate;
-	var selected = "variant1";
+	var dictionaryVariantName, dictionaryVariantNameReverse;
+	var selected = "variant0"; //variant1
+
+	var start_iniziale=0
 
 	var total_trace_number=0
 	var total_event_number=0
 	var max_event_length=0
 	var min_event_length=Number.MAX_SAFE_INTEGER
+	var avarage_trace_length=0
 
 
 
 	initialRequest();
+	initialVariantRequest();
 
 	getMap(true);
 

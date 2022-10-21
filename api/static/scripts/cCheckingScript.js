@@ -116,7 +116,7 @@ function updateInfoListener(){
     r3 = response[2]
     r3 = JSON.parse(r3.replace(/'/g,"\""));
 
-    console.log("allora r3?")
+    //console.log("allora r3?")
     console.log(r3);
 
     
