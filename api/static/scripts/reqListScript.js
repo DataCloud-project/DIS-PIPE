@@ -219,6 +219,7 @@ function initialVariantListener2(){
 
 	partial_avarage_trace_length=partial_event_number/partial_trace_number;
 
+	$("#log_detail").text("");
 	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of traces: "+"<span style='color:blue;'>"+partial_trace_number +"</span>"+"</div> <br> ");
 	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of events: "+"<span style='color:blue;'>"+partial_event_number +"</span>"+"</div> <br> ");
 	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Avarage trace length: "+"<span style='color:blue;'>"+partial_avarage_trace_length.toFixed(2) +"</span>"+"</div> <br> ");
@@ -374,6 +375,7 @@ function initialVariantListener(){
 	avarage_trace_length=total_event_number/total_trace_number;
 	
 	// $("#log_detail").val("");
+	$("#log_detail").text("");
 	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of traces: "+"<span style='color:blue;'>"+total_trace_number +"</span>"+"</div> <br> ");
 	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Total number of events: "+"<span style='color:blue;'>"+total_event_number +"</span>"+"</div> <br> ");
 	$("#log_detail").append("<div style='color: rgb(38, 38, 38);'> "+"Avarage trace length: "+"<span style='color:blue;'>"+avarage_trace_length.toFixed(2) +"</span>"+"</div> <br> ");
