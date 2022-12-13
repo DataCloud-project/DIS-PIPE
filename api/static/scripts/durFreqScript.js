@@ -173,6 +173,9 @@ function getAllUsedVariables(variable){
 		console.log("inside")
 		variant=document.getElementById("variants_alternative").innerHTML.replace("[","").replace("]","").split(",")
 	}
+
+	document.getElementById("variants_original").innerHTML=String(0)
+	variant=Object.keys(dictionaryVariantNameReverse)
 	//console.log(variant)
 
 	// console.log(obj[0]);

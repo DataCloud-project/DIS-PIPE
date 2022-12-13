@@ -57,52 +57,175 @@ function addCheckbox(name) {
  }
 
  
- function cb(valore,controllo){
-     if(controllo) {
-         // console.log(this.value)
-         var valore_s=valore.replace(".", "@");
-         listToFilter.push(valore_s)
-         console.log(listToFilter)
-     }else{
-         var valore_s=valore.replace(".", "@");
-         const index = listToFilter.indexOf(valore_s);
-         if (index > -1) {
-             listToFilter.splice(index, 1); // 2nd parameter means remove one item only
-         }
-         console.log(listToFilter)
-     }
- }
-
-
-function showEvents(varKey, caseKey) {
-    // console.log
-    allCases = json[varKey];
-    allCases.forEach( (c) => {
-        
-        var ck = Object.keys(c)[0]; //case key
-        // console.log(caseKey +" =?= "+ck);
-        if(caseKey == ck){
-            // console.log("yes");
-            allEvents = Object.values(c)[0]; // all events
+function cb(valore,controllo){
+    if(controllo) {
+        // console.log(this.value)
+        var valore_s=valore.replace(".", "@");
+        listToFilter.push(valore_s)
+        console.log(listToFilter)
+    }else{
+        var valore_s=valore.replace(".", "@");
+        const index = listToFilter.indexOf(valore_s);
+        if (index > -1) {
+            listToFilter.splice(index, 1); // 2nd parameter means remove one item only
         }
-        });
-    //  console.log(allEvents);
-        
-        var table = document.getElementById("eventsTable");
-        //var tableHTML = "<tr><th>Activity</th><th>Resource</th><th>Date</th><th>Time</th><th>Duration</th><th>Role</th></tr>"
-        var tableHTML = "<tr>";
-        var i = 0;
-        
-    //  console.log("fps")
-    //  console.log(allEvents[0]['concept:name'])
-        var parameter_dicitionary={}
-        var indx=0
-        var remove_index
-        allEvents.forEach((e) => {
+        console.log(listToFilter)
+    }
+}
+
+function showEvents2(varKey, caseKey) {
+    //console.log("showEvents start")
+    //console.log(varKey)
+    //console.log(caseKey)
+
+    //console.log("showevents2")
+    
+    allCases = json[dictionaryVariantNameReverse[varKey]];
+    //console.log(allCases);
+    
+    allCases.forEach( (c) => {
+
+        var ck = Object.values(c)[0]["concept:name"]; //case key
+        //console.log(caseKey +" =?= "+ck);
+        if(caseKey == ck){
+            allEvents = Object.values(c)[1]; // all events
+            //console.log(Object.keys(allEvents[0]))
+        }
+    });
+
+    var table = document.getElementById("eventsTable");
+    var tableHTML = "<tr>";
+    
+    var i = 0;
+    var parameter_dicitionary={}
+    var parameter_array=[]
+    var param_new={}
+    var indx=0
+    var remove_index
+
+    allEvents.forEach((e) => {
+        var date = e["time:timestamp"].split(" ")[0];
+        var time = e["time:timestamp"].split(" ")[1];   
+      
+        if(i==0){
+            Object.entries(e).forEach((attr) => {
+                if(!(parameter_array.includes(attr[0]))){
+                    parameter_array.push(attr[0])
+                } 
+            });
+        }  
+    });
+    //console.log(parameter_array)
+
+    var parameter_array_sort=parameter_array.sort(function(x, y) {
+        if(x=="concept:name" && y!="concept:name"){
+            return -1
+        }
+        if(x!="concept:name" && y=="concept:name"){
+            return 1
+        }
+        if(x!="concept:name" && y!="concept:name" && x[0]=="@" && y[0]!="@"){
+            return 1
+        }
+        if(x!="concept:name" && y!="concept:name" && x[0]!="@" && y[0]=="@"){
+            return -1
+        }
+        if(x.substring(0,5)=="case:" && y[0]!="@"){
+            return 1
+        }
+        if(y.substring(0,5)=="case:" && x[0]!="@"){
+            return -1
+        }
+        return x.localeCompare(y)
+    });
+
+    //console.log(parameter_array_sort)
+
+    for(var pas=0; pas<parameter_array_sort.length; pas++){
+        parameter_dicitionary[parameter_array_sort[pas]]=indx
+		indx=indx+1
+        if(parameter_array_sort[pas]=="Activity"){
+            remove_index=indx
+        }else if(parameter_array_sort[pas]=="concept:name"){
+            tableHTML += "<th><h6>"+ "step" +"</h6><hr><br></th>" ;
+        }else{
+            tableHTML += "<th><h6>"+ parameter_array_sort[pas] +"</h6><hr><br></th>" ;
+        }
+    }
+    //console.log(parameter_dicitionary)
+    //console.log(Object.keys(parameter_dicitionary).length)
+    inv_map = swap(parameter_dicitionary)  
+    //console.log(inv_map)
+    
+
+    tableHTML += "</tr>"
+
+    allEvents.forEach((e) => {
         //dates.push(new Date(e["time:timestamp"]));
 
         var date = e["time:timestamp"].split(" ")[0];
         var time = e["time:timestamp"].split(" ")[1];
+        
+        //console.log(Object.keys(inv_map))
+        for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
+            //console.log(Object.keys(inv_map))
+            //console.log(inv_map[kf]);
+            if(inv_map[kf]!="Activity"){
+                if(e[inv_map[kf]]!=undefined){
+                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
+                    // console.log(e[inv_map[kf]]);
+                }else{
+                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
+                }                
+            }
+        }
+        tableHTML += "</tr>"
+    });
+
+    table.innerHTML = tableHTML;
+
+    var liItems = document.getElementById("case-ul").getElementsByTagName("li"); 
+
+    for (i = 0; i < liItems.length; i++) {
+        //console.log(liItems[i].id == li.id);
+        if(liItems[i].id == "case"+caseKey){
+            liItems[i].setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white; border-radius: 5px;");
+            //selected = li.id;
+        } else {
+            liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color: black; border-radius: 5px;");
+        }
+    }
+}
+
+
+function showEvents(varKey, caseKey) {
+
+    allCases = json[varKey];
+    allCases.forEach( (c) => {
+        var ck = Object.keys(c)[0]; //case key
+        // console.log(caseKey +" =?= "+ck);
+        if(caseKey == ck){
+            allEvents = Object.values(c)[0]; // all events
+        }
+    });
+    //  console.log(allEvents);
+        
+    var table = document.getElementById("eventsTable");
+    //var tableHTML = "<tr><th>Activity</th><th>Resource</th><th>Date</th><th>Time</th><th>Duration</th><th>Role</th></tr>"
+    var tableHTML = "<tr>";
+    var i = 0;
+    
+//  console.log("fps")
+//  console.log(allEvents[0]['concept:name'])
+    var parameter_dicitionary={}
+    var indx=0
+    var remove_index
+
+    allEvents.forEach((e) => {
+    //dates.push(new Date(e["time:timestamp"]));
+
+    var date = e["time:timestamp"].split(" ")[0];
+    var time = e["time:timestamp"].split(" ")[1];
         
         
         //console.log(e);
@@ -155,10 +278,11 @@ function showEvents(varKey, caseKey) {
         tableHTML += "<td>" + "Duration" + "</td>"
         tableHTML += "<td>" + "Role" + "</td>"*/
         // tableHTML += "</tr>"
-        });
-        tableHTML += "</tr>"
+    });
+        
+    tableHTML += "</tr>"
 
-        allEvents.forEach((e) => {
+    allEvents.forEach((e) => {
         //dates.push(new Date(e["time:timestamp"]));
 
         var date = e["time:timestamp"].split(" ")[0];
@@ -201,7 +325,7 @@ function showEvents(varKey, caseKey) {
         tableHTML += "<td>" + "Duration" + "</td>"
         tableHTML += "<td>" + "Role" + "</td>"*/
         tableHTML += "</tr>"
-        });
+    });
         
     table.innerHTML = tableHTML;
 
@@ -222,8 +346,51 @@ function showEvents(varKey, caseKey) {
 
 }
 
+function showCases2(li, key1) {
+    //console.log("showcases2")
+	var liItems = document.getElementById("variants-ul").getElementsByTagName("li"); 
+    
+	for (i = 0; i < liItems.length; i++) {
+		//console.log(liItems[i].id == li.id);
+        
+		if(liItems[i].id == li.id){
+			li.setAttribute("style", "background-color: #7a4791; cursor: pointer; color:white; ; border-radius: 5px;");
+			selected = li.id;
+		}else {
+			liItems[i].setAttribute("style", "background-color: #dad3f8; cursor: pointer; color:black; ; border-radius: 5px;");
+		}
+        
+	}
+
+    
+	allCases = json[dictionaryVariantNameReverse[key1]];
+	ul2.innerHTML = "";
+	//console.log(allCases)
+    
+    allCases.forEach( (c) => {
+		//var caseKey = Object.keys(c)[0]; //case key old
+        var caseKey = Object.values(c)[0]["concept:name"] //case key
+		allEvents = Object.values(c)[1]; // all events
+		
+		var li2 = document.createElement('li');
+        
+		if("variant"+key1 == selected){
+			li2.innerHTML = "<span class='text-table' style='border-radius: 4px;'>" + "Case " + caseKey + "</span><br><small class='text-table' style='border-radius: 4px;'>" + "Events: " + allEvents.length + '</small>';
+			li2.setAttribute("style", "cursor: pointer; border-radius: 5px;");
+			li2.setAttribute("id", "case"+ caseKey);
+
+			li2.setAttribute("onclick", "showEvents2("+key1+",'"+caseKey+"')");
+			ul2.append(li2);
+		}
+        
+	});
+    
+
+};
+
 
 function showCases(li, key1) {
+    //console.log("showCases start")
 	var liItems = document.getElementById("variants-ul").getElementsByTagName("li"); 
 	//console.log(liItems);
 	for (i = 0; i < liItems.length; i++) {
@@ -498,25 +665,30 @@ function applyFilter() {
 
     if(af_selected=='variants' && document.getElementById("variants_original").innerHTML==String(0)){
         plus_mode="1"
-        var real_filter=document.getElementById("variants_info").innerHTML
-        data_filter_attr = JSON.parse(real_filter);
+        //var real_filter=document.getElementById("variants_info").innerHTML
+        //data_filter_attr = JSON.parse(real_filter);
         
         for(var key_variant in listToFilter) {
-            console.log("la variante considerata è "+listToFilter[key_variant])
-            console.log("insieme dati in variante ")
+            //console.log("la variante considerata è "+listToFilter[key_variant])
             var key_variant_used=listToFilter[key_variant].trim()
-            console.log(data_filter_attr[key_variant_used])
-            
-            for(var index in data_filter_attr[key_variant_used]){
+            //console.log(dictionaryVariantNameReverse[key_variant_used])
+            var array_var_singolar=dictionaryVariantNameReverse[key_variant_used].split(",")
+            //console.log(array_var_singolar)
+            listToFilter_plus.push(array_var_singolar)
+            /*
+            for(var index in dictionaryVariantNameReverse[key_variant_used]){
 
-                console.log("indice dati variante ")
-                console.log(data_filter_attr[key_variant_used][index])
-                console.log(String(Object.keys(data_filter_attr[key_variant_used][index])))
-                listToFilter_plus.push(String(Object.keys(data_filter_attr[key_variant_used][index])))
+                console.log(dictionaryVariantNameReverse[key_variant_used][index])
+                console.log(String(Object.keys(dictionaryVariantNameReverse[key_variant_used][index])))
+                listToFilter_plus.push(String(Object.keys(dictionaryVariantNameReverse[key_variant_used][index])))
                 //console.log(listToFilter_plus)
             }
+            */
         }
+        //console.log(listToFilter_plus)
+        listToFilter_plus=JSON.stringify(listToFilter_plus)
         
+
         filtro="filter"+ "?"+"filterTime="+filtered_timeframe+	"&timeframe="+tf_selected+	"&start="+start_tf+				"&end="+end_tf+
 
         "&filterPerf="+filtered_perf+		"&perfFrame="+pf_selected+	"&min="+String(min_sec)+		"&max="+String(max_sec)+
@@ -544,6 +716,8 @@ function applyFilter() {
     // console.log(history_crono.length)
     oReq.open("GET",frontend+filtro, false);
     oReq.send();
+    initialVariantRequest();
+
     getMap(false);
 
     closeForm();
@@ -755,6 +929,7 @@ function filterSwipeUp(id){
 		// perfRequest();
 		// variantRequest();
 		swipeRemoveRequest();
+        initialVariantRequest();
 		apply_crono()
 
 		$("#loadingMessage").css("visibility", "hidden");
@@ -832,9 +1007,9 @@ function filterSwipeDown(id){
 
 
         var temp = $('#valore'+String(id)).attr('title');
-        console.log(temp)
+        //console.log(temp)
         var temp2 = $('#valore'+indice_up).attr('title');
-        console.log(temp2)
+        //console.log(temp2)
 
         $('#valore'+indice_up).attr('title',temp);
         $('#valore'+String(id)).attr('title',temp2);
@@ -843,6 +1018,7 @@ function filterSwipeDown(id){
 		// perfRequest();
 		// variantRequest();
 		swipeRemoveRequest();
+        initialVariantRequest();
 		apply_crono()
 
 		$("#loadingMessage").css("visibility", "hidden");
@@ -923,6 +1099,7 @@ function filterRemove(id){
 		// perfRequest();
 		// variantRequest();
 		swipeRemoveRequest();
+        initialVariantRequest();
 		apply_crono();
 		indice=indice-1
 
@@ -949,6 +1126,7 @@ function apply_crono(){
 	
 	
 	Object.keys(history_crono).forEach(function(key) {
+        console.log("applycronoinside")
    		
 		oReq.open("GET",frontend+history_crono[key], false);
 
@@ -956,6 +1134,7 @@ function apply_crono(){
 		
 	});
 
+    initialVariantRequest();
 	getMap(false);
 	redo_function=false;
 	
