@@ -406,6 +406,8 @@ function applyfilterScan(){
     oReq.send();  
     history_crono[String(indice)]=filtroScan
 
+    initialVariantRequest();
+
     getMap(false);
 
     closeForm();

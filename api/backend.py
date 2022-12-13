@@ -17,6 +17,17 @@ from utilities import *
 from rule import *
 import glob
 
+#import date
+import datetime
+import json, re
+
+class DateTimeAwareEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
+
 #IMAGES_FOLDER = os.path.join('static', 'images')
 LOGS_FOLDER = "/event logs"
 IMAGE_FOLDER = os.path.join('static', 'images')
@@ -94,7 +105,6 @@ if platform.system() == "Linux":
         marking_path="net/marking.txt"
         cost_file_path="jar/cost_file"
 
-app.config["CACHE_TYPE"] = "null"
 
 
 def home(file):
@@ -129,6 +139,44 @@ def home(file):
         nameupload = nomeupload     ) )
 
 
+import json
+import datetime
+import dateutil.parser
+import decimal
+
+CONVERTERS = {
+    'datetime': dateutil.parser.parse,
+    'decimal': decimal.Decimal,
+    'dict': dict,
+    'list': list,
+    'trace': pm4py.objects.log.obj.Trace,
+    'string': str
+}
+
+#pm4py.objects.log.obj.Trace
+class MyJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (datetime.datetime,)):
+            return {"val": str(obj), "_spec_type": "string"}
+        elif isinstance(obj, (decimal.Decimal,)):
+            return {"val": str(obj), "_spec_type": "decimal"}
+        elif isinstance(obj, (pm4py.objects.log.obj.Event,)):
+            return {"val": dict(obj), "_spec_type": "dict"}
+        elif isinstance(obj, (pm4py.objects.log.obj.Trace,)):
+            return {"val": {'attribute':obj.attributes, 'events':list(obj)}, "_spec_type": "dict"}
+        else:
+            return super().default(obj)
+
+
+def object_hook(obj):
+    _spec_type = obj.get('_spec_type')
+    if not _spec_type:
+        return obj
+
+    if _spec_type in CONVERTERS:
+        return CONVERTERS[_spec_type](obj['val'])
+    else:
+        raise Exception('Unknown {}'.format(_spec_type))
 
 
 
@@ -1008,99 +1056,10 @@ def filterScan():
 
     p=gviz_p
     
-    '''
-    variantsDict = '{'
-
-    cases = len(filtered_log)
-    print(cases)
-    j=0
-    for i in range(0, cases):
-        j=j+1
-        info = filtered_log[i].__getattribute__('attributes')
-        caseName = info['concept:name']
-        if ("variant-index" in info):
-            varIndex = info['variant-index']
-            if (i == 0):
-                variantsDict = variantsDict + '"' + str(varIndex) + '": ['
-        else:
-            variantsDict = variantsDict + '"' + str(j) + '": ['
-        
-        variantsDict = variantsDict + '{"' + str(caseName) + '":['
-
-        for x in filtered_log[i]:
-            timestamp = x['time:timestamp']
-            x['time:timestamp'] = str(timestamp)
-            stringX = str(x).replace("'", '"')
-            variantsDict = variantsDict + '' + stringX  # +', '
-        
-        variantsDict = variantsDict + ']}'  # chiude ogni caso
-        if ("variant-index" not in info):
-            variantsDict = variantsDict + ']' # chiude ogni variante
-    if ("variant-index" in info):
-        variantsDict = variantsDict + ']' # chiude ogni variante
-    variantsDict = variantsDict + '}' # chiude tutto
-
-    variantsDict = variantsDict.replace("][","],[")
-    variantsDict = variantsDict.replace("}{","},{")
-    variantsDict = variantsDict.replace(']"','],"')
-    '''
-    '''
-    variantsDict = '{'
-
-    j=-1
-    for var, trace in variants.items():
-
-        j =j+1
-        cases = len(trace)
-        print("Numero cases var "+str(j)+": "+str(cases))
-        varEmpty = True
-        for i in range(0, cases):
-            info = (list(variants.values())[j][i])
-            info = info.__getattribute__('attributes')
-            #print("info: "+str(info))
-            caseName = info['concept:name']
-            print()
-            #print(trace[i])
-            inFilter = False
-            for k in range(0,len(filtered_log)):
-                infoFiltered = filtered_log[k].__getattribute__('attributes')
-                filteredCaseName = infoFiltered['concept:name']
-                if(filteredCaseName == caseName):
-                    inFilter = True
-                    break
-
-            if(inFilter == False):
-                break
-            if(i==0):
-                varEmpty = False
-                if("variant-index" in info):
-                    variantsDict = variantsDict + '"' + str(info['variant-index']) + '": ['
-                else:
-                    variantsDict = variantsDict + '"' + str(j) + '": ['
-                #variantsDict = variantsDict + '"' + str(j) + '": ['
-            variantsDict = variantsDict + '{"'+str(caseName)+'":['
-            #print("Trac i len: "+str(len(trace[i])))
-            for x in trace[i]:
-                timestamp = x['time:timestamp']
-                x['time:timestamp'] = str(timestamp)
-                stringX = str(x).replace("'",'"')
-                variantsDict = variantsDict + '' + stringX #+', '
-            variantsDict = variantsDict + ']}' # chiude ogni caso
-        if(varEmpty == False):
-            variantsDict = variantsDict + ']' # chiude ogni variante
-
-    variantsDict = variantsDict + '}' # chiude tutto
-
-    variantsDict = variantsDict.replace("][","],[")
-    variantsDict = variantsDict.replace("}{","},{")
-    variantsDict = variantsDict.replace(']"','],"')
-    #variantsDict = variantsDict.replace('}"','},"')
-    variantsDict = variantsDict.replace('True','"True"')
-    variantsDict = variantsDict.replace('False','"False"')
-    '''
 
 
     alternative_variants_array=[]
+    '''
     varianti_array=[]
     variants = variants_filter.get_variants(log)
     variantsDict = '{'
@@ -1168,12 +1127,13 @@ def filterScan():
     variantsDict = variantsDict.replace(']"','],"')        
     variantsDict = variantsDict.replace('True','"True"')
     variantsDict = variantsDict.replace('False','"False"')
-    
-    result = str(f)+"|||"+str(p)+"|||"+str(variantsDict)
+    '''
+
+    result = str(f)+"|||"+str(p)
     # result=str(variantsDict)
     # print(variantsDict)
     # start_case=True
-    return result+"£"+str(alternative_variants_array)   
+    return result   
  
 
 
@@ -1501,14 +1461,17 @@ def filter():
 
         elif attrFrame == 'variants':
             # print("attr variants")
-            variant_list=list_attr.split(",")
+            
             # log = xes_importer.apply(log_path)
             variants = variants_filter.get_variants(log) 
             #print(plusMode)
             if(plusMode=="1"):
                 #print("plusmode")
-                filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "concept:name", attributes_filter.Parameters.POSITIVE: True})
+                variant_list_array=json.loads(list_attr)
+                filtered_log = pm4py.filter_variants(log,variant_list_array)
+                #filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "concept:name", attributes_filter.Parameters.POSITIVE: True})
             else:
+                variant_list=list_attr.split(",")
                 filtered_log = attributes_filter.apply_trace_attribute(log, variant_list, parameters={attributes_filter.Parameters.ATTRIBUTE_KEY: "variant", attributes_filter.Parameters.POSITIVE: True})
             log = filtered_log
 
@@ -1676,8 +1639,9 @@ def filter():
     variantsDict = variantsDict.replace('False','"False"')
     '''
 
-
+    
     alternative_variants_array=[]
+    '''
     varianti_array=[]
     variants = variants_filter.get_variants(log)
     variantsDict = '{'
@@ -1745,12 +1709,17 @@ def filter():
     variantsDict = variantsDict.replace(']"','],"')        
     variantsDict = variantsDict.replace('True','"True"')
     variantsDict = variantsDict.replace('False','"False"')
+    '''
+    #result = str(f)+"|||"+str(p)+"|||"+str(variantsDict)
+    result = str(f)+"|||"+str(p)
     
-    result = str(f)+"|||"+str(p)+"|||"+str(variantsDict)
+
     # result=str(variantsDict)
     # print(variantsDict)
     # start_case=True
-    return result+"£"+str(alternative_variants_array)   
+    #return result+"£"+str(alternative_variants_array)
+    
+    return result   
 
     # ******************************************************************************
     # ******************************************************************************
@@ -1770,6 +1739,23 @@ def usedvariable():
     stringX = str(str(activities)+"*"+str(resources)+"*"+str(resources_cost)+"*"+str(caseid)+"*"+str(variant)).replace("'",'"')
 
     return stringX
+
+import ast
+@app.route('/initialVariantAction', methods=['GET', 'POST'])
+def initialVariantAction():
+    global log
+    global log_duplicate
+
+    variants = variants_filter.get_variants(log)
+    
+    alternative_variants_array=[]
+    
+    response_string = json.dumps(variants, cls=MyJSONEncoder)
+    response_json=json.loads(response_string, object_hook=object_hook)
+
+    return response_json
+
+    
 
 @app.route('/initialAction', methods=['GET', 'POST'])
 def initialAction():
@@ -2152,7 +2138,7 @@ def initialAction():
     
     alternative_variants_array=[]
     
-    
+    '''
     variantsDict = '{'
 
     j=0
@@ -2221,8 +2207,10 @@ def initialAction():
     variantsDict = variantsDict.replace(']"','],"')        
     variantsDict = variantsDict.replace('True','"True"')
     variantsDict = variantsDict.replace('False','"False"')
-
+    '''
+    variantsDict=jsonify({"variants": str(variants)})  
     varianti=(variantsDict)
+    print(varianti)
 
     #variants fine_______________________________________________________________________________________________________________________
 
@@ -2232,7 +2220,8 @@ def initialAction():
 
     #___________________________________________________________________________
 
-    return grafo_frequency+"£"+grafo_performance+"£"+variabili_usare+"£"+activity_durata+"£"+varianti+"£"+durata_edge+"£"+activity_frequency+"£"+frequency_edge+"£"+str(alternative_variants_array)
+    #return jsonify({"grafo_frequency": grafo_frequency, "grafo_performance":grafo_performance, "variabili_usare":variabili_usare, "activity_durata":activity_durata,  "alternative_variants_array":str(alternative_variants_array)})
+    return grafo_frequency+"£"+grafo_performance+"£"+variabili_usare+"£"+activity_durata+"£"+durata_edge+"£"+activity_frequency+"£"+frequency_edge
 
 
 @app.route('/swipeRemoveAction', methods=['GET', 'POST'])
@@ -2282,6 +2271,7 @@ def swipeRemoveAction():
 
     ####start variants________________________________________________________________________________________
 
+    '''
     variants = variants_filter.get_variants(log)
     # global start_case
     # start_case= False
@@ -2347,13 +2337,13 @@ def swipeRemoveAction():
     variantsDict = variantsDict.replace('False','"False"')
 
     varianti=(variantsDict)
-
+    '''
 
     ####end variants_________________________________________________________________________________________
 
 
-
-    return grafo_frequency+"£"+grafo_performance+"£"+varianti+"£"+str(alternative_variants_array)
+    #return grafo_frequency+"£"+grafo_performance+"£"+varianti+"£"+str(alternative_variants_array)
+    return grafo_frequency+"£"+grafo_performance
 
 
 
