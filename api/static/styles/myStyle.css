@@ -15,7 +15,7 @@ body{
   /*align-items: center;*/
   /*justify-content: center;*/
   background: #dad3f8;
-  /* overflow-x: hidden; */
+  overflow-x: hidden; 
 }
 
 ::selection{
@@ -39,6 +39,31 @@ body{
 
 .attribute_drop {
   width: 70%;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #667676;
+}
+
+button:disabled,
+button[disabled]:hover{
+  background-color: #cccccc;
+  color: #667676;
+  cursor: default;
+}
+
+a.link_normal{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+a.link_disabled {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: #667676;
 }
 
 #loadingMessage {
@@ -86,6 +111,7 @@ body{
 	 
 .container{
   width: 100%;
+  min-height: 50em;
   padding: 40px 50px  40px  40px;
   background: #fff;
   margin: 0 20px;
@@ -166,7 +192,7 @@ body{
   text-decoration: underline;
 }
 
-#scan:checked ~ .list label.scan,
+#query:checked ~ .list label.query,
 #map:checked ~ .list label.map,
 #elanalysis:checked ~ .list label.elanalysis,
 #cChecking:checked ~ .list label.cChecking{
@@ -185,7 +211,7 @@ body{
 #cChecking:checked ~ .list .slider{
   top: 135px;
 }
-#scan:checked ~ .list .slider{
+#query:checked ~ .list .slider{
   top: 202px;
 }
 
@@ -1438,4 +1464,36 @@ ul.no-bullets {
   cursor: pointer;
   overflow: hidden;
   outline: none;
+}
+
+
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  background-color: #914781;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #914781;
 }

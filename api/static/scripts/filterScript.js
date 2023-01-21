@@ -175,7 +175,7 @@ function showEvents2(varKey, caseKey) {
                     tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
                     // console.log(e[inv_map[kf]]);
                 }else{
-                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
+                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "N/A" + "</td>" ;
                 }                
             }
         }
@@ -297,7 +297,7 @@ function showEvents(varKey, caseKey) {
                     tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
                     // console.log(e[inv_map[kf]]);
                 }else{
-                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "*" + "</td>" ;
+                    tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + "N/A" + "</td>" ;
                 }                
             }
 
@@ -456,61 +456,67 @@ function swap(json){
 function openForm(id) {
 	document.getElementById("blocker").style.display = "block";
 	switch (id) {
-	  case 'timeframe_filter':
-		document.getElementById("filter_title").innerHTML = "Timeframe";
-		document.getElementById("timeframe_filter_div").style.display = "block";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-        document.getElementById("all_filters_button").style.display = "block";
-        $("#myForm").removeClass("form-popup-scan");
-		break;
-	  case 'perf_filter':
-		document.getElementById("filter_title").innerHTML = "Performance";
-		document.getElementById("perf_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-        document.getElementById("all_filters_button").style.display = "block";
-        $("#myForm").removeClass("form-popup-scan");
-		break;
-	  case 'endpoints_filter':
-		document.getElementById("filter_title").innerHTML = "Endpoints";
-		document.getElementById("endpoints_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-        document.getElementById("all_filters_button").style.display = "block";
-        $("#myForm").removeClass("form-popup-scan");
-		break;
-	  case 'attribute_filter':
-		document.getElementById("filter_title").innerHTML = "Attribute";
-		document.getElementById("attribute_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("follower_filter_div").style.display = "none";
-        document.getElementById("all_filters_button").style.display = "block";
-        $("#myForm").removeClass("form-popup-scan");
-		
-		break;
-	  case 'follower_filter':
-		document.getElementById("filter_title").innerHTML = "Rule";
-		document.getElementById("follower_filter_div").style.display = "block";
-		document.getElementById("timeframe_filter_div").style.display = "none";
-		document.getElementById("perf_filter_div").style.display = "none";
-		document.getElementById("endpoints_filter_div").style.display = "none";
-		document.getElementById("attribute_filter_div").style.display = "none";
-        document.getElementById("all_filters_button").style.display = "none";
-        $("#myForm").addClass("form-popup-scan");
+	    case 'timeframe_filter':
+            document.getElementById("filter_title").innerHTML = "Timeframe";
+            document.getElementById("filter_info").style.visibility = "hidden";
+            document.getElementById("timeframe_filter_div").style.display = "block";
+            document.getElementById("perf_filter_div").style.display = "none";
+            document.getElementById("endpoints_filter_div").style.display = "none";
+            document.getElementById("attribute_filter_div").style.display = "none";
+            document.getElementById("follower_filter_div").style.display = "none";
+            document.getElementById("all_filters_button").style.display = "block";
+            $("#myForm").removeClass("form-popup-scan");
+            break;
+	    case 'perf_filter':
+            document.getElementById("filter_title").innerHTML = "Performance";
+            document.getElementById("filter_info").style.visibility = "hidden";
+            document.getElementById("perf_filter_div").style.display = "block";
+            document.getElementById("timeframe_filter_div").style.display = "none";
+            document.getElementById("endpoints_filter_div").style.display = "none";
+            document.getElementById("attribute_filter_div").style.display = "none";
+            document.getElementById("follower_filter_div").style.display = "none";
+            document.getElementById("all_filters_button").style.display = "block";
+            $("#myForm").removeClass("form-popup-scan");
+            break;
+	    case 'endpoints_filter':
+            document.getElementById("filter_title").innerHTML = "Endpoints";
+            document.getElementById("filter_info").style.visibility = "hidden";
+            document.getElementById("endpoints_filter_div").style.display = "block";
+            document.getElementById("timeframe_filter_div").style.display = "none";
+            document.getElementById("perf_filter_div").style.display = "none";
+            document.getElementById("attribute_filter_div").style.display = "none";
+            document.getElementById("follower_filter_div").style.display = "none";
+            document.getElementById("all_filters_button").style.display = "block";
+            $("#myForm").removeClass("form-popup-scan");
+            break;
+	    case 'attribute_filter':
+            document.getElementById("filter_title").innerHTML = "Attribute";
+            document.getElementById("filter_info").style.visibility = "visible";
+            document.getElementById("filter_info").title = "You can use it to split your log \nbased on a particular attribute, but also to \nfilter cases based on the presence or absence of activities, \nto filter case IDs and variants, or to remove individual \nactivities or attribute values"
+            document.getElementById("attribute_filter_div").style.display = "block";
+            document.getElementById("timeframe_filter_div").style.display = "none";
+            document.getElementById("perf_filter_div").style.display = "none";
+            document.getElementById("endpoints_filter_div").style.display = "none";
+            document.getElementById("follower_filter_div").style.display = "none";
+            document.getElementById("all_filters_button").style.display = "block";
+            $("#myForm").removeClass("form-popup-scan");
+            break;
+	    case 'follower_filter':
+            document.getElementById("filter_title").innerHTML = "Rule";
+            document.getElementById("filter_info").style.visibility = "visible";
+            document.getElementById("filter_info").title = "You can use it to filter your log based \non the defintion on a declare constraint"
+            document.getElementById("follower_filter_div").style.display = "block";
+            document.getElementById("timeframe_filter_div").style.display = "none";
+            document.getElementById("perf_filter_div").style.display = "none";
+            document.getElementById("endpoints_filter_div").style.display = "none";
+            document.getElementById("attribute_filter_div").style.display = "none";
+            document.getElementById("all_filters_button").style.display = "none";
+            $("#myForm").addClass("form-popup-scan");
 
-        scanRequest();
-		break;
-	  default:
-		document.getElementById("filter_title").innerHTML = "Sorry, there has been an error. No filter has been applied yet.";
+            scanRequest();
+            break;
+	    default:
+		    document.getElementById("filter_title").innerHTML = "Sorry, there has been an error. No filter has been applied yet.";
 	}
   document.getElementById("myForm").style.display = "block";
 }

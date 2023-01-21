@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <link rel="icon" href="{{ url_for('static',filename='images/logo.png') }}"> -->
+	<link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='images/normal/logo.png') }}">
 	<!-- <link rel="icon" type="image/x-icon" href="/images/favicon.ico"> -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/myStyle.css') }}">
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/durFreqScript.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static',filename='scripts/initialScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/lateralScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/filterScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/reqListScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/cCheckingScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/mapScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/scanScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/checkScript.js') }}"></script>
-
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/queryScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/generalScript.js') }}"></script>
     <!-- Fontawesome CDN Link -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
@@ -89,7 +90,7 @@ function checkRefresh()
 		outputPP.value = sliderPP.value;
 		outputAF.value = sliderAF.value;
 		outputAP.value = sliderAP.value;
-		$("#check_tabs").prop("checked", false);
+		$("#check_tabs").prop("checked", true);
 		document.getElementById("demo").innerHTML="100"
 		
 		document.refreshForm.visited.value = "1";
@@ -135,7 +136,7 @@ function checkRefresh()
 			<input type="radio" name="slider" checked id="map" onclick="displayContent()">
 			<input type="radio" name="slider" id="elanalysis" onclick="displayContent()">
 			<input type="radio" name="slider" id="cChecking" onclick="displayContent()">
-			<input type="radio" name="slider" id="scan" onclick="displayContent()">
+			<input type="radio" name="slider" id="query" onclick="displayContent()">
 			<div class="list" id="list">
 				<label id="firstpagemap" for="map" class="map">
 					<i class="fas fa-sitemap"></i>
@@ -145,13 +146,13 @@ function checkRefresh()
 					<i class="fas fa-chart-line"></i>
 					<span class="topic">Event Log Analysis</span>
 				</label>
-				<label for="cChecking" class="cChecking"  onclick="cCheckingComputation()">
+				<label for="cChecking" class="cChecking"  onclick="petriNetCompute()">
 					<i class="fas fa-check-double"></i>
 					<span class="topic">Conformance Checking</span>
 				</label>
-				<label style="display: none;" for="scan" class="scan" onclick="scanRequest()">
+				<label for="query" class="query" onclick="databasePresenceRequest()"> <!--onclick="queryDbRequest()"-->
 					<i class="fa-solid fa-sliders"></i>
-					<span class="topic">Scan</span>
+					<span class="topic">Query</span>
 				</label>
 				<div class="slider"></div>
 			</div>
@@ -159,12 +160,22 @@ function checkRefresh()
 			<div class="bottomleft" id="bottomleft">
 				<form action="" method='POST' enctype = "multipart/form-data">
 					<!-- <button type="button" for="myFile">Import log</button> -->
-					<button class="menu_button" type="button" onclick="update()">Import log</button>
+					<button id="import_log" class="menu_button" type="button" onclick="update()">Import log</button>
 					<input accept=".xes" type='file' id="file" name="file" style="display:none">
 					<br />
-					<button class="menu_button" type="button" onclick="exportDsl()">Export to DSL</button>
+					
+					<button id="export_log" class="menu_button" type="button"><a id="link_export_log" class="link_normal" href="{{url_for('downloadXes')}}">Export log</a></button>
 					<br />
-					<button class="menu_button" type="button">Export to DEF-PIPE</button>
+					<button id="export_dsl" class="menu_button" type="button" onclick="exportDsl()">Export DSL</button>
+					<br />
+					<button id="get_dsl" class="menu_button" type="button">Get DSL from DEF-PIPE</button>
+					<br />
+					<button id="send_dsl" class="menu_button" type="button">Send DSL to DEF-PIPE</button>
+					<br />
+					<button style="visibility: hidden;" id="load_project" class="menu_button" type="button" onclick="load()">Load project</button>
+					<input id="uploadFolder" type="file" webkitdirectory directory multiple onchange="changeFolder()" style="display:none">
+					<br />
+					<button style="visibility: hidden;" id="save_project" class="menu_button" type="button" onclick="saveProject()">Save project</button>
 					<input type="submit" id="updateBtn" value="Update" style="display:none">
 					<input type="hidden" value="{{updated}}" name="updated" id="updated">
 				</form>
@@ -346,7 +357,7 @@ function checkRefresh()
 						<div class="row">
 							<div class="column left">
 							<div class="containerVariants">
-								<h4 style="text-align:center;">Variants</h4>
+								<h4 title="A variant indicate a specific sequence of steps" style="text-align:center;">Variants ℹ️</h4>
 								<hr>
 								<br>
 								<ul id="variants-ul">
@@ -355,7 +366,7 @@ function checkRefresh()
 							</div>
 							<div class="column middle">
 							<div class="containerCases">
-								<h4 style="text-align:center;">Cases</h4>
+								<h4 title="list of cases IDs for the selected variant" style="text-align:center;">Cases ℹ️</h4>
 								<hr>
 								<br>
 								<ul id="case-ul">
@@ -492,7 +503,11 @@ function checkRefresh()
 						<div class="form-popup" id="myForm">
 						  <!-- INCOLLARE FORM -->
 							<form action="" class="form-container">
-							<h1 id="filter_title" style="color:#7a4791; text-align: center">Timeframe</h1>
+								<div style="text-align: center">
+									<span id="filter_title" style="color:#7a4791; text-align: center; font-size: 25px;">Timeframe </span>
+									<span id="filter_info">ℹ️</span>
+								</div>
+
 							<hr style="background:#cfa8d5">
 							<br>
 							<!-- FILTER FOR TIMEFRAME -->
@@ -755,7 +770,7 @@ function checkRefresh()
 												
 												
 												<button id="button-apply" type="button" onclick="takeFunction();" disabled>Check</button>
-												<button style="visibility: hidden;"id="button-reset" type="button" onclick="deleteBtn();">Reset</button>
+												<button disabled id="button-reset" type="button" onclick="deleteBtn();">Reset</button>
 											</div>
 											<div class="alert alert-danger alert-dismissible fade show" id="error_adding_rule" style="display:none" role="alert">
 												<strong>Error!</strong> It is not possible to use the same activity twice.
@@ -847,7 +862,7 @@ function checkRefresh()
 										</div>
 										<div style="text-align:center">
 											<button type="button" class="btn applycancel" style="font-size:13px; margin-right:10px;" onclick="closeForm()">Cancel</button>	
-											<button id="aplly-scan" type="button" class="btn applycancel" style="visibility: hidden; font-size:13px" onclick="applyfilterScan()">Apply</button>
+											<button id="aplly-scan" type="button" class="btn applycancel" disabled style="font-size:13px" onclick="applyfilterScan()">Apply</button>
 											
 										</div>
 										
@@ -1141,7 +1156,7 @@ function checkRefresh()
 						<!-- </center> -->
 
 						<div class="mapContainer" id="map2-content" style="display: none;">
-							<!-- <button type="button" style="font-size: 16px; float: right;" onclick="">cCheckingComputation</button>
+							<!-- <button type="button" style="font-size: 16px; float: right;" onclick="">petriNetCompute()</button>
 							<button type="button" style="font-size: 16px; float: right;" onclick="backPrecDiv()">Back</button> -->
 							
 							
@@ -1226,13 +1241,137 @@ function checkRefresh()
 								
 					</div>
 
-					<div class="scan text" id="scan-text">
-						<div class="title"> Scan </div>
+					<div class="query text" id="query-text">
+						<div class="title"> Query </div>
 						
+						<!-- <button style="font-size: 14px;" onclick="initializeDBRequest()">Make Query</button> -->
 						
+						<!-- <textarea class="vmiddle" style="font-size: 13px; resize: none;" name="queryPercentage" id="queryPercentage" cols="3" rows="1">110</textarea> -->
+						<!-- <div id="resultQuery"> -->
 
+						<!-- </div> -->
+
+						<div id="formQuery" class="divcenter" style="display: block;">
+							<!-- INCOLLARE FORM -->
+							<br>
+							<br>
+							<center>
+							<div class="conformance-container query-container">
+								<div class="conformance-title query-title">Database Presence</div>
+								
+								<hr>
+								<br>
+
+								<div id="response_database"> Do you want to use this tool, translation may take a bit time?</div>
+
+								<div id="querydivfacose" style="text-align:center">
+									<br>
+									<!-- <button type="button" style="font-size: 16px;">Yes</button> -->
+									<!-- <button type="button" style="font-size: 16px;">No</button>  -->
+									
+								</div>
 							
+							</div>
+							</center>
 
+						</div>
+
+						<div id="formQuery2" class="divcenter" style="display: none;">
+							<br>
+							<br>
+							<center>
+							<div id="qc2" class="conformance-container query-container2">
+								<div class="conformance-title quety-title">Personalize Query</div>
+								<hr>
+								<br>
+							
+								<div id="query_filter_div">
+
+									
+								</div>
+
+								<br>
+								<div id="where_condition">
+
+								</div>
+
+								<br>
+								<input style="font-size: 16px;" type="radio" name="choose" checked="checked" onclick="changeSecondTerm('none')"> <span style="font-size: 16px; padding-right: 10px;"> None</span>
+								<input style="font-size: 16px;" type="radio" name="choose" onclick="changeSecondTerm('select')"> <span style="font-size: 16px; padding-right: 10px;"> Standard query</span> 
+								<input style="font-size: 16px;" type="radio" name="choose" onclick="changeSecondTerm('textarea')"> <span style="font-size: 16px; padding-right: 10px;"> Free query </span> <br>
+
+								<br>
+
+								<select style="display: none; font-size: 16px;" id="select_first_element">
+									
+								</select>
+
+								<textarea style="display: none; font-size: 16px;" class="vmiddle" id="first_element_textarea">  </textarea>
+								
+
+								<select style="display: none; font-size: 16px;" id="select_operator">
+									<option> > </option>
+									<option> < </option>
+									<option> = </option>
+									<option> != </option>
+									<option> > </option>
+									<option> >= </option>
+									<option> <= </option>
+
+								</select>
+								
+
+
+								<select style="display: none; font-size: 16px;" id="select_second_element">
+									
+								</select>
+								
+
+								<textarea style="display: none; font-size: 16px;" class="vmiddle" id="second_element_textarea">  </textarea>
+								
+								<br>
+								<button style="font-size: 16px; width: 20%;" id="addCondition" onclick="addCondition()">Add Condition</button>
+								<br> <br>
+								<!-- 
+								<input type="radio" name="condition" value="and">And
+								<input type="radio" name="condition" value="or">Or -->
+								<button style="font-size: 16px; padding-right: 10px; width: 14%;" id="addAnd" onclick="addAnd()" disabled>And</button>
+								<button style="font-size: 16px; padding-right: 10px; width: 14%;" id="addOr" onclick="addOr()" disabled>Or</button>
+								
+						
+							
+								<div style="text-align:center">
+									<br>
+									<button class="conf_check_button" onclick="goback()" type="button" style="font-size: 16px;">Back</button>
+									<button class="conf_check_button" onclick="applicaFiltro()" type="button" style="font-size: 16px;">Apply filter</button>
+								</div>
+							
+							</div>
+							</center>
+						</div>
+
+
+						<div id="formQuery3" class="divcenter" style="display: none;">
+							<center>
+								<div class="conformance-title quety-title">Result</div>
+								<hr>
+								<br>
+								<div id="result_div">
+
+									
+								</div>
+
+								<div style="text-align:center">
+									<br>
+									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="backMakeQuery()">Back</button>
+									<!-- <button class="conf_check_button" onclick="applicaFiltro()" type="button" style="font-size: 16px;">Apply filter</button> -->
+								</div>
+						
+							</center>
+						
+						</div>
+						
+							
 					</div>
 
 
@@ -1262,8 +1401,9 @@ function checkRefresh()
 	var elanalysis = document.getElementById("elanalysis");
 	var cChecking = document.getElementById("cChecking");
 	var mapText = document.getElementById("map-text");
+	var query = document.getElementById("query")
 	var elanalysisText = document.getElementById("elanalysis-text");
-	var scanText = document.getElementById("scan-text");
+	var queryText = document.getElementById("query-text");
 	var cCheckingText = document.getElementById("cChecking-text");
 
 	var sliderPF = document.getElementById("myPathF");
