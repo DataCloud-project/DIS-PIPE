@@ -19,6 +19,13 @@ import psycopg2
 import sqlvalidator
 import pandas as pd
 
+
+#aggiunto da simone
+from flask_oidc import OpenIDConnect
+from flask_cors import CORS
+from flask import Flask,redirect
+from keycloak import KeycloakOpenID
+
 from graphviz import Digraph
 from flask import request, jsonify, render_template, redirect, send_file
 from pm4py.algo.filtering.log.attributes import attributes_filter
@@ -96,11 +103,39 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['UPLOAD_FOLDER'] = LOGS_FOLDER
 app.config['SESSION_TYPE'] = 'filesystem'
+
+
+f = open('client_secrets.json')
+client_secret_json = json.load(f)
+secret_key_client=client_secret_json['web']['client_secret']
+secret_server_url=client_secret_json['web']['server_url']
+secret_client_id=client_secret_json['web']['client_id']
+secret_realm_name=client_secret_json['web']['realm_name']
+
+f.close()
+
+#add by SimoneONE vvvvvvvvvvvvv
+app.config.update({
+    'SECRET_KEY': secret_key_client,
+    'TESTING': True,
+    'DEBUG': True,
+    'OIDC_CLIENT_SECRETS': 'client_secrets.json',
+    'OIDC_ID_TOKEN_COOKIE_SECURE': False,
+    'OIDC_REQUIRE_VERIFIED_EMAIL': False,
+    'OIDC_USER_INFO_ENABLED': True,
+    'OIDC_OPENID_REALM': 'user-authentication',
+    'OIDC_SCOPES': ['openid', 'email', 'profile'],
+    'OIDC_INTROSPECTION_AUTH_METHOD': 'client_secret_post'
+})
+oidc = OpenIDConnect(app)
+#add by SimoneONE ^^^^^^^^^
+
 app.app_context().push()
 #Session(app)
 app.secret_key = "hello"
 sess = Session()
 sess.init_app(app)
+
 
 
 
@@ -217,7 +252,127 @@ thisdict = {
 }
 '''
 
+#added by SimoneONE
+@app.route('/',methods=["POST", "GET"])
+@oidc.require_login
+def indice():
+    """Example for protected endpoint that extracts private information from the OpenID Connect id_token.
+       Uses the accompanied access_token to access a backend service.
+    """
+    
+    info = oidc.user_getinfo(['preferred_username', 'sub'])
+
+    username = info.get('preferred_username')
+    user_id = info.get('sub')
+    greeting = "Hello %s" % username
+    #access_token= ""
+    
+
+    if user_id in oidc.credentials_store:
+            from oauth2client.client import OAuth2Credentials
+            session["access_token"] = OAuth2Credentials.from_json(oidc.credentials_store[user_id]).access_token
+            session["refresh_token"] = OAuth2Credentials.from_json(oidc.credentials_store[user_id]).refresh_token
+            print(greeting, user_id, session["access_token"])
+            #filename = 'running-example.xes'
+
+            #session.permanent = True
+            #user1 = request.form["nm"]
+            session["user"] = username
+            session["log_name"] = "Example.xes"
+            session["log_name_clear"] = session["log_name"].replace(".xes","")
+            session["databaseName"] = session["log_name_clear"].lower()+"_"+session["user"].lower()
+            session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
+            session["log_path"] = os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
+            session["nomeupload"] = ""
+            session["backup_dir"] = os.getcwd()
+            #session["plans_path"] = ""
+            session["boolean_case"] = False
+            session["activity_list"] = []
+            session["dfg"] = None
+            session["dfg_f"] = None
+            process_jar= None
+            session["process_script"]= None
+
+            print(session["directory_log"])
+
+
+            return home(session["log_name"])
+    else:
+            return logout()
+
+
+@app.route('/sendDsl')
+@oidc.require_login
+def sendDsl():
+
+    mydsl = request.args.get('dsl')
+    import requests
+
+    headers = {
+        'Authorization': 'Bearer '+session["access_token"]
+    }
+
+    with open('dslFile.txt') as f:
+        lines = f.read()
+    print(lines)
+
+    files = {
+    'dsl': (None, lines),
+    }
+
+    response = requests.post('https://crowdserv.sys.kth.se/api/repo/testuser/import', headers=headers, files=files)
+    return response.text
+
+
+#added by SimoneONE
+@app.route('/logout')
+@oidc.require_login
+def logout():
+    """Performs local logout by removing the session cookie."""
+    session.pop("user", None)
+    session.pop("log_name", None)
+    session.pop("log_name_clear", None)
+    session.pop("databaseName", None)
+    session.pop("directory_log", None)
+    session.pop("log", None)
+    session.pop("log_duplicate", None)
+    session.pop("nomeupload", None)
+    session.pop("backup_dir", None)
+    #session.pop("plans_path", None)
+    session.pop("boolean_case", None)
+    session.pop("activity_list", None)
+    session.pop("dfg", None)
+
+
+    #oidc.logout()
+
+
+    
+    
+    keycloak_openid = KeycloakOpenID(server_url=secret_server_url,
+                                    client_id=secret_client_id,
+                                    realm_name=secret_realm_name,
+                                    client_secret_key=secret_key_client)
+    keycloak_openid.logout(session["refresh_token"])
+
+
+    oidc.logout()
+    
+    session.pop("access_token", None)
+    session.pop("refresh_token", None)
+    
+    
+    #return 'Hi, you have been logged out! <a href="/">Return</a>'
+    return render_template("logout.html")
+
+
+
+
+
+
+
 #session
+'''
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
@@ -247,6 +402,8 @@ def login():
 
         return render_template("login.html")
 
+'''
+
 @app.route("/user")
 def user():
     if "user" in session:
@@ -255,6 +412,7 @@ def user():
     else:
         return redirect(url_for("login"))
 
+'''
 @app.route("/logout")
 def logout():
     session.pop("user", None)
@@ -272,6 +430,7 @@ def logout():
     session.pop("dfg", None)
     
     return redirect(url_for("login"))
+'''
 
 #Server functions
 def home(file):
@@ -301,9 +460,9 @@ def home(file):
         filename = file, \
         nameupload = session["log_name"]     ) )
 
-@app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
 def index():
-    session.permanent = True
+    #session.permanent = True
     if session.get('user') != True:
         session["user"] = "testuser"
     
@@ -372,13 +531,11 @@ def index():
     except :
         print("process alreay killed")
 
-    
-    
-     
-
     return home(filename)
+
+
 process_jar= None
-@app.route('/', methods = ['POST'])
+@app.route('/index', methods = ['POST'])
 def upload_file():
 
     global process_jar
@@ -2854,7 +3011,7 @@ def makeQuery():
                 if(isinstance(a, datetime.datetime)):
                     response=response+a.strftime("%d/%m/%Y %H:%M:%S")+","
                 else:
-                    response=response+a+","
+                    response=response+str(a)+","
             response=response[:-1]+"\n"
 
             #print(row[0])

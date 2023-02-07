@@ -131,8 +131,14 @@ function checkRefresh()
 	<label for="check">
 		<i class="fas fa-bars" id="btn"></i>
 	</label>
+
 	<div class="container">
 		<div class="menu" id="menu">
+			<input type="checkbox" id="logout" onclick="logout()">
+			<label for="logout">
+				<i class="fas fa-sign-out-alt" id="lgt"></i>
+			</label>
+
 			<input type="radio" name="slider" checked id="map" onclick="displayContent()">
 			<input type="radio" name="slider" id="elanalysis" onclick="displayContent()">
 			<input type="radio" name="slider" id="cChecking" onclick="displayContent()">
@@ -158,7 +164,7 @@ function checkRefresh()
 			</div>
 			
 			<div class="bottomleft" id="bottomleft">
-				<form action="" method='POST' enctype = "multipart/form-data">
+				<form action="/index" method='POST' enctype = "multipart/form-data">
 					<!-- <button type="button" for="myFile">Import log</button> -->
 					<button id="import_log" class="menu_button" type="button" onclick="update()">Import log</button>
 					<input accept=".xes" type='file' id="file" name="file" style="display:none">
@@ -170,7 +176,7 @@ function checkRefresh()
 					<br />
 					<button id="get_dsl" class="menu_button" type="button">Get DSL from DEF-PIPE</button>
 					<br />
-					<button id="send_dsl" class="menu_button" type="button">Send DSL to DEF-PIPE</button>
+					<button id="send_dsl" class="menu_button" type="button" onclick="sendDslRequest()">Send DSL to DEF-PIPE</button>
 					<br />
 					<button style="visibility: hidden;" id="load_project" class="menu_button" type="button" onclick="load()">Load project</button>
 					<input id="uploadFolder" type="file" webkitdirectory directory multiple onchange="changeFolder()" style="display:none">
@@ -1280,7 +1286,7 @@ function checkRefresh()
 							<br>
 							<br>
 							<center>
-							<div id="qc2" class="conformance-container query-container2">
+							<div id="qc2" class="conformance-container3 query-container2">
 								<div class="conformance-title quety-title">Personalize Query</div>
 								<hr>
 								<br>
@@ -1306,7 +1312,7 @@ function checkRefresh()
 									
 								</select>
 
-								<textarea style="display: none; font-size: 16px;" class="vmiddle" id="first_element_textarea">  </textarea>
+								<textarea style="display: none; font-size: 16px;" class="vmiddle" cols="30" id="first_element_textarea">  </textarea>
 								
 
 								<select style="display: none; font-size: 16px;" id="select_operator">
@@ -1327,7 +1333,7 @@ function checkRefresh()
 								</select>
 								
 
-								<textarea style="display: none; font-size: 16px;" class="vmiddle" id="second_element_textarea">  </textarea>
+								<textarea style="display: none; font-size: 16px;" cols="30" class="vmiddle" id="second_element_textarea">  </textarea>
 								
 								<br>
 								<button style="font-size: 16px; width: 20%;" id="addCondition" onclick="addCondition()">Add Condition</button>

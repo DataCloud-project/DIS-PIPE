@@ -1,3 +1,14 @@
+
+function logout() {
+    //console.log("bode")
+    //var oReq = new XMLHttpRequest();
+	//oReq.open("GET", frontend+"logout", false);
+	//oReq.send();
+    var url = "/logout";
+    window.location.assign(url);
+}
+
+
 function exportXesRequest() {
 
 	$("#loadingMessage").css("visibility", "visible");
@@ -123,6 +134,54 @@ function load(){
 	document.getElementById('uploadFolder').click();
 }
 
+function sendDslListener(){
+	console.log(this.responseText)
+}
+
+function sendDslRequest(){
+
+	var predecessors = [];
+	var parameters = [];
+	var count = [];
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	var dsl = 'Pipeline ' + pipelineName +'{\n';
+	
+	for (var i=0; i<dslSteps.length; i++){
+		predecessors[i] = '';
+		count[i] = 0;
+		// get parameters of the current step in a string
+		parameters[i] = '\t\t\t\tFrequency: ' + dslSteps[i][0][1] + ',\n\t\t\t\tDuration: ' + dslSteps[i][0][2];
+		// iterate on the predecessors of the current step and save them in a string
+		for (var j=1; j<dslSteps[i].length; j++){
+			count[i]++;
+			predecessors[i] = predecessors[i] + '\t\t\t\t' + dslSteps[i][j][0].replace(' ', '_');
+			if (j<dslSteps[i].length-1)
+				predecessors[i] = predecessors[i] +',\n';	
+		}
+		// print the whole string for each step
+		dsl = dsl + '\t-\tStep: ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		if (predecessors[i] != ''){
+			dsl = dsl + '\n\t\t\tPrevious:';
+			if (count[i]>1)
+				dsl = dsl + '[';
+			dsl = dsl + '\n' + predecessors[i];
+			if (count[i]>1)
+				dsl = dsl + '\n\t\t\t]';
+		}
+		if (dslSteps[i][0][0] == 'start' || dslSteps[i][0][0] == 'end')
+			dsl = dsl + '\n';
+		else
+			dsl = dsl + '\n\t\t\tEnvironmentParameters:\n' + parameters[i] + '\n';
+	}
+	dsl = dsl + '\}';
+
+	var oReq1 = new XMLHttpRequest();
+	oReq1.addEventListener("load", sendDslListener);
+	oReq1.open("GET", frontend+"sendDsl?dsl="+dsl, false);
+	oReq1.send();
+
+}
+
 
 //function used to export DSL file
 function exportDsl(){
@@ -146,7 +205,7 @@ function exportDsl(){
 				predecessors[i] = predecessors[i] +',\n';	
 		}
 		// print the whole string for each step
-		dsl = dsl + '\t-\tStep Step: ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		dsl = dsl + '\t-\tStep: ' + dslSteps[i][0][0].replaceAll(' ', '_');
 		if (predecessors[i] != ''){
 			dsl = dsl + '\n\t\t\tPrevious:';
 			if (count[i]>1)
