@@ -183,8 +183,8 @@ function sendDslRequest(){
 }
 
 
-//function used to export DSL file
-function exportDsl(){
+//function used to compute the DSL
+function createDsl(){
 
 	var predecessors = [];
 	var parameters = [];
@@ -194,6 +194,12 @@ function exportDsl(){
 	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
 	//iterate on the steps
 	for (var i=0; i<dslSteps.length; i++){
+		// if the step is start or end, just skip
+		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
+			continue;
+		// first iteration no \n
+		if (i != 0)
+			dsl = dsl + '\n\n';
 		predecessors[i] = '';
 		count[i] = 0;
 		// get parameters of the current step in a string
@@ -219,9 +225,15 @@ function exportDsl(){
 				dsl = dsl + '\n\t\t\t]';
 		}
 		// --------------------------------------------------------------------------------------------*/
-		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n\n\n';
+		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n';
 	}
 	dsl = dsl + '\}';
-	// return the dsl
+	//return the dsl
+	return dsl;
+}
+// function used to export the DSL to file
+function exportDsl(){
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	var dsl = createDsl();
 	download(dsl, pipelineName, '.txt');
 }
