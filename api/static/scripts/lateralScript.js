@@ -190,13 +190,15 @@ function exportDsl(){
 	var parameters = [];
 	var count = [];
 	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
-	var dsl = 'Pipeline ' + pipelineName +'{\n';
-	
+	//print pipeline title + fixed line about communicationMedium
+	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
+	//iterate on the steps
 	for (var i=0; i<dslSteps.length; i++){
 		predecessors[i] = '';
 		count[i] = 0;
 		// get parameters of the current step in a string
-		parameters[i] = '\t\t\t\tFrequency: ' + dslSteps[i][0][1] + ',\n\t\t\t\tDuration: ' + dslSteps[i][0][2];
+		parameters[i] = "\t\t\t\tFrequency: '" + dslSteps[i][0][1] + "',\n\t\t\t\tDuration: '" + dslSteps[i][0][2] +"'";
+		/* -----------------------outdated part about predecessors --------------------------------------
 		// iterate on the predecessors of the current step and save them in a string
 		for (var j=1; j<dslSteps[i].length; j++){
 			count[i]++;
@@ -204,8 +206,10 @@ function exportDsl(){
 			if (j<dslSteps[i].length-1)
 				predecessors[i] = predecessors[i] +',\n';	
 		}
+		// --------------------------------------------------------------------------------------------*/
 		// print the whole string for each step
-		dsl = dsl + '\t-\tStep: ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		dsl = dsl + '\t\t- data-processing step ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		/* -----------------------outdated part about predecessors --------------------------------------
 		if (predecessors[i] != ''){
 			dsl = dsl + '\n\t\t\tPrevious:';
 			if (count[i]>1)
@@ -214,12 +218,10 @@ function exportDsl(){
 			if (count[i]>1)
 				dsl = dsl + '\n\t\t\t]';
 		}
-		if (dslSteps[i][0][0] == 'start' || dslSteps[i][0][0] == 'end')
-			dsl = dsl + '\n';
-		else
-			dsl = dsl + '\n\t\t\tEnvironmentParameters:\n' + parameters[i] + '\n';
+		// --------------------------------------------------------------------------------------------*/
+		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n\n\n';
 	}
 	dsl = dsl + '\}';
 	// return the dsl
-	download(dsl, pipelineName, 'txt');
+	download(dsl, pipelineName, '.txt');
 }
