@@ -322,8 +322,8 @@ label #lgt{
 	cursor: pointer;
 	background: white;
 	border-radius: 3px;
-	/*z-index: 0; */
-	left: 280px;
+	/*z-index: -5; */
+	left: 85%;
 	top: -13px;
 	font-size: 23px;
 	color: #6d50e2;
@@ -336,7 +336,7 @@ label #btn_tabs{
 	cursor: pointer;
 	background: white;
 	border-radius: 3px;
-	z-index: 3;
+	z-index: 2;
 	right: 40px;
 	top: 25px;
 	font-size: 23px;
@@ -849,10 +849,12 @@ button:hover {
 }
 
 .menu_button{
+  z-index: 2;
   padding: 5px;
   font-size: 12px;
   margin-bottom: 5px;
   width: 100%;
+  
 }
 
 .dis_submit{
@@ -1138,7 +1140,7 @@ button:hover {
   right: 0;
   content: ' ';
   background: rgba(0,0,0,.5);
-  z-index: 1;
+  z-index: 7;
 }
 
 

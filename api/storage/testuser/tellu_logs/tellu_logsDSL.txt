@@ -1,10 +1,10 @@
-Pipeline Example {
+Pipeline tellu_logs {
 	communicationMedium: medium WEB_SERVICE
 	steps:
-		- data-processing step check_ticket
+		- data-processing step EVENT_12_END
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '9',
+				Frequency: '100',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -12,10 +12,10 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step decide
+		- data-processing step EVENT_2_START
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '9',
+				Frequency: '100',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -23,10 +23,10 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step examine_casually
+		- data-processing step analyzeData
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '6',
+				Frequency: '180',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -34,10 +34,10 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step examine_thoroughly
+		- data-processing step createRecord
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
+				Frequency: '100',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -45,10 +45,10 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step pay_compensation
+		- data-processing step endAnalysis
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
+				Frequency: '100',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -56,10 +56,10 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step register_request
+		- data-processing step receiveBloodMeasure
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '6',
+				Frequency: '36',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -67,10 +67,10 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step reinitiate_request
+		- data-processing step receiveDataFromMq
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
+				Frequency: '100',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint
@@ -78,10 +78,43 @@ Pipeline Example {
 				hardRequirements:
 
 
-		- data-processing step reject_request
+		- data-processing step receiveScaleMeasure
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
+				Frequency: '31',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step receiveTempMeasure
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '33',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step sendDataToMq
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step startAnalysis
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
 				Duration: '0s'
 			}
 			resourceProvider: Accesspoint

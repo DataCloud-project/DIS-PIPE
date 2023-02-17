@@ -544,6 +544,10 @@ function closeChangement(){
     document.getElementById("myChange").style.display = "none";
     document.getElementById("blocker5").style.display = "none";
 }
+function closeFeedBack(){
+    document.getElementById("dslFeedBack").style.display = "none";
+    document.getElementById("blocker6").style.display = "none";
+}
 
 function dateMachRegex(date) {
 	const regex = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})$/g;

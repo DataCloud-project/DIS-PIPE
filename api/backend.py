@@ -305,16 +305,18 @@ def indice():
 @oidc.require_login
 def sendDsl():
 
-    mydsl = request.args.get('dsl')
+    #mydsl = request.args.get('dsl')
     import requests
 
     headers = {
         'Authorization': 'Bearer '+session["access_token"]
     }
 
-    with open('dslFile.txt') as f:
+    
+    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+"DSL.txt") as f:
         lines = f.read()
     print(lines)
+    
 
     files = {
     'dsl': (None, lines),
@@ -353,7 +355,12 @@ def logout():
                                     client_id=secret_client_id,
                                     realm_name=secret_realm_name,
                                     client_secret_key=secret_key_client)
-    keycloak_openid.logout(session["refresh_token"])
+
+    try:
+        keycloak_openid.logout(session["refresh_token"])
+    except:
+        print("An exception on keycloak_openid.logout occurred")
+    
 
 
     oidc.logout()
@@ -460,7 +467,8 @@ def home(file):
         filename = file, \
         nameupload = session["log_name"]     ) )
 
-@app.route('/index', methods=['GET'])
+@app.route('/index')
+@oidc.require_login
 def index():
     #session.permanent = True
     if session.get('user') != True:
@@ -3189,9 +3197,8 @@ def dslPost():
     dslJson=(json.loads(dslHeader))
     
     #global directory_log
-    
-    with open(session["directory_log"]+"/dslFile.txt", "w") as f:
-        
+
+    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+"DSL.txt", "w") as f:
         f.write(dslJson['pipeline'])    
         f.close()
     
