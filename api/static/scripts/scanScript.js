@@ -90,9 +90,13 @@ function selectFunction(){
 
 //take the rule inserted and check if it is valid
 function takeFunction(){
-    document.getElementById("button-reset").style.visibility = "visible";
-    document.getElementById("button-apply").style.visibility = "hidden";
-    document.getElementById("aplly-scan").style.visibility = "visible";
+    //document.getElementById("button-reset").style.visibility = "visible";
+    //document.getElementById("button-apply").style.visibility = "hidden";
+    //document.getElementById("aplly-scan").style.visibility = "visible";
+    
+    document.getElementById("button-reset").disabled = false;
+    document.getElementById("button-apply").disabled = true;
+    document.getElementById("aplly-scan").disabled = false;
     var fun = document.getElementById("selectFun").value;
     var act1 = document.getElementById("act1").value;
     var activity2 = document.getElementById("act2");
@@ -507,9 +511,12 @@ function createFirstRowTable(tableId){
 //when click delete button 
 function deleteBtn(){
     //console.log("delete")
-    document.getElementById("button-reset").style.visibility = "hidden";
-    document.getElementById("button-apply").style.visibility = "visible";
-    document.getElementById("aplly-scan").style.visibility = "hidden";
+    //document.getElementById("button-reset").style.visibility = "hidden";
+    document.getElementById("button-reset").disabled = true;
+    //document.getElementById("button-apply").style.visibility = "visible";
+    document.getElementById("button-apply").disabled = false;
+    //document.getElementById("aplly-scan").style.visibility = "hidden";
+    document.getElementById("aplly-scan").disabled = true;
     error_no_rule = document.getElementById("error_no_rule");
     error_no_check_rule = document.getElementById("error_no_check_rule");
     var selectedCount = 0;

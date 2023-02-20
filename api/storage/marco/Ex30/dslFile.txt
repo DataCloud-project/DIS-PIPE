@@ -1,0 +1,67 @@
+Pipeline Ex30{
+	-	Step Step: check_ticket
+			Previous:[
+				examine_casually,
+				examine_thoroughly,
+				register_request,
+				reinitiate_request
+			]
+			EnvironmentParameters:
+				Frequency: 9,
+				Duration: 0s
+	-	Step Step: decide
+			Previous:[
+				check_ticket,
+				examine_casually,
+				examine_thoroughly
+			]
+			EnvironmentParameters:
+				Frequency: 9,
+				Duration: 0s
+	-	Step Step: examine_casually
+			Previous:[
+				check_ticket,
+				register_request,
+				reinitiate_request
+			]
+			EnvironmentParameters:
+				Frequency: 6,
+				Duration: 0s
+	-	Step Step: examine_thoroughly
+			Previous:[
+				check_ticket,
+				register_request,
+				reinitiate_request
+			]
+			EnvironmentParameters:
+				Frequency: 3,
+				Duration: 0s
+	-	Step Step: pay_compensation
+			Previous:
+				decide
+			EnvironmentParameters:
+				Frequency: 3,
+				Duration: 0s
+	-	Step Step: register_request
+			Previous:
+				start
+			EnvironmentParameters:
+				Frequency: 6,
+				Duration: 0s
+	-	Step Step: reinitiate_request
+			Previous:
+				decide
+			EnvironmentParameters:
+				Frequency: 3,
+				Duration: 0s
+	-	Step Step: reject_request
+			Previous:
+				decide
+			EnvironmentParameters:
+				Frequency: 3,
+				Duration: 0s
+	-	Step Step: start
+	-	Step Step: end
+			Previous:
+				pay_compensation
+}
