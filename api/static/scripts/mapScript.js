@@ -21,11 +21,7 @@ var $total_max=0
 var $total_median=0
 var $total_total=0
 
-
-// $('textarea').prop('readonly', true);
-
 var copia_sample
-
 
 
 // function used to update simultaneously the slider and the textarea
@@ -87,29 +83,17 @@ function updateInfo(caso){
         }
         
 	}
-
-
-
-
 }
 
 
-
-
-
+//function to update the map, based on the slider change
 function pre_request(p_check){
 	document.getElementById("loadingMessage").style.visibility = "visible";	
 	request(p_check)
 }
-
+//function called by pre_request(p_check)
 function request(p_check) {
 
-	
-    // $(document).ready(function(){
-    //     $(".dosubmit").click(function(){
-    //         $(this).css('background-color', 'red');
-    //     });
-    // });
 	document.getElementById("loadingMessage").style.visibility = "hidden";
 
 	var pf = document.getElementById("myPathF").value;
@@ -140,52 +124,12 @@ function request(p_check) {
 	$(".change_form").css("visibility", "hidden");
 	$(".dis_submit").removeClass("dosubmit");
 	$(".dis_submit").attr('disabled', true);
-
 	
 	document.getElementById("myChange").style.display = "block";
 	document.getElementById("blocker5").style.display = "block";
 }
 
-function exportDsl(){
-
-	var predecessors = [];
-	var parameters = [];
-	var count = [];
-	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
-	var dsl = 'Pipeline ' + pipelineName +'{\n';
-	
-	for (var i=0; i<dslSteps.length; i++){
-		predecessors[i] = '';
-		count[i] = 0;
-		// get parameters of the current step in a string
-		parameters[i] = '\t\t\t\tFrequency: ' + dslSteps[i][0][1] + ',\n\t\t\t\tDuration: ' + dslSteps[i][0][2];
-		// iterate on the predecessors of the current step and save them in a string
-		for (var j=1; j<dslSteps[i].length; j++){
-			count[i]++;
-			predecessors[i] = predecessors[i] + '\t\t\t\t' + dslSteps[i][j][0].replace(' ', '_');
-			if (j<dslSteps[i].length-1)
-				predecessors[i] = predecessors[i] +',\n';	
-		}
-		// print the whole string for each step
-		dsl = dsl + '\t-\tStep Step: ' + dslSteps[i][0][0].replaceAll(' ', '_');
-		if (predecessors[i] != ''){
-			dsl = dsl + '\n\t\t\tPrevious:';
-			if (count[i]>1)
-				dsl = dsl + '[';
-			dsl = dsl + '\n' + predecessors[i];
-			if (count[i]>1)
-				dsl = dsl + '\n\t\t\t]';
-		}
-		if (dslSteps[i][0][0] == 'start' || dslSteps[i][0][0] == 'end')
-			dsl = dsl + '\n';
-		else
-			dsl = dsl + '\n\t\t\tEnvironmentParameters:\n' + parameters[i] + '\n';
-	}
-	dsl = dsl + '\}';
-	// return the dsl
-	download(dsl, pipelineName, 'txt');
-}
-
+//function used to close popup using ❌
 function closePP(){
     $("#myPopup").attr("class","popuptext")
     $(".node").find("polygon").attr('stroke', "#000000");
@@ -205,9 +149,7 @@ function closePP(){
     $total_total=0
 }
 
-
-
-
+//function to handle all the map
 function getMap(bool) {
 		
     // DARIO START
@@ -243,30 +185,6 @@ function getMap(bool) {
                 
             });
         });
-        
-        // console.log(getAllEdgeFrequency("absolute")["register request#examine casually"]);
-        // console.log(getAllFrequency("absolute")["reject request"]);
-        // debug
-        /*console.log('GraphTextF:');
-        console.log(graphTextF);
-        console.log('GraphTextP:');
-        console.log(graphTextP);
-        console.log('GraphEdgesF:');
-        console.log(graphEdgesF);
-        console.log('GraphEdgesP:');
-        console.log(graphEdgesP);*/
-        /*
-        console.log('GraphNodes:');
-        console.log(graphNodes);
-        console.log('LabeledGraphEdges:');
-        console.log(graphEdges);
-        console.log('DSL:');
-        console.log(dslSteps);
-        console.log('MeanDuration:');
-        console.log(meanDurationFP);
-        console.log('MeanEdgeDuration:');
-        console.log(meanEdgeDuration);
-        */
     }
     //DARIO END
     
@@ -290,27 +208,28 @@ function getMap(bool) {
     //sample = sample.replace(/■/g, '    &#9724;'); //9632
     sample = sample.replace(/■/g, " ");
     copia_sample=sample
-    
+    console.log(sample)
+    //sample=sample.replace("digraph {", 'digraph { \nrankdir="LR";')
     
     var options = {
       format: 'svg',
       ALLOW_MEMORY_GROWTH: 1,
-      totalMemory: 537395200
+      totalMemory: 537395200,
+      //rankdir:"LR",
+      //splines:ortho,
       // format: 'png-image-element'
     }
 
     var image = Viz(sample, options);
+
+    
 
     var main = document.getElementById('graphContainer');
 
     main.innerHTML = image;		// SVG
 
     // document.getElementById('graphContainer2').innerHTML=image
-
-
-    
-    
-    
+        
     // Optional - resize the SVG element based on the contents.
     /*var svg = document.querySelector('#graphContainer');
     var bbox = svg.getBBox();
@@ -333,9 +252,6 @@ function getMap(bool) {
 
 
     var $totale = 0
-    
-
-
     var $totale_edge=0
     var $make_somma=0
         
@@ -364,10 +280,6 @@ function getMap(bool) {
             nodes[i].children[0].innerHTML = nodesNames[i];
             // console.log(nodes[i].children[0].innerHTML)
 
-
-            
-
-            
             names = nodesNames[i].split(' (')[0];
             names = '"'+ names +'"';
             //console.log(names);
@@ -399,9 +311,6 @@ function getMap(bool) {
 
     lista_ora=['w','h','s','m','d','y']
     number_selected_activity=0
-
-
-    
 
 
     // Apply functions on node*************************************************************
@@ -685,9 +594,6 @@ function getMap(bool) {
     });
     // ****************************************************************************************************
 
-    
-
-    
 
     // analyze edge****************************************************************************************
     $totale_edge=0
@@ -1136,10 +1042,6 @@ function getMap(bool) {
 
 
 
-
-
-    
-
         var bool_switch = document.getElementById("tabPerf").checked;
         if ((bool_switch) == true){
             // if($('select[name=perfs] option').filter(':selected').val()=="totDur"){
@@ -1434,11 +1336,8 @@ function getMap(bool) {
                     if($("#"+node_id).find("title").text()=="@@E (instant)" || $("#"+node_id).find("title").text()=="@@S (instant)"){
                         $("#"+node_id).find("title").text(" ")
                     }	
-
                 }
-                
-                
-                
+
             });
 
 
@@ -1507,7 +1406,7 @@ function getMap(bool) {
             
         });
 
-        // nuovo nuovo
+       
         $('#perfromanceFrequency').on('change', function(e) {
             e.stopImmediatePropagation();
 
@@ -1538,11 +1437,7 @@ function getMap(bool) {
                     if($("#"+node_id).find("title").text()=="@@E (instant)" || $("#"+node_id).find("title").text()=="@@S (instant)"){
                         $("#"+node_id).find("title").text(" ")
                     }	
-
-                }
-                
-                
-                
+                } 
             });
 
             
@@ -1550,8 +1445,7 @@ function getMap(bool) {
             $.each(classedge, function(index, item) {
                 var edge_id=item.id
                 // if(node_id!="@@S" && node_id!="@@E"){
-                    
-                    
+                 
                     if(typeF=="absFreq"){
                         $frequency_edge_values=getAllEdgeFrequency("absolute");
                     }else if (typeF=="caseFreq"){
@@ -1572,88 +1466,44 @@ function getMap(bool) {
                         var $target= $label_title.split('->')[1].trim()
                         // console.log($target)
 
-                        
                         // console.log(nodes_id_association)
                         // console.log(nodes_id_association[$source])
                         // console.log(nodes_id_association[$target])
                         // console.log(secondsToHms($duration_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]))
-                        
-
+ 
                         if($source=="@@startnode"){
                             $("#"+edge_id).find("text").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
                             $("#"+edge_id).find("title").text(($frequency_edge_values["@@startnode"+"#"+nodes_id_association[$target]]));
-
                         }else if($target=="@@endnode"){
                             $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
                             $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+"@@endnode"]));
                         }else{
                             $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
                             $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
-
                         }
-                    
-                        // console.log("prova7")+
+        
                         // $("#"+edge_id).find("text").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
                         // $("#"+edge_id).find("title").text(($frequency_edge_values[nodes_id_association[$source]+"#"+nodes_id_association[$target]]));
 
                         if($source=="@@startnode" && typeF=="maxRep"){
                             $("#"+edge_id).find("text").text("");
                             $("#"+edge_id).find("title").text("")
-                            // TESTTEST
                         }
                         if($target=="@@endnode" && typeF=="maxRep"){
                             $("#"+edge_id).find("text").text("");
                             $("#"+edge_id).find("title").text("")
-                            // TESTTEST
                         }
-                    
-
                     }
-                    
-                    
-                // }
-                
-                
-                
-            });
-            
+                // } 
+            }); 
         });
-
-
-
-
     });
     // *******************************************************************************************************************************
-
-    // function getNode(nodeName){
-    // 	$("#"+node_id).find(".text_name").text($titolo_name);
-    // }
-
-    
-
-
-
-
-
-    
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-    
     
     var median = document.getElementById('median').innerHTML;
     var total = document.getElementById('total').innerHTML;
     
+    //function to convert seconds to year,day,hour,minute,seconds
     function secondsToHms(d) {
         d = Number(d);
         
@@ -1711,7 +1561,7 @@ function getMap(bool) {
         return result; 
     }
 
-
+    //function to convert edge time
     function edgetimeconvert(d) {
         d = Number(d);
     
@@ -1740,13 +1590,10 @@ function getMap(bool) {
         return result; 
     }
 
-
-
     var x = secondsToHms(median);
     var y = secondsToHms(total);
     // popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y;
-    // popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y+ "<br /> <br />"  +"Selected duration node: "+ secondsToHms($totale) + "<br /> <br />" +"Selected duration edge: <br />"+ secondsToHms($totale_edge);
-    
+    // popup.innerHTML = "Median duration: " + x + "<br /> <br />" + "Total duration: " + y+ "<br /> <br />"  +"Selected duration node: "+ secondsToHms($totale) + "<br /> <br />" +"Selected duration edge: <br />"+ secondsToHms($totale_edge);    
 
     // function to do dictionary sum
     function sum_dict( obj ) {
@@ -1760,17 +1607,13 @@ function getMap(bool) {
     }
 
 
-
+    // When the user clicks, open the popup
     function openInfo(e) {
-    // When the user clicks, open the popup
-    // When the user clicks, open the popup
-    
         // popup.classList.toggle("show");
         popup.style.left = e.clientX-100+200 + "px";
         popup.style.top = (e.clientY-280) + "px";
         //popup.style.top= "10%"
         //popup.style.left= "47%"
         popup.style.zIndez = "15";
-        
     }	
 }
