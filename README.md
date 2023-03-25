@@ -94,14 +94,14 @@ If there is an error saying <br />
 It provides dedicated *segmentation*, *abstraction*, and *filtering* functionalities to transform the (collected) event data into an interpretable event log by extrapolating relevant fragments for an effective pipeline discovery. We implemented **DIS-PIPE-Event-Log-Manager** as a standalone tool developed using Java SE 8, Python 3.9 and C.-->
 
 ## Deployment
-The DIS-PIPE tool is deployed on a single host as shown in the figure below. From the browser is possible to access DIS-PIPE at the following link: http://94.177.218.70:7778/. As the request comes in the backend will process it and the user is able to perform the functionalities provided above. 
+The DIS-PIPE tool is deployed on a single host as shown in the figure below. From the browser is possible to access DIS-PIPE at the following link: https://195.231.61.196:7778/. As the request comes in the backend will process it and the user is able to perform the functionalities provided above. 
 
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/images/DIS-PIPE-online-deployment.png">
 </p>
 
-The ```exportPipeline(pipelineID)``` REST-API can be invoked at: http://94.177.218.70:7780/
+The ```exportPipeline(pipelineID)``` REST-API can be invoked at: http://195.231.61.196:7780/
 
 ## User Guide
 See the [example](https://github.com/DataCloud-project/DIS-PIPE/tree/main/example) folder for instructions on how to run your first data pipeline discovery.
