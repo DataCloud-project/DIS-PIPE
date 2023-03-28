@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <log xes.version="1849-2016" xes.features="nested-attributes" xmlns="http://www.xes-standard.org/">
-	<extension name="Concept" prefix="concept" uri="http://code.deckfour.org/xes/concept.xesext" />
-	<extension name="Time" prefix="time" uri="http://code.deckfour.org/xes/time.xesext" />
-	<extension name="Organizational" prefix="org" uri="http://code.deckfour.org/xes/org.xesext" />
-	<classifier name="Activity" keys="Activity" />
-	<classifier name="activity classifier" keys="Activity" />
-	<string key="creator" value="Fluxicon Nitro" />
-	<string key="PM4PY_TYPE" value="interval" />
-	<global scope="trace">
-		<string key="concept:name" value="name" />
-	</global>
-	<global scope="event">
-		<string key="concept:name" value="name" />
-		<string key="org:resource" value="resource" />
-		<date key="time:timestamp" value="2011-04-13T14:02:31.199000+02:00" />
-		<string key="Activity" value="string" />
-		<string key="Resource" value="string" />
-		<string key="Costs" value="string" />
-	</global>
+	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
+	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
+	<extension name="Organizational" prefix="org" uri="http://www.xes-standard.org/org.xesext" />
+	<string key="origin" value="csv" />
 	<trace>
 		<string key="concept:name" value="3" />
 		<string key="creator" value="Fluxicon Nitro" />
@@ -34,8 +20,7 @@
 			<int key="@@approx_bh_partial_lead_time" value="0" />
 			<int key="@@approx_bh_overall_wasted_time" value="0" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
-			<int key="@approx_bh_ratio_cycle_lead_time" value="1" />
-			<int key="resourceCost" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine casually" />
@@ -51,7 +36,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="2040" />
 			<int key="@@approx_bh_this_wasted_time" value="2040" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -67,7 +51,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="7320" />
 			<int key="@@approx_bh_this_wasted_time" value="5280" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -83,7 +66,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="161160" />
 			<int key="@@approx_bh_this_wasted_time" value="153840" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="reinitiate request" />
@@ -99,7 +81,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="171960" />
 			<int key="@@approx_bh_this_wasted_time" value="10800" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine thoroughly" />
@@ -115,7 +96,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="174840" />
 			<int key="@@approx_bh_this_wasted_time" value="2880" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -131,7 +111,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="224880" />
 			<int key="@@approx_bh_this_wasted_time" value="50040" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -147,7 +126,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="224880" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="pay compensation" />
@@ -163,7 +141,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="404880" />
 			<int key="@@approx_bh_this_wasted_time" value="180000" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 	</trace>
 	<trace>
@@ -182,8 +159,7 @@
 			<int key="@@approx_bh_partial_lead_time" value="0" />
 			<int key="@@approx_bh_overall_wasted_time" value="0" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
-			<int key="@approx_bh_ratio_cycle_lead_time" value="1" />
-			<int key="resourceCost" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -199,7 +175,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="2400" />
 			<int key="@@approx_bh_this_wasted_time" value="2400" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine casually" />
@@ -215,7 +190,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="9840" />
 			<int key="@@approx_bh_this_wasted_time" value="7440" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -231,7 +205,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="143400" />
 			<int key="@@approx_bh_this_wasted_time" value="133560" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="pay compensation" />
@@ -247,7 +220,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="235680" />
 			<int key="@@approx_bh_this_wasted_time" value="92280" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 	</trace>
 	<trace>
@@ -266,8 +238,7 @@
 			<int key="@@approx_bh_partial_lead_time" value="0" />
 			<int key="@@approx_bh_overall_wasted_time" value="0" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
-			<int key="@approx_bh_ratio_cycle_lead_time" value="1" />
-			<int key="resourceCost" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine thoroughly" />
@@ -283,7 +254,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="32640" />
 			<int key="@@approx_bh_this_wasted_time" value="32640" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -299,7 +269,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="159000" />
 			<int key="@@approx_bh_this_wasted_time" value="126360" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -315,7 +284,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="180960" />
 			<int key="@@approx_bh_this_wasted_time" value="21960" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="reject request" />
@@ -331,7 +299,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="228120" />
 			<int key="@@approx_bh_this_wasted_time" value="47160" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 	</trace>
 	<trace>
@@ -350,8 +317,7 @@
 			<int key="@@approx_bh_partial_lead_time" value="0" />
 			<int key="@@approx_bh_overall_wasted_time" value="0" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
-			<int key="@approx_bh_ratio_cycle_lead_time" value="1" />
-			<int key="resourceCost" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine casually" />
@@ -367,7 +333,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="3840" />
 			<int key="@@approx_bh_this_wasted_time" value="3840" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -383,7 +348,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="40800" />
 			<int key="@@approx_bh_this_wasted_time" value="36960" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -399,7 +363,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="42600" />
 			<int key="@@approx_bh_this_wasted_time" value="1800" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="pay compensation" />
@@ -415,7 +378,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="223080" />
 			<int key="@@approx_bh_this_wasted_time" value="180480" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 	</trace>
 	<trace>
@@ -434,8 +396,7 @@
 			<int key="@@approx_bh_partial_lead_time" value="0" />
 			<int key="@@approx_bh_overall_wasted_time" value="0" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
-			<int key="@approx_bh_ratio_cycle_lead_time" value="1" />
-			<int key="resourceCost" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine casually" />
@@ -451,7 +412,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="40440" />
 			<int key="@@approx_bh_this_wasted_time" value="40440" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -467,7 +427,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="64680" />
 			<int key="@@approx_bh_this_wasted_time" value="24240" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -483,7 +442,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="87960" />
 			<int key="@@approx_bh_this_wasted_time" value="23280" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="reinitiate request" />
@@ -499,7 +457,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="134160" />
 			<int key="@@approx_bh_this_wasted_time" value="46200" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -515,7 +472,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="235860" />
 			<int key="@@approx_bh_this_wasted_time" value="101700" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine casually" />
@@ -531,7 +487,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="244680" />
 			<int key="@@approx_bh_this_wasted_time" value="8820" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -547,7 +502,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="332160" />
 			<int key="@@approx_bh_this_wasted_time" value="87480" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="reinitiate request" />
@@ -563,7 +517,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="373560" />
 			<int key="@@approx_bh_this_wasted_time" value="41400" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine casually" />
@@ -579,7 +532,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="396240" />
 			<int key="@@approx_bh_this_wasted_time" value="22680" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -595,7 +547,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="405120" />
 			<int key="@@approx_bh_this_wasted_time" value="8880" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -611,7 +562,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="424680" />
 			<int key="@@approx_bh_this_wasted_time" value="19560" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="reject request" />
@@ -627,7 +577,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="453240" />
 			<int key="@@approx_bh_this_wasted_time" value="28560" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 	</trace>
 	<trace>
@@ -646,8 +595,7 @@
 			<int key="@@approx_bh_partial_lead_time" value="0" />
 			<int key="@@approx_bh_overall_wasted_time" value="0" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
-			<int key="@approx_bh_ratio_cycle_lead_time" value="1" />
-			<int key="resourceCost" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
 		</event>
 		<event>
 			<string key="concept:name" value="check ticket" />
@@ -663,7 +611,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="25440" />
 			<int key="@@approx_bh_this_wasted_time" value="25440" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="examine thoroughly" />
@@ -679,7 +626,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="43080" />
 			<int key="@@approx_bh_this_wasted_time" value="17640" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="decide" />
@@ -695,7 +641,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="43080" />
 			<int key="@@approx_bh_this_wasted_time" value="0" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 		<event>
 			<string key="concept:name" value="reject request" />
@@ -711,7 +656,6 @@
 			<int key="@@approx_bh_overall_wasted_time" value="146520" />
 			<int key="@@approx_bh_this_wasted_time" value="103440" />
 			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
-			<int key="resourceCost" value="0" />
 		</event>
 	</trace>
 </log>

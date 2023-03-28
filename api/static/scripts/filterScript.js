@@ -148,6 +148,8 @@ function showEvents2(varKey, caseKey) {
             remove_index=indx
         }else if(parameter_array_sort[pas]=="concept:name"){
             tableHTML += "<th><h6>"+ "step" +"</h6><hr><br></th>" ;
+        }else if(parameter_array_sort[pas][0]=="@"){
+            console.log("nada")
         }else{
             tableHTML += "<th><h6>"+ parameter_array_sort[pas] +"</h6><hr><br></th>" ;
         }
@@ -170,7 +172,7 @@ function showEvents2(varKey, caseKey) {
         for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
             //console.log(Object.keys(inv_map))
             //console.log(inv_map[kf]);
-            if(inv_map[kf]!="Activity"){
+            if(inv_map[kf]!="Activity" && inv_map[kf][0]!="@"){
                 if(e[inv_map[kf]]!=undefined){
                     tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
                     // console.log(e[inv_map[kf]]);
@@ -250,7 +252,10 @@ function showEvents(varKey, caseKey) {
                         remove_index=indx
                     }else if(attr[0]=="concept:name"){
                         tableHTML += "<th><h6>"+ "step" +"</h6><hr><br></th>" ;
-                    }else{
+                    }else if(attr[0][0]=="@"){
+                        console.log("nada")
+                    }
+                    else{
                         tableHTML += "<th><h6>"+ attr[0] +"</h6><hr><br></th>" ;
                     }
                     
@@ -292,7 +297,9 @@ function showEvents(varKey, caseKey) {
         // console.log(e)
         for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
             // console.log(inv_map[kf]);
-            if(inv_map[kf]!="Activity"){
+            if(inv_map[kf]!="Activity" && inv_map[kf][0]!="@"){
+                console.log("GREVISSSSSSIMO")
+                console.log(inv_map[kf][0])
                 if(e[inv_map[kf]]!=undefined){
                     tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
                     // console.log(e[inv_map[kf]]);

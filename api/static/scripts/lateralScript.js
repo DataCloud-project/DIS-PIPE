@@ -132,14 +132,16 @@ function sendDslListenerReq2(){
 
 }
 
-function sendDslRequest(){
+function sendDslRequest(posizione){
 
 	console.log("sendDslRequest")
 
     var dsl = createDsl();
 	
     var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", sendDslListenerReq2);
+	if(posizione!="start"){
+		oReq.addEventListener("load", sendDslListenerReq2);
+	}
 	oReq.open("POST", frontend+"dslPost", true);
 	payload = {"pipeline": dsl}
 	

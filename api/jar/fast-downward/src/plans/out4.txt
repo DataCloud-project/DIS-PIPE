@@ -9,10 +9,10 @@ done! [t=0s]
 done initalizing global data [t=0s]
 Conducting best first search with reopening closed nodes, (real) bound = 2147483647
 Initializing blind search heuristic...
-f = 0 [1 evaluated, 0 expanded, t=0.01s, 3756 KB]
-Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0.01s, 3756 KB]
+f = 0 [1 evaluated, 0 expanded, t=0s, 3752 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
 Solution found!
-Actual search time: 0s [t=0.01s]
+Actual search time: 0s [t=0s]
 movesync#registerrequest#ev1  (0)
 moveinthemodel#tausplit_3  (0)
 movesync#examinecasually#ev2  (0)
@@ -35,6 +35,6 @@ Evaluated until last jump: 1 state(s).
 Generated until last jump: 0 state(s).
 Number of registered states: 20
 Search time: 0s
-Total time: 0.01s
+Total time: 0s
 Solution found.
-Peak memory: 3760 KB
+Peak memory: 3756 KB

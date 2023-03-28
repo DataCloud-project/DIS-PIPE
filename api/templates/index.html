@@ -20,6 +20,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>DIS-PIPE</title>
+	<script>
+		document.addEventListener('readystatechange', event => { sendDslRequest('start')});
+		console.log("grev")
+	</script>
+
 </head>
 
 <!-- Da sconosciuto
@@ -176,7 +181,7 @@ function checkRefresh()
 					<br />
 					<button id="get_dsl" class="menu_button" type="button">Get DSL from DEF-PIPE</button>
 					<br />
-					<button id="send_dsl" class="menu_button" type="button" onclick="sendDslRequest()">Send DSL to DEF-PIPE</button>
+					<button id="send_dsl" class="menu_button" type="button" onclick="sendDslRequest('fine')">Send DSL to DEF-PIPE</button>
 					<br />
 					<button style="visibility: hidden;" id="load_project" class="menu_button" type="button" onclick="load()">Load project</button>
 					<input id="uploadFolder" type="file" webkitdirectory directory multiple onchange="changeFolder()" style="display:none">
@@ -251,38 +256,38 @@ function checkRefresh()
 										<form action="" method='POST'>
 											<center>
 											<input type="hidden" id='tabTypeFreq' name='tabType' value="frequency">
-											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF">
-											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2"  id="pathF" onchange="checkPercentage('PF')"></textarea>%
-											<button class="setPath" type="button" style="width: 70px; " id="setPathF" onclick="updateInfo('PF')">set Path</button>
+											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF" onchange="pre_request('false')">
+											Path: <textarea readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2"  id="pathF" onchange="checkPercentage('PF')"></textarea>%
+											<button class="setPath" type="button" style="width: 70px; display: none;" id="setPathF" onclick="updateInfo('PF')">set Path</button>
 											
 											<br><br>
 
-											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF">
-											Steps: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
-											<button type="button" style="width: 95px; " id="setActF" onclick="updateInfo('AF')">set Steps</button>
+											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF" onchange="pre_request('false')">
+											Steps: <textarea readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
+											<button type="button" style="width: 95px; display: none;" id="setActF" onclick="updateInfo('AF')">set Steps</button>
 											<br>
 											
-											<input type="hidden" min="0" max="100" value="{{myPathP_init}}" name="myPathP">
-											<input type="hidden" min="0" max="100" value="{{myActP_init}}"  name="myActP">
+											<input type="hidden" min="0" max="100" value="{{myPathP_init}}" name="myPathP" >
+											<input type="hidden" min="0" max="100" value="{{myActP_init}}"  name="myActP" >
 											
 											
 											<br />
 											
-											<select id="perfromanceFrequency" name="freqs" class="dropdown dropdown_width">
-											  <option value="absFreq">Absolute frequency</option>
-											  <option value="caseFreq">Case Frequency</option>
-											  <option value="maxRep">Max. repetition</option>
+											<select title="the message1" id="perfromanceFrequency" name="freqs" class="dropdown dropdown_width">
+											  <option id="pf_absFreq" title="the message1" value="absFreq">Absolute frequency</option>
+											  <option id="pf_caseFreq" title="the message2" value="caseFreq">Case Frequency</option>
+											  <option id="pf_maxRep" title="the message3" value="maxRep">Max. repetition</option>
 											</select>
 											
 											<br />
 											<br />
 										
 										
-											<button class="dis_submit" disabled type="button" onclick="pre_request('false')">Submit</button>
+											<button style="display: none;" class="dis_submit" disabled type="button" onclick="pre_request('false')">Submit</button>
 
 											<br />
 
-											<p class="change_form" style="visibility: hidden;"  > * Apply changes</p>
+											<p class="change_form" style="visibility: hidden; display: none;"  > * Apply changes</p>
 											
 											<button id="invisibleButton" type="button" hidden>My Button</button>
 											</center>
@@ -300,15 +305,15 @@ function checkRefresh()
 										<form action="" method='POST'>
 											<center>
 											<input type="hidden" id='tabTypePerf' name='tabType' value="performance">
-											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP'>
-											Path: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="pathP" onchange="checkPercentage('PP')"></textarea>% 
-											<button class="setPath" type="button" style="width: 70px; " id="setPathP" onclick="updateInfo('PP')">set Path</button>
+											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP' onchange="pre_request('false')">
+											Path: <textarea  readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="pathP" onchange="checkPercentage('PP')"></textarea>% 
+											<button class="setPath" type="button" style="width: 70px; display: none;" id="setPathP" onclick="updateInfo('PP')">set Path</button>
 											<br><br>
 											
 											
-											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP'>
-											Steps: <textarea  class="vmiddle" style="resize: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
-											<button type="button" style="width: 95px; " id="setActP" onclick="updateInfo('AP')">set Steps</button>
+											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP' onchange="pre_request('false')">
+											Steps: <textarea  readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
+											<button type="button" style="width: 95px; display: none;" id="setActP" onclick="updateInfo('AP')">set Steps</button>
 											<br>
 											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
 											<input type="hidden" min="0" max="100" value="{{myActF_init}}"  name="myActF">
@@ -327,10 +332,10 @@ function checkRefresh()
 											<br />
 											<br />
 										
-											<button class="dis_submit" disabled type="button" onclick="pre_request('true')">Submit</button>
+											<button style="display: none;" class="dis_submit" disabled type="button" onclick="pre_request('true')">Submit</button>
 
 											<br>
-											<p class="change_form" style="visibility: hidden;" > * Apply changes</p>
+											<p class="change_form" style="visibility: hidden; display: none;" > * Apply changes</p>
 
 											</center>
 											
@@ -348,7 +353,7 @@ function checkRefresh()
 									<br>
 									<span>Change Applied</span>
 									<br>
-									<button type="button" class="btn" onclick="closeChangement()">Close</button>
+									<button type="button" class="btn closeButton" onclick="closeChangement()">Close</button>
 									</center>
 								</div>
 							</div>
@@ -399,11 +404,16 @@ function checkRefresh()
 								</ul>
 							</div>
 							</div>
+							<center>
 							<div class="column right">
-								<table id="eventsTable">
+								
+									<table id="eventsTable">
+										
 							
-								</table>
+									</table>
+								
 							</div>
+							</center>
 							
 							<div class="column filtro">
 								
@@ -548,12 +558,12 @@ function checkRefresh()
 								<br />
 								<br />
 								<text>Keep cases by:</text>
-								<select name="keep_timeframe" id="keep_timeframe" class="dropdown dropdown_width_timeframe">
-									<option value="contained">Contained in timeframe</option>
-									<option value="intersecting">Intersecting timeframe</option>
-									<option value="started">Started in timeframe</option>
-									<option value="completed">Completed in timeframe</option>
-									<option value="trim">Trim to timeframe</option>
+								<select title="Contained in timeframe" name="keep_timeframe" id="keep_timeframe" class="dropdown dropdown_width_timeframe" onchange="cambiaTitolo()">
+									<option id="kp_contained" title="Contained in timeframe" value="contained">Contained in timeframe</option>
+									<option id="kp_intersecting" title="Intersecting timeframe" value="intersecting">Intersecting timeframe</option>
+									<option id="kp_started" title="Started in timeframe" value="started">Started in timeframe</option>
+									<option id="kp_completed" title="Completed in timeframe" value="completed">Completed in timeframe</option>
+									<option id="kp_trim" title="Trim to timeframe" value="trim">Trim to timeframe</option>
 								</select>
 								<br />
 								<br />

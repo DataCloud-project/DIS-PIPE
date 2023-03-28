@@ -251,6 +251,17 @@ thisdict = {
   "year": 1964
 }
 '''
+'''
+@app.before_request
+def before_request():
+    print("before req")
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        print("after")
+        return redirect(url, code=code)
+'''
+
 
 #added by SimoneONE
 @app.route('/',methods=["POST", "GET"])
@@ -313,7 +324,7 @@ def sendDsl():
     }
 
     
-    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+"DSL.txt") as f:
+    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+".txt") as f:
         lines = f.read()
     print(lines)
     
@@ -567,7 +578,7 @@ def upload_file():
     f = request.files['file']
     print(f.filename)
 
-    regex_expression="^[\w\.,\s-]+\.xes$"
+    regex_expression="^[\(\)\w\.,\s-]+\.xes$"
     check = re.search(regex_expression, f.filename)
 
     #global nomeupload
@@ -585,7 +596,21 @@ def upload_file():
 
     #global user
     #global log_name
-    session["log_name"]=session["nomeupload"]
+    '''
+    import calendar
+    import time
+
+    current_GMT = time.gmtime()
+
+    time_stamp = calendar.timegm(current_GMT)
+    '''
+
+    now = datetime.datetime.now()
+    time_stamp = now.strftime("%Y%m%d%H%M%S%f")
+
+    print("Current timestamp:", time_stamp)
+
+    session["log_name"]=session["nomeupload"].replace(".xes","")+str(time_stamp)+".xes"
     #global log_name_clear    
     session["log_name_clear"]=session["log_name"].replace(".xes","")
     #global databaseName
@@ -3056,6 +3081,7 @@ def checkDatabasePresence():
         print('Database not connected.')
 
     if connection is not None:
+        print(connection)
         connection.autocommit = True
 
         cur = connection.cursor()
@@ -3078,6 +3104,9 @@ def checkDatabasePresence():
         print('Done')
 
         return jsonify({"presence":response}) 
+    
+    else:
+        return jsonify({"presence":"error connection"}) 
 
 
 p=None
@@ -3198,7 +3227,7 @@ def dslPost():
     
     #global directory_log
 
-    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+"DSL.txt", "w") as f:
+    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+".txt", "w") as f:
         f.write(dslJson['pipeline'])    
         f.close()
     
@@ -3445,4 +3474,8 @@ def clearDiv():
     return render_template('index.html');
     
 
-app.run(host=path_f, port=int(port_n))
+#app.run(host=path_f, port=int(port_n))
+
+#context = ('key/certificate.crt', 'key/private.key')    #certificate and key files
+context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
+app.run(host=path_f, port=int(port_n), debug=True, ssl_context=context)

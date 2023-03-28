@@ -1215,6 +1215,24 @@ function changedisalignment_dictionary(valore){
 
 }
 
+
+function cambiaTitolo(){
+    if($('#keep_timeframe').find(":selected").val()=="contained"){
+        $('#keep_timeframe').prop('title', $('#kp_contained').prop('title'));
+    }else if($('#keep_timeframe').find(":selected").val()=="intersecting"){
+        $('#keep_timeframe').prop('title', $('#kp_intersecting').prop('title'));
+    }else if($('#keep_timeframe').find(":selected").val()=="started"){
+        $('#keep_timeframe').prop('title', $('#kp_started').prop('title'));
+    }else if($('#keep_timeframe').find(":selected").val()=="completed"){
+        $('#keep_timeframe').prop('title', $('#kp_completed').prop('title'));
+    }else if($('#keep_timeframe').find(":selected").val()=="trim"){
+        $('#keep_timeframe').prop('title', $('#kp_trim').prop('title'));
+    }
+
+    
+}
+
+
 function displayTracePopUp(){
     if(document.getElementById("check_conformance").checked){
         document.getElementById("tabTrace").style.visibility = "visible";
@@ -1225,7 +1243,7 @@ function displayTracePopUp(){
 }
 
 window.onchange = function() {
-	var regex = new RegExp(/^[\w\.,\s-]+\.xes$/);
+	var regex = new RegExp(/^[\(\)\w\.,\s-]+\.xes$/);
 
 	if (document.getElementById("file").files[0] != undefined && regex.test(document.getElementById("file").files[0]['name']) == false) {
 		// console.log(document.getElementById("file").files[0])

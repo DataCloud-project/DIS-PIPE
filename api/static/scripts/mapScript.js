@@ -1411,6 +1411,7 @@ function getMap(bool) {
             e.stopImmediatePropagation();
 
             var typeF=this.value
+            var titoloCheck= this.title
 
             var classList = $('.node');
             // console.log(classList)
@@ -1419,10 +1420,13 @@ function getMap(bool) {
                 if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
                     if(typeF=="absFreq"){
                         $frequency_values=getAllFrequency("absolute");
+                        $('#perfromanceFrequency').prop('title', $('#pf_absFreq').prop('title'));
                     }else if (typeF=="caseFreq"){
                         $frequency_values=getAllFrequency("case");
+                        $('#perfromanceFrequency').prop('title', $('#pf_caseFreq').prop('title'));
                     }else if (typeF=="maxRep"){
                         $frequency_values=getAllFrequency("max");
+                        $('#perfromanceFrequency').prop('title', $('#pf_maxRep').prop('title'));
                     }
                     
                     var $title = $("#"+node_id+" title").html(); 				
@@ -1448,10 +1452,13 @@ function getMap(bool) {
                  
                     if(typeF=="absFreq"){
                         $frequency_edge_values=getAllEdgeFrequency("absolute");
+                        $('#perfromanceFrequency').prop('title', $('#pf_absFreq').prop('title'));
                     }else if (typeF=="caseFreq"){
                         $frequency_edge_values=getAllEdgeFrequency("case");
+                        $('#perfromanceFrequency').prop('title', $('#pf_caseFreq').prop('title'));
                     }else if (typeF=="maxRep"){
                         $frequency_edge_values=getAllEdgeFrequency("max");
+                        $('#perfromanceFrequency').prop('title', $('#pf_maxRep').prop('title'));
                     }
                     
 
