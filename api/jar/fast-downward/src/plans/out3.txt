@@ -3,7 +3,7 @@ reading input... [t=0s]
 Simplifying transitions... done!
 done reading input! [t=0s]
 building causal graph...done! [t=0s]
-packing state variables...Variables: 11
+packing state variables...Variables: 3
 Bytes per state: 4
 done! [t=0s]
 done initalizing global data [t=0s]
@@ -11,29 +11,58 @@ Conducting best first search with reopening closed nodes, (real) bound = 2147483
 Initializing blind search heuristic...
 f = 0 [1 evaluated, 0 expanded, t=0s, 3752 KB]
 Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
+f = 1 [3 evaluated, 1 expanded, t=0s, 3752 KB]
+f = 2 [6 evaluated, 3 expanded, t=0s, 3752 KB]
+f = 3 [10 evaluated, 6 expanded, t=0s, 3752 KB]
+f = 4 [15 evaluated, 10 expanded, t=0s, 3752 KB]
+f = 5 [21 evaluated, 15 expanded, t=0s, 3752 KB]
+f = 6 [35 evaluated, 23 expanded, t=0s, 3752 KB]
+f = 7 [56 evaluated, 37 expanded, t=0s, 3752 KB]
+f = 8 [74 evaluated, 56 expanded, t=0s, 3752 KB]
+f = 9 [93 evaluated, 75 expanded, t=0s, 3752 KB]
+f = 10 [114 evaluated, 94 expanded, t=0s, 3752 KB]
+f = 11 [132 evaluated, 114 expanded, t=0s, 3752 KB]
+f = 12 [148 evaluated, 132 expanded, t=0s, 3752 KB]
+f = 13 [166 evaluated, 149 expanded, t=0s, 3752 KB]
+f = 14 [185 evaluated, 167 expanded, t=0s, 3752 KB]
+f = 15 [204 evaluated, 186 expanded, t=0s, 3752 KB]
+f = 16 [219 evaluated, 204 expanded, t=0s, 3752 KB]
 Solution found!
 Actual search time: 0s [t=0s]
-movesync#registerrequest#ev1  (0)
-moveinthemodel#tausplit_3  (0)
-movesync#examinethoroughly#ev2  (0)
-movesync#checkticket#ev3  (0)
-movesync#decide#ev4  (0)
-moveinthemodel#skip_5  (0)
-movesync#rejectrequest#ev5  (0)
-Plan length: 7 step(s).
-Plan cost: 0
+moveinthemodel#data_merge  (1)
+moveinthemodel#launch_algorithm  (1)
+moveinthemodel#model_generated  (1)
+moveinthemodel#query  (1)
+moveinthemodel#report_generated  (1)
+movesync#request#ev1  (0)
+movesync#restore_accessto_database#ev2  (0)
+moveinthelog#restore_accessto_database#ev3-ev4  (1)
+moveinthelog#query#ev4-ev5  (1)
+moveinthelog#query#ev5-ev6  (1)
+moveinthemodel#store_results  (1)
+movesync#trasformation#ev6  (0)
+moveinthelog#trasformation#ev7-ev8  (1)
+moveinthelog#launch_algorithm#ev8-ev9  (1)
+moveinthelog#launch_algorithm#ev9-ev10  (1)
+movesync#visualization#ev10  (0)
+moveinthelog#visualization#ev11-ev12  (1)
+moveinthelog#store_results#ev12-ev13  (1)
+moveinthelog#store_results#ev13-ev14  (1)
+moveinthelog#model_generated#ev14-evend  (1)
+Plan length: 20 step(s).
+Plan cost: 16
 Initial state h value: 0.
-Expanded 8 state(s).
+Expanded 216 state(s).
 Reopened 0 state(s).
-Evaluated 20 state(s).
-Evaluations: 20
-Generated 21 state(s).
+Evaluated 225 state(s).
+Evaluations: 225
+Generated 318 state(s).
 Dead ends: 0 state(s).
-Expanded until last jump: 0 state(s).
+Expanded until last jump: 204 state(s).
 Reopened until last jump: 0 state(s).
-Evaluated until last jump: 1 state(s).
-Generated until last jump: 0 state(s).
-Number of registered states: 20
+Evaluated until last jump: 219 state(s).
+Generated until last jump: 304 state(s).
+Number of registered states: 225
 Search time: 0s
 Total time: 0s
 Solution found.

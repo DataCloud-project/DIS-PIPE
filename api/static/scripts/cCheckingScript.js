@@ -4,78 +4,115 @@ var color_highlight='#8B008B';
 var disalignment_dictionary={}
 var inizio=0
 
-var tr_name=""
-var log_name=""
+//var tr_name=""
+//var log_name=""
 
 var change_in_pnml=0
 
-var color_node_highlight={}
+var cambio_mapping=0
+
+var color_dictionary={}
+//var r1;
+var r2;
+var r3;
+//var name_activity;
+
 
 var array_complete_activity=[] 
 var array_moveinthemodel= [] 
 var array_moveinthelog = [] 
 
-function textareaInsert(){
-    
-}
 
 function backPopUp(){
+    console.log("Function: backPopUp()")
     
     var innerHTMLcode=""
     document.getElementById("myPopup_cChecking").innerHTML="<i class='fa-solid fa-square-pen'></i> Detail" +"<span class='close_pp' onclick='closePP2()'>❌</span>"+"<hr> <br>"+
                                                         "<table style='width: 100%;'>"+
                                                         
                                                         "<tr> <th style='text-decoration: underline;'>Activity</th> <th>times</th> <th>in traces</th> </tr>"+
-                                                        "<tr> <th>skipped</th> <td style='border: revert;'> <span id='skip_act'> X2 </span> </td> <td style='border: revert;'> <span id='mean_skip_act'> X2 </span> of "+total_trace_number+" </td> </tr>"+
-                                                        "<tr> <th>inserted</th> <td style='border: revert;'> <span id='ins_act'> X3 </span> </td> <td style='border: revert;'> <span id='mean_ins_act'> X2 </span> of "+total_trace_number+"</td> </tr>"+
+                                                        "<tr> <th>skipped</th> <td style='border: revert;'> <span id='skip_act'> X2 </span> </td> <td style='border: revert;'> <span id='mean_skip_act'> X2 </span> </td> </tr>"+ //of "+total_trace_number+"
+                                                        "<tr> <th>inserted</th> <td style='border: revert;'> <span id='ins_act'> X3 </span> </td> <td style='border: revert;'> <span id='mean_ins_act'> X2 </span> </td> </tr>"+ //of "+total_trace_number+"
                                                         "</table>"
-
                                                         
-
-
     if(name_activity in r1){
+        console.log("name activity sta in r1")
+        console.log(r1[name_activity][1])
+        console.log(r1[name_activity][2])
         $("#skip_act").text(r1[name_activity][1] )
         $("#ins_act").text(r1[name_activity][2] )
+    }else if(name_activity_end in r1){
+        console.log(r1[name_activity_end][1])
+        console.log(r1[name_activity_end][2])
+        $("#skip_act").text(r1[name_activity_end][1] )
+        $("#ins_act").text(r1[name_activity_end][2] )
     }else{
         $("#skip_act").text("0" )
         $("#ins_act").text("0" )
     }
 
+    var arraySkipIns=findNumberSkipIns(r3)
+    console.log("sto stampando arraySkipIns")
+    console.log(arraySkipIns)
+
     if(name_activity in r2){
-        var r2_name_Act_1=r2[name_activity][1]
-        var r2_name_Act_2=r2[name_activity][2]
+
+        console.log("name activity sta in r2")
+        try {
+            console.log(arraySkipIns[name_activity][1])
+            console.log(arraySkipIns[name_activity][0])
+            var r2_name_Act_1=arraySkipIns[name_activity][1]
+            var r2_name_Act_2=arraySkipIns[name_activity][0]
+        }catch(error){
+            console.error(error);
+            var r2_name_Act_1="0"
+            var r2_name_Act_2="0"
+        }
+
+    }else if(name_activity_end in r2){
+        try {
+            console.log(arraySkipIns[name_activity_end][1])
+            console.log(arraySkipIns[name_activity_end][0])
+            $("#skip_act").text(arraySkipIns[name_activity_end][1] )
+            $("#ins_act").text(arraySkipIns[name_activity_end][0] )
+            var r2_name_Act_1=arraySkipIns[name_activity_end][1]
+            var r2_name_Act_2=arraySkipIns[name_activity_end][0]
+        }catch(error){
+            console.error(error);
+            var r2_name_Act_1="0"
+            var r2_name_Act_2="0"
+        }
     }else{
         var r2_name_Act_1="0"
         var r2_name_Act_2="0"
     }
-
-    $("#mean_skip_act").text(r2_name_Act_1 ).click(function(){
-        
-        console.log(r3[name_activity][1]) 
-        
+    $("#mean_skip_act").text(r2_name_Act_1).click(function(){
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
-        
         if(name_activity in r2){
             var temp1=(r3[name_activity][1]).sort(function(a,b){
-                    a=a.replace("Trace ","")
-                    b=b.replace("Trace ","")
-                    return parseInt(a)-parseInt(b)})
-            
-            console.log(temp1)
+                a=a.replace("Trace ","")
+                b=b.replace("Trace ","")
+                return parseInt(a)-parseInt(b)})
         
             for (var i = 0; i < temp1.length; i++) {
-                
+                innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
+            }
+        }else if(name_activity_end in r2){
+            var temp1=(r3[name_activity_end][1]).sort(function(a,b){
+                a=a.replace("Trace ","")
+                b=b.replace("Trace ","")
+                return parseInt(a)-parseInt(b)})
+        
+            for (var i = 0; i < temp1.length; i++) {
                 innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
             }
         }
+
 
         document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
     
     });
     $("#mean_ins_act").text(r2_name_Act_2 ).click(function(){ 
-        
-        console.log(r3[name_activity][0]) 
-        
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
         
         if(name_activity in r2){
@@ -83,131 +120,91 @@ function backPopUp(){
                 a=a.replace("Trace ","")
                 b=b.replace("Trace ","")
                 return parseInt(a)-parseInt(b)})
-            console.log(temp2)
-
+        
             for (var i = 0; i < temp2.length; i++) {
-                
+                innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
+            }
+        }else if(name_activity_end in r2){
+            temp2=(r3[name_activity_end][0]).sort(function(a,b){
+                a=a.replace("Trace ","")
+                b=b.replace("Trace ","")
+                return parseInt(a)-parseInt(b)})
+        
+            for (var i = 0; i < temp2.length; i++) {
                 innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
             }
         }
 
         document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
     });
+
 } 
-var color_dictionary={}
-var r1;
-var r2;
-var r3;
-var name_activity;
+
 
 function updateInfoListener(){
-
-
-    console.log(this.responseText)
-    var response = this.responseText.split("#")
-
-    r1 = response[0]
-    r1 = JSON.parse(r1.replace(/'/g,"\""));
   
-    r2 = response[1]
-    r2 = JSON.parse(r2.replace(/'/g,"\""));
-  
+    const p_upInfo = new Promise((resolve, reject) => {  
+        var response=this.responseText
 
-    r3 = response[2]
-    r3 = JSON.parse(r3.replace(/'/g,"\""));
 
-    //console.log("allora r3?")
-    console.log(r3);
+        console.log("Function: updateInfoListener()")
 
+        //console.log(this.responseText)
+        var response = this.responseText.split("#")
+
+        color_dictionary={}
+        name_activity=""
+        document.getElementById("myPopup_cChecking").innerHTML=""
+        r1 = ""
+        r1 = response[0]
+        r1 = JSON.parse(r1.replace(/'/g,"\""));
+    
+        r2= ""
+        r2 = response[1]
+        r2 = JSON.parse(r2.replace(/'/g,"\""));
     
 
-    
-    for (const [key, value] of Object.entries(r1)) {
-        console.log(key, (value[1]+value[2])/(value[1]+value[2]+value[0]));
-        color_dictionary[key]=(value[1]+value[2])/(value[1]+value[2]+value[0])  
-    }
+        r3=""
+        r3 = response[2]
+        r3 = JSON.parse(r3.replace(/'/g,"\""));
 
-    
-    
-
-    $(".node").on('click', function(event){
-        event.stopPropagation();
-        var element_id=$(this).attr('id')
-
-        const lst = element_id.slice(-1);
-        var innerHTMLcode=""
-
-        if(lst=="_"){
-           
-            //console.log(element_id);
-            var selected_element=$(this).find("text").text().trim()
-            name_activity=selected_element.replaceAll(" ","").toLowerCase()
-            console.log(name_activity)
-            console.log(r1[name_activity])
-            if(name_activity in r1){
-                $("#skip_act").text(r1[name_activity][1] )
-                $("#ins_act").text(r1[name_activity][2] )
-            }else{
-                $("#skip_act").text("0" )
-                $("#ins_act").text("0" )
-            }
-
-            if(name_activity in r2){
-                var r2_name_Act_1=r2[name_activity][1]
-                var r2_name_Act_2=r2[name_activity][2]
-            }else{
-                var r2_name_Act_1="0"
-                var r2_name_Act_2="0"
-            }
-            $("#mean_skip_act").text(r2_name_Act_1 ).click(function(){
-                
-                //console.log(r3[name_activity][1]) 
-                
-                innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
-                if(name_activity in r2){
-                    var temp1=(r3[name_activity][1]).sort(function(a,b){
-                        a=a.replace("Trace ","")
-                        b=b.replace("Trace ","")
-                        return parseInt(a)-parseInt(b)})
-                
-                    for (var i = 0; i < temp1.length; i++) {
-                        innerHTMLcode=innerHTMLcode+"<div>"+temp1[i]+"</div>" 
-                    }
-                }
-
-
-                document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
-            
-            });
-            $("#mean_ins_act").text(r2_name_Act_2 ).click(function(){ 
-                
-                //console.log(r3[name_activity][0]) 
-                
-                innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
-                
-                if(name_activity in r2){
-                    temp2=(r3[name_activity][0]).sort(function(a,b){
-                        a=a.replace("Trace ","")
-                        b=b.replace("Trace ","")
-                        return parseInt(a)-parseInt(b)})
-                
-                    for (var i = 0; i < temp2.length; i++) {
-                        innerHTMLcode=innerHTMLcode+"<div>"+temp2[i]+"</div>" 
-                    }
-                }
-
-                document.getElementById("myPopup_cChecking").innerHTML=innerHTMLcode
-             });
-            
-            
-        }
+        console.log("sto stampando r1")
+        console.log(r1)
         
-    });
+        //console.log(r3);
 
+        
+        for (const [key, value] of Object.entries(r1)) {
+            console.log(key, (value[1]+value[2])/(value[1]+value[2]+value[0]));
+            color_dictionary[key]=(value[1]+value[2])/(value[1]+value[2]+value[0])  
+        }
+        console.log("sto stampando color_dictionary: "+color_dictionary)
+
+
+        resolve(response); 
+    });
+    p_upInfo.then(
+    (value) => {
+        console.log(value); // Success!
     
+        personalizeNode();
+
+        var traceSelectedName=String($("#trace_selected").val());
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", updateTraceListener);
+        oReq.open("GET", frontend+"updateTraceDetail?nameTrace="+traceSelectedName, false);
+        oReq.send();
+    },
+    (reason) => {
+        console.error(reason); // Error!
+    },
+    ); 
+
+
 }   
 
 function updateInfoRequest(){
+    console.log("Function: updateInfoRequest()")
     var oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", updateInfoListener);
 	oReq.open("GET", frontend+"generalTraceInfo", false);
@@ -218,6 +215,8 @@ function updateInfoRequest(){
 
 
 function highlightTrace(){
+    console.log("Function: highlightTrace()")
+    
     if($("#highlight_trace option:selected").val()=="yes"){
         highlightTraceNode()
         
@@ -232,11 +231,13 @@ function highlightTrace(){
 } 
 
 function highlightTraceNode(){
+    console.log("Function: highlightTraceNode()")
+
     
     closePP2()
     closeEdge()
 
- 
+    /*provare commento
     if($("#highlight_trace option:selected").val()=="yes"){
 
         
@@ -314,14 +315,17 @@ function highlightTraceNode(){
     }else{
        
     }  
-
+    */
     
 
 }
 
 
 function updateTraceListener(){
+    console.log("Function: updateTraceListener()")
+
     var analise_response=this.responseText.split("$")
+    
     var alignment=String(analise_response[0])
     alignment_array=alignment.split("\n")
     //console.log(alignment_array)
@@ -366,7 +370,7 @@ function updateTraceListener(){
                 check_word=activity_name.replaceAll("("+response_matchbis+")", "").trim()
             }
             if(!(invisible_steps.includes(check_word))){
-                console.log(check_word)
+                //console.log(check_word)
                 $('#aligner_space').append($('<span>').attr('style',"color: blue;").text(activity_name)) 
                 $('#aligner_space').append($('<br>'))
             } 
@@ -379,7 +383,7 @@ function updateTraceListener(){
                 response_match=match[1];
             }
             if(!(invisible_steps.includes(activity_name))){
-                console.log(activity_name)
+                //console.log(activity_name)
                 $('#aligner_space').append($('<span>').attr('style',"text-decoration: line-through; color:red;").text(activity_name+" ("+response_match+")" ) )
                 $('#aligner_space').append($('<br>'))
             }
@@ -387,7 +391,7 @@ function updateTraceListener(){
         }else if(movetype=="movesync"){
             array_complete_activity.push(activity_name)
             if(!(invisible_steps.includes(activity_name))){
-                console.log(activity_name)
+                //console.log(activity_name)
                 $('#aligner_space').append($('<span>').text(activity_name))
                 $('#aligner_space').append($('<br>'))
             }
@@ -403,6 +407,8 @@ function updateTraceListener(){
 }
 
 function updateTraceRequest(){
+    console.log("Function: updateTraceRequest()")
+
     var traceSelectedName=String($("#trace_selected").val());
  
     var oReq = new XMLHttpRequest();
@@ -413,11 +419,22 @@ function updateTraceRequest(){
 
 function jarListener() {
 	// document.getElementById("allFq").innerHTML = this.responseText;
-    console.log("jar listener")
+    //console.log("jar listener")
+    const p_jar = new Promise((resolve, reject) => {  
+        var response=this.responseText
+        resolve(response); 
+    });
+    p_jar.then((value) => {
+        console.log(value); // Success!
+        traceRequest();
+    },(reason) => {
+        console.error(reason); // Error!
+    },); 
 }
 
 function jarRequest(minLen,maxLen,chPlanner,chDuplicate) {
-   
+    console.log("Function: jarRequest()")
+
 	var oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", jarListener);
 	oReq.open("GET", frontend+"jarCalling?minLen="+minLen+"&maxLen="+maxLen+"&planner="+chPlanner+"&duplicate="+chDuplicate, false);
@@ -425,23 +442,41 @@ function jarRequest(minLen,maxLen,chPlanner,chDuplicate) {
 }
 
 function traceListener() {
-	document.getElementById("traceDt").innerHTML = this.responseText;
-    var traceNameList=this.responseText.split("#")
-    
-    var listSort=traceNameList.sort(function(a,b){
-        return parseInt(a)-parseInt(b)})
 
-    $('#selectBox').append($('<option>').val("out"+listSort[0]+".txt").text("out"+listSort[0]+".txt"))
-   
-    for (let i = 0; i < listSort.length; i++) {
-          
-        $('#trace_selected').append($('<option>').attr('value',"out"+listSort[i]+".txt").text("Trace "+listSort[i]))
-    }
+    const p_trl = new Promise((resolve, reject) => {  
+        var response=this.responseText
+
+
+        console.log("Function: traceListener()")
+
+        document.getElementById("traceDt").innerHTML = this.responseText;
+        var traceNameList=this.responseText.split("#")
+        
+        var listSort=traceNameList.sort(function(a,b){
+            return parseInt(a)-parseInt(b)})
+
+        $('#selectBox').append($('<option>').val("out"+listSort[0]+".txt").text("out"+listSort[0]+".txt"))
+    
+        for (let i = 0; i < listSort.length; i++) {
+            
+            $('#trace_selected').append($('<option>').attr('value',"out"+listSort[i]+".txt").text("Trace "+listSort[i]))
+        }
+
+        resolve(response); 
+    });
+    p_trl.then((value) => {
+        console.log(value); // Success!
+        updateInfoRequest();
+    },(reason) => {
+        console.error(reason); // Error!
+    },); 
     
     
 }
 
 function traceRequest() {
+    console.log("Function: traceRequest()")
+
    
 	var oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", traceListener);
@@ -450,6 +485,8 @@ function traceRequest() {
 }
 
 function updatePnml(first,after){
+
+    console.log("Function: updatePnml()")
 
     var oReq = new XMLHttpRequest();
     var ciao=1
@@ -460,7 +497,23 @@ function updatePnml(first,after){
     oReq.send()
 }
 
+function updatePnmlBis(array){
+
+    console.log("Function: updatePnml()")
+    console.log(array)
+    var oReq = new XMLHttpRequest();
+    var ciao=1
+    //oReq.addEventListener("load", jarListener);
+	oReq.open("POST", frontend+"mapPnmlBis", true);
+    
+    oReq.setRequestHeader('Replace_content', JSON.stringify(array));
+    oReq.send()
+}
+
 function checkPnmlExistence(){
+
+    console.log("Function: checkPnmlExistence()")
+
     var oReq = new XMLHttpRequest();
 
     //oReq.addEventListener("load", jarListener);
@@ -469,6 +522,8 @@ function checkPnmlExistence(){
 }
 
 function getPnmlExistenceListener(){
+    console.log("Function: getPnmlExistenceListener()")
+
     if(String(this.responseText)=="False"){
         checkPnmlExistence()
     }
@@ -476,13 +531,31 @@ function getPnmlExistenceListener(){
 
 
 function getPnmlExistenceRequest(){
+    console.log("Function: getPnmlExistenceRequest()")
+
     var oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", getPnmlExistenceListener);
 	oReq.open("GET", frontend+"getPnmlExistence", false);
 	oReq.send();
 } 
 
+function noMappingListener(){
+    console.log(this.responseText)
+
+
+}
+
+function noMappingRequest(){
+    console.log("Function: noMappingRequest()")
+
+    var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", noMappingListener);
+	oReq.open("GET", frontend+"noMappingExistence", false);
+	oReq.send();
+}
+
 function updateCostFile(){
+    console.log("Function: updateCostFile()")
     
     var oReq = new XMLHttpRequest();
     var ciao=1
@@ -495,12 +568,16 @@ function updateCostFile(){
 
 
 function backDivForm(){
+    console.log("Function: backDivForm()")
+
     $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "block";
     document.getElementById("formConformanceChecking2").style.display = "none";
     document.getElementById("map2-content").style.display = "none";
 }
 function backPrecDiv(){
+    console.log("Function: backPrecDiv()")
+
     $('html, body').animate({ scrollTop: 0 }, 'fast');
     document.getElementById("formConformanceChecking").style.display = "none";
     document.getElementById("formConformanceChecking2").style.display = "block";
@@ -510,15 +587,88 @@ function backPrecDiv(){
 }
 
 function nextDivForm(){
+    console.log("Function: nextDivForm()")
+
+    var mapYes = document.getElementById('mapYes');
+    var mapNo = document.getElementById('mapNo');
+  
+    // Check if mapping is allowed
+    if (mapYes.checked && !mapNo.checked) {
+        console.log("Mapping is allowed")
+        // Mapping is allowed
+        var confirmation = confirm("Do you want to apply the following mapping?");
+
+        if (confirmation) {
+            
+            // Define an array to store the select IDs and their associated option values
+            var selectData = [];
+            var howUpdatePnml = []
+            // Get the table element by its ID
+            var table = document.getElementById('pnml_log_table');
+            // Iterate over each row in the table
+            for (var i = 0; i < table.rows.length; i++) {
+                // Get the third cell (td) in each row, which contains the select element
+                var selectCell = table.rows[i].cells[2];
+                // Get the select element within the cell
+                var selectElement = selectCell.querySelector('select');
+                // Get the select ID and selected option value
+                var selectId = selectElement.id;
+                var selectedValue = selectElement.value;
+    
+                cambio_mapping=1
+                var prima_1=selectId.replaceAll("_bis", " ").trim()
+                console.log(prima_1);
+                var dopo_1=selectedValue
+                console.log(dopo_1)
+                howUpdatePnml.push({ before_text: prima_1, after_text: dopo_1 });
+                //updatePnml(prima_1,dopo_1)
+                
+                // Store the select ID and selected value in the array
+                selectData.push({ id: selectId, value: selectedValue });
+            }
+            
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
+            document.getElementById("formConformanceChecking").style.display = "none";
+            document.getElementById("formConformanceChecking2").style.display = "block";
+            document.getElementById("map2-content").style.display = "none";
+    
+            updatePnmlBis(howUpdatePnml)
+
+            //getPnmlExistenceRequest();
+    
+        } else {
+            
+        }
+        
+    } else if(!mapYes.checked && mapNo.checked) {
+        console.log("Mapping is not allowed")
+
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        document.getElementById("formConformanceChecking").style.display = "none";
+        document.getElementById("formConformanceChecking2").style.display = "block";
+        document.getElementById("map2-content").style.display = "none";
+
+        //getPnmlExistenceRequest();
+        noMappingRequest();
+      
+    }  
+}
+
+
+function backStart(){
+    console.log("Function: backStart()")
+
     $('html, body').animate({ scrollTop: 0 }, 'fast');
+    document.getElementById("formConformanceChecking0").style.display = "block";
     document.getElementById("formConformanceChecking").style.display = "none";
-    document.getElementById("formConformanceChecking2").style.display = "block";
+    document.getElementById("formConformanceChecking2").style.display = "none";
     document.getElementById("map2-content").style.display = "none";
 
-    getPnmlExistenceRequest();
 }
 
 function backToPersonalize(){
+    console.log("Function: backToPersonalize()")
+
     document.getElementById("slidercontainer_cChecking").style.display = "none"
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -532,22 +682,76 @@ function backToPersonalize(){
 
 }
 
-function petriRequest(){
+function petriRequestInternal(){
+    console.log("Function: petriRequestInternal()")
 
     var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", petriListener);
+    oReq.addEventListener("load", petriListenerInternal);
     oReq.open("GET", frontend+"conformanceChecking", false);
     oReq.send();
 
 }
 
-function petriListener(){
+function petriListenerInternal(){
+    console.log("Function: petriListenerInternal()")
+    console.log("non usato forse")
+
     var response=this.responseText.split("£")
-    // console.log(response[0])
-    // console.log(response[1])
-    // console.log(response[2])
-    // console.log(response[3])
-    // console.log(response[4])
+
+    tr_name=response[4]
+    log_name=response[3]
+
+    addTransitionName(tr_name,log_name);
+    document.getElementById("stringPetriNet").innerHTML = response[0];
+
+    petri_sample = document.getElementById("stringPetriNet").innerHTML
+    petri_sample = petri_sample.replace(/&#34;/g, '"');
+    petri_sample = petri_sample.replace(/&gt;/g, ">");
+    petri_sample = petri_sample.replace(/&lt;/g, "<");
+    petri_sample = petri_sample.replace(/●/g, " ");
+    petri_sample = petri_sample.replace(/■/g, " ");
+    /*
+    document.getElementById("InitialMarking").innerHTML = "Initial Marking: "+response[1];
+    document.getElementById("FinalMarking").innerHTML = "Final Marking: "+response[2];
+    */
+
+
+
+    
+    var oReq1 = new XMLHttpRequest();
+    oReq1.addEventListener("load", getNameDslWorkBis);
+    oReq1.open("POST", frontend+"deleteRemap", false);
+    oReq1.send();
+    
+
+}
+
+function getNameDslWorkBis(){
+    console.log("Function: getNameDslWorkBis()")
+    
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", getNameDslListener);
+    oReq.open("GET", frontend+"getDslName", false);
+    oReq.send();
+
+}
+
+function petriRequestExternal(){
+    console.log("Function: petriRequestExternal()")
+
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", petriListenerExternal);
+    oReq.open("GET", frontend+"conformanceChecking", false);
+    oReq.send();
+
+}
+
+function petriListenerExternal(){
+    console.log("non usato")
+    console.log("Function: petriListenerExternal()")
+
+    var response=this.responseText.split("£")
+
     tr_name=response[4]
     log_name=response[3]
     addTransitionName();
@@ -559,87 +763,79 @@ function petriListener(){
 }
 
 
+
+
 var invisible_steps=[]
 
-function addTransitionName(){
-    // Create text with HTML
-    // console.log(tr_name)
+function addTransitionName(tr_name,log_name){
+    console.log("Function: addTransitionName("+tr_name+","+log_name+")")
     
-    var tr_array = JSON.parse(tr_name.replace(/'/g,"\"") );
-    var log_array=JSON.parse(log_name.replace(/'/g,"\"") );
-
-    // console.log(log_array)
-    // console.log(tr_array[0][1]);
+    //array con i nomi delle transizioni relative al dsl importato
+    tr_array = JSON.parse(tr_name.replace(/'/g,"\"") );
+    //array con i nomi delle attività del log
+    log_array=JSON.parse(log_name.replace(/'/g,"\"") );
+    
     backDivForm();
     
-    if(inizio==0){
-        //log_array.push("None"); REMOVE COMMENT to have possibility to map to invisible
-        for (let i = 0; i < tr_array.length; i++) {
-
+    //si può anche togliere l'if 
+    //non ci sono problemi dal momento che la variabile inizio non cambia
+    if(inizio==0){ 
+        
+        //rimuovere tutti elementi tabella
+        $("#pnml_log_table").empty();
+        //resettare le opzioni per il disalinneamento del log
+        document.getElementById("disalignment_log").options.length = 0;
+        
+        //log_array.push("None");   Rimuovere il commento per mappare ad una attività invisible
+        
+        for (let j = 0; j < log_array.length; j++) {
+           
+           $('#disalignment_log').append($("<option>").attr('value',log_array[j]).text(log_array[j]))
             
-            if(tr_array[i][1]=="None"){
+        }
+
+        //ciclo su array che contiene transizioni
+        //utile per popolare la tabella per il mapping
+        for (let i = 0; i < tr_array.length; i++) {
+            if(tr_array[i][1]=="None"){ //caso in cui si ha una transizione invisibile
+                //caso non preso in considerazione per l'utente
                 $("#pnml_log_table").append("<tr style=' display: none; background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][0]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][0].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
                 invisible_steps.push(tr_array[i][0].replaceAll(" ","").toLowerCase())
-                console.log(invisible_steps)
             }else{
+                //caso in cui inserisco una riga con: 1) nome transizione 2)spazio 3)select da popolare con id=nome della transizione più .replaceAll(" ","_bis")+"_bis"
                 $("#pnml_log_table").append("<tr style='background-color: revert; border: revert'> <td style='border: revert'>"+tr_array[i][1]+"</td> <td style='width: 40%; border: revert'></td> <td style='border: revert'> <select id="+tr_array[i][1].replaceAll(" ","_bis")+"_bis"+ " class='pnmlRemap'></select></td></tr>");
             } 
             
-            
-
-            // console.log(tr_array[i][1])
-            /*
-            if(tr_array[i][1]=="None"){
-                //tr_array[i][1]="InvisibleT"
-                $("#transition_pnml").append("<p style='font-style: italic;'>"+tr_array[i][0]+"</p>","<br>");
-            }else{
-                $("#transition_pnml").append("<p>"+tr_array[i][1]+"</p>","<br>");
-            }*/
-            // A
-            // sel.append($("<option>").attr('value',1).text(tr_array[i][1]));
+            //se stiamo aggiungendo per la prima volta una riga
             if(i==0){
-                if(tr_array[i][1]=="None"){
+                if(tr_array[i][1]=="None"){ //se transizione invisibile non fare nulla
                     //$('#disalignment_log').append($("<option>").attr('value',tr_array[i][0]).text(tr_array[i][0]).attr('selected','selected'))
-                }else{
+                }else{ //altrimenti popolare la select con le opzioni per il disalinneamento del log e selezionare l'elemento
                     $('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]).attr('selected','selected'))
                 } 
             }else{
-                if(tr_array[i][1]=="None"){
+                if(tr_array[i][1]=="None"){ //se transizione invisibile non fare nulla
                     //$('#disalignment_log').append($("<option>").attr('value',tr_array[i][0]).text(tr_array[i][0]))
-                }else{
+                }else{ //altrimenti popolare la select con le opzioni per il disalinneamento del log
                     $('#disalignment_log').append($("<option>").attr('value',tr_array[i][1]).text(tr_array[i][1]))
                 } 
-                
             }
             
-            
+            //Imposto a 0 i valori relativi al disalinneamento del log
             $('#move_log').text("0")
+            //Imposto a 0 i valori relativi al disalinneamento del modello
             $('#move_model').text("0")
 
-            /*
-            if(tr_array[i][1]=='None'){
-                //disalignment_dictionary[tr_array[i][1]]=[0,0]
-                var sel = $('<select>').attr('id',tr_array[i][0].replaceAll(" ","_bis")+"_bis"+"bode").attr("class","pnmlRemap")
-            }else{
-                var sel = $('<select>').attr('id',tr_array[i][1].replaceAll(" ","_bis")+"_bis"+"bode").attr("class","pnmlRemap")
-            }
-            */
-
-            
-        
-
-            
-
-            
-            if(tr_array[i][1]=='None'){
+            //popolazione del dizionario relativo ai disalignment
+            if(tr_array[i][1]=='None'){ //se la transizione è invisibile imposto a 0
                 disalignment_dictionary[tr_array[i][0]]=[0,0]
-                //disalignment_dictionary[tr_array[i][1]]=[0,0]
-            }else{
+            }else{ //altrimenti i valori base sono 1,1
                 disalignment_dictionary[tr_array[i][1]]=[1,1]
             }
 
             var selected_elem=""
             var minimo=5000
+            //Uso la distanza di levenshtein per trovare il miglior mapping per la transizione con l'attività del log
             for (let j = 0; j < log_array.length; j++) {
                 if(levenshteinDistance(tr_array[i][1],log_array[j])<minimo){
                     minimo=levenshteinDistance(tr_array[i][1],log_array[j])
@@ -647,57 +843,63 @@ function addTransitionName(){
                 }
             }
 
+
+            //loop per popolar la select che serve a mappare le transizioni con il log nel modello
             for (let k = 0; k < log_array.length; k++) {
 
-                if(tr_array[i][1]=="None"){
+                if(tr_array[i][1]=="None"){     //se la transizione è nulla, non so se serve veramente
                     if(selected_elem==log_array[k]){
-                        //sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]).attr('selected','selected'));
+                        //selezionare il miglior mapping se presente
                         $("#"+tr_array[i][0].replaceAll(" ","_bis")+"_bis").append($("<option>").attr('value',log_array[k]).text(log_array[k]).attr('selected','selected'));
                     }else{
-                        //sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]));
                         $("#"+tr_array[i][0].replaceAll(" ","_bis")+"_bis").append($("<option>").attr('value',log_array[k]).text(log_array[k]));
                     }  
 
                 }else{
-                    if(selected_elem==log_array[k]){
-                        //sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]).attr('selected','selected'));
+                    if(selected_elem==log_array[k]){ 
+                        //selezionare il miglior mapping se presente
                         $("#"+tr_array[i][1].replaceAll(" ","_bis")+"_bis").append($("<option>").attr('value',log_array[k]).text(log_array[k]).attr('selected','selected'));
                     }else{
-                        //sel.append($("<option>").attr('value',log_array[k]).text(log_array[k]));
                         $("#"+tr_array[i][1].replaceAll(" ","_bis")+"_bis").append($("<option>").attr('value',log_array[k]).text(log_array[k]));
                     }  
                 } 
                 
                 
             }
-            //$('#transition_log').append(sel,"<br>","<br>");
-            // console.log(String(i))
+
         }
+
+
+        for(let j=0; j< log_array.length; j++){
+            disalignment_dictionary[log_array[j]]=[1,1]
+        }
+        
 
         changedisalignment_select()
     
 
-        // console.log(disalignment_dictionary)
-        inizio=1
+        //inizio=1
+
+        //funzione chiamata quando c'è un cambio di mapping
+        
         $( ".pnmlRemap" ).change(function() {
-            
+            cambio_mapping=1
+            /*
             var first_1=this.id.replaceAll("_bis", " ").trim()
             //console.log(first_1);
             var prova=$('#'+this.id).find(":selected").val();
             var after_1=prova
             //console.log(after_1)
             updatePnml(first_1,after_1)
+            */
         });
     
     }
-    // console.log(typeof tr_array);
-    
-
-    
     
 }
 
 function closeEdge(){
+    console.log("Function: closeEdge()")
 
     var prova=$('#graphContainer2')
     // console.log(prova)
@@ -725,7 +927,19 @@ function closeEdge(){
 
 } 
 
+function findCharPositions(word, char) {
+    var positions = [];
+    for (var i = 0; i < word.length; i++) {
+      if (word.charAt(i) === char) {
+        positions.push(i);
+      }
+    }
+    return positions;
+}
+
 function closePP2(){
+    console.log("Function: closePP2()")
+
     $("#myPopup_cChecking").attr("class","popuptext")
    
     var prova=$('#graphContainer2')
@@ -737,420 +951,98 @@ function closePP2(){
     $.each(class3, function(index, item) {
         var node_id=item.id
         var title_id=$("#"+item.id).find("title").html()
-        var titolo=title_id.replaceAll(" ","").toLowerCase()
+        var titolo=title_id.replaceAll(" ","").replaceAll("-","_").replaceAll("_End","").replaceAll("_","").toLowerCase()
    
-        //console.log(titolo)
-        //console.log(color_dictionary[titolo])
+        var titolo_end = title_id.replaceAll(" ","").replaceAll("-","_").toLowerCase()
 
-        if(!(titolo in color_dictionary)){
-            $("#"+item.id).find("polygon").attr('stroke',"#187F00")
-            color_node_highlight[item.id]="#187F00"
+        console.log("Sono in closePP2, il titolo prima è:" + titolo)
 
-        }else if(color_dictionary[titolo]==0){
-            $("#"+item.id).find("polygon").attr('stroke',"#187F00")
-            color_node_highlight[item.id]="#187F00"
-        }else if(color_dictionary[titolo]<=0.1){
-            $("#"+item.id).find("polygon").attr('stroke',"#FF9292")
-            color_node_highlight[item.id]="#FF9292"
-        }else if(color_dictionary[titolo]<=0.3){
-            $("#"+item.id).find("polygon").attr('stroke',"#FF5C5C")
-            color_node_highlight[item.id]="#FF5C5C"
-        }else if(color_dictionary[titolo]<=0.5){
-            $("#"+item.id).find("polygon").attr('stroke',"#FF3838")
-            color_node_highlight[item.id]="#FF3838"
-        }else{
-            $("#"+item.id).find("polygon").attr('stroke',"#E20000")
-            color_node_highlight[item.id]="#E20000"
+        ///
+        var selected_elem=""
+        var minimo=5000
+       
+        for (let j = 0; j < log_array.length; j++) {
+            if(levenshteinDistance(title_id,log_array[j])<minimo){
+                minimo=levenshteinDistance(title_id,log_array[j])
+                selected_elem=log_array[j]
+            }
         }
+        if(title_id.toLowerCase() in color_dictionary){
+            titolo=title_id.toLowerCase()
+            console.log("Sono in closePP2, primo if")
+        }else if(title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","") in color_dictionary){
+            titolo=title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","")
+            console.log("Sono in closePP2, secondo if")
+        }else if(title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_") in color_dictionary){
+            titolo=title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
+            console.log("Sono in closePP2, terzo if")
+        }else{
+            var stringa_temporanea=title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
+            var stringa_comparazione=selected_elem.toLowerCase().replaceAll(" ","")
+            
+            var stringa_finale=findPossibleTitolo(stringa_temporanea,stringa_comparazione)
+                
+            if(stringa_finale in color_dictionary){
+                titolo=stringa_finale
+            }
+
+        }
+        console.log("Sono in closePP2, il titolo dopo è:" + titolo)
+
+        ///
+
+
+        if(titolo in color_dictionary){
+            if(color_dictionary[titolo]==0){
+                $("#"+item.id).find("polygon").attr('stroke',"#187F00")
+                color_node_highlight[item.id]="#187F00"
+            }else if(color_dictionary[titolo]<=0.2){
+                $("#"+item.id).find("polygon").attr('stroke',"#FF9292")
+                color_node_highlight[item.id]="#FF9292"
+            }else if(color_dictionary[titolo]<=0.5){
+                $("#"+item.id).find("polygon").attr('stroke',"#FF5C5C")
+                color_node_highlight[item.id]="#FF5C5C"
+            }else if(color_dictionary[titolo]<=0.8){
+                $("#"+item.id).find("polygon").attr('stroke',"#FF3838")
+                color_node_highlight[item.id]="#FF3838"
+            }else{
+                $("#"+item.id).find("polygon").attr('stroke',"#E20000")
+                color_node_highlight[item.id]="#E20000"
+            }
+        }else if(titolo_end in color_dictionary){
+            if(color_dictionary[titolo_end]==0){
+                $("#"+item.id).find("polygon").attr('stroke',"#187F00")
+                color_node_highlight[item.id]="#187F00"
+            }else if(color_dictionary[titolo_end]<=0.2){
+                $("#"+item.id).find("polygon").attr('stroke',"#FF9292")
+                color_node_highlight[item.id]="#FF9292"
+            }else if(color_dictionary[titolo_end]<=0.5){
+                $("#"+item.id).find("polygon").attr('stroke',"#FF5C5C")
+                color_node_highlight[item.id]="#FF5C5C"
+            }else if(color_dictionary[titolo_end]<=0.8){
+                $("#"+item.id).find("polygon").attr('stroke',"#FF3838")
+                color_node_highlight[item.id]="#FF3838"
+            }else{
+                $("#"+item.id).find("polygon").attr('stroke',"#E20000")
+                color_node_highlight[item.id]="#E20000"
+            }
+        }else{
+            $("#"+item.id).find("polygon").attr('stroke',"#999999")
+            color_node_highlight[item.id]="#999999"
+        }
+        /*
+        
+        */
         $("#"+item.id).find("text").css({"text-decoration":"revert"});
         
     }) 
 } 
 
 
-
-function showResultonDFG(){
- 
-
-    if(checkPlannerChosen() && checkDisalignmentMove() && checkTraceLengthFilter()) {
-
-    $("#loadingMessage").css("visibility", "visible");
-    $('html, body').animate({ scrollTop: 0 }, 'fast');
-	setTimeout(() => {
-
-    document.getElementById("slidercontainer_cChecking").style.display = "block"
-
-    $('#trace_selected').find('option').remove()
-
-    $('html, body').animate({ scrollTop: 0 }, 'fast');
-    document.getElementById("formConformanceChecking").style.display = "none";
-    document.getElementById("formConformanceChecking2").style.display = "none";
-    document.getElementById("map2-content").style.display = "block";
-    // var gpContainer=$( "#graphContainer" ).clone()
-
-    $("#btn_conformance").css('visibility', 'visible');
-    $("#back_slide_conf").css('visibility', 'visible');
-    $("#info_check_conformance").css('visibility','visible');
-    
-    
-    var response2 = document.getElementById("digraphF").innerHTML
-
-    response2 = response2.replace(/&#34;/g, '"');
-    response2 = response2.replace(/&gt;/g, ">");
-    response2 = response2.replace(/&lt;/g, "<");
-    //response2 = response2.replace(/●/g, "  &#9679;"); //9679
-    response2 = response2.replace(/●/g, " ");
-    //response2 = response2.replace(/■/g, '    &#9724;'); //9632
-    response2 = response2.replace(/■/g, " ");
-
-    var options2 = {
-      format: 'svg',
-      ALLOW_MEMORY_GROWTH: 1,
-      totalMemory: 537395200
-      // format: 'png-image-element'
-    }
-
-    var image2 = Viz(response2, options2);
-
-    var main2 = document.getElementById('graphContainer2');
-
-    // main2.innerHTML = image2;
-    // console.log(image2)		
-    $(".node").find("polygon").attr('stroke', "#000000");
-    $(".node").find("text").css({"text-decoration":"revert"});
-
-    $(".edge").find("path").attr('stroke', "#000000");
-    $(".edge").find("polygon").attr('stroke', "#000000");
-    $(".edge").find("text").css({"text-decoration":"revert"});
-
-    main2.innerHTML = document.getElementById('graphContainer').innerHTML;
-
-    var prova=$('#graphContainer2')
-    // console.log(prova)
-    var prova2=prova.find("svg")
-    // console.log(prova2.attr("width"))
-    var prova3=prova2.find("#graph0")
-    // console.log(prova3.attr("id","graph1"))
-    // var targetNode = document.getElementById("graph1").getElementsByClassName("node")
-    // var targetEdge = document.getElementById("graph1").getElementsByClassName("edge")
-    // targetDiv.textContent = "Goodbye world!";
-
-    // document.getElementById("node1").onclick= function(event) {
-      // 	console.log("edge");
-    // };
-    
-
-
-    var classList = prova3.find('.node');
-    // console.log(classList)
-                
-    $.each(classList, function(index, item) {
-        var node_id=item.id
-        // console.log(node_id)
-        item.id=node_id+"_"
-        
-        //ADDEDTEST
-        var change_title=$("#"+item.id).find("title").html()
-        // console.log(change_title)
-        refactor_title=(change_title.split("(")[0])
-        $("#"+item.id).find("text").html(refactor_title)
-        $("#"+item.id).find("title").html(refactor_title)
-        
-        $("#"+item.id).find("polygon").attr('fill','#fdfdff')
-        //ADDEDTEST
-
-        $("#"+item.id).find("polygon").attr('stroke-width',4)
-        var node_number = item.id
-        var node_number = node_number.replace("node","");
-        // console.log(node_number)
-        var node_number= node_number.replace("_","");
-
-        if(parseInt(node_number)%2==0){
-            $("#"+item.id).find("polygon").attr('stroke',"green")
-            color_node_highlight[item.id]="green"
-        }else{
-            $("#"+item.id).find("polygon").attr('stroke',"red")
-            color_node_highlight[item.id]="red"
-        }
-        // console.log(node_number)
-        // console.log(item.id)
-        $('#'+item.id).click(function(e) {
-            // alert('ho ho ho1');
-
-            $temp= ($("#"+item.id).find("polygon").attr('stroke'))
-            $check_node=($("#"+item.id).find("polygon")).length
-
-            if(($temp=="#686868" || $temp=="#FFD23F" || $temp=="#000000" || $temp=="#187F00" || $temp=="#FF9292" || $temp=="#FF5C5C" || $temp=="#FF3838" || $temp=="#E20000") && $check_node!=0){
-
-                
-
-                // for (const element in Object.keys(color_node_highlight)) {
-                //     $("#"+element).find("polygon").attr('stroke', color_node_highlight[element]);
-                //     console.log(element)
-                // }
-
-                if(($temp=="#FFD23F" || $temp=="#686868")  && ($("#highlight_trace option:selected").val()=="yes")){
-
-                    highlightTraceNode();
-                    $("#"+item.id).find("polygon").attr('stroke', color_highlight);
-
-                }else{
-
-        
-
-                for (var i=0;i<Object.keys(color_node_highlight).length;i++) {
-                    var id_node=Object.keys(color_node_highlight)[i]
-                    $("#"+id_node).find("polygon").attr('stroke', color_node_highlight[id_node]);
-                    // console.log(id_node)
-                    // console.log(color_node_highlight[id_node])
-                }
-
-                
-
-                // $(".node").find("polygon").attr('stroke', color_node_highlight[item.id]);
-
-                $(".node").find("text").css({"text-decoration":"revert"});
-
-                $(".edge").find("path").attr('stroke', "#000000");
-                $(".edge").find("polygon").attr('stroke', "#000000");
-                $(".edge").find("text").css({"text-decoration":"revert"});
-
-
-                if($temp=="red"){
-                    $("#"+item.id).find("polygon").attr('stroke', '#f57e07');
-                }else if($temp=="green"){
-                    $("#"+item.id).find("polygon").attr('stroke', '#23f507');
-                }else{
-                    $("#"+item.id).find("polygon").attr('stroke', color_highlight);
-                }
-                
-                }
-
-                $("#"+item.id).find("text").css({"text-decoration":"underline"});
-
-                document.getElementById("myPopup_cChecking").innerHTML= "<i class='fa-solid fa-square-pen'></i> Detail" +"<span class='close_pp' onclick='closePP2()'>❌</span>"+"<hr> <br>"+
-                                                                        
-                                                                        /*
-                                                                        "Activity skipped <span id='skip_act'> X2 </span> times" +"<br /> <br />"+
-                                                                        "Activity inserted <span id='ins_act'> X3 </span> times" +"<br /> <br />"+
-                                                                        "Activity skipped in <span id='mean_skip_act'> X2 </span> traces"+"<br /> <br />"+
-                                                                        "Activity inserted in <span id='mean_ins_act'> X2 </span> traces"+"<br /> <br />"*/
-                                                                        "<table style='width: 100%;'>"+
-                                                                        
-                                                                        "<tr> <th style='text-decoration: underline;'>Activity</th> <th>times</th> <th>in traces</th> </tr>"+
-                                                                        "<tr> <th>skipped</th> <td style='border: revert;'> <span id='skip_act'> X2 </span> </td> <td style='border: revert;'> <span id='mean_skip_act'> X2 </span> of "+total_trace_number+" </td> </tr>"+
-                                                                        "<tr> <th>inserted</th> <td style='border: revert;'> <span id='ins_act'> X3 </span> </td> <td style='border: revert;'> <span id='mean_ins_act'> X2 </span> of "+total_trace_number+"</td> </tr>"+
-                                                                        "</table>"
-                $("#myPopup_cChecking").attr("class","popuptext show")
-                openInfoCc(e)
-                // console.log("you have selected a node")
-                
-            }else if(($("#highlight_trace option:selected").val()=="yes") && ($temp==color_highlight || $temp=='#23f507' || $temp=='#f57e07') && $check_node!=0){
-                
-                var title_id2=$("#"+item.id).find("title").html()
-                var titolo2=title_id2.replaceAll(" ","").toLowerCase()
-    
-                if(array_complete_activity.includes(titolo2)) {
-                    $("#"+item.id).find("polygon").attr('stroke', "#FFD23F");
-                }else{
-                    $("#"+item.id).find("polygon").attr('stroke', "#686868");
-                } 
-                
-                
-                $("#"+item.id).find("text").css({"text-decoration":"revert"});
-                $("#myPopup_cChecking").attr("class","popuptext")
-            }else if(($temp==color_highlight || $temp=='#23f507' || $temp=='#f57e07') && $check_node!=0){
-                $("#"+item.id).find("polygon").attr('stroke', color_node_highlight[item.id]);
-                $("#"+item.id).find("text").css({"text-decoration":"revert"});
-                $("#myPopup_cChecking").attr("class","popuptext")
-                // console.log("you have deselected a node")
-            }
-
-            
-        });
-        // $("#"+node_id).attr("id","ciao")
-    })
-
-    //console.log(color_node_highlight)
-
-    var classList = prova3.find('.edge');
-    // console.log(classList)
-                
-    $.each(classList, function(index, item) {
-        var edge_id=item.id
-        // console.log(edge_id)
-        item.id=edge_id+"_"
-        //ADDEDTEST
-        $("#"+item.id).find("text").html("")
-        $("#"+item.id).find("title").html("")
-        //ADDEDTEST
-
-        // console.log(item.id)
-        /*
-        $('#'+item.id).click(function() {
-            // alert('ho ho ho2');
-
-            $temp_polygon= ($("#"+item.id).find("polygon").attr('stroke'))
-            $temp_path= ($("#"+item.id).find("path").attr('stroke'))
-            $check_edge= ($("#"+item.id).find("polygon")).length
-            var $titolo_1 = $("#"+item.id+" text").html();
-    
-
-            if($temp_polygon=="#000000" && $check_edge!=0 && $titolo_1!=undefined){
-
-                $(".node").find("polygon").attr('stroke', "#000000");
-                $(".node").find("text").css({"text-decoration":"revert"});
-
-                $(".edge").find("path").attr('stroke', "#000000");
-                $(".edge").find("polygon").attr('stroke', "#000000");
-                $(".edge").find("text").css({"text-decoration":"revert"});
-
-                $("#"+item.id).find("polygon").attr('stroke', color_highlight);
-                $("#"+item.id).find("path").attr('stroke', color_highlight);
-                $("#"+item.id).find("text").css({"text-decoration":"underline"});
-
-
-                document.getElementById("myPopup_cChecking").innerHTML="You have selected an edge"
-                $("#myPopup_cChecking").attr("class","popuptext show")
-                // console.log("you have selected an edge")
-
-            }else if($temp_polygon==color_highlight && $check_edge!=0 && $titolo_1!=undefined){
-
-                $("#"+item.id).find("path").attr('stroke', "#000000");
-                $("#"+item.id).find("polygon").attr('stroke', "#000000");
-                $("#"+item.id).find("text").css({"text-decoration":"revert"});
-
-                $("#myPopup_cChecking").attr("class","popuptext")
-                // console.log("you have deselected an edge")
-            }
-
-            
-        });*/
-        // $("#"+edge_id).attr("id","ciao")
-    })
-
-    var jarPath;
-    var pnmlPath;
-    var xesPath;
-    var costPath;
-    
-    var lengthMin=String(min_event_length);
-    var lengthMax=String(max_event_length);
-    if($('#trace_length').is(":checked")){
-        var message_min = $('#minlen').val();
-        if(message_min!="" && message_min!=null){
-            //console.log(message_min)
-            lengthMin=String(message_min)
-        }
-
-        var message_max = $('#maxlen').val();
-        if(message_max!="" && message_max!=null){
-            //console.log(message_max)
-            lengthMax=String(message_max)
-        }
-    }
-
-    
-
-    var duplicateChoose;
-    //console.log("duplicateChoose: "+$('#discard_check').is(":checked"))
-    if($('#discard_check').is(":checked")){
-        duplicateChoose="true"
-    }else{
-        duplicateChoose="false"    
-    }
-    
-    
-    var plannerChoose;
-    if($('#FD').is(":checked")){
-        plannerChoose="FD";
-    }else if($('#SYMBA').is(":checked")){
-        plannerChoose="SYMBA";
-    }else if($('#Planner3').is(":checked")){
-        plannerChoose="FD";
-    }else {
-        plannerChoose="FD";
-    } 
-
-
-
-
-    // document.getElementById('graphContainer2').innerHTML = document.getElementById('graphContainer').innerHTML
-
-    // $(document).ready(function(){
-    
-    // 	$('#node1_').click(function() {
-    // 		alert('ho ho ho');
-    // 	});
-    // });
-    //updateCostFile();
-    jarRequest(lengthMin,lengthMax,plannerChoose,duplicateChoose);
-    traceRequest();
-    updateInfoRequest();
-
-    var class3 = prova3.find('.node');
-    // console.log(class3)
-                
-    $.each(class3, function(index, item) {
-        var node_id=item.id
-        var title_id=$("#"+item.id).find("title").html()
-        var titolo=title_id.replaceAll(" ","").toLowerCase()
-   
-        //console.log(titolo)
-        //console.log(color_dictionary[titolo])
-
-        if(color_dictionary[titolo]==0){
-            $("#"+item.id).find("polygon").attr('stroke',"#187F00")
-            color_node_highlight[item.id]="#187F00"
-        }else if(color_dictionary[titolo]<=0.1){
-            $("#"+item.id).find("polygon").attr('stroke',"#FF9292")
-            color_node_highlight[item.id]="#FF9292"
-        }else if(color_dictionary[titolo]<=0.3){
-            $("#"+item.id).find("polygon").attr('stroke',"#FF5C5C")
-            color_node_highlight[item.id]="#FF5C5C"
-        }else if(color_dictionary[titolo]<=0.5){
-            $("#"+item.id).find("polygon").attr('stroke',"#FF3838")
-            color_node_highlight[item.id]="#FF3838"
-        }else{
-            $("#"+item.id).find("polygon").attr('stroke',"#E20000")
-            color_node_highlight[item.id]="#E20000"
-        }
-        
-    }) 
-
-
-
-
-
-    var traceSelectedName=String($("#trace_selected").val());
-    var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", updateTraceListener);
-	oReq.open("GET", frontend+"updateTraceDetail?nameTrace="+traceSelectedName, false);
-	oReq.send();
-
-    $('html, body').animate({ scrollTop: 0 }, 'fast');
-    $("#loadingMessage").css("visibility", "hidden");
-
-	}, 10);
-
-    
-}
-
-function openInfoCc(e) {
-// When the user clicks, open the popup
-// When the user clicks, open the popup
-    var pop=document.getElementById("myPopup_cChecking")
-    // popup.classList.toggle("show");
-    pop.style.left = e.clientX+50 + "px";
-    pop.style.top = (e.clientY-150) + "px";
-    //popup.style.top= "10%"
-    //popup.style.left= "47%"
-    pop.style.zIndez = "15";
-    }
-}	
-
-
 function trace_length_filter(){
+    console.log("Function: trace_length_filter()")
+    
+
     if($('#trace_length').is(":checked")){
         $('#maxlen').prop('disabled', false);
         $('#minlen').prop('disabled', false);
@@ -1164,6 +1056,8 @@ function trace_length_filter(){
 }
 
 function trace_date_filter(){
+    console.log("Function: trace_date_filter()")
+
     if($('#trace_date').is(":checked")){
         $('#maxdate').prop('disabled', false);
         $('#mindate').prop('disabled', false);
@@ -1179,6 +1073,8 @@ function trace_date_filter(){
 }
 
 function changedisalignment_select(){
+    console.log("Function: changedisalignment_select()")
+
     var changed_disalign=$('#disalignment_log option:selected').val();
     
     
@@ -1188,6 +1084,8 @@ function changedisalignment_select(){
 }
 
 function changedisalignment_dictionary(valore){
+    console.log("Function: changedisalignment_dictionary("+valore+")")
+
     if(valore=="log"){
         
         
@@ -1217,6 +1115,8 @@ function changedisalignment_dictionary(valore){
 
 
 function cambiaTitolo(){
+    console.log("Function: cambiaTitolo()")
+
     if($('#keep_timeframe').find(":selected").val()=="contained"){
         $('#keep_timeframe').prop('title', $('#kp_contained').prop('title'));
     }else if($('#keep_timeframe').find(":selected").val()=="intersecting"){
@@ -1234,6 +1134,8 @@ function cambiaTitolo(){
 
 
 function displayTracePopUp(){
+    console.log("Function: displayTracePopUp()")
+
     if(document.getElementById("check_conformance").checked){
         document.getElementById("tabTrace").style.visibility = "visible";
         document.getElementById("mytabsConformance").style.display = "block";
@@ -1243,6 +1145,8 @@ function displayTracePopUp(){
 }
 
 window.onchange = function() {
+    console.log("Function: window.onchange function()")
+
 	var regex = new RegExp(/^[\(\)\w\.,\s-]+\.xes$/);
 
 	if (document.getElementById("file").files[0] != undefined && regex.test(document.getElementById("file").files[0]['name']) == false) {

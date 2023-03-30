@@ -1,2 +1,1 @@
 IP frontend: https://127.0.0.1:7778/
-IP backend: http://127.0.0.1:7777/

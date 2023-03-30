@@ -208,7 +208,7 @@ function getMap(bool) {
     //sample = sample.replace(/■/g, '    &#9724;'); //9632
     sample = sample.replace(/■/g, " ");
     copia_sample=sample
-    console.log(sample)
+    //console.log(sample)
     //sample=sample.replace("digraph {", 'digraph { \nrankdir="LR";')
     
     var options = {
@@ -255,8 +255,8 @@ function getMap(bool) {
     var $totale_edge=0
     var $make_somma=0
         
-    var nodes = document.getElementsByClassName("node");
-    var edges = document.getElementsByClassName("edge");
+    var nodes = document.getElementById('graphContainer').getElementsByClassName("node");
+    var edges = document.getElementById('graphContainer').getElementsByClassName("edge");
     
     var nodesNames = [];
     var names;
@@ -268,9 +268,9 @@ function getMap(bool) {
     $(document).ready(function(){
         for(var i=0; i<nodes.length; i++){
             
-            //console.log(nodes[i].children[2].innerHTML);
+            // console.log(nodes[i].children[2].innerHTML);
             nodesNames[i] = nodes[i].children[2].innerHTML;
-            //console.log(nodes[i].children[2].innerHTML);
+            // console.log(nodes[i].children[2].innerHTML);
             // console.log(nodes[i].children[0].innerHTML)
             if(nodes[i].id!=undefined){
                 var use=nodes[i].id
@@ -303,7 +303,6 @@ function getMap(bool) {
         }
     });
 
-    
 
     var selected_nodes={}  //used to memoryze the selected nodes
 
@@ -315,7 +314,7 @@ function getMap(bool) {
 
     // Apply functions on node*************************************************************
     $(document).ready(function(){
-        $(".node").on('click', function(event){
+        $("#graphContainer").find(".node").on('click', function(event){
             
             $used_id=this.id
             $temp= ($("#"+$used_id).find("polygon").attr('stroke'))
@@ -329,11 +328,11 @@ function getMap(bool) {
                 $("#"+$used_id).find("text").css({"text-decoration":"underline"});
 
                 $titolo_name=$titolo.split(' (')[0].trim()
-                // console.log($titolo_name)
+                console.log($titolo_name)
 
                 $titolo_time=$titolo.split(' (')[1].trim()
                 $statistica=$titolo_time.substring(0,$titolo_time.length-1)
-                // console.log($statistica)
+                console.log($statistica)
                 
                 $myduration_mean=getAllDuration("mean");
                 $myduration_total=getAllDuration("total");
@@ -369,16 +368,16 @@ function getMap(bool) {
                 if(document.getElementById("tabPerf").checked==false){
                     selected_edges={}
                     selected_nodes={}
-                    $(".node").find("polygon").attr('stroke', "#000000");
-                        $(".node").find("text").css({"text-decoration":"revert"});
+                    $("#graphContainer").find(".node").find("polygon").attr('stroke', "#000000");
+                    $("#graphContainer").find(".node").find("text").css({"text-decoration":"revert"});
 
-                        $(".edge").find("path").attr('stroke', "#000000");
-                        $(".edge").find("polygon").attr('stroke', "#000000");
-                        $(".edge").find("text").css({"text-decoration":"revert"});
-                        
+                    $("#graphContainer").find(".edge").find("path").attr('stroke', "#000000");
+                    $("#graphContainer").find(".edge").find("polygon").attr('stroke', "#000000");
+                    $("#graphContainer").find(".edge").find("text").css({"text-decoration":"revert"});
+                    
 
-                        $("#"+$used_id).find("polygon").attr('stroke', color_highlight);
-                        $("#"+$used_id).find("text").css({"text-decoration":"underline"});
+                    $("#"+$used_id).find("polygon").attr('stroke', color_highlight);
+                    $("#"+$used_id).find("text").css({"text-decoration":"underline"});
                 }
 
 
@@ -389,18 +388,16 @@ function getMap(bool) {
 
                 if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
 
-                    $(".node").find("polygon").attr('stroke', "#000000");
-                    $(".node").find("text").css({"text-decoration":"revert"});
+                    $("#graphContainer").find(".node").find("polygon").attr('stroke', "#000000");
+                    $("#graphContainer").find(".node").find("text").css({"text-decoration":"revert"});
 
-                    $(".edge").find("path").attr('stroke', "#000000");
-                    $(".edge").find("polygon").attr('stroke', "#000000");
-                    $(".edge").find("text").css({"text-decoration":"revert"});
+                    $("#graphContainer").find(".edge").find("path").attr('stroke', "#000000");
+                    $("#graphContainer").find(".edge").find("polygon").attr('stroke', "#000000");
+                    $("#graphContainer").find(".edge").find("text").css({"text-decoration":"revert"});
 
-                    
-                    
-                    
                     $("#"+$used_id).find("polygon").attr('stroke', color_highlight);
                     $("#"+$used_id).find("text").css({"text-decoration":"underline"});
+
                 }
                 
 
@@ -531,12 +528,12 @@ function getMap(bool) {
 
                 if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
 
-                    $(".node").find("polygon").attr('stroke', "#000000");
-                    $(".node").find("text").css({"text-decoration":"revert"});
+                    $("#graphContainer").find(".node").find("polygon").attr('stroke', "#000000");
+                    $("#graphContainer").find(".node").find("text").css({"text-decoration":"revert"});
 
-                    $(".edge").find("path").attr('stroke', "#000000");
-                    $(".edge").find("polygon").attr('stroke', "#000000");
-                    $(".edge").find("text").css({"text-decoration":"revert"});
+                    $("#graphContainer").find(".edge").find("path").attr('stroke', "#000000");
+                    $("#graphContainer").find(".edge").find("polygon").attr('stroke', "#000000");
+                    $("#graphContainer").find(".edge").find("text").css({"text-decoration":"revert"});
 
             
 
@@ -594,14 +591,13 @@ function getMap(bool) {
     });
     // ****************************************************************************************************
 
-
     // analyze edge****************************************************************************************
     $totale_edge=0
 
     var selected_edges={}
 
     $(document).ready(function(){
-        $(".edge").on('click', function(event){
+        $("#graphContainer").find(".edge").on('click', function(event){
             
             $used_id=this.id
             $temp_polygon= ($("#"+$used_id).find("polygon").attr('stroke'))
@@ -680,12 +676,12 @@ function getMap(bool) {
                     if(document.getElementById("tabPerf").checked==false){
                         selected_edges={}
                         selected_nodes={}
-                        $(".node").find("polygon").attr('stroke', "#000000");
-                        $(".node").find("text").css({"text-decoration":"revert"});
+                        $("#graphContainer").find(".node").find("polygon").attr('stroke', "#000000");
+                        $("#graphContainer").find(".node").find("text").css({"text-decoration":"revert"});
 
-                        $(".edge").find("path").attr('stroke', "#000000");
-                        $(".edge").find("polygon").attr('stroke', "#000000");
-                        $(".edge").find("text").css({"text-decoration":"revert"});
+                        $("#graphContainer").find(".edge").find("path").attr('stroke', "#000000");
+                        $("#graphContainer").find(".edge").find("polygon").attr('stroke', "#000000");
+                        $("#graphContainer").find(".edge").find("text").css({"text-decoration":"revert"});
                         
                         $("#"+$used_id).find("path").attr('stroke', color_highlight);
                         $("#"+$used_id).find("polygon").attr('stroke', color_highlight);
@@ -701,12 +697,12 @@ function getMap(bool) {
 
                     if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
 
-                        $(".node").find("polygon").attr('stroke', "#000000");
-                        $(".node").find("text").css({"text-decoration":"revert"});
+                        $("#graphContainer").find(".node").find("polygon").attr('stroke', "#000000");
+                        $("#graphContainer").find(".node").find("text").css({"text-decoration":"revert"});
 
-                        $(".edge").find("path").attr('stroke', "#000000");
-                        $(".edge").find("polygon").attr('stroke', "#000000");
-                        $(".edge").find("text").css({"text-decoration":"revert"});
+                        $("#graphContainer").find(".edge").find("path").attr('stroke', "#000000");
+                        $("#graphContainer").find(".edge").find("polygon").attr('stroke', "#000000");
+                        $("#graphContainer").find(".edge").find("text").css({"text-decoration":"revert"});
 
 
                         $("#"+$used_id).find("path").attr('stroke', color_highlight);
@@ -882,12 +878,12 @@ function getMap(bool) {
 
                     if((Object.keys(selected_nodes).length>1 || Object.keys(selected_edges).length>1) && document.getElementById("tabPerf").checked==false){
     
-                        $(".node").find("polygon").attr('stroke', "#000000");
-                        $(".node").find("text").css({"text-decoration":"revert"});
+                        $("#graphContainer").find(".node").find("polygon").attr('stroke', "#000000");
+                        $("#graphContainer").find(".node").find("text").css({"text-decoration":"revert"});
 
-                        $(".edge").find("path").attr('stroke', "#000000");
-                        $(".edge").find("polygon").attr('stroke', "#000000");
-                        $(".edge").find("text").css({"text-decoration":"revert"});
+                        $("#graphContainer").find(".edge").find("path").attr('stroke', "#000000");
+                        $("#graphContainer").find(".edge").find("polygon").attr('stroke', "#000000");
+                        $("#graphContainer").find(".edge").find("text").css({"text-decoration":"revert"});
                         
                         $("#"+$used_id).find("path").attr('stroke', color_highlight);
                         $("#"+$used_id).find("polygon").attr('stroke', color_highlight);
@@ -969,9 +965,6 @@ function getMap(bool) {
     });
     // *****************************************************************************************************
 
-    
-
-
     var edgesNames = [];
     var popup = document.getElementById("myPopup");
     var popup_cChecking=document.getElementById("myPopup_cChecking");
@@ -1016,8 +1009,7 @@ function getMap(bool) {
         }
     });
 
-    
-    
+
     // Switch Duration**************************************************************************
     $(document).ready(function(){
 
@@ -1046,7 +1038,8 @@ function getMap(bool) {
         if ((bool_switch) == true){
             // if($('select[name=perfs] option').filter(':selected').val()=="totDur"){
                 var typeD=$('select[name=perfs] option').filter(':selected').val()
-                var classList = $('.node');
+                //var classList = $('.node');
+                var classList = document.getElementById('graphContainer').getElementsByClassName("node");
                 
                 $.each(classList, function(index, item) {
                     var node_id=item.id
@@ -1102,7 +1095,8 @@ function getMap(bool) {
                 });
 
 
-                var classList = $('.edge');
+                //var classList = $('.edge');
+                var classList = document.getElementById('graphContainer').getElementsByClassName("edge"); 
                 $.each(classList, function(index, item) {
                     var edge_id=item.id
                     // if(node_id!="@@S" && node_id!="@@E"){
@@ -1171,7 +1165,9 @@ function getMap(bool) {
         if(bool_switch2){
                 var typeF=$('select[name=freqs] option').filter(':selected').val()
                 
-                var classList = $('.node');
+                //var classList = $('.node');
+                var classList = document.getElementById('graphContainer').getElementsByClassName("node");
+                
                 $.each(classList, function(index, item) {
                     var node_id=item.id
                     if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
@@ -1221,7 +1217,8 @@ function getMap(bool) {
                 });
 
 
-                var classEdge = $('.edge');
+                //var classEdge = $('.edge');
+                var classEdge = document.getElementById('graphContainer').getElementsByClassName("edge");
                 $.each(classEdge, function(index, item) {
                     var edge_id=item.id
                     
@@ -1307,21 +1304,28 @@ function getMap(bool) {
 
             var typeD=this.value
 
-            var classList = $('.node');
+            //var classList = $('.node');
+            var classList = document.getElementById('graphContainer').getElementsByClassName("node");
+            
             // console.log(classList)
             $.each(classList, function(index, item) {
                 var node_id=item.id
                 if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
                     if(typeD=="totDur"){
                         $duration_values=getAllDuration("total");
+                        $('#performanceDuration').prop('title', $('#pd_totDur').prop('title'));
                     }else if (typeD=="medDur"){
                         $duration_values=getAllDuration("median");
+                        $('#performanceDuration').prop('title', $('#pd_medDur').prop('title'));
                     }else if (typeD=="meanDur"){
                         $duration_values=getAllDuration("mean");
+                        $('#performanceDuration').prop('title', $('#pd_meanDur').prop('title'));
                     }else if (typeD=="maxDur"){
                         $duration_values=getAllDuration("max");
+                        $('#performanceDuration').prop('title', $('#pd_maxDur').prop('title'));
                     }else if (typeD=="minDur"){
                         $duration_values=getAllDuration("min");
+                        $('#performanceDuration').prop('title', $('#pd_minDur').prop('title'));
                     }
                     
                     var $title = $("#"+node_id+" title").html(); 				
@@ -1342,6 +1346,7 @@ function getMap(bool) {
 
 
             var classedge = $('.edge');
+            var classedge = document.getElementById('graphContainer').getElementsByClassName("edge");
             $.each(classedge, function(index, item) {
                 var edge_id=item.id
                 // if(node_id!="@@S" && node_id!="@@E"){
@@ -1413,7 +1418,9 @@ function getMap(bool) {
             var typeF=this.value
             var titoloCheck= this.title
 
-            var classList = $('.node');
+            //var classList = $('.node');
+            var classList = document.getElementById('graphContainer').getElementsByClassName("node");
+            
             // console.log(classList)
             $.each(classList, function(index, item) {
                 var node_id=item.id
@@ -1445,7 +1452,8 @@ function getMap(bool) {
             });
 
             
-            var classedge = $('.edge');
+            //var classedge = $('.edge');
+            var classedge = document.getElementById('graphContainer').getElementsByClassName("edge");
             $.each(classedge, function(index, item) {
                 var edge_id=item.id
                 // if(node_id!="@@S" && node_id!="@@E"){
@@ -1511,6 +1519,9 @@ function getMap(bool) {
     var total = document.getElementById('total').innerHTML;
     
     //function to convert seconds to year,day,hour,minute,seconds
+
+
+
     function secondsToHms(d) {
         d = Number(d);
         
@@ -1623,4 +1634,7 @@ function getMap(bool) {
         //popup.style.left= "47%"
         popup.style.zIndez = "15";
     }	
+
+
+
 }

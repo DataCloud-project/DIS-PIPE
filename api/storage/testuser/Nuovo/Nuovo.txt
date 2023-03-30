@@ -1,0 +1,24 @@
+Pipeline Nuovo {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step Step11-zeta
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '11',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Vabene-Funziona
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '11',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

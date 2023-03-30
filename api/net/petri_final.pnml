@@ -2,31 +2,6 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
     <page id="n0">
-      <place id="p_5">
-        <name>
-          <text>p_5</text>
-        </name>
-      </place>
-      <place id="sink">
-        <name>
-          <text>sink</text>
-        </name>
-      </place>
-      <place id="p_6">
-        <name>
-          <text>p_6</text>
-        </name>
-      </place>
-      <place id="p_8">
-        <name>
-          <text>p_8</text>
-        </name>
-      </place>
-      <place id="p_9">
-        <name>
-          <text>p_9</text>
-        </name>
-      </place>
       <place id="source">
         <name>
           <text>source</text>
@@ -35,95 +10,42 @@
           <text>1</text>
         </initialMarking>
       </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
       <place id="p_4">
         <name>
           <text>p_4</text>
         </name>
       </place>
-      <place id="p_10">
+      <place id="sink">
         <name>
-          <text>p_10</text>
+          <text>sink</text>
         </name>
       </place>
-      <place id="p_11">
+      <transition id="e1c20da2-1d28-4663-a58b-29a96a50f79d">
         <name>
-          <text>p_11</text>
-        </name>
-      </place>
-      <transition id="239483c7-5e66-48dd-9aa3-e10af9a0476a">
-        <name>
-          <text>examine thoroughly</text>
+          <text>GenerateSampledataReformatPushinMQTT-End</text>
         </name>
       </transition>
-      <transition id="b69cc962-f3e6-412b-bfa4-b30ec5008b80">
+      <transition id="c8dd6116-eb66-4c76-a5c6-9618779cf09d">
         <name>
-          <text>examine casually</text>
+          <text>ReceiveDataFromMQTTCheckPatientPlanBuildFhirDBrecordsStoretoFhirDB-End</text>
         </name>
       </transition>
-      <transition id="1e44243a-58e6-4584-b8a5-857724d60f26">
+      <transition id="d53feb77-04fd-46eb-8af8-f97c51c31aef">
         <name>
-          <text>reject request</text>
+          <text>AnalyzeandCreateNotificationforHealthcarePersonnel-End</text>
         </name>
       </transition>
-      <transition id="428774fc-d0ad-4767-8c43-5c799c453f0f">
-        <name>
-          <text>pay compensation</text>
-        </name>
-      </transition>
-      <transition id="9f44e860-3007-492e-bd3b-895ddf9cdeb5">
-        <name>
-          <text>register request</text>
-        </name>
-      </transition>
-      <transition id="tauSplit_3">
-        <name>
-          <text>tauSplit_3</text>
-        </name>
-        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="00ae3c78-2e53-40a5-8191-53ab5dec099f"/>
-      </transition>
-      <transition id="4afd7705-cab3-4ed6-b0d3-fbb0bd4cd8b7">
-        <name>
-          <text>check ticket</text>
-        </name>
-      </transition>
-      <transition id="d3363fa2-134d-4f38-a3da-53420761e7d8">
-        <name>
-          <text>decide</text>
-        </name>
-      </transition>
-      <transition id="c8ae6d85-1794-4db7-9e82-51aa7187e7eb">
-        <name>
-          <text>reinitiate request</text>
-        </name>
-      </transition>
-      <transition id="skip_5">
-        <name>
-          <text>skip_5</text>
-        </name>
-        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="1da741d2-1e93-4c3d-b334-30fd8f48526b"/>
-      </transition>
-      <arc id="140459037475456" source="239483c7-5e66-48dd-9aa3-e10af9a0476a" target="p_11"/>
-      <arc id="140459037477520" source="p_4" target="428774fc-d0ad-4767-8c43-5c799c453f0f"/>
-      <arc id="140459042463264" source="4afd7705-cab3-4ed6-b0d3-fbb0bd4cd8b7" target="p_9"/>
-      <arc id="140459037475744" source="b69cc962-f3e6-412b-bfa4-b30ec5008b80" target="p_11"/>
-      <arc id="140459037486384" source="p_5" target="tauSplit_3"/>
-      <arc id="140459037478192" source="p_11" target="d3363fa2-134d-4f38-a3da-53420761e7d8"/>
-      <arc id="140459037476272" source="c8ae6d85-1794-4db7-9e82-51aa7187e7eb" target="p_5"/>
-      <arc id="140459037477952" source="9f44e860-3007-492e-bd3b-895ddf9cdeb5" target="p_5"/>
-      <arc id="140459042460096" source="p_8" target="4afd7705-cab3-4ed6-b0d3-fbb0bd4cd8b7"/>
-      <arc id="140459037474880" source="tauSplit_3" target="p_10"/>
-      <arc id="140459037475264" source="p_10" target="239483c7-5e66-48dd-9aa3-e10af9a0476a"/>
-      <arc id="140459037476800" source="p_4" target="1e44243a-58e6-4584-b8a5-857724d60f26"/>
-      <arc id="140459037476560" source="skip_5" target="p_4"/>
-      <arc id="140459042020320" source="source" target="9f44e860-3007-492e-bd3b-895ddf9cdeb5"/>
-      <arc id="140459037486816" source="tauSplit_3" target="p_8"/>
-      <arc id="140459037475936" source="d3363fa2-134d-4f38-a3da-53420761e7d8" target="p_6"/>
-      <arc id="140459037475552" source="p_10" target="b69cc962-f3e6-412b-bfa4-b30ec5008b80"/>
-      <arc id="140459037477856" source="428774fc-d0ad-4767-8c43-5c799c453f0f" target="sink"/>
-      <arc id="140459037476080" source="p_6" target="c8ae6d85-1794-4db7-9e82-51aa7187e7eb"/>
-      <arc id="140459037476464" source="p_6" target="skip_5"/>
-      <arc id="140459037477616" source="1e44243a-58e6-4584-b8a5-857724d60f26" target="sink"/>
-      <arc id="140459037478000" source="p_9" target="d3363fa2-134d-4f38-a3da-53420761e7d8"/>
+      <arc id="140235343939328" source="e1c20da2-1d28-4663-a58b-29a96a50f79d" target="p_3"/>
+      <arc id="140235343938656" source="p_3" target="c8dd6116-eb66-4c76-a5c6-9618779cf09d"/>
+      <arc id="140235339384768" source="p_4" target="d53feb77-04fd-46eb-8af8-f97c51c31aef"/>
+      <arc id="140235343938224" source="source" target="e1c20da2-1d28-4663-a58b-29a96a50f79d"/>
+      <arc id="140235343940528" source="c8dd6116-eb66-4c76-a5c6-9618779cf09d" target="p_4"/>
+      <arc id="140235339386736" source="d53feb77-04fd-46eb-8af8-f97c51c31aef" target="sink"/>
     </page>
     <finalmarkings>
       <marking>

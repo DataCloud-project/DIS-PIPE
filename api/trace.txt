@@ -1,6 +1,0 @@
-1, 'register request', 'examine casually', 'check ticket', 'decide', 'reinitiate request', 'examine thoroughly', 'check ticket', 'decide', 'pay compensation',segment_0
-1, 'register request', 'check ticket', 'examine casually', 'decide', 'pay compensation',segment_1
-1, 'register request', 'examine thoroughly', 'check ticket', 'decide', 'reject request',segment_2
-1, 'register request', 'examine casually', 'check ticket', 'decide', 'pay compensation',segment_3
-1, 'register request', 'examine casually', 'check ticket', 'decide', 'reinitiate request', 'check ticket', 'examine casually', 'decide', 'reinitiate request', 'examine casually', 'check ticket', 'decide', 'reject request',segment_4
-1, 'register request', 'check ticket', 'examine thoroughly', 'decide', 'reject request',segment_5

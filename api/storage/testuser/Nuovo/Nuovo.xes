@@ -1,0 +1,320 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<log>
+	<string key="creator" value="RefModel_Generator"/>
+	<extension name="Concept" prefix="concept" uri="http://code.deckfour.org/xes/concept.xesext"/>
+	<extension name="Time" prefix="time" uri="http://code.deckfour.org/xes/time.xesext"/>
+	<extension name="Organizational" prefix="org" uri="http://code.deckfour.org/xes/org.xesext"/>
+	<global scope="trace">
+		<string key="concept:name" value="name"/>
+	</global>
+	<global scope="event">
+		<string key="concept:name" value="name"/>
+		<string key="StepPhaseID" value="string"/>
+		<date key="time:timestamp" value="2023-04-19T16:02:40.689673+01:00"/>
+		<string key="PipelineName" value="name"/>
+		<string key="PipelineID" value="string"/>
+		<string key="PipelineCommunicationMedium" value="string"/>
+		<string key="StepID" value="string"/>
+		<string key="StepContinuumLayer" value="string"/>
+		<string key="StepType" value="string"/>
+	</global>
+	<classifier name="Activity" keys="name"/>
+	<classifier name="activity classifier" keys="Activity"/>
+	<trace>
+		<string key="concept:name" value="11"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:40.689756+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:40.689791+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="10"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:40.890546+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:40.890655+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="9"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.091330+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.091415+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="8"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.292083+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.292487+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="7"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.493244+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.493324+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="6"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.693935+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.694033+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="5"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.894825+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:41.895086+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="4"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.095813+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.095954+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="3"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.296546+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.296701+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="2"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.497482+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.497587+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="1"/>
+		<event>
+			<string key="concept:name" value="Step11-zeta"/>
+			<string key="StepPhaseID" value="11"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.697932+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Step11"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Consumer"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Vabene-Funziona"/>
+			<string key="StepPhaseID" value="14"/>
+			<date key="time:timestamp" value="2023-04-19T16:02:42.697997+01:00"/>
+			<string key="PipelineID" value="3"/>
+			<string key="PipelineCommunicationMedium" value="casa"/>
+			<string key="PipelineName" value="Nuovo"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Vabene"/>
+			<string key="StepContinuumLayer" value="Fog"/>
+			<string key="StepType" value="Processing"/>
+		</event>
+	</trace>
+</log>

@@ -1,0 +1,64 @@
+This is a nonunit task.
+reading input... [t=0s]
+Simplifying transitions... done!
+done reading input! [t=0s]
+building causal graph...done! [t=0s]
+packing state variables...Variables: 3
+Bytes per state: 4
+done! [t=0s]
+done initalizing global data [t=0s]
+Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+Initializing blind search heuristic...
+f = 0 [1 evaluated, 0 expanded, t=0s, 3752 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
+f = 1 [3 evaluated, 1 expanded, t=0s, 3752 KB]
+f = 2 [6 evaluated, 3 expanded, t=0s, 3752 KB]
+f = 3 [10 evaluated, 6 expanded, t=0s, 3752 KB]
+f = 4 [15 evaluated, 10 expanded, t=0s, 3752 KB]
+f = 5 [24 evaluated, 16 expanded, t=0s, 3752 KB]
+f = 6 [40 evaluated, 26 expanded, t=0s, 3752 KB]
+f = 7 [56 evaluated, 40 expanded, t=0s, 3752 KB]
+f = 8 [72 evaluated, 56 expanded, t=0s, 3752 KB]
+f = 9 [88 evaluated, 72 expanded, t=0s, 3752 KB]
+f = 10 [105 evaluated, 89 expanded, t=0s, 3752 KB]
+f = 11 [118 evaluated, 105 expanded, t=0s, 3752 KB]
+f = 12 [130 evaluated, 119 expanded, t=0s, 3752 KB]
+f = 13 [141 evaluated, 131 expanded, t=0s, 3752 KB]
+f = 14 [149 evaluated, 141 expanded, t=0s, 3752 KB]
+Solution found!
+Actual search time: 0s [t=0s]
+moveinthelog#request#ev1-ev2  (1)
+moveinthemodel#data_merge  (1)
+moveinthemodel#launch_algorithm  (1)
+moveinthemodel#model_generated  (1)
+movesync#query#ev2  (0)
+moveinthelog#query#ev3-ev4  (1)
+moveinthemodel#report_generated  (1)
+moveinthemodel#request  (1)
+moveinthemodel#restore_accessto_database  (1)
+moveinthemodel#store_results  (1)
+movesync#trasformation#ev4  (0)
+moveinthelog#trasformation#ev5-ev6  (1)
+moveinthelog#data_merge#ev6-ev7  (1)
+moveinthelog#data_merge#ev7-ev8  (1)
+movesync#visualization#ev8  (0)
+moveinthelog#visualization#ev9-ev10  (1)
+moveinthelog#report_generated#ev10-evend  (1)
+Plan length: 17 step(s).
+Plan cost: 14
+Initial state h value: 0.
+Expanded 149 state(s).
+Reopened 0 state(s).
+Evaluated 154 state(s).
+Evaluations: 154
+Generated 201 state(s).
+Dead ends: 0 state(s).
+Expanded until last jump: 141 state(s).
+Reopened until last jump: 0 state(s).
+Evaluated until last jump: 149 state(s).
+Generated until last jump: 192 state(s).
+Number of registered states: 154
+Search time: 0s
+Total time: 0s
+Solution found.
+Peak memory: 3756 KB

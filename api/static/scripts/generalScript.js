@@ -1,9 +1,48 @@
 var petri_sample
 
+
+function renameProject(){
+	
+	let nuovoNome = ""
+	nuovoNome = prompt('Please enter a new name:');
+
+	if(document.getElementById("mapTitle").innerText==="Example.xes"){
+		alert("You can't rename the demo project.");
+	}else if(!nuovoNome) {
+		alert("You can't enter an empty name.");
+	}else if(nuovoNome==="Example" || nuovoNome==="example") {
+		alert("You can't use this name.");
+	}else{
+		// Verifica se la stringa contiene caratteri speciali
+		var regex = /[!@#$%^&£*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+		if (regex.test(nuovoNome)) {
+			alert("La stringa contiene caratteri speciali.");
+		} else {
+			console.log("La stringa è valida.");
+			var oReq1 = new XMLHttpRequest();
+			oReq1.addEventListener("load", renameProjectListener);
+			oReq1.open("POST", frontend+"renameProject/"+nuovoNome, false);
+			oReq1.send();
+		}
+	}
+}
+
+function renameProjectListener(){
+	console.log(this.responseText)
+	document.getElementById('mapTitle').innerHTML = this.responseText
+}
+
 function update(){
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
 	
+}
+
+function changeConstraint(){
+	console.log($("#selectFun option:selected").attr("title"));
+	var constraint_definition=$("#selectFun option:selected").attr("title");
+	var constraint_title=$("#selectFun option:selected").text();
+	$('#definitions_constraint').text(constraint_title+": "+constraint_definition);
 }
 
 function mainMenu(){
@@ -34,7 +73,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = false;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = true;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = false;
 		document.getElementById("save_project").disabled = false;
@@ -55,7 +94,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = true;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = false;
@@ -75,7 +114,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = false;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = true;
@@ -96,7 +135,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = true; 
 		document.getElementById("export_dsl").disabled = true; 
-		document.getElementById("get_dsl").disabled = true;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = true; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = true; 
@@ -107,17 +146,56 @@ function displayContent(){
 	}
 }
 
-function petriNetCompute(){
-	
+
+function petriNetComputeInternal(){
+		
+
+	$("#showRes").attr("onclick","showResultonDFGbis('interno')");
+
+
 	$("#loadingMessage").css("visibility", "visible");
 	$("#back_slide_conf").css('visibility','hidden');
     $("#info_check_conformance").css('visibility','hidden');
     $("#btn_conformance").css('visibility','hidden');
 
+
+	document.getElementById("formConformanceChecking0").style.display = "none";
+	document.getElementById("formConformanceChecking").style.display = "block";
+    document.getElementById("formConformanceChecking2").style.display = "none";
+    document.getElementById("map2-content").style.display = "none";
+
 	setTimeout(() => {
 
-		petriRequest();
-		petri_sample=document.getElementById("stringPetriNet").innerHTML
+		petriRequestInternal();
+
+		$("#loadingMessage").css("visibility", "hidden");
+
+	}, 10);
+}
+
+
+
+function petriNetComputeExternal(){
+	
+	/*
+	$("#loadingMessage").css("visibility", "visible");
+	$("#back_slide_conf").css('visibility','hidden');
+    $("#info_check_conformance").css('visibility','hidden');
+    $("#btn_conformance").css('visibility','hidden');
+	*/
+
+	/*getNameDsl()*/
+
+	/*
+	document.getElementById("formConformanceChecking0").style.display = "none";
+	document.getElementById("formConformanceChecking").style.display = "block";
+    document.getElementById("formConformanceChecking2").style.display = "none";
+    document.getElementById("map2-content").style.display = "none";
+
+	setTimeout(() => {
+
+		petriRequestExternal();
+		petri_sample = document.getElementById("stringPetriNet").innerHTML
 		petri_sample = petri_sample.replace(/&#34;/g, '"');
 		petri_sample = petri_sample.replace(/&gt;/g, ">");
 		petri_sample = petri_sample.replace(/&lt;/g, "<");
@@ -127,8 +205,11 @@ function petriNetCompute(){
 		$("#loadingMessage").css("visibility", "hidden");
 
 	}, 10);
-
+	*/
 }
+
+
+
 
 function getGraphText(selector){
 	// take the graph in text form and save it 
@@ -145,8 +226,8 @@ function getGraphText(selector){
 	// then remove from the array the first 3 and last 2 elements which are useless
 	var graphText = graphText.split('\n\t').splice(3);
 	graphText.pop();
-	graphText.pop();
-
+	if ( selector != 'frequency' )
+		graphText.pop();
 	return graphText;
 }
 
@@ -201,7 +282,7 @@ function getCombinedNodes(graphNodesF, graphNodesP){
 }
 
 function getGraphEdges(graphText, boolFreq){
-	//obtain the array of edges with parameter
+	//obtain the array of edges with parameters
 	var graphEdges = [];
 	var j = 0;
 	// cycle throguh the graph array 
@@ -226,7 +307,7 @@ function getGraphEdges(graphText, boolFreq){
 				graphEdges[j][2] = '';
 			}
 			j++;
-		}	
+		}
 	}
 	
 	return graphEdges;
@@ -257,6 +338,8 @@ function getLabeledGraphEdges(graphNodes, graphEdges){
 
 function getDslSteps(graphNodes, graphEdges){
 	// from graphNodes and graphEdges get a unique matrix ready for conversion
+	console.log(graphNodes)
+	console.log(graphEdges)
 	var dslSteps = [];
 	// for each node 
 	for (var i=0; i<graphNodes.length; i++){
@@ -265,13 +348,14 @@ function getDslSteps(graphNodes, graphEdges){
 		dslSteps[i].push([graphNodes[i][1], graphNodes[i][2], graphNodes[i][3]]);
 		// then, for each edge
 		for (var j=0; j<graphEdges.length; j++){
-			// check if the current node is the successor
-			if (graphEdges[j][1] == graphNodes[i][1]){
-				// in that case save the info about the edge
-				dslSteps[i].push([graphEdges[j][0], graphEdges[j][2], graphEdges[j][3]]);
+			// check if the current node is the predecessor
+			if (graphEdges[j][0] == graphNodes[i][1]){
+				//save the info about the edge (successor name, frequency, duration)
+				dslSteps[i].push([graphEdges[j][1], graphEdges[j][2], graphEdges[j][3]]);
 			}
 		}
 	}
+	console.log(dslSteps)
 	return dslSteps;
 }
 

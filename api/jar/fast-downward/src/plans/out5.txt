@@ -1,49 +1,80 @@
-This is a nonunit task.
+This is a unit task.
 reading input... [t=0s]
 Simplifying transitions... done!
 done reading input! [t=0s]
 building causal graph...done! [t=0s]
-packing state variables...Variables: 11
+packing state variables...Variables: 3
 Bytes per state: 4
 done! [t=0s]
 done initalizing global data [t=0s]
 Conducting best first search with reopening closed nodes, (real) bound = 2147483647
 Initializing blind search heuristic...
-f = 0 [1 evaluated, 0 expanded, t=0s, 3752 KB]
-Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
+f = 1 [1 evaluated, 0 expanded, t=0s, 3752 KB]
+Best heuristic value: 1 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
+f = 2 [3 evaluated, 1 expanded, t=0s, 3752 KB]
+f = 3 [6 evaluated, 3 expanded, t=0s, 3752 KB]
+f = 4 [10 evaluated, 6 expanded, t=0s, 3752 KB]
+f = 5 [15 evaluated, 10 expanded, t=0s, 3752 KB]
+f = 6 [21 evaluated, 15 expanded, t=0s, 3752 KB]
+f = 7 [28 evaluated, 21 expanded, t=0s, 3752 KB]
+f = 8 [36 evaluated, 28 expanded, t=0s, 3752 KB]
+f = 9 [45 evaluated, 36 expanded, t=0s, 3752 KB]
+f = 10 [55 evaluated, 45 expanded, t=0s, 3752 KB]
+f = 11 [66 evaluated, 55 expanded, t=0s, 3752 KB]
+f = 12 [78 evaluated, 66 expanded, t=0s, 3752 KB]
+f = 13 [90 evaluated, 78 expanded, t=0s, 3752 KB]
+f = 14 [102 evaluated, 90 expanded, t=0s, 3752 KB]
+f = 15 [113 evaluated, 102 expanded, t=0s, 3752 KB]
+f = 16 [123 evaluated, 113 expanded, t=0s, 3752 KB]
+f = 17 [132 evaluated, 123 expanded, t=0s, 3752 KB]
+f = 18 [140 evaluated, 132 expanded, t=0s, 3752 KB]
+f = 19 [147 evaluated, 140 expanded, t=0s, 3752 KB]
+f = 20 [153 evaluated, 147 expanded, t=0s, 3752 KB]
+f = 21 [158 evaluated, 153 expanded, t=0s, 3752 KB]
+f = 22 [162 evaluated, 158 expanded, t=0s, 3752 KB]
+f = 23 [165 evaluated, 162 expanded, t=0s, 3752 KB]
+f = 24 [167 evaluated, 165 expanded, t=0s, 3752 KB]
+Best heuristic value: 0 [g=24, 168 evaluated, 166 expanded, t=0s, 3752 KB]
 Solution found!
 Actual search time: 0s [t=0s]
-movesync#registerrequest#ev1  (0)
-moveinthemodel#tausplit_3  (0)
-movesync#examinecasually#ev2  (0)
-movesync#checkticket#ev3  (0)
-movesync#decide#ev4  (0)
-movesync#reinitiaterequest#ev5  (0)
-moveinthemodel#tausplit_3  (0)
-movesync#checkticket#ev6  (0)
-movesync#examinecasually#ev7  (0)
-movesync#decide#ev8  (0)
-movesync#reinitiaterequest#ev9  (0)
-moveinthemodel#tausplit_3  (0)
-movesync#examinecasually#ev10  (0)
-movesync#checkticket#ev11  (0)
-movesync#decide#ev12  (0)
-moveinthemodel#skip_5  (0)
-movesync#rejectrequest#ev13  (0)
-Plan length: 17 step(s).
-Plan cost: 0
-Initial state h value: 0.
-Expanded 20 state(s).
+moveinthelog#registerrequest#ev1-ev2  (1)
+moveinthelog#examinecasually#ev2-ev3  (1)
+moveinthelog#checkticket#ev3-ev4  (1)
+moveinthelog#decide#ev4-ev5  (1)
+moveinthelog#reinitiaterequest#ev5-ev6  (1)
+moveinthelog#checkticket#ev6-ev7  (1)
+moveinthelog#examinecasually#ev7-ev8  (1)
+moveinthelog#decide#ev8-ev9  (1)
+moveinthelog#reinitiaterequest#ev9-ev10  (1)
+moveinthelog#examinecasually#ev10-ev11  (1)
+moveinthelog#checkticket#ev11-ev12  (1)
+moveinthelog#decide#ev12-ev13  (1)
+moveinthelog#rejectrequest#ev13-evend  (1)
+moveinthemodel#event_12_end_end  (1)
+moveinthemodel#event_2_start_end  (1)
+moveinthemodel#analyzedata_end  (1)
+moveinthemodel#createrecord_end  (1)
+moveinthemodel#endanalysis_end  (1)
+moveinthemodel#receivebloodmeasure_end  (1)
+moveinthemodel#receivedatafrommq_end  (1)
+moveinthemodel#receivescalemeasure_end  (1)
+moveinthemodel#receivetempmeasure_end  (1)
+moveinthemodel#senddatatomq_end  (1)
+moveinthemodel#startanalysis_end  (1)
+Plan length: 24 step(s).
+Plan cost: 24
+Initial state h value: 1.
+Expanded 167 state(s).
 Reopened 0 state(s).
-Evaluated 52 state(s).
-Evaluations: 52
-Generated 58 state(s).
+Evaluated 168 state(s).
+Evaluations: 168
+Generated 167 state(s).
 Dead ends: 0 state(s).
-Expanded until last jump: 0 state(s).
+Expanded until last jump: 165 state(s).
 Reopened until last jump: 0 state(s).
-Evaluated until last jump: 1 state(s).
-Generated until last jump: 0 state(s).
-Number of registered states: 52
+Evaluated until last jump: 167 state(s).
+Generated until last jump: 166 state(s).
+Number of registered states: 168
 Search time: 0s
 Total time: 0s
 Solution found.
