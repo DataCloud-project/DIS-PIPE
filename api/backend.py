@@ -610,7 +610,8 @@ def upload_file():
 
     print("Current timestamp:", time_stamp)
 
-    session["log_name"]=session["nomeupload"].replace(".xes","")+str(time_stamp)+".xes"
+    session["log_name"]=session["nomeupload"]
+    #session["log_name"]=session["nomeupload"].replace(".xes","")+str(time_stamp)+".xes"
     #global log_name_clear    
     session["log_name_clear"]=session["log_name"].replace(".xes","")
     #global databaseName
@@ -633,7 +634,24 @@ def upload_file():
         #applyDbSchema(session["databaseName"])
         
         session["log_path"]=os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
+        
         f.save(session["log_path"])
+        
+        now = datetime.datetime.now()
+        time_stamp = now.strftime("%Y%m%d%H%M%S%f")
+        
+        
+        f.save(os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+time_stamp+".txt")
+        # Open the file in write mode
+        file = open(os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+time_stamp+".txt", "w")
+
+        # Write the string to the file
+        file.write(time_stamp)
+
+        # Close the file
+        file.close()
+        print("greve:", time_stamp)
+
         print("upload_file")
         #Process(target=queryDb).start()
     else:
