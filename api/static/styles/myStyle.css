@@ -9,8 +9,8 @@
 }
 
 body{
-  height: 100%;
-  width: 100%;
+  height: min-content;
+  /* width: 100%; */
   display: flex;
   /*align-items: center;*/
   /*justify-content: center;*/
@@ -75,7 +75,7 @@ a.link_disabled {
 	color: white;
 	opacity: 0.8;
 	width:100%;
-	height: 200%;
+	height: fit-content;
 	text-align: center;
 	font-size: 10px;
 	padding-top: 15%;
@@ -111,6 +111,7 @@ a.link_disabled {
 	 
 .container{
   width: 100%;
+  height: fit-content;
   min-height: 50em;
   padding: 40px 50px  40px  40px;
   background: #fff;
@@ -134,6 +135,7 @@ a.link_disabled {
 }
 .container .menu{
 	width:20%;
+  height: 60%;
 	display: flex;
   flex-wrap: wrap;
   position: fixed;
@@ -750,7 +752,7 @@ width: 100%;
 }
 
 .right {
-  max-width: 52%;
+  width: 52%;
   max-height:80vh;
   overflow: auto;
   float: left;
@@ -823,8 +825,8 @@ width: 100%;
 }
 
 .bottomleft {
-  position:fixed;	
-  bottom: 30px;
+  position: fixed;	
+  bottom: -50px;
   /* background-color: white; */
   border-radius: 12px;
   width: 20%;
@@ -947,7 +949,7 @@ button:hover {
   border: none;
   cursor: pointer;
   border-radius: 12px;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .tab input[type=submit]{
@@ -1529,4 +1531,58 @@ ul.no-bullets {
 
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #914781;
+}
+
+
+
+
+
+.columnNameList {
+  float: left;
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  background-color: #7a4791;
+}
+
+
+.columnNameList:hover {
+  background-color: #a973c2;
+  cursor: pointer;
+}
+
+
+/* Clear floats after the columns */
+
+.rowDslName:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.rowDslName{
+  height: 34em;
+  overflow-y: auto;
+}
+
+
+/* Style the buttons */
+
+.btn {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: rgb(104, 104, 104);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn.active {
+  background-color: #666;
+  color: white;
 }

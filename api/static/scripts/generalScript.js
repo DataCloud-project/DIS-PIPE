@@ -6,6 +6,13 @@ function update(){
 	
 }
 
+function changeConstraint(){
+	console.log($("#selectFun option:selected").attr("title"));
+	var constraint_definition=$("#selectFun option:selected").attr("title");
+	var constraint_title=$("#selectFun option:selected").text();
+	$('#definitions_constraint').text(constraint_title+": "+constraint_definition);
+}
+
 function mainMenu(){
 	if (menuBtn.checked == false) {
 		menu.style.display = "none";
@@ -34,7 +41,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = false;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = true;
+		document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = false;
 		document.getElementById("save_project").disabled = false;
@@ -55,7 +62,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = true;
+		document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = false;
@@ -96,7 +103,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = true; 
 		document.getElementById("export_dsl").disabled = true; 
-		document.getElementById("get_dsl").disabled = true;
+		document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = true; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = true; 

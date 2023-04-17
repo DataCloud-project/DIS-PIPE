@@ -498,8 +498,8 @@ function openForm(id) {
             break;
 	    case 'attribute_filter':
             document.getElementById("filter_title").innerHTML = "Attribute";
-            document.getElementById("filter_info").style.visibility = "visible";
-            document.getElementById("filter_info").title = "You can use it to split your log \nbased on a particular attribute, but also to \nfilter cases based on the presence or absence of activities, \nto filter case IDs and variants, or to remove individual \nactivities or attribute values"
+            document.getElementById("filter_info").style.visibility = "hidden";
+            document.getElementById("filter_title").title = "You can use it to split your log \nbased on a particular attribute, but also to \nfilter cases based on the presence or absence of activities, \nto filter case IDs and variants, or to remove individual \nactivities or attribute values"
             document.getElementById("attribute_filter_div").style.display = "block";
             document.getElementById("timeframe_filter_div").style.display = "none";
             document.getElementById("perf_filter_div").style.display = "none";
@@ -510,8 +510,8 @@ function openForm(id) {
             break;
 	    case 'follower_filter':
             document.getElementById("filter_title").innerHTML = "Rule";
-            document.getElementById("filter_info").style.visibility = "visible";
-            document.getElementById("filter_info").title = "You can use it to filter your log based \non the defintion on a declare constraint"
+            document.getElementById("filter_info").style.visibility = "hidden";
+            document.getElementById("filter_title").title = "You can use it to filter your log based \non the defintion on a declare constraint"
             document.getElementById("follower_filter_div").style.display = "block";
             document.getElementById("timeframe_filter_div").style.display = "none";
             document.getElementById("perf_filter_div").style.display = "none";

@@ -15,7 +15,9 @@
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/checkScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/queryScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/generalScript.js') }}"></script>
-    <!-- Fontawesome CDN Link -->
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/dsltoXesScript.js') }}"></script>
+    <link rel="stylesheet" href="../static/dist/css/lightbox.min.css">
+	<!-- Fontawesome CDN Link -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -24,6 +26,38 @@
 		document.addEventListener('readystatechange', event => { sendDslRequest('start')});
 		console.log("grev")
 	</script>
+	<style>
+		.popup {
+		  display: none;
+		  position: fixed;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		  width: 300px;
+		  background-color: #fff;
+		  border-radius: 5px;
+		  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+		  padding: 20px;
+		  text-align: center;
+		}
+		.popup h2 {
+		  font-size: 24px;
+		  margin-bottom: 10px;
+		}
+		.popup p {
+		  font-size: 18px;
+		  margin-bottom: 20px;
+		}
+		.popup button {
+		  background-color: #4caf50;
+		  color: #fff;
+		  border: none;
+		  border-radius: 5px;
+		  padding: 10px 20px;
+		  font-size: 18px;
+		  cursor: pointer;
+		}
+	  </style>
 
 </head>
 
@@ -179,7 +213,7 @@ function checkRefresh()
 					<br />
 					<button id="export_dsl" class="menu_button" type="button" onclick="exportDsl()">Export DSL</button>
 					<br />
-					<button id="get_dsl" class="menu_button" type="button">Get DSL from DEF-PIPE</button>
+					<button id="get_dsl" class="menu_button" type="button" onclick="getNameDsl()">Get DSL from DEF-PIPE</button>
 					<br />
 					<button id="send_dsl" class="menu_button" type="button" onclick="sendDslRequest('fine')">Send DSL to DEF-PIPE</button>
 					<br />
@@ -190,7 +224,9 @@ function checkRefresh()
 					<input type="submit" id="updateBtn" value="Update" style="display:none">
 					<input type="hidden" value="{{updated}}" name="updated" id="updated">
 				</form>
+
 			</div>	
+		
 		</div>			
 		
 		<div class="content" id="content">
@@ -228,6 +264,50 @@ function checkRefresh()
 						<label for="check_tabs">
 							<i class="fas fa-edit" id="btn_tabs"></i>
 						</label>
+
+						<!-- <button onclick="showPopup()">Show Popup</button>
+						<div class="popup" id="popup77">
+						<h2 id="popup-title"></h2>
+						<p id="popup-content"></p>
+						<button onclick="hidePopup()">Close</button>
+						</div> -->
+
+						<div class="blocker" id="blocker_dsl_name" onclick="closePopupDslName()"></div>
+
+						<div class="form-popup" id="popupDslName">
+	
+							<form action="" class="form-container">
+								
+								<div style="text-align: center">
+									<span id="DSL_title" style="color:#7a4791; text-align: center; font-size: 25px;">DSL name</span>
+								</div>
+						
+								<hr style="background:#cfa8d5">
+								
+								<br>
+								
+								<center>
+									
+								  
+									<div id="btnContainer">
+										<span>Chose a view</span>
+										<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+									  	<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+									</div>
+									<br>
+								  
+									<div id="dslNameList" class="rowDslName">
+										
+									
+									
+									</div>
+							
+								</center>
+								
+							</form>
+							
+						</div>
+
 						
 						<!-- First page - Map Content -->
 						<div class="mapContainer">
@@ -250,20 +330,22 @@ function checkRefresh()
 							<div class="mytabs">
 							
 									<input type="radio" name="mytabs" id="tabFreq" checked="checked" value="frequency" onclick="getMap()">
-									<label id="labelTabFreq" for="tabFreq">Frequency</label>
+									<label title="The frequency metrics show you which parts of your process have been executed most often" id="labelTabFreq" for="tabFreq">Frequency</label>
 									<div class="tab">
 										
 										<form action="" method='POST'>
 											<center>
 											<input type="hidden" id='tabTypeFreq' name='tabType' value="frequency">
 											<input type="range" min="0" max="100" value="{{myPathF_init}}" class="sliderPA" id="myPathF" name="myPathF" onchange="pre_request('false')">
-											Path: <textarea readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2"  id="pathF" onchange="checkPercentage('PF')"></textarea>%
+											<span title="how many paths are shown in your process map, ranging from only the most dominant process flows among the shown activities up to all connections between the steps.">Path:</span> 
+											<textarea readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2"  id="pathF" onchange="checkPercentage('PF')"></textarea>%
 											<button class="setPath" type="button" style="width: 70px; display: none;" id="setPathF" onclick="updateInfo('PF')">set Path</button>
 											
 											<br><br>
 
 											<input type="range" min="0" max="100" value="{{myActF_init}}" class="sliderPA" id="myActF" name="myActF" onchange="pre_request('false')">
-											Steps: <textarea readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
+											<span title="the number of activities shown in your process map, ranging from only the most frequent activities up to all including the least frequent activities">Steps:</span>   
+											<textarea readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="actF" onchange="checkPercentage('AF')"></textarea>%
 											<button type="button" style="width: 95px; display: none;" id="setActF" onclick="updateInfo('AF')">set Steps</button>
 											<br>
 											
@@ -273,10 +355,10 @@ function checkRefresh()
 											
 											<br />
 											
-											<select title="the message1" id="perfromanceFrequency" name="freqs" class="dropdown dropdown_width">
-											  <option id="pf_absFreq" title="the message1" value="absFreq">Absolute frequency</option>
-											  <option id="pf_caseFreq" title="the message2" value="caseFreq">Case Frequency</option>
-											  <option id="pf_maxRep" title="the message3" value="maxRep">Max. repetition</option>
+											<select title="total number of times that a particular process step was performed" id="perfromanceFrequency" name="freqs" class="dropdown dropdown_width">
+											  <option id="pf_absFreq" title="total number of times that a particular process step was performed" value="absFreq">Absolute frequency</option>
+											  <option id="pf_caseFreq" title="number of times that a particular process step was performed, ignoring repetitions" value="caseFreq">Case Frequency</option>
+											  <option id="pf_maxRep" title="maximum number of repetitions within a case" value="maxRep">Max. repetition</option>
 											</select>
 											
 											<br />
@@ -299,20 +381,22 @@ function checkRefresh()
 									
 									
 									<input type="radio" name="mytabs" id="tabPerf" value="performance" onclick="getMap()">
-									<label id="labelTabPerf" for="tabPerf">Performance</label>
+									<label title="The Performance metrics are used to know more about the time that is spent in the different parts of the process" id="labelTabPerf" for="tabPerf">Performance</label>
 									<div class="tab">
 										
 										<form action="" method='POST'>
 											<center>
 											<input type="hidden" id='tabTypePerf' name='tabType' value="performance">
 											<input type="range" min="0" max="100" value="{{myPathP_init}}" class="sliderPA" id="myPathP" name='myPathP' onchange="pre_request('false')">
-											Path: <textarea  readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="pathP" onchange="checkPercentage('PP')"></textarea>% 
+											<span title="how many paths are shown in your process map, ranging from only the most dominant process flows among the shown activities up to all connections between the steps.">Path:</span>  
+											<textarea  readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="pathP" onchange="checkPercentage('PP')"></textarea>% 
 											<button class="setPath" type="button" style="width: 70px; display: none;" id="setPathP" onclick="updateInfo('PP')">set Path</button>
 											<br><br>
 											
 											
 											<input type="range" min="0" max="100" value="{{myActP_init}}" class="sliderPA" id="myActP" name='myActP' onchange="pre_request('false')">
-											Steps: <textarea  readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
+											<span title="the number of activities shown in your process map, ranging from only the most frequent activities up to all including the least frequent activities">Steps:</span>  
+											<textarea  readonly class="vmiddle" style="resize: none; pointer-events: none;" rows="1" cols="2" id="actP" onchange="checkPercentage('AP')"></textarea>%
 											<button type="button" style="width: 95px; display: none;" id="setActP" onclick="updateInfo('AP')">set Steps</button>
 											<br>
 											<input type="hidden" min="0" max="100" value="{{myPathF_init}}" name="myPathF">
@@ -321,12 +405,12 @@ function checkRefresh()
 											
 											<br />
 											
-											<select id="performanceDuration" name="perfs" class="dropdown dropdown_width">
-												<option selected value="totDur">Total duration</option>
-												<option value="medDur">Median duration</option>
-												<option value="meanDur">Mean duration</option>
-												<option value="maxDur">Max. duration</option>
-												<option value="minDur">Min. duration</option>
+											<select title="the accumulated durations for the execution of each step and for the delays on each path" id="performanceDuration" name="perfs" class="dropdown dropdown_width">
+												<option title="the accumulated durations for the execution of each step and for the delays on each path" id="pd_totDur" selected value="totDur">Total duration</option>
+												<option title="the median time spent within and between activities can be displayed" id="pd_medDur" value="medDur">Median duration</option>
+												<option title="the average time spent within and between steps can be displayed" id="pd_meanDur" value="meanDur">Mean duration</option>
+												<option title="the largest execution times and delays that were measured" id="pd_maxDur" value="maxDur">Max. duration</option>
+												<option title="the smallest execution times and delays that were measured" id="pd_minDur" value="minDur">Min. duration</option>
 											</select>
 											
 											<br />
@@ -381,6 +465,9 @@ function checkRefresh()
 						<!-- end first page -->
 						
 					</div>
+
+
+
 					
 					<!-- Second page Event log analisis -->
 					<div class="elanalysis text" id="elanalysis-text">
@@ -388,7 +475,7 @@ function checkRefresh()
 						<div class="row">
 							<div class="column left">
 							<div class="containerVariants">
-								<h4 title="A variant indicate a specific sequence of steps" style="text-align:center;">Variants ℹ️</h4>
+								<h4 title="A variant indicate a specific sequence of steps" style="text-align:center;">Variants</h4>
 								<hr>
 								<br>
 								<ul id="variants-ul">
@@ -397,23 +484,23 @@ function checkRefresh()
 							</div>
 							<div class="column middle">
 							<div class="containerCases">
-								<h4 title="list of cases IDs for the selected variant" style="text-align:center;">Cases ℹ️</h4>
+								<h4 title="list of cases IDs for the selected variant" style="text-align:center;">Cases</h4>
 								<hr>
 								<br>
 								<ul id="case-ul">
 								</ul>
 							</div>
 							</div>
-							<center>
+							
 							<div class="column right">
-								
+								<center>
 									<table id="eventsTable">
 										
 							
 									</table>
-								
+								</center>
 							</div>
-							</center>
+							
 							
 							<div class="column filtro">
 								
@@ -536,6 +623,7 @@ function checkRefresh()
 						<div class="blocker" id="blocker2" onclick="closeLoading()"></div>
 
 						<div class="blocker" id="blocker" onclick="closeForm()"></div>
+						
 						<div class="form-popup" id="myForm">
 						  <!-- INCOLLARE FORM -->
 							<form action="" class="form-container">
@@ -746,62 +834,71 @@ function checkRefresh()
 												</div>    
 											</div>
 											<div id="new_rule">
-												<span class="title-rule" style="text-align:center">Define a constraint</span>
+												<!-- <span class="title-rule" style="text-align:center">Define a constraint</span> -->
 												<br>
+												<center>
 												<table>
 													<thead>
 														<tr>
 														<th>
-													<span id="first-combobox" class="combobox2">
-													<span class="sub-title">Select constraint
-														<!-- <button id="infoId" onclick ="showInfo();" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-															<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-														</svg></button> -->
-													</span>
-													<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="selectFun" onclick="selectFunction();" disabled>                          
-														<option value="Start">Start(a)</option>
-														<option value="End">End(a)</option>
-														<option value="Existence">Existence(a)</option>
-														<option value="Absence">Absence(a)</option>
-														<option value="Choice">Choice(a,b)</option>
-														<option value="ExclusiveChoice">ExclusiveChoice(a,b)</option>
-														<option value="RespondedExistence">RespondedExistence(a,b)</option>
-														<option value="Response">Response(a,b)</option>
-														<option value="AlternateResponse">AlternateResponse(a,b)</option>
-														<option value="ChainResponse">ChainResponse(a,b)</option>
-														<option value="Precedence">Precedence(a,b)</option>
-														<option value="AlternatePrecedence">AlternatePrecedence(a,b)</option>
-														<option value="ChainPrecedence">ChainPrecedence(a,b)</option>
-														<option value="CoExistence">CoExistence(a,b)</option>
-														<option value="Succession">Succession(a,b)</option>
-														<option value="AlternateSuccession">AlternateSuccession(a,b)</option>
-														<option value="ChainSuccession">ChainSuccession(a,b)</option>
-														<option value="NotCoExistence">NotCoExistence(a,b)</option>
-														<option value="NotSuccession">NotSuccession(a,b)</option>
-														<option value="NotChainSuccession">NotChainSuccession(a,b)</option>
-													</select>
-												</span> 
-
+														<span id="first-combobox" class="combobox2">
+															<span class="sub-title">Select constraint
+																<!-- <button id="infoId" onclick ="showInfo();" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+																	<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+																</svg></button> -->
+																<a href="../static/images/rule1.jpg" data-lightbox="example-set">💡</a>
+																<a href="../static/images/rule2.jpg" data-lightbox="example-set"></a>
+															</span>
+															<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="selectFun" onclick="selectFunction();" disabled onchange="changeConstraint()">                          
+																<option title="a occurs at the beginning" value="Start">Start(a)</option>
+																<option title="a occurs at the end" value="End">End(a)</option>
+																<option title="a occurs at least once" value="Existence">Existence(a)</option>
+																<option title="a never occurs" value="Absence">Absence(a)</option>
+																<option title="a or b eventually occur" value="Choice">Choice(a,b)</option>
+																<option title="a or b eventually occur, but not togheter" value="ExclusiveChoice">ExclusiveChoice(a,b)</option>
+																<option title="If a occurs in the trace, then b occurs as well" value="RespondedExistence">RespondedExistence(a,b)</option>
+																<option title="If a occurs, then b occurs after a" value="Response">Response(a,b)</option>
+																<option title="Each time a occurs, then b occurs afterwards, before a recurs" value="AlternateResponse">AlternateResponse(a,b)</option>
+																<option title="Each time a occurs, then b occurs immediately afterwards" value="ChainResponse">ChainResponse(a,b)</option>
+																<option title="b occurs only if preceded by a" value="Precedence">Precedence(a,b)</option>
+																<option title="Each time b occurs, it is preceded by a and no other b can recur in between" value="AlternatePrecedence">AlternatePrecedence(a,b)</option>
+																<option title="Each time b occurs, then a occurs immediately beforehand" value="ChainPrecedence">ChainPrecedence(a,b)</option>
+																<option title="If b occurs, then a occurs, and vice-versa" value="CoExistence">CoExistence(a,b)</option>
+																<option title="a occurs if and only if it is followed by b" value="Succession">Succession(a,b)</option>
+																<option title="a and b if and only if the latter follows the former, and they alternate each other in the trace" value="AlternateSuccession">AlternateSuccession(a,b)</option>
+																<option title="a and b occur if and only if the latter immediately follows the former" value="ChainSuccession">ChainSuccession(a,b)</option>
+																<option title="a and b never occur togheter" value="NotCoExistence">NotCoExistence(a,b)</option>
+																<option title="a can never occur before b" value="NotSuccession">NotSuccession(a,b)</option>
+																<option title="a and b occur if and only if the latter does not immediately follows the former" value="NotChainSuccession">NotChainSuccession(a,b)</option>
+															</select>
+														</span> 
 														</th>
-														<th><span id="second-combobox" class="combobox2">
-													<span class="sub-title">Select step 1</span>
-													<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act1" disabled>
-														
-													</select>
-												</span>
 
-														</th>
 														<th>
-															<span id="third-combobox" class="combobox2">
-													<span class="sub-title">Select step 2</span>
-													<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act2" disabled>
+														<span id="second-combobox" class="combobox2">
+															<span class="sub-title">Select step 1</span>
+															<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act1" disabled>
+															
+															</select>
+														</span>
+														</th>
+
+														<th>
+														<span id="third-combobox" class="combobox2">
+															<span class="sub-title">Select step 2</span>
+															<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="act2" disabled>
 														
-													</select>													
-												</span>
+															</select>													
+														</span>
 														</th>
 														</tr>
 													</thead>
 												</table>
+												</center>
+												<br>
+												<center>
+													<div id="definitions_constraint">Start(a): a occurs at the beginning</div>
+												</center>
 												
 												
 												
@@ -1115,7 +1212,7 @@ function checkRefresh()
 											<br>
 											<br>
 											<span>Planner list</span><br>
-											<input type="radio" id="FD" name="planner_list" value="FD">
+											<input checked type="radio" id="FD" name="planner_list" value="FD">
 											<label for="FD">fast-downward</label><br>
 											<input type="radio" id="SYMBA" name="planner_list" value="SYMBA">
 											<label for="SYMBA">seq-opt-symba-2</label><br>
@@ -1417,6 +1514,7 @@ function checkRefresh()
 		</div>
 		
 	</div>
+	<script src="../static/dist/js/lightbox-plus-jquery.min.js"></script>
 	
 </body>
 

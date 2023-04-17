@@ -1314,14 +1314,19 @@ function getMap(bool) {
                 if(node_id!="@@S" && node_id!="@@E" && $("#"+node_id).find(".label_node").text()!="@@startnode" && $("#"+node_id).find(".label_node").text()!="@@endnode"){
                     if(typeD=="totDur"){
                         $duration_values=getAllDuration("total");
+                        $('#performanceDuration').prop('title', $('#pd_totDur').prop('title'));
                     }else if (typeD=="medDur"){
                         $duration_values=getAllDuration("median");
+                        $('#performanceDuration').prop('title', $('#pd_medDur').prop('title'));
                     }else if (typeD=="meanDur"){
                         $duration_values=getAllDuration("mean");
+                        $('#performanceDuration').prop('title', $('#pd_meanDur').prop('title'));
                     }else if (typeD=="maxDur"){
                         $duration_values=getAllDuration("max");
+                        $('#performanceDuration').prop('title', $('#pd_maxDur').prop('title'));
                     }else if (typeD=="minDur"){
                         $duration_values=getAllDuration("min");
+                        $('#performanceDuration').prop('title', $('#pd_minDur').prop('title'));
                     }
                     
                     var $title = $("#"+node_id+" title").html(); 				

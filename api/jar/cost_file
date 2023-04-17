@@ -1,10 +1,10 @@
-examinethoroughly 1 1
-examinecasually 1 1
-rejectrequest 1 1
-paycompensation 1 1
 registerrequest 1 1
-tausplit_3 0 0
-checkticket 1 1
+examinecasually 1 1
 decide 1 1
 reinitiaterequest 1 1
 skip_5 0 0
+paycompensation 1 1
+tausplit_3 0 0
+checkticket 1 1
+examinethoroughly 1 1
+rejectrequest 1 1

@@ -7,8 +7,8 @@ import datetime
 import numpy as np
 
 def clear():
-    clearFile('segments.txt')
-    clearFile('removeSegments.txt')
+    clearFile('rule_filter/segments.txt')
+    clearFile('rule_filter/removeSegments.txt')
 
 def clearFile(file):
     f = open(file,"w")
@@ -56,7 +56,7 @@ def downloadFile():
 
 def takeSegmentFromTrace():  
     segments = []  
-    with open('trace.txt', 'r') as f:
+    with open('rule_filter/trace.txt', 'r') as f:
         for line in f:
             line = line.strip("[()]")
             line = line.replace("('", "")
@@ -78,7 +78,7 @@ def takeSegmentFromTrace():
 
 def takeSegmentFromFile():  
     segments = []  
-    with open('segments.txt', 'r') as f:
+    with open('rule_filter/segments.txt', 'r') as f:
         for line in f:
             line = line.strip("[()]")
             line = line.replace("('", "")
@@ -103,7 +103,7 @@ def takeSegmentFromFile():
 
 def takeRemoveSegmentFromFile():  
     segments = []  
-    with open('removeSegments.txt', 'r') as f:
+    with open('rule_filter/removeSegments.txt', 'r') as f:
         for line in f:
             line = line.strip("[()]")
             line = line.replace("('", "")
@@ -127,20 +127,20 @@ def takeRemoveSegmentFromFile():
     return segments       
 
 def writeOnSegmentFile(result):
-    with open('segments.txt', 'w') as f:
+    with open('rule_filter/segments.txt', 'w') as f:
         for line in result:
             f.write(str(line))
             f.write("\n")
     f.close()
-    replaceInFile("segments.txt")
+    replaceInFile("rule_filter/segments.txt")
         
 def writeOnRemoveSegmentFile(removeSegment):
-    with open('removeSegments.txt', 'w') as f:
+    with open('rule_filter/removeSegments.txt', 'w') as f:
         for line in removeSegment:
             f.write(str(line))
             f.write("\n")
     f.close() 
-    replaceInFile("removeSegments.txt")
+    replaceInFile("rule_filter/removeSegments.txt")
      
         
 def replaceInFile(file):
