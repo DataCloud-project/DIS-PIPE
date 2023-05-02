@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/queryScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/generalScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/dsltoXesScript.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='scripts/segmentatorScript.js') }}"></script>
     <link rel="stylesheet" href="../static/dist/css/lightbox.min.css">
 	<!-- Fontawesome CDN Link -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
@@ -24,7 +25,6 @@
 	<title>DIS-PIPE</title>
 	<script>
 		document.addEventListener('readystatechange', event => { sendDslRequest('start')});
-		console.log("grev")
 	</script>
 	<style>
 		.popup {
@@ -110,6 +110,10 @@ function checkRefresh()
 {
 		 // This is a fresh page load
 		
+    	if ( window.history.replaceState ) {
+        	window.history.replaceState( null, null, window.location.href );
+    	}
+
 		$("#firstpagemap").click();
 		$("#myRange").val("100");
 		$("#myPathP").val("100");
@@ -166,6 +170,43 @@ function checkRefresh()
 		<div class="loader"></div>
 	</div>
 
+
+	<div class="blocker" id="blocker_dsl_name" onclick="closePopupDslName()"></div>
+
+	<div class="form-popup" id="popupDslName">
+
+		<form action="" class="form-container">
+			
+			<div style="text-align: center">
+				<span id="DSL_title" style="color:#7a4791; text-align: center; font-size: 25px;">DSL name</span>
+			</div>
+	
+			<hr style="background:#cfa8d5">
+			
+			<br>
+			
+			<center>
+				
+				<div id="btnContainer">
+					<span>Chose a view</span>
+					<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+					<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+				</div>
+				<br>
+				
+				<div id="dslNameList" class="rowDslName">
+					
+				
+				</div>
+		
+			</center>
+			
+		</form>
+		
+	</div>
+
+
+
 	<input type="checkbox" id="check" onclick="mainMenu()">
 	<label for="check">
 		<i class="fas fa-bars" id="btn"></i>
@@ -182,6 +223,8 @@ function checkRefresh()
 			<input type="radio" name="slider" id="elanalysis" onclick="displayContent()">
 			<input type="radio" name="slider" id="cChecking" onclick="displayContent()">
 			<input type="radio" name="slider" id="query" onclick="displayContent()">
+			<input type="radio" name="slider" id="segmentator" onclick="callSegmentator()">
+			
 			<div class="list" id="list">
 				<label id="firstpagemap" for="map" class="map">
 					<i class="fas fa-sitemap"></i>
@@ -191,13 +234,17 @@ function checkRefresh()
 					<i class="fas fa-chart-line"></i>
 					<span class="topic">Event Log Analysis</span>
 				</label>
-				<label for="cChecking" class="cChecking"  onclick="petriNetCompute()">
+				<label for="cChecking" class="cChecking"> <!-- onclick="petriNetCompute()" -->
 					<i class="fas fa-check-double"></i>
 					<span class="topic">Conformance Checking</span>
 				</label>
 				<label for="query" class="query" onclick="databasePresenceRequest()"> <!--onclick="queryDbRequest()"-->
 					<i class="fa-solid fa-sliders"></i>
 					<span class="topic">Query</span>
+				</label>
+				<label for="segmentator" class="segmentator"> <!--onclick="queryDbRequest()"-->
+					<i class="fa-solid fa-sliders"></i>
+					<span class="topic">segmentator</span>
 				</label>
 				<div class="slider"></div>
 			</div>
@@ -234,6 +281,7 @@ function checkRefresh()
 				<div class="text-content">
 					<div class="map text" id="map-text">
 					 	<div class="title" style="float: left"> Map Content</div>
+						<p id='new_digraph' style='display:none'></p>
 						<p id='digraphF' style='display:none'>{{ stringF }}</p>
 						<p id='digraphP' style='display:none'>{{ stringP }}</p>
 						<p id='allDt' style='display:none'>{{ stringDuration }}</p>
@@ -245,7 +293,7 @@ function checkRefresh()
 						<p id='petriFreq' style='display:none'>Try</p>
 						<p id='petriPerf' style='display:none'>Try</p>
 						<p id='bpmn' style='display:none'>Try</p>
-						<p id='mapTitle' style="text-align: center;">{{ nameupload }}</p>
+						<p id='mapTitle' style="text-align: center; cursor: pointer;" ondblclick="renameProject()">{{ nameupload }}</p>
 						<p id='median' style='display:none'>{{ median }}</p>
 						<p id='total' style='display:none'>{{ total }}</p>
 						<p id='traceDt' style='display:none'>{{ traceDt }}</p>
@@ -272,42 +320,7 @@ function checkRefresh()
 						<button onclick="hidePopup()">Close</button>
 						</div> -->
 
-						<div class="blocker" id="blocker_dsl_name" onclick="closePopupDslName()"></div>
-
-						<div class="form-popup" id="popupDslName">
-	
-							<form action="" class="form-container">
-								
-								<div style="text-align: center">
-									<span id="DSL_title" style="color:#7a4791; text-align: center; font-size: 25px;">DSL name</span>
-								</div>
 						
-								<hr style="background:#cfa8d5">
-								
-								<br>
-								
-								<center>
-									
-								  
-									<div id="btnContainer">
-										<span>Chose a view</span>
-										<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
-									  	<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
-									</div>
-									<br>
-								  
-									<div id="dslNameList" class="rowDslName">
-										
-									
-									
-									</div>
-							
-								</center>
-								
-							</form>
-							
-						</div>
-
 						
 						<!-- First page - Map Content -->
 						<div class="mapContainer">
@@ -329,7 +342,7 @@ function checkRefresh()
 							<!-- popup path and activities -->
 							<div class="mytabs">
 							
-									<input type="radio" name="mytabs" id="tabFreq" checked="checked" value="frequency" onclick="getMap()">
+									<input type="radio" name="mytabs" id="tabFreq" checked="checked" value="frequency" onclick="getMap(false)">
 									<label title="The frequency metrics show you which parts of your process have been executed most often" id="labelTabFreq" for="tabFreq">Frequency</label>
 									<div class="tab">
 										
@@ -380,7 +393,7 @@ function checkRefresh()
 									</div>
 									
 									
-									<input type="radio" name="mytabs" id="tabPerf" value="performance" onclick="getMap()">
+									<input type="radio" name="mytabs" id="tabPerf" value="performance" onclick="getMap(false)">
 									<label title="The Performance metrics are used to know more about the time that is spent in the different parts of the process" id="labelTabPerf" for="tabPerf">Performance</label>
 									<div class="tab">
 										
@@ -1089,30 +1102,36 @@ function checkRefresh()
 
 						<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
 						
-						<!-- <button id="check_conformance" onchange="displayTracePopUp()">Details</button> -->
-						 
-						<!-- <button id="check_conformance" style="position: absolute; 
-						right: 30%; font-size: 16px; width: 7%; cursor: pointer;" onclick="displayTracePopUp()">
-							Details
-					 	</button> -->
 						
 
-						<!-- <input type="checkbox" id="check_tabs">
-						<label for="check_tabs">
-							<i class="fas fa-edit" id="btn_tabs"></i>
-						</label> -->
-
-
-						<!-- <div id="InitialMarking">Initial Marking</div>
-						<div id="FinalMarking">Final Marking</div> -->
-						<!-- <br> -->
-						<!-- <div class="map-content" id="petrinet-content">
-							<svg id="petriContainer">
-							
-							</svg>
-						</div> -->
 						<center>
-						<div id="formConformanceChecking" style="display: block;">
+							<div id="formConformanceChecking0" style="display: block;">
+								<br>
+								<div class="conformance-container">
+									<div class="conformance-title">Choose technique</div>
+									
+									<hr>
+									<br>
+									
+									<div style="border-spacing: 0 15px;">
+										Do you want to use an external or internal model?
+									</div>
+	
+									
+									<div style="text-align:center">
+										<br>
+										<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="petriNetComputeInternal()">Internal</button>
+										<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="getNameDsl()">External</button>
+										
+									</div>
+								
+								</div>
+							</div>
+						</center>
+
+
+						<center>
+						<div id="formConformanceChecking" style="display: none;">
 							<!-- INCOLLARE FORM -->
 							<br>
 							<br>
@@ -1158,7 +1177,7 @@ function checkRefresh()
 							
 								<div style="text-align:center">
 									<br>
-									<button type="button" style="font-size: 16px; visibility: hidden" onclick="resetField()">Reset</button>
+									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="backStart()">Back</button>
 									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="nextDivForm()">Next</button>
 									
 								</div>
@@ -1280,7 +1299,7 @@ function checkRefresh()
 								<div style="text-align:center">
 									<br>
 									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="backDivForm()">Back</button>
-									<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="showResultonDFG()">Next</button>
+									<button id="showRes" class="conf_check_button" type="button" style="font-size: 16px;" onclick="showResultonDFGbis('interno')">Next</button>
 									
 								</div>
 							
@@ -1523,6 +1542,7 @@ function checkRefresh()
 <!--(script with getMap())-->
 <script>
 	var nodes_id_association={}
+	var color_node_highlight={}
 	var frontend = document.getElementById("path_frontend").innerHTML;
 	// console.log(frontend)
 

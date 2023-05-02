@@ -176,7 +176,7 @@ function initialVariantListener2(){
 
 	
 	json = JSON.parse(variantsInfo);
-	console.log(json)
+	//console.log(json)
 	
 	allVariants = Object.keys(json);
 

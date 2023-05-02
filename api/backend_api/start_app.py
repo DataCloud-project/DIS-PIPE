@@ -91,7 +91,7 @@ def initialAction():
     dataframe1=pd.DataFrame(session["log"])
     log = pm4py.convert_to_event_log(dataframe1)
     
-    print(log_clone==log)
+    #print(log_clone==log)
     
 
     dfg=session["dfg"]
@@ -185,8 +185,7 @@ def initialAction():
 
     already_sum=[]
 
-    # print(dfg)
-    # print("\n")
+
     for i in range(0, len(log)):
         for j in range(0, len(log[i])-1):
             for k in range(j, len(log[i])):
@@ -271,8 +270,7 @@ def initialAction():
 
     for trace_max in log:
         for ev_max in trace_max:
-    #         print(precedente)
-    #         if(ev_max['concept:name']!=precedente):
+
             if(ev_max['concept:name'] in dictionary_max_trace):
                 dictionary_max_trace[ev_max['concept:name']]=str(int(dictionary_max_trace[ev_max['concept:name']])+1)
             else:
@@ -427,7 +425,7 @@ def initialAction():
    
     variantsDict=jsonify({"variants": str(variants)})  
     varianti=(variantsDict)
-    print(varianti)
+    #print(varianti)
 
     #variants fine_______________________________________________________________________________________________________________________
 

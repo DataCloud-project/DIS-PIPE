@@ -298,7 +298,7 @@ function showEvents(varKey, caseKey) {
         for (var kf = 0; kf < Object.keys(inv_map).length; kf++) {
             // console.log(inv_map[kf]);
             if(inv_map[kf]!="Activity" && inv_map[kf][0]!="@"){
-                console.log("GREVISSSSSSIMO")
+        
                 console.log(inv_map[kf][0])
                 if(e[inv_map[kf]]!=undefined){
                     tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;

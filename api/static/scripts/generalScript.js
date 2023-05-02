@@ -1,5 +1,21 @@
 var petri_sample
 
+
+function renameProject(){
+	console.log("sto rinominando")
+	let nuovoNome = prompt('Please enter a new name:');
+
+	var oReq1 = new XMLHttpRequest();
+    oReq1.addEventListener("load", renameProjectListener);
+    oReq1.open("POST", frontend+"renameProject/"+nuovoNome, false);
+    oReq1.send();
+}
+
+function renameProjectListener(){
+	console.log(this.responseText)
+	document.getElementById('mapTitle').innerHTML = this.responseText
+}
+
 function update(){
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
@@ -114,17 +130,56 @@ function displayContent(){
 	}
 }
 
-function petriNetCompute(){
-	
+
+function petriNetComputeInternal(){
+		
+
+	$("#showRes").attr("onclick","showResultonDFGbis('interno')");
+
+
 	$("#loadingMessage").css("visibility", "visible");
 	$("#back_slide_conf").css('visibility','hidden');
     $("#info_check_conformance").css('visibility','hidden');
     $("#btn_conformance").css('visibility','hidden');
 
+
+	document.getElementById("formConformanceChecking0").style.display = "none";
+	document.getElementById("formConformanceChecking").style.display = "block";
+    document.getElementById("formConformanceChecking2").style.display = "none";
+    document.getElementById("map2-content").style.display = "none";
+
 	setTimeout(() => {
 
-		petriRequest();
-		petri_sample=document.getElementById("stringPetriNet").innerHTML
+		petriRequestInternal();
+
+		$("#loadingMessage").css("visibility", "hidden");
+
+	}, 10);
+}
+
+
+
+function petriNetComputeExternal(){
+	
+	/*
+	$("#loadingMessage").css("visibility", "visible");
+	$("#back_slide_conf").css('visibility','hidden');
+    $("#info_check_conformance").css('visibility','hidden');
+    $("#btn_conformance").css('visibility','hidden');
+	*/
+
+	/*getNameDsl()*/
+
+	/*
+	document.getElementById("formConformanceChecking0").style.display = "none";
+	document.getElementById("formConformanceChecking").style.display = "block";
+    document.getElementById("formConformanceChecking2").style.display = "none";
+    document.getElementById("map2-content").style.display = "none";
+
+	setTimeout(() => {
+
+		petriRequestExternal();
+		petri_sample = document.getElementById("stringPetriNet").innerHTML
 		petri_sample = petri_sample.replace(/&#34;/g, '"');
 		petri_sample = petri_sample.replace(/&gt;/g, ">");
 		petri_sample = petri_sample.replace(/&lt;/g, "<");
@@ -134,8 +189,11 @@ function petriNetCompute(){
 		$("#loadingMessage").css("visibility", "hidden");
 
 	}, 10);
-
+	*/
 }
+
+
+
 
 function getGraphText(selector){
 	// take the graph in text form and save it 

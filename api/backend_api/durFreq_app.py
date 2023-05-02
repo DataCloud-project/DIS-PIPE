@@ -141,8 +141,6 @@ def alledgeduration():
     
     already_sum=[]
 
-    # print(dfg)
-    # print("\n")
     for i in range(0, len(log)):
         for j in range(0, len(log[i])-1):
             for k in range(j, len(log[i])):
@@ -156,7 +154,7 @@ def alledgeduration():
                     time_result=log[i][k]['start_timestamp']-log[i][j]['time:timestamp']
                     time_result=time_result.total_seconds()
                     follower_dictionary[log[i][j]['concept:name']+"#"+log[i][k]['concept:name']].append(time_result)
-                    # print(follower_dictionary)
+      
         already_sum=[]
 
    
@@ -231,8 +229,7 @@ def allfrequency():
 
     for trace_max in log:
         for ev_max in trace_max:
-    #         print(precedente)
-    #         if(ev_max['concept:name']!=precedente):
+
             if(ev_max['concept:name'] in dictionary_max_trace):
                 dictionary_max_trace[ev_max['concept:name']]=str(int(dictionary_max_trace[ev_max['concept:name']])+1)
             else:
@@ -347,8 +344,7 @@ def alledgefrequency():
     follower_max_dictionary_trace={}
     content=""
 
-    # print(dfg)
-    # print("\n")
+
     for i in range(0, len(log)):
         for j in range(0, len(log[i])-1):
     #         for k in range(j, len(log[i])):

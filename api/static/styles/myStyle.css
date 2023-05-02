@@ -24,6 +24,10 @@ body{
   
 }
 
+#disalignment_log{
+  width: 90%;
+}
+
 .conf_check_button {
   width: 20%;
 }
@@ -75,7 +79,7 @@ a.link_disabled {
 	color: white;
 	opacity: 0.8;
 	width:100%;
-	height: fit-content;
+	height: 100%;
 	text-align: center;
 	font-size: 10px;
 	padding-top: 15%;
@@ -154,7 +158,7 @@ a.link_disabled {
   background: transparent;
   border-radius: 12px;
   /* height: 200px; */
-  height: 267px;
+  height: 335px;
 }
 
 .menu .list label{
@@ -194,6 +198,7 @@ a.link_disabled {
   text-decoration: underline;
 }
 
+#segmentator:checked ~ .list label.segmentator,
 #query:checked ~ .list label.query,
 #map:checked ~ .list label.map,
 #elanalysis:checked ~ .list label.elanalysis,
@@ -216,6 +221,9 @@ a.link_disabled {
 #query:checked ~ .list .slider{
   top: 202px;
 }
+#segmentator:checked ~ .list .slider{
+  top: 269px;
+}
 
 .content .text-content{
   width: 100%;
@@ -231,11 +239,11 @@ a.link_disabled {
   font-weight: 500;
 }
 
-.title{
+/* .title{
   font-size: 20px;
   margin-bottom: 10px;
   font-weight: 500;
-}
+} */
 
 .vmiddle {
   display:inlline-block;

@@ -130,8 +130,6 @@ def initializeQuery():
     response=""
     row = cursor1.fetchone() 
     while row: 
-        # print(row[1])
-        print(row)
         response=response+str(row)+"\n"
         row = cursor1.fetchone()
 
@@ -193,7 +191,7 @@ def makeQuery():
         response=""
         row = cursor1.fetchone() 
         while row: 
-            # print(row[1])
+        
             for a in row:
                 if(isinstance(a, datetime.datetime)):
                     response=response+a.strftime("%d/%m/%Y %H:%M:%S")+","
@@ -201,9 +199,6 @@ def makeQuery():
                     response=response+str(a)+","
             response=response[:-1]+"\n"
 
-            #print(row[0])
-
-            #print(row[1])
             #response=response+str(row)+"\n"
             row = cursor1.fetchone()
 
@@ -214,9 +209,6 @@ def makeQuery():
 
 @app_query.route('/checkDatabasePresence', methods=['GET'])
 def checkDatabasePresence():
-
-    print("ultimotest")
-    print(session["databaseName"])
 
     server = 'localhost' 
     port= '5432'
@@ -233,7 +225,6 @@ def checkDatabasePresence():
         print('Database not connected.')
 
     if connection is not None:
-        print(connection)
         connection.autocommit = True
 
         cur = connection.cursor()
@@ -268,8 +259,7 @@ def translation1():
     #p=Process(target=queryDb)
     #p.start()
     queryDb()
-    print("greve")
-    print("ho finito")
+
     return("done")
 
 @app_query.route('/translation2', methods=['GET'])
@@ -281,8 +271,6 @@ def translation2():
     queryDb()
 
     #p.start()
-    print("greve")
-    print("ho finito")
 
     return("done")
 

@@ -3,6 +3,13 @@ import sys
 import random
 from datetime import datetime
 import time
+from flask import Flask, session
+from flask_session import Session
+
+from flask import Flask, redirect, url_for, render_template, request, session
+from datetime import timedelta
+import time
+import os
 #--------------------------------------------------------------------
 #function to debug by populating the data sources
 #--------------------------------------------------------------------
@@ -19,6 +26,7 @@ def fromDSLtoXES(inputDSL):
     environmentVariables = []
     step_name = ""
     step_type = ""
+    risultato = ""
     for item in steps_details:
         step_type = (item.split(" step ")[0])
         step_name = (item.split(" step ")[1].split('\n')[0])
@@ -33,7 +41,9 @@ def fromDSLtoXES(inputDSL):
     #NOW THAT WE TRANSLATED THE DSL INTO ALL THE REQUIRED OBJECTS WE CAN GENERATE THE XES    
     for i in step_phases:
         print(i)
-        generateXES("1", pipeline_name, pipeline_medium, 1, 1, steps, step_phases)
+        risultato=risultato+generateXES("1", pipeline_name, pipeline_medium, 1, 1, steps, step_phases)
+
+    return risultato
 
 
 def debug(steps, step_phases, technologies):
@@ -65,6 +75,7 @@ def debug(steps, step_phases, technologies):
 #--------------------------------------------------------------------
 def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n, steps, step_phases):
         print("Generating XES file.")
+        xes_result=""
         original_stdout = sys.stdout # Save a reference to the original standard output
         #check for presence of links
         presence_of_continuum_layer = 0
@@ -94,7 +105,9 @@ def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n,
                             presence_of_storages = 1
                         if len(j.networks) > 0:
                             presence_of_networks = 1
-        with open('logs/' + pipeline_name + '.xes', 'w') as f:
+        
+        log_result=""
+        with open(session["directory_getdsl"][1:]+'/' + "importedpipeline" + '.xes', 'w+') as f:
             sys.stdout = f # Change the standard output to the file we created.
             #standard header
             print("<?xml version='1.0' encoding='UTF-8'?>\n<log>")
@@ -259,6 +272,13 @@ def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n,
             #close the log 
             print('</log>')
         sys.stdout = original_stdout # Reset the standard output to its original value       
+        
+        
+        with open(session["directory_getdsl"][1:]+'/' + "importedpipeline" + '.xes', 'r') as file:
+            log_result = file.read()
+        
+        return log_result
+        
 #--------------------------------------------------------------------
 #function to generate the json file
 #--------------------------------------------------------------------

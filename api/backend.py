@@ -66,12 +66,20 @@ import time
 sys.path.insert(1, 'database')
 sys.path.insert(2, 'rule_filter')
 sys.path.insert(3, 'backend_api')
+sys.path.insert(4, 'dsl_to_xes')
 
 from backend_classes import *
 from databaseFunctions import *
 from utilities import *
 from rule import *
+from classes import *
+from utils import *
 
+from pm4py.objects.conversion.dfg import converter as dfg_mining
+from pm4py.objects.conversion.log import converter as log_converter
+from pm4py.algo.discovery.inductive import algorithm as inductive_miner
+from pm4py.objects.conversion.process_tree import converter as pt_converter
+from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
 
 
 ############################################################
@@ -159,6 +167,10 @@ app.register_blueprint(app_conformance)
 from query_app import app_query
 app.register_blueprint(app_query)
 
+from segmentator_app import app_Segmentator
+app.register_blueprint(app_Segmentator)
+
+
 ############################################################
 #_________________________API LOGIN________________________#
 ############################################################
@@ -185,13 +197,16 @@ def indice():
             from oauth2client.client import OAuth2Credentials
             session["access_token"] = OAuth2Credentials.from_json(oidc.credentials_store[user_id]).access_token
             session["refresh_token"] = OAuth2Credentials.from_json(oidc.credentials_store[user_id]).refresh_token
-            print(greeting, user_id, session["access_token"])
+            #print(greeting, user_id, session["access_token"])
             #session.permanent = True
             session["user"] = username
             session["log_name"] = "Example.xes"
             session["log_name_clear"] = session["log_name"].replace(".xes","")
             session["databaseName"] = session["log_name_clear"].lower()+"_"+session["user"].lower()
             session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
+            session["directory_getdsl"]=session["directory_log"]+"/"+"getdsl"
+            session["directory_net_pnml"]=session["directory_log"]+"/"+"net"
+            
             session["log_path"] = os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
             session["nomeupload"] = ""
             session["backup_dir"] = os.getcwd()
@@ -208,7 +223,7 @@ def indice():
             session["cost_file_path"]="jar/cost_file"
             session["TIMESTAMP_FOLDER"] = 'timestamp/'
 
-            print(session["directory_log"])
+            #print(session["directory_log"])
 
 
             return home(session["log_name"])
@@ -237,6 +252,8 @@ def logout():
     session.pop("xes_path", None)
     session.pop("cost_file_path", None)
     session.pop("TIMESTAMP_FOLDER", None)
+    session.pop("directory_getdsl",None)
+    session.pop("directory_net_pnml",None)
     
     keycloak_openid = KeycloakOpenID(server_url=secret_server_url,
                                     client_id=secret_client_id,
@@ -335,6 +352,12 @@ def index():
     if session.get('process_script') != True:
         session["process_script"]= None
 
+    if session.get("directory_getdsl") != True:
+        session["directory_getdsl"]= session["directory_log"]+"/"+"getdsl"
+
+    if session.get("directory_net_pnml") != True:
+        session["directory_net_pnml"] = session["directory_log"]+"/"+"net"
+
     #session["pnml_path"] = "net/petri_final.pnml"
     #session["marking_path"] = "net/marking.txt"
     #session["xes_path"] = "net/petri_log.xes"
@@ -342,11 +365,11 @@ def index():
 
 
     os.chdir(session["backup_dir"])
-    print("Current working directory: {0}".format(os.getcwd()))
+    #print("Current working directory: {0}".format(os.getcwd()))
 
     log_name = session["log_name"]
     filename = log_name
-    print("index")
+    #print("index")
 
     global process_jar
     #process_jar= None
@@ -439,6 +462,7 @@ def upload_file():
         os.mkdir(directory_user)
     #print(isExistUser)
     #global directory_log
+    
     session["directory_log"]=directory_user+"/"+session["log_name_clear"]
     isExistLog = os.path.exists(session["directory_log"])
     if(not(isExistLog)):
@@ -464,17 +488,31 @@ def upload_file():
 
         # Close the file
         file.close()
-        print("greve:", time_stamp)
+
 
         print("upload_file")
         #Process(target=queryDb).start()
-    else:
-        
+    else: 
         session["log_path"]=os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
         f.save(session["log_path"])
         print("upload_file")
     #print(isExistLog)
-    print("sto printando "+session["log_name"])
+
+    session["directory_getdsl"]=session["directory_log"]+"/"+"getdsl"
+    isExistGETDSL = os.path.exists(session["directory_getdsl"])
+    if(not(isExistGETDSL)):
+        print("create directory getdsl")
+        os.mkdir(session["directory_getdsl"])
+
+    
+    session["directory_net_pnml"] = session["directory_log"]+"/"+"net"
+    isExistNETPNML = os.path.exists(session["directory_net_pnml"])
+    if(not(isExistNETPNML)):
+        print("create directory net")
+        os.mkdir(session["directory_net_pnml"])
+    
+    
+
     return home(f.filename)
     #return redirect("http://127.0.0.1:8080", code=200)    
 
@@ -574,6 +612,52 @@ def saveProject():
     pm4py.write_xes(log, session["log_path"])
     return "work_done"
 
+@app.route('/renameProject/<newname>', methods=['POST'])
+@oidc.require_login
+def renameProject(newname):
+    headers = {
+        'Authorization': session["access_token"]
+    }
+
+    '''
+    with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+".txt") as f:
+        lines = f.read() 
+
+    files = {
+        'dsl': (None, lines),
+    }
+    '''
+    path = "storage"+"/"+session["user"]+"/"+session["log_name_clear"]
+    dirs = os.listdir( path )
+
+    pipelineID=""
+    for file in dirs:        
+        #if(len(str(file))==24):
+        #    print(file)
+        matches = re.findall(r'(\d+|\D+)', file)
+        matches = [ int(x) if x.isdigit() else x for x in matches ] #elemento 0 è il ts elemento 1 .txt
+        if(len(matches)!=1 and len(str(matches[0]))==20):
+            pipelineID=(str(matches[0]))
+
+    print(pipelineID)
+
+    #response = requests.post('https://195.231.61.196:7779/renamePipeline/'+session["user"]+'/:pipelineID/'+newname, headers=headers, verify=False)
+    
+    response = rename_pipeline(session["user"],pipelineID,newname)
+
+    session["log_name"] = newname+".xes"
+    session["log_name_clear"] = session["log_name"].replace(".xes","")
+    session["databaseName"] = session["log_name_clear"].lower()+"_"+session["user"].lower()
+    session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
+    session["directory_getdsl"]=session["directory_log"]+"/"+"getdsl"
+    session["directory_net_pnml"]=session["directory_log"]+"/"+"net"
+
+    session["log_path"] = os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
+
+
+    #return response.text
+    return session["log_name"]
+
 @app.route('/sendDsl')
 @oidc.require_login
 def sendDsl():
@@ -583,14 +667,13 @@ def sendDsl():
     }
 
     with open("storage"+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name_clear"]+".txt") as f:
-        lines = f.read()
-    print(lines)    
+        lines = f.read() 
 
     files = {
         'dsl': (None, lines),
     }
 
-    response = requests.post('https://crowdserv.sys.kth.se/api/repo/testuser/import', headers=headers, files=files)
+    response = requests.post('https://crowdserv.sys.kth.se/api/repo/'+session["user"]+'/import', headers=headers, files=files, verify=False)
     
     return response.text
 
@@ -606,6 +689,195 @@ def dslPost():
     return "work_done"    
 
 
+@app.route('/getDslStructure')
+@oidc.require_login
+def getDslStructure():
+
+    dslName = request.args.get('dslName')
+
+    headers = {
+        'Authorization': 'Bearer '+session["access_token"]
+    }
+    
+
+    response = requests.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers, verify=False)
+
+    new_xes=fromDSLtoXES(json.loads(response.text)["data"])
+    
+    ######
+    
+    dfg=session["dfg"]
+
+    dataframe1=pd.DataFrame(session["log"])
+    log = pm4py.convert_to_event_log(dataframe1)
+
+    activities = pm4py.get_event_attribute_values(log, "concept:name")
+    dfg_f=session["dfg_f"]
+
+    if(dfg_f!=None):
+        dfg_conf =dfg_f
+    else:
+        dfg_conf = dfg
+
+    #Print the current working directory
+    working_dir=os.getcwd()
+    #global backup_dir
+    
+    session["backup_dir"]=working_dir
+    print("Current working directory: {0}".format(os.getcwd()))
+    os.chdir(working_dir+'/jar')
+    
+
+    # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
+    # subprocess.call(['bash', './run_SYMBA_all'])
+    os.chdir(working_dir)
+    
+    
+    ######
+
+
+    
+    path=session["directory_getdsl"][1:]+"/importedpipeline"+".xes"
+    
+    new_xes_log = xes_importer.apply(path)
+
+    #dfg=session["dfg"]
+    #session["dfg"]=dfg
+
+    new_dfg, new_start_activities, new_end_activities = pm4py.discover_dfg(new_xes_log)
+    new_parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
+    new_gviz_freq = dfg_visualization.apply(new_dfg, log=new_xes_log, variant=dfg_visualization.Variants.FREQUENCY,
+                                            parameters={new_parameters.FORMAT: "svg", new_parameters.START_ACTIVITIES: new_start_activities,
+                                                new_parameters.END_ACTIVITIES: new_end_activities})
+
+    new_grafo_frequency=(str(new_gviz_freq))
+
+
+
+
+    parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
+    static_event_stream = log_converter.apply(new_xes_log, variant=log_converter.Variants.TO_EVENT_STREAM)
+    tree = inductive_miner.apply_tree(new_xes_log, variant=inductive_miner.Variants.IMf)
+    net, im, fm = pt_converter.apply(tree)
+
+    gviz = pn_visualizer.apply(net, im, fm)
+    # pn_visualizer.view(gviz)
+    places = net.places
+    transitions = net.transitions
+    arcs = net.arcs
+    trst=[]
+
+
+    for tr in transitions:
+        trst.append([str(tr.name), str(tr.label)])
+
+
+    print(session["directory_net_pnml"])
+    pnml_exporter.apply(net, im, session["directory_net_pnml"][1:]+'/petri_final.pnml', final_marking=fm)
+    with open(session["marking_path"], 'w') as f:
+        f.write(str(im))
+        f.write('\n')
+        f.write(str(fm))
+
+    xes_exporter.apply(new_xes_log, session["xes_path"])
+
+    
+    with open(session["cost_file_path"], "w") as f:
+        for index in trst:
+            if(index[1].lower().replace(" ", "")=="none"):
+                f.write(index[0].lower().replace(" ", "")+" 0 0")
+            else:
+                f.write(index[1].lower().replace(" ", "")+" 1 1")    
+            f.write('\n')
+        #f.write("none"+" 0 0") remove comment to consider invisible transitions
+        f.close()
+
+    #session["dfg"]=dfg
+
+    
+    #print(str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst))
+
+    return str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst)+"£"+str(new_grafo_frequency)
+
+
+
+@app.route('/getDslName')
+@oidc.require_login
+def getDslName():
+
+    headers = {
+        'Authorization': 'Bearer '+session["access_token"]
+    }
+    
+
+    response = requests.get('https://crowdserv.sys.kth.se/api/repo/'+session["user"], headers=headers, verify=False)
+    
+
+    #fromDSLtoXES("Pipeline TELLU {\n\tcommunicationMedium: medium \n\tsteps:\n\t\t-  step GenerateSampledataReformatPushinMQTT\n\t\t\timplementation:  image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tMQTT_HOST: ''oslo.sct.sintef.no'',\n\t\t\t\tMQTT_USERNAME: ''TGW000000000'',\n\t\t\t\tMQTT_CLIENT_ID: ''TGWDATACLOUD'',\n\t\t\t\tMQTT_PASS: ''???'',\n\t\t\t\tMQTT_PORT: ''1883''\n\t\t\t}\n\t\t\tresourceProvider: TelluGateway0\n\t\t\texecutionRequirement:\n\n\n\t\t-  step ReceiveDataFromMQTTCheckPatientPlanBuildFhirDBrecordsStoretoFhirDB\n\t\t\timplementation:  image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tRABBITMQ_HOST: ''oslo.sct.sintef.no',\n\t\t\t\t: '5672'',\n\t\t\t\tRABBITMQ_USERNAME: ''tellucareapi'',\n\t\t\t\tRABBITMQ_PASSWORD: ''???'',\n\t\t\t\tFHIR_URL: ''https//tellucloud-fhir.sintef.cloud''\n\t\t\t}\n\t\t\tresourceProvider: TelluCloudProvider\n\t\t\texecutionRequirement:\n\n\n\t\t-  step AnalyzeandCreateNotificationforHealthcarePersonnel\n\t\t\timplementation:  image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tRABBITMQ_HOST: ''oslo.sct.sintef.no',\n\t\t\t\t: '5672'',\n\t\t\t\tRABBITMQ_USERNAME: ''tellucareapi'',\n\t\t\t\tRABBITMQ_PASSWORD: ''???'',\n\t\t\t\tFHIR_URL: ''https//tellucloud-fhir.sintef.cloud''\n\t\t\t}\n\t\t\tresourceProvider: TelluCloudProvider\n\t\t\texecutionRequirement:\n\n}\n\n")
+
+    return response.text
+
+
+
+
+
+def rename_pipeline(user,id,newname):
+    repo = 'storage/'
+    user_dir = ""
+    find = False
+    folders_and_files=os.listdir(repo)
+    for username in folders_and_files:
+            if os.path.isdir(repo+username) and user==username:
+                    find = True
+                    pipelines = os.listdir(repo+user)
+                    user_dir = repo+user
+
+    if find is False:
+            return {"data": {}}
+
+    diz={}
+    dsl=""
+
+    for project in pipelines:
+            project_files = os.listdir(repo+user+"/"+project)
+            for file in project_files:
+                    matches = re.findall(r'(\d+|\D+)', file)
+                    
+                    matches = [ int(x) if x.isdigit() else x for x in matches ] #elemento 0 è il ts elemento 1 .txt
+                    if(len(matches)!=1 and len(str(matches[0]))==20):
+                            diz[matches[0]]=project
+
+    if int(id) in diz:
+            dsl = diz[int(id)]
+            new_dsl_name=renameDSL(user_dir,dsl,newname)
+            data = {"data": "pipeline with id "+id+" was correctly renamed from "+dsl+" to "+newname}                                               
+    else:
+            data = {"data": "pipeline with id "+id+" was not correctly renamed"}     
+                
+    return data
+
+
+def renameDSL(folderName,vecchioNome,nuovoNome):
+        os.rename(folderName+"/"+vecchioNome+"/"+vecchioNome+".txt",folderName+"/"+vecchioNome+"/"+nuovoNome+".txt")
+        os.rename(folderName+"/"+vecchioNome+"/"+vecchioNome+".xes",folderName+"/"+vecchioNome+"/"+nuovoNome+".xes")
+        os.rename(folderName+"/"+vecchioNome, folderName+"/"+nuovoNome )
+
+        concatenazione = ""
+        f = open(folderName+"/"+nuovoNome+"/"+nuovoNome+".txt")
+        l = f.read()
+        first_line=0
+        for elem in l:
+                if(first_line==0 and elem=="\n"):
+                        concatenazione += "Pipeline "+nuovoNome+" {\n"
+                        first_line=1
+                elif(first_line!=0):
+                        concatenazione += elem
+        f.close()
+
+        with open(folderName+"/"+nuovoNome+"/"+nuovoNome+".txt", 'w') as f1:
+                f1.write(concatenazione)
+        
+        return concatenazione
 
 
 ############################################################

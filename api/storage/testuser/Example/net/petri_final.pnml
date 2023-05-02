@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <transition id="4bb2e98f-1be4-4195-87a5-d794d7d4385c">
+        <name>
+          <text>GenerateSampledataReformatPushinMQTT-End</text>
+        </name>
+      </transition>
+      <transition id="fbc84427-1193-4b4a-b68a-76dfdcdafd25">
+        <name>
+          <text>AnalyzeandCreateNotificationforHealthcarePersonnel-End</text>
+        </name>
+      </transition>
+      <transition id="100074f3-a385-4033-847a-16ed57d4d04c">
+        <name>
+          <text>ReceiveDataFromMQTTCheckPatientPlanBuildFhirDBrecordsStoretoFhirDB-End</text>
+        </name>
+      </transition>
+      <arc id="140505329372128" source="4bb2e98f-1be4-4195-87a5-d794d7d4385c" target="p_3"/>
+      <arc id="140505330566624" source="fbc84427-1193-4b4a-b68a-76dfdcdafd25" target="sink"/>
+      <arc id="140505329371024" source="source" target="4bb2e98f-1be4-4195-87a5-d794d7d4385c"/>
+      <arc id="140505330017616" source="p_4" target="fbc84427-1193-4b4a-b68a-76dfdcdafd25"/>
+      <arc id="140505330018192" source="p_3" target="100074f3-a385-4033-847a-16ed57d4d04c"/>
+      <arc id="140505330020016" source="100074f3-a385-4033-847a-16ed57d4d04c" target="p_4"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

@@ -4,12 +4,12 @@ var color_highlight='#8B008B';
 var disalignment_dictionary={}
 var inizio=0
 
-var tr_name=""
-var log_name=""
+//var tr_name=""
+//var log_name=""
 
 var change_in_pnml=0
 
-var color_node_highlight={}
+
 
 var array_complete_activity=[] 
 var array_moveinthemodel= [] 
@@ -51,7 +51,7 @@ function backPopUp(){
 
     $("#mean_skip_act").text(r2_name_Act_1 ).click(function(){
         
-        console.log(r3[name_activity][1]) 
+        //console.log(r3[name_activity][1]) 
         
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity skipped in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
         
@@ -61,7 +61,7 @@ function backPopUp(){
                     b=b.replace("Trace ","")
                     return parseInt(a)-parseInt(b)})
             
-            console.log(temp1)
+            //console.log(temp1)
         
             for (var i = 0; i < temp1.length; i++) {
                 
@@ -74,7 +74,7 @@ function backPopUp(){
     });
     $("#mean_ins_act").text(r2_name_Act_2 ).click(function(){ 
         
-        console.log(r3[name_activity][0]) 
+        //console.log(r3[name_activity][0]) 
         
         innerHTMLcode=innerHTMLcode+"<i class='fa-solid fa-square-pen'></i> Acrivity inserted in:" +"<span class='close_pp_before'> <span style='border: 3px solid #a18df0;border-radius: 6px; cursor: pointer;' onclick='backPopUp()'>🔙</span> <span class='close_pp_inside' onclick='closePP2()'>❌</span></span>"+"<hr> <br>"
         
@@ -83,7 +83,7 @@ function backPopUp(){
                 a=a.replace("Trace ","")
                 b=b.replace("Trace ","")
                 return parseInt(a)-parseInt(b)})
-            console.log(temp2)
+            //console.log(temp2)
 
             for (var i = 0; i < temp2.length; i++) {
                 
@@ -103,27 +103,32 @@ var name_activity;
 function updateInfoListener(){
 
 
-    console.log(this.responseText)
+    //console.log(this.responseText)
     var response = this.responseText.split("#")
 
+    color_dictionary={}
+    name_activity=""
+    document.getElementById("myPopup_cChecking").innerHTML=""
+    r1 = ""
     r1 = response[0]
     r1 = JSON.parse(r1.replace(/'/g,"\""));
   
+    r2= ""
     r2 = response[1]
     r2 = JSON.parse(r2.replace(/'/g,"\""));
   
 
+    r3=""
     r3 = response[2]
     r3 = JSON.parse(r3.replace(/'/g,"\""));
 
-    //console.log("allora r3?")
-    console.log(r3);
+    //console.log(r3);
 
     
 
     
     for (const [key, value] of Object.entries(r1)) {
-        console.log(key, (value[1]+value[2])/(value[1]+value[2]+value[0]));
+        //console.log(key, (value[1]+value[2])/(value[1]+value[2]+value[0]));
         color_dictionary[key]=(value[1]+value[2])/(value[1]+value[2]+value[0])  
     }
 
@@ -141,9 +146,8 @@ function updateInfoListener(){
            
             //console.log(element_id);
             var selected_element=$(this).find("text").text().trim()
-            name_activity=selected_element.replaceAll(" ","").toLowerCase()
-            console.log(name_activity)
-            console.log(r1[name_activity])
+            name_activity=selected_element.replaceAll(" ","").replaceAll("-","_").toLowerCase()
+
             if(name_activity in r1){
                 $("#skip_act").text(r1[name_activity][1] )
                 $("#ins_act").text(r1[name_activity][2] )
@@ -322,6 +326,7 @@ function highlightTraceNode(){
 
 function updateTraceListener(){
     var analise_response=this.responseText.split("$")
+    
     var alignment=String(analise_response[0])
     alignment_array=alignment.split("\n")
     //console.log(alignment_array)
@@ -366,7 +371,7 @@ function updateTraceListener(){
                 check_word=activity_name.replaceAll("("+response_matchbis+")", "").trim()
             }
             if(!(invisible_steps.includes(check_word))){
-                console.log(check_word)
+                //console.log(check_word)
                 $('#aligner_space').append($('<span>').attr('style',"color: blue;").text(activity_name)) 
                 $('#aligner_space').append($('<br>'))
             } 
@@ -379,7 +384,7 @@ function updateTraceListener(){
                 response_match=match[1];
             }
             if(!(invisible_steps.includes(activity_name))){
-                console.log(activity_name)
+                //console.log(activity_name)
                 $('#aligner_space').append($('<span>').attr('style',"text-decoration: line-through; color:red;").text(activity_name+" ("+response_match+")" ) )
                 $('#aligner_space').append($('<br>'))
             }
@@ -387,7 +392,7 @@ function updateTraceListener(){
         }else if(movetype=="movesync"){
             array_complete_activity.push(activity_name)
             if(!(invisible_steps.includes(activity_name))){
-                console.log(activity_name)
+                //console.log(activity_name)
                 $('#aligner_space').append($('<span>').text(activity_name))
                 $('#aligner_space').append($('<br>'))
             }
@@ -518,6 +523,16 @@ function nextDivForm(){
     getPnmlExistenceRequest();
 }
 
+
+function backStart(){
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+    document.getElementById("formConformanceChecking0").style.display = "block";
+    document.getElementById("formConformanceChecking").style.display = "none";
+    document.getElementById("formConformanceChecking2").style.display = "none";
+    document.getElementById("map2-content").style.display = "none";
+
+}
+
 function backToPersonalize(){
     document.getElementById("slidercontainer_cChecking").style.display = "none"
 
@@ -532,22 +547,68 @@ function backToPersonalize(){
 
 }
 
-function petriRequest(){
+function petriRequestInternal(){
 
     var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", petriListener);
+    oReq.addEventListener("load", petriListenerInternal);
     oReq.open("GET", frontend+"conformanceChecking", false);
     oReq.send();
 
 }
 
-function petriListener(){
+function petriListenerInternal(){
+
     var response=this.responseText.split("£")
-    // console.log(response[0])
-    // console.log(response[1])
-    // console.log(response[2])
-    // console.log(response[3])
-    // console.log(response[4])
+
+    tr_name=response[4]
+    log_name=response[3]
+
+    addTransitionName(tr_name,log_name);
+    document.getElementById("stringPetriNet").innerHTML = response[0];
+
+    petri_sample = document.getElementById("stringPetriNet").innerHTML
+    petri_sample = petri_sample.replace(/&#34;/g, '"');
+    petri_sample = petri_sample.replace(/&gt;/g, ">");
+    petri_sample = petri_sample.replace(/&lt;/g, "<");
+    petri_sample = petri_sample.replace(/●/g, " ");
+    petri_sample = petri_sample.replace(/■/g, " ");
+    /*
+    document.getElementById("InitialMarking").innerHTML = "Initial Marking: "+response[1];
+    document.getElementById("FinalMarking").innerHTML = "Final Marking: "+response[2];
+    */
+
+
+
+    
+    var oReq1 = new XMLHttpRequest();
+    oReq1.addEventListener("load", getNameDslWorkBis);
+    oReq1.open("POST", frontend+"deleteRemap", false);
+    oReq1.send();
+    
+
+}
+
+function getNameDslWorkBis(){
+    
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", getNameDslListener);
+    oReq.open("GET", frontend+"getDslName", false);
+    oReq.send();
+
+}
+
+function petriRequestExternal(){
+
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", petriListenerExternal);
+    oReq.open("GET", frontend+"conformanceChecking", false);
+    oReq.send();
+
+}
+
+function petriListenerExternal(){
+    var response=this.responseText.split("£")
+
     tr_name=response[4]
     log_name=response[3]
     addTransitionName();
@@ -559,20 +620,23 @@ function petriListener(){
 }
 
 
+
+
 var invisible_steps=[]
 
-function addTransitionName(){
-    // Create text with HTML
-    // console.log(tr_name)
+function addTransitionName(tr_name,log_name){
     
     var tr_array = JSON.parse(tr_name.replace(/'/g,"\"") );
     var log_array=JSON.parse(log_name.replace(/'/g,"\"") );
 
-    // console.log(log_array)
-    // console.log(tr_array[0][1]);
+    console.log(log_array)
+    console.log(tr_array[0][1]);
+    
     backDivForm();
     
     if(inizio==0){
+        $("#pnml_log_table").empty();
+        document.getElementById("disalignment_log").options.length = 0;
         //log_array.push("None"); REMOVE COMMENT to have possibility to map to invisible
         for (let i = 0; i < tr_array.length; i++) {
 
@@ -678,7 +742,7 @@ function addTransitionName(){
     
 
         // console.log(disalignment_dictionary)
-        inizio=1
+        //inizio=1
         $( ".pnmlRemap" ).change(function() {
             
             var first_1=this.id.replaceAll("_bis", " ").trim()
@@ -691,9 +755,6 @@ function addTransitionName(){
     
     }
     // console.log(typeof tr_array);
-    
-
-    
     
 }
 
@@ -737,7 +798,7 @@ function closePP2(){
     $.each(class3, function(index, item) {
         var node_id=item.id
         var title_id=$("#"+item.id).find("title").html()
-        var titolo=title_id.replaceAll(" ","").toLowerCase()
+        var titolo=title_id.replaceAll(" ","").replaceAll("-","_").toLowerCase()
    
         //console.log(titolo)
         //console.log(color_dictionary[titolo])
@@ -745,10 +806,14 @@ function closePP2(){
         if(!(titolo in color_dictionary)){
             $("#"+item.id).find("polygon").attr('stroke',"#187F00")
             color_node_highlight[item.id]="#187F00"
+            console.log(titolo)
+            console.log("situazione critica 1")
 
         }else if(color_dictionary[titolo]==0){
             $("#"+item.id).find("polygon").attr('stroke',"#187F00")
             color_node_highlight[item.id]="#187F00"
+            console.log(titolo)
+            console.log("situazione critica 2")
         }else if(color_dictionary[titolo]<=0.1){
             $("#"+item.id).find("polygon").attr('stroke',"#FF9292")
             color_node_highlight[item.id]="#FF9292"
@@ -875,7 +940,6 @@ function showResultonDFG(){
         // console.log(node_number)
         // console.log(item.id)
         $('#'+item.id).click(function(e) {
-            // alert('ho ho ho1');
 
             $temp= ($("#"+item.id).find("polygon").attr('stroke'))
             $check_node=($("#"+item.id).find("polygon")).length

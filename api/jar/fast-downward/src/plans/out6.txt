@@ -1,39 +1,48 @@
-This is a nonunit task.
+This is a unit task.
 reading input... [t=0s]
 Simplifying transitions... done!
 done reading input! [t=0s]
 building causal graph...done! [t=0s]
-packing state variables...Variables: 11
+packing state variables...Variables: 3
 Bytes per state: 4
 done! [t=0s]
 done initalizing global data [t=0s]
 Conducting best first search with reopening closed nodes, (real) bound = 2147483647
 Initializing blind search heuristic...
-f = 0 [1 evaluated, 0 expanded, t=0s, 3764 KB]
-Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3764 KB]
+f = 1 [1 evaluated, 0 expanded, t=0s, 3764 KB]
+Best heuristic value: 1 [g=0, 1 evaluated, 0 expanded, t=0s, 3764 KB]
+f = 2 [3 evaluated, 1 expanded, t=0s, 3764 KB]
+f = 3 [6 evaluated, 3 expanded, t=0s, 3764 KB]
+f = 4 [10 evaluated, 6 expanded, t=0s, 3764 KB]
+f = 5 [14 evaluated, 10 expanded, t=0s, 3764 KB]
+f = 6 [18 evaluated, 14 expanded, t=0s, 3764 KB]
+f = 7 [21 evaluated, 18 expanded, t=0s, 3764 KB]
+f = 8 [23 evaluated, 21 expanded, t=0s, 3764 KB]
+Best heuristic value: 0 [g=8, 24 evaluated, 22 expanded, t=0s, 3764 KB]
 Solution found!
 Actual search time: 0s [t=0s]
-movesync#registerrequest#ev1  (0)
-moveinthemodel#tausplit_3  (0)
-movesync#checkticket#ev2  (0)
-movesync#examinethoroughly#ev3  (0)
-movesync#decide#ev4  (0)
-moveinthemodel#skip_5  (0)
-movesync#rejectrequest#ev5  (0)
-Plan length: 7 step(s).
-Plan cost: 0
-Initial state h value: 0.
-Expanded 8 state(s).
+moveinthelog#registerrequest#ev1-ev2  (1)
+moveinthelog#checkticket#ev2-ev3  (1)
+moveinthelog#examinethoroughly#ev3-ev4  (1)
+moveinthelog#decide#ev4-ev5  (1)
+moveinthelog#rejectrequest#ev5-evend  (1)
+moveinthemodel#generatesampledatareformatpushinmqtt_end  (1)
+moveinthemodel#receivedatafrommqttcheckpatientplanbuildfhirdbrecordsstoretofhirdb_end  (1)
+moveinthemodel#analyzeandcreatenotificationforhealthcarepersonnel_end  (1)
+Plan length: 8 step(s).
+Plan cost: 8
+Initial state h value: 1.
+Expanded 23 state(s).
 Reopened 0 state(s).
-Evaluated 20 state(s).
-Evaluations: 20
-Generated 22 state(s).
+Evaluated 24 state(s).
+Evaluations: 24
+Generated 23 state(s).
 Dead ends: 0 state(s).
-Expanded until last jump: 0 state(s).
+Expanded until last jump: 21 state(s).
 Reopened until last jump: 0 state(s).
-Evaluated until last jump: 1 state(s).
-Generated until last jump: 0 state(s).
-Number of registered states: 20
+Evaluated until last jump: 23 state(s).
+Generated until last jump: 22 state(s).
+Number of registered states: 24
 Search time: 0s
 Total time: 0s
 Solution found.

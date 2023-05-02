@@ -52,6 +52,7 @@ from pm4py.statistics.traces.generic.log import case_statistics
 from pm4py.algo.organizational_mining.resource_profiles import algorithm
 from pm4py.algo.discovery.temporal_profile import algorithm as temporal_profile_discovery
 from pm4py.objects.log.exporter.xes import exporter as xes_exporter
+from pm4py.algo.discovery.alpha import algorithm as alpha_miner
 sys.path.insert(1, 'database')
 sys.path.insert(2, 'rule_filter')
 sys.path.insert(3, 'backend_api')
@@ -61,6 +62,11 @@ from rule import *
 
 from backend_classes import *
 
+from pm4py.objects.conversion.dfg import converter as dfg_mining
+from pm4py.objects.conversion.log import converter as log_converter
+from pm4py.algo.discovery.inductive import algorithm as inductive_miner
+from pm4py.objects.conversion.process_tree import converter as pt_converter
+from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
 
 ############################################################
 #_________________CONFORMANCE CHECKING API_________________#
@@ -70,44 +76,38 @@ app_conformance = Blueprint('app_conformance',__name__)
 
 @app_conformance.route('/conformanceChecking', methods=['GET', 'POST'])
 def conformanceChecking():
-    # global log
-    # global dfg
+
     dfg=session["dfg"]
 
     dataframe1=pd.DataFrame(session["log"])
     log = pm4py.convert_to_event_log(dataframe1)
 
     activities = pm4py.get_event_attribute_values(log, "concept:name")
-    from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
-    from pm4py.algo.discovery.alpha import algorithm as alpha_miner
     dfg_f=session["dfg_f"]
+
     if(dfg_f!=None):
         dfg_conf =dfg_f
     else:
         dfg_conf = dfg
 
-    # Print the current working directory
+    #Print the current working directory
     working_dir=os.getcwd()
     #global backup_dir
+    
     session["backup_dir"]=working_dir
     print("Current working directory: {0}".format(os.getcwd()))
     os.chdir(working_dir+'/jar')
     
 
     # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
-    
     # subprocess.call(['bash', './run_SYMBA_all'])
-
     os.chdir(working_dir)
 
-    from pm4py.objects.conversion.dfg import converter as dfg_mining
+
     # net, im, fm = dfg_mining.apply(dfg_conf)
     parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
-    from pm4py.objects.conversion.log import converter as log_converter
     static_event_stream = log_converter.apply(log, variant=log_converter.Variants.TO_EVENT_STREAM)
-    from pm4py.algo.discovery.inductive import algorithm as inductive_miner
     tree = inductive_miner.apply_tree(log, variant=inductive_miner.Variants.IMf)
-    from pm4py.objects.conversion.process_tree import converter as pt_converter
     net, im, fm = pt_converter.apply(tree)
 
     # net, im, fm = alpha_miner.apply(log)
@@ -123,13 +123,11 @@ def conformanceChecking():
         # print((str(tr.name)+" "+str(tr.label)))
         trst.append([str(tr.name), str(tr.label)])
 
-    from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
+    
     # pnml_exporter.apply(net, im, "petri.pnml")
 
 
-
-
-    pnml_exporter.apply(net, im, session["pnml_path"], final_marking=fm)
+    pnml_exporter.apply(net, im, session["directory_net_pnml"][1:]+'/petri_final.pnml', final_marking=fm)
     with open(session["marking_path"], 'w') as f:
         f.write(str(im))
         f.write('\n')
@@ -138,7 +136,6 @@ def conformanceChecking():
     xes_exporter.apply(log, session["xes_path"])
 
     
-
     with open(session["cost_file_path"], "w") as f:
         for index in trst:
             if(index[1].lower().replace(" ", "")=="none"):
@@ -153,6 +150,9 @@ def conformanceChecking():
 
     return str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst)
 
+
+
+
 @app_conformance.route('/jarCalling', methods=['GET', 'POST'])
 def jarCalling():
     minLen = str(request.args.get('minLen'))
@@ -165,12 +165,19 @@ def jarCalling():
     working_dir=os.getcwd()
     print("Current working directory: {0}".format(os.getcwd()))
     os.chdir(working_dir+'/jar')
-    pnmlPath="../net/petri_final_remap.pnml"
-    xesPath="../net/petri_log.xes"
+    #pnmlPath="../net/petri_final_remap.pnml"
     costPath="cost_file"
 
+    xesPath=".."+session["directory_log"]+"/"+session["log_name"]
+    pnmlPath=".."+session["directory_net_pnml"]+"/"+"petri_final_remap.pnml"
     #os.system("java -jar traceAligner.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate)
     global process_jar
+    print("chiamata a jar è questa")
+    print(session["log_path"])
+    print(session["directory_log"])
+    print(session["log_name"])
+    print("java -jar traceAligner11.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate )
+    print("chiamata a jar è fininta")
     process_jar = subprocess.Popen( "java -jar traceAligner11.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate , shell=True)
     
     try:
@@ -260,6 +267,7 @@ def traceDetail():
         allTraceName=allTraceName+traceIndex+"#"
         
     allTraceName = allTraceName[:-1]
+
     os.chdir(working_dir)
     
     return allTraceName
@@ -426,6 +434,10 @@ def generalTraceInfo():
     
     os.chdir(working_dir)
 
+    #print(dict_event)
+    #print(dict_trace)
+    #print(dict_skip_ins)
+
     return str(dict_event)+"#"+str(dict_trace)+"#"+str(dict_skip_ins)
 
 
@@ -438,7 +450,7 @@ def mapPnml():
     x=replace_array[0] 
     y=replace_array[1] 
 
-    with open('./net/petri_final.pnml') as f:
+    with open(session["directory_net_pnml"][1:]+'/'+'petri_final.pnml') as f:
         trace = f.readlines()
 
     response=""
@@ -451,7 +463,7 @@ def mapPnml():
            
         response=response+substi
 
-    f = open("./net/petri_final_remap.pnml", "w")
+    f = open(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml", "w")
     f.write(response)
     f.close()
     
@@ -459,13 +471,15 @@ def mapPnml():
 
 @app_conformance.route('/getPnmlExistence', methods=['GET'])
 def getPnmlExistence():
-    file_exists = exists("./net/petri_final_remap.pnml")
+
+    file_exists = exists(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml")
+
     return str(file_exists)
 
 @app_conformance.route('/createRemap', methods=['POST'])
 def createRemap():
 
-    with open('./net/petri_final.pnml') as f:
+    with open(session["directory_net_pnml"][1:]+'/petri_final.pnml') as f:
         trace = f.readlines()
 
     response=""
@@ -475,7 +489,7 @@ def createRemap():
         
         response=response+substi
 
-    f = open("./net/petri_final_remap.pnml", "w")
+    f = open(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml", "w")
     f.write(response)
     f.close()
 
@@ -483,10 +497,13 @@ def createRemap():
     
 @app_conformance.route('/deleteRemap', methods=['POST'])
 def deleteRemap():
-    file_exists = exists("./net/petri_final_remap.pnml")
+
+    file_exists = exists(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml")
 
     if(file_exists):
-        os.remove("./net/petri_final_remap.pnml")    
+        os.remove(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml")  
+
+    file_exists1 = exists(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml")
 
     return "prova"
 
