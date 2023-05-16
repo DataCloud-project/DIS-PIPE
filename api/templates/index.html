@@ -17,7 +17,9 @@
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/generalScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/dsltoXesScript.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static',filename='scripts/segmentatorScript.js') }}"></script>
-    <link rel="stylesheet" href="../static/dist/css/lightbox.min.css">
+    <script type="text/javascript" src="{{ url_for('static',filename='scripts/openProjectScript.js') }}"></script>
+	
+	<link rel="stylesheet" href="../static/dist/css/lightbox.min.css">
 	<!-- Fontawesome CDN Link -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
@@ -171,38 +173,52 @@ function checkRefresh()
 	</div>
 
 
+	<div class="blocker" id="blocker_open_project" onclick="closePopupOpenProject()"></div>
+
+	<div class="form-popup" id="popupOpenProject">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="Project_title" style="color:#7a4791; text-align: center; font-size: 25px;">Project name</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="projectContainer">
+					<span>Chose a view</span>
+					<button style=" padding: 10px;" id="listProjectView" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+					<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+				</div>
+				<br>
+				<div id="projectNameList" class="rowDslName">
+				
+				</div>
+			</center>
+		</form>
+	</div>
+
+
+
 	<div class="blocker" id="blocker_dsl_name" onclick="closePopupDslName()"></div>
 
 	<div class="form-popup" id="popupDslName">
-
 		<form action="" class="form-container">
-			
 			<div style="text-align: center">
 				<span id="DSL_title" style="color:#7a4791; text-align: center; font-size: 25px;">DSL name</span>
 			</div>
-	
 			<hr style="background:#cfa8d5">
-			
 			<br>
-			
 			<center>
-				
 				<div id="btnContainer">
 					<span>Chose a view</span>
 					<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
 					<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
 				</div>
 				<br>
-				
 				<div id="dslNameList" class="rowDslName">
-					
 				
 				</div>
-		
 			</center>
-			
 		</form>
-		
 	</div>
 
 
@@ -264,6 +280,10 @@ function checkRefresh()
 					<br />
 					<button id="send_dsl" class="menu_button" type="button" onclick="sendDslRequest('fine')">Send DSL to DEF-PIPE</button>
 					<br />
+					
+					<button id="open_project" class="menu_button" type="button" onclick="openProject()">Open Project Script</button>
+					<br />
+
 					<button style="visibility: hidden;" id="load_project" class="menu_button" type="button" onclick="load()">Load project</button>
 					<input id="uploadFolder" type="file" webkitdirectory directory multiple onchange="changeFolder()" style="display:none">
 					<br />

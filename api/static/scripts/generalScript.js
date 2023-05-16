@@ -2,13 +2,25 @@ var petri_sample
 
 
 function renameProject(){
-	console.log("sto rinominando")
-	let nuovoNome = prompt('Please enter a new name:');
+	
+	let nuovoNome = ""
+	nuovoNome = prompt('Please enter a new name:');
 
-	var oReq1 = new XMLHttpRequest();
-    oReq1.addEventListener("load", renameProjectListener);
-    oReq1.open("POST", frontend+"renameProject/"+nuovoNome, false);
-    oReq1.send();
+	if (!nuovoNome) {
+		console.log("La stringa è nulla o vuota.");
+	  } else {
+		// Verifica se la stringa contiene caratteri speciali
+		var regex = /[!@#$%^&£*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+		if (regex.test(nuovoNome)) {
+		  console.log("La stringa contiene caratteri speciali.");
+		} else {
+		  console.log("La stringa è valida.");
+		  var oReq1 = new XMLHttpRequest();
+		  oReq1.addEventListener("load", renameProjectListener);
+		  oReq1.open("POST", frontend+"renameProject/"+nuovoNome, false);
+		  oReq1.send();
+		}
+	  }
 }
 
 function renameProjectListener(){

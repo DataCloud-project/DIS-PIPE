@@ -888,6 +888,6 @@ if(path_f=="127.0.0.1"):
     context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
     app.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
 else:
-    app.run(host=path_f, port=int(port_f))
     context = ('key/certificate.crt', 'key/private.key')    #certificate and key files
+    app.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
 

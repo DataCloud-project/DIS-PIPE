@@ -1,0 +1,4 @@
+Pipeline Example {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+}

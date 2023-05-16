@@ -179,6 +179,9 @@ def makeQuery():
         return "errore,sql"+"£"+"errore,sql"
 
       
+    print("############")
+    print(queryTODO)
+    print("############")
 
     sql_query = sqlvalidator.parse(queryTODO)
     if not sql_query.is_valid():

@@ -2,14 +2,6 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
     <page id="n0">
-      <place id="source">
-        <name>
-          <text>source</text>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-      </place>
       <place id="sink">
         <name>
           <text>sink</text>
@@ -20,32 +12,136 @@
           <text>p_4</text>
         </name>
       </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <place id="p_8">
+        <name>
+          <text>p_8</text>
+        </name>
+      </place>
+      <place id="p_9">
+        <name>
+          <text>p_9</text>
+        </name>
+      </place>
+      <place id="p_10">
+        <name>
+          <text>p_10</text>
+        </name>
+      </place>
+      <place id="p_11">
+        <name>
+          <text>p_11</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
       <place id="p_3">
         <name>
           <text>p_3</text>
         </name>
       </place>
-      <transition id="4bb2e98f-1be4-4195-87a5-d794d7d4385c">
+      <place id="p_12">
         <name>
-          <text>GenerateSampledataReformatPushinMQTT-End</text>
+          <text>p_12</text>
+        </name>
+      </place>
+      <transition id="cf4fa197-e320-4309-877f-0f0b848840d9">
+        <name>
+          <text>analyzeData-End</text>
         </name>
       </transition>
-      <transition id="fbc84427-1193-4b4a-b68a-76dfdcdafd25">
+      <transition id="57d7f001-d547-48dc-b44b-acb33542d332">
         <name>
-          <text>AnalyzeandCreateNotificationforHealthcarePersonnel-End</text>
+          <text>EVENT_12_END-End</text>
         </name>
       </transition>
-      <transition id="100074f3-a385-4033-847a-16ed57d4d04c">
+      <transition id="7db96880-c393-4cc5-9424-a5ea9d5895e4">
         <name>
-          <text>ReceiveDataFromMQTTCheckPatientPlanBuildFhirDBrecordsStoretoFhirDB-End</text>
+          <text>EVENT_2_START-End</text>
         </name>
       </transition>
-      <arc id="140505329372128" source="4bb2e98f-1be4-4195-87a5-d794d7d4385c" target="p_3"/>
-      <arc id="140505330566624" source="fbc84427-1193-4b4a-b68a-76dfdcdafd25" target="sink"/>
-      <arc id="140505329371024" source="source" target="4bb2e98f-1be4-4195-87a5-d794d7d4385c"/>
-      <arc id="140505330017616" source="p_4" target="fbc84427-1193-4b4a-b68a-76dfdcdafd25"/>
-      <arc id="140505330018192" source="p_3" target="100074f3-a385-4033-847a-16ed57d4d04c"/>
-      <arc id="140505330020016" source="100074f3-a385-4033-847a-16ed57d4d04c" target="p_4"/>
+      <transition id="cb97a42a-0ffe-44cc-aa75-a17abcd4f116">
+        <name>
+          <text>endAnalysis-End</text>
+        </name>
+      </transition>
+      <transition id="c5f3fb87-7899-45b6-9071-4fa48568f465">
+        <name>
+          <text>createRecord-End</text>
+        </name>
+      </transition>
+      <transition id="d323d277-3b52-4466-aa62-88d11a927385">
+        <name>
+          <text>receiveBloodMeasure-End</text>
+        </name>
+      </transition>
+      <transition id="7b040f2a-9dfd-4672-85d3-4a3a4bd0b772">
+        <name>
+          <text>receiveDataFromMq-End</text>
+        </name>
+      </transition>
+      <transition id="6fbf7b40-446c-448c-b861-3df8eb51ef6f">
+        <name>
+          <text>receiveScaleMeasure-End</text>
+        </name>
+      </transition>
+      <transition id="2921c16a-c5e9-4b0e-a558-709e722f85e7">
+        <name>
+          <text>receiveTempMeasure-End</text>
+        </name>
+      </transition>
+      <transition id="18e84ad9-59f7-4e83-bb5f-a6862e2cfc5d">
+        <name>
+          <text>sendDataToMq-End</text>
+        </name>
+      </transition>
+      <transition id="d2c1aaf8-ddaf-4c10-81a3-b9338342d89c">
+        <name>
+          <text>startAnalysis-End</text>
+        </name>
+      </transition>
+      <arc id="140590822154880" source="p_8" target="7b040f2a-9dfd-4672-85d3-4a3a4bd0b772"/>
+      <arc id="140590822155024" source="7b040f2a-9dfd-4672-85d3-4a3a4bd0b772" target="p_9"/>
+      <arc id="140590821723920" source="d2c1aaf8-ddaf-4c10-81a3-b9338342d89c" target="sink"/>
+      <arc id="140590614541600" source="source" target="57d7f001-d547-48dc-b44b-acb33542d332"/>
+      <arc id="140590614542752" source="57d7f001-d547-48dc-b44b-acb33542d332" target="p_3"/>
+      <arc id="140590822155168" source="p_9" target="6fbf7b40-446c-448c-b861-3df8eb51ef6f"/>
+      <arc id="140590614540976" source="7db96880-c393-4cc5-9424-a5ea9d5895e4" target="p_4"/>
+      <arc id="140590822155312" source="6fbf7b40-446c-448c-b861-3df8eb51ef6f" target="p_10"/>
+      <arc id="140590821723056" source="p_10" target="2921c16a-c5e9-4b0e-a558-709e722f85e7"/>
+      <arc id="140590821723440" source="p_11" target="18e84ad9-59f7-4e83-bb5f-a6862e2cfc5d"/>
+      <arc id="140590822154304" source="p_6" target="cb97a42a-0ffe-44cc-aa75-a17abcd4f116"/>
+      <arc id="140590822154448" source="cb97a42a-0ffe-44cc-aa75-a17abcd4f116" target="p_7"/>
+      <arc id="140590821723728" source="p_12" target="d2c1aaf8-ddaf-4c10-81a3-b9338342d89c"/>
+      <arc id="140590614542944" source="cf4fa197-e320-4309-877f-0f0b848840d9" target="p_5"/>
+      <arc id="140590821987040" source="p_5" target="c5f3fb87-7899-45b6-9071-4fa48568f465"/>
+      <arc id="140590822154592" source="p_7" target="d323d277-3b52-4466-aa62-88d11a927385"/>
+      <arc id="140590614541552" source="p_4" target="cf4fa197-e320-4309-877f-0f0b848840d9"/>
+      <arc id="140590614543856" source="p_3" target="7db96880-c393-4cc5-9424-a5ea9d5895e4"/>
+      <arc id="140590822155504" source="c5f3fb87-7899-45b6-9071-4fa48568f465" target="p_6"/>
+      <arc id="140590822154736" source="d323d277-3b52-4466-aa62-88d11a927385" target="p_8"/>
+      <arc id="140590821723248" source="2921c16a-c5e9-4b0e-a558-709e722f85e7" target="p_11"/>
+      <arc id="140590821723632" source="18e84ad9-59f7-4e83-bb5f-a6862e2cfc5d" target="p_12"/>
     </page>
     <finalmarkings>
       <marking>

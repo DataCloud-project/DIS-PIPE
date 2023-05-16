@@ -14,11 +14,19 @@ Best heuristic value: 1 [g=0, 1 evaluated, 0 expanded, t=0s, 3764 KB]
 f = 2 [3 evaluated, 1 expanded, t=0s, 3764 KB]
 f = 3 [6 evaluated, 3 expanded, t=0s, 3764 KB]
 f = 4 [10 evaluated, 6 expanded, t=0s, 3764 KB]
-f = 5 [14 evaluated, 10 expanded, t=0s, 3764 KB]
-f = 6 [18 evaluated, 14 expanded, t=0s, 3764 KB]
-f = 7 [21 evaluated, 18 expanded, t=0s, 3764 KB]
-f = 8 [23 evaluated, 21 expanded, t=0s, 3764 KB]
-Best heuristic value: 0 [g=8, 24 evaluated, 22 expanded, t=0s, 3764 KB]
+f = 5 [15 evaluated, 10 expanded, t=0s, 3764 KB]
+f = 6 [21 evaluated, 15 expanded, t=0s, 3764 KB]
+f = 7 [27 evaluated, 21 expanded, t=0s, 3764 KB]
+f = 8 [33 evaluated, 27 expanded, t=0s, 3764 KB]
+f = 9 [39 evaluated, 33 expanded, t=0s, 3764 KB]
+f = 10 [45 evaluated, 39 expanded, t=0s, 3764 KB]
+f = 11 [51 evaluated, 45 expanded, t=0s, 3764 KB]
+f = 12 [57 evaluated, 51 expanded, t=0s, 3764 KB]
+f = 13 [62 evaluated, 57 expanded, t=0s, 3764 KB]
+f = 14 [66 evaluated, 62 expanded, t=0s, 3764 KB]
+f = 15 [69 evaluated, 66 expanded, t=0s, 3764 KB]
+f = 16 [71 evaluated, 69 expanded, t=0s, 3764 KB]
+Best heuristic value: 0 [g=16, 72 evaluated, 70 expanded, t=0s, 3764 KB]
 Solution found!
 Actual search time: 0s [t=0s]
 moveinthelog#registerrequest#ev1-ev2  (1)
@@ -26,23 +34,31 @@ moveinthelog#checkticket#ev2-ev3  (1)
 moveinthelog#examinethoroughly#ev3-ev4  (1)
 moveinthelog#decide#ev4-ev5  (1)
 moveinthelog#rejectrequest#ev5-evend  (1)
-moveinthemodel#generatesampledatareformatpushinmqtt_end  (1)
-moveinthemodel#receivedatafrommqttcheckpatientplanbuildfhirdbrecordsstoretofhirdb_end  (1)
-moveinthemodel#analyzeandcreatenotificationforhealthcarepersonnel_end  (1)
-Plan length: 8 step(s).
-Plan cost: 8
+moveinthemodel#event_12_end_end  (1)
+moveinthemodel#event_2_start_end  (1)
+moveinthemodel#analyzedata_end  (1)
+moveinthemodel#createrecord_end  (1)
+moveinthemodel#endanalysis_end  (1)
+moveinthemodel#receivebloodmeasure_end  (1)
+moveinthemodel#receivedatafrommq_end  (1)
+moveinthemodel#receivescalemeasure_end  (1)
+moveinthemodel#receivetempmeasure_end  (1)
+moveinthemodel#senddatatomq_end  (1)
+moveinthemodel#startanalysis_end  (1)
+Plan length: 16 step(s).
+Plan cost: 16
 Initial state h value: 1.
-Expanded 23 state(s).
+Expanded 71 state(s).
 Reopened 0 state(s).
-Evaluated 24 state(s).
-Evaluations: 24
-Generated 23 state(s).
+Evaluated 72 state(s).
+Evaluations: 72
+Generated 71 state(s).
 Dead ends: 0 state(s).
-Expanded until last jump: 21 state(s).
+Expanded until last jump: 69 state(s).
 Reopened until last jump: 0 state(s).
-Evaluated until last jump: 23 state(s).
-Generated until last jump: 22 state(s).
-Number of registered states: 24
+Evaluated until last jump: 71 state(s).
+Generated until last jump: 70 state(s).
+Number of registered states: 72
 Search time: 0s
 Total time: 0s
 Solution found.
