@@ -6,21 +6,25 @@ function renameProject(){
 	let nuovoNome = ""
 	nuovoNome = prompt('Please enter a new name:');
 
-	if (!nuovoNome) {
-		console.log("La stringa è nulla o vuota.");
-	  } else {
+	if(document.getElementById("mapTitle").innerText==="Example.xes"){
+		alert("You can't rename the demo project.");
+	}else if(!nuovoNome) {
+		alert("You can't enter an empty name.");
+	}else if(nuovoNome==="Example" || nuovoNome==="example") {
+		alert("You can't use this name.");
+	}else{
 		// Verifica se la stringa contiene caratteri speciali
 		var regex = /[!@#$%^&£*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 		if (regex.test(nuovoNome)) {
-		  console.log("La stringa contiene caratteri speciali.");
+			alert("La stringa contiene caratteri speciali.");
 		} else {
-		  console.log("La stringa è valida.");
-		  var oReq1 = new XMLHttpRequest();
-		  oReq1.addEventListener("load", renameProjectListener);
-		  oReq1.open("POST", frontend+"renameProject/"+nuovoNome, false);
-		  oReq1.send();
+			console.log("La stringa è valida.");
+			var oReq1 = new XMLHttpRequest();
+			oReq1.addEventListener("load", renameProjectListener);
+			oReq1.open("POST", frontend+"renameProject/"+nuovoNome, false);
+			oReq1.send();
 		}
-	  }
+	}
 }
 
 function renameProjectListener(){
@@ -69,7 +73,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = false;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = false;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = false;
 		document.getElementById("save_project").disabled = false;
@@ -90,7 +94,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = false;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = false;
@@ -110,7 +114,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = false; 
 		document.getElementById("export_dsl").disabled = false; 
-		document.getElementById("get_dsl").disabled = false;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = false; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = true;
@@ -131,7 +135,7 @@ function displayContent(){
 		document.getElementById("import_log").disabled = true;
 		document.getElementById("export_log").disabled = true; 
 		document.getElementById("export_dsl").disabled = true; 
-		document.getElementById("get_dsl").disabled = false;
+		//document.getElementById("get_dsl").disabled = false;
 		document.getElementById("send_dsl").disabled = true; 
 		document.getElementById("load_project").disabled = true;
 		document.getElementById("save_project").disabled = true; 

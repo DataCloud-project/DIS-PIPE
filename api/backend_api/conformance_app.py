@@ -68,6 +68,8 @@ from pm4py.algo.discovery.inductive import algorithm as inductive_miner
 from pm4py.objects.conversion.process_tree import converter as pt_converter
 from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
 
+import xml.etree.ElementTree as ET
+
 ############################################################
 #_________________CONFORMANCE CHECKING API_________________#
 ############################################################
@@ -96,7 +98,7 @@ def conformanceChecking():
     
     session["backup_dir"]=working_dir
     print("Current working directory: {0}".format(os.getcwd()))
-    os.chdir(working_dir+'/jar')
+    # os.chdir(working_dir+'/jar')
     
 
     # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
@@ -168,8 +170,8 @@ def jarCalling():
     #pnmlPath="../net/petri_final_remap.pnml"
     costPath="cost_file"
 
-    xesPath=".."+session["directory_log"]+"/"+session["log_name"]
-    pnmlPath=".."+session["directory_net_pnml"]+"/"+"petri_final_remap.pnml"
+    xesPath=".."+process_string_jar(session["directory_log"]+"/"+session["log_name"])
+    pnmlPath=".."+process_string_jar(session["directory_net_pnml"]+"/"+"petri_final_remap.pnml")
     #os.system("java -jar traceAligner.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate)
     global process_jar
     print("chiamata a jar è questa")
@@ -236,14 +238,16 @@ def jarCalling():
        
     os.chdir(working_dir)
 
-    return "done"
+    return "jar_calling"
 
 @app_conformance.route('/costFile', methods=['POST'])
 def costFile():
     costHeader=request.headers.get('Contenuto')
     costJson = json.loads(costHeader)
+    print(costHeader)
+    print(costJson)
 
-    with open(cost_file_path, "w") as f:
+    with open(session["cost_file_path"], "w") as f:
         for singleCost in costJson:
             f.write(singleCost.lower().replace(" ", "")+" "+str(costJson[singleCost][0])+" "+str(costJson[singleCost][1]))    
             f.write('\n')
@@ -255,6 +259,10 @@ def costFile():
 def traceDetail():
     allTraceName=""
 
+    working_dir=os.getcwd()
+    if(working_dir=="/root/datacloud/DIS-PIPE-development-current/api/jar"):
+        os.chdir("..")
+    
     working_dir=os.getcwd()
     print("Current working directory: {0}".format(os.getcwd()))
 
@@ -325,6 +333,8 @@ def generalTraceInfo():
     dict_skip_ins ={} 
 
     working_dir=os.getcwd()
+    print("la cartella su cui lavora general trace info è:")
+    print(working_dir)
 
     # plans_path="./jar/fast-downward/src/plans" 
     # plans_path="./jar/seq-opt-symba-2/plans"
@@ -440,7 +450,7 @@ def generalTraceInfo():
 
     return str(dict_event)+"#"+str(dict_trace)+"#"+str(dict_skip_ins)
 
-
+'''
 @app_conformance.route('/mapPnml', methods=['POST'])
 def mapPnml():
     costHeader=request.headers.get('Replace_content')
@@ -450,8 +460,14 @@ def mapPnml():
     x=replace_array[0] 
     y=replace_array[1] 
 
-    with open(session["directory_net_pnml"][1:]+'/'+'petri_final.pnml') as f:
-        trace = f.readlines()
+    if os.path.exists(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml"):
+        with open(session["directory_net_pnml"][1:]+'/'+'petri_final_remap.pnml') as f:
+            trace = f.readlines()
+    else:
+        with open(session["directory_net_pnml"][1:]+'/'+'petri_final.pnml') as f:
+            trace = f.readlines()
+
+    
 
     response=""
 
@@ -468,9 +484,170 @@ def mapPnml():
     f.close()
     
     return "prova"
+'''
+
+def extract_transitions(file_path):
+    transitions = []
+
+    # Parse the XML file
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    # Find all transition elements
+    transition_elements = root.findall(".//transition")
+
+    # Iterate over the transition elements
+    for transition in transition_elements:
+        # Get the transition ID
+        transition_id = transition.attrib["id"]
+
+        # Find the text tag within the transition element
+        text_element = transition.find(".//text")
+
+        if text_element is not None:
+            # Get the text value
+            text = text_element.text
+        else:
+            text = None
+
+        # Add the transition ID and text to the result array
+        transitions.append({"id": transition_id, "text": text})
+
+    return transitions
+
+def rephrase_text(file_path, transition_id, new_text, file_path_end):
+    # Parse the XML file
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    # Find the transition element with the given ID
+    transition_element = root.find(".//transition[@id='" + transition_id + "']")
+
+    if transition_element is not None:
+        # Find the text tag within the transition element
+        text_element = transition_element.find(".//text")
+
+        if text_element is not None:
+            # Update the text value
+            text_element.text = new_text
+        else:
+            # Create a new text element and set its value
+            text_element = ET.SubElement(transition_element, "text")
+            text_element.text = new_text
+    else:
+        # Transition not found
+        return False
+
+    # Save the modified XML to file
+    tree.write(file_path_end)
+
+    return True
+
+def retrieve_id(text, array):
+    for item in array:
+        if item['text'] == text:
+            return item['id']
+    return None
+
+
+def process_string(input_string):
+    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
+        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    else :
+        return input_string
+
+def process_string_jar(input_string):
+    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
+        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    else :
+        return input_string
+
+@app_conformance.route('/mapPnmlBis', methods=['POST'])
+def mapPnmlBis():
+    file_exists = exists(process_string(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml"))
+
+    if(file_exists):
+        os.remove(process_string(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml"))
+
+    costHeader=request.headers.get('Replace_content')
+    
+    array = json.loads(costHeader)
+
+    path_base = process_string(session["directory_net_pnml"][1:]+'/'+'petri_final.pnml')
+    path_finale = process_string(session["directory_net_pnml"][1:]+'/'+'petri_final_remap.pnml')
+    all_transitions = extract_transitions(path_base)
+
+    # Now you can work with the array as a regular Python list
+    for item in array:
+        before_text = item['before_text']
+        after_text = item['after_text']
+        print(before_text)
+        print(after_text)
+        transition_id = retrieve_id(before_text,all_transitions)
+        print(transition_id)
+        
+        if os.path.exists(path_finale):
+            print("sono nel path finale")
+            execute_remap = rephrase_text(path_finale, transition_id, after_text, path_finale)
+        else:
+            print("sono nel path iniziale")
+            execute_remap = rephrase_text(path_base, transition_id, after_text, path_finale)
+           
+        if execute_remap:
+            print("Text updated successfully.")
+        else:
+            print("Transition ID not found.")
+    
+    
+    return "prova"
+
+
+
+@app_conformance.route('/noMappingExistence', methods=['GET'])
+def noMappingExistence():
+    file_exists = exists(process_string(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml"))
+
+    if(file_exists):
+        os.remove(process_string(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml"))
+
+    
+    with open(process_string(session["directory_net_pnml"][1:]+'/petri_final.pnml')) as f:
+        trace = f.readlines()
+
+    response=""
+
+    for line in trace:
+        substi=line    
+        response=response+substi
+
+    f = open(process_string(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml"), "w")
+    f.write(response)
+    f.close()
+
+    return "mapping_reset"
 
 @app_conformance.route('/getPnmlExistence', methods=['GET'])
 def getPnmlExistence():
+
+    
 
     file_exists = exists(session["directory_net_pnml"][1:]+"/petri_final_remap.pnml")
 
@@ -478,6 +655,9 @@ def getPnmlExistence():
 
 @app_conformance.route('/createRemap', methods=['POST'])
 def createRemap():
+
+
+    print("creato un remap XDXDXDXDXDXXD")
 
     with open(session["directory_net_pnml"][1:]+'/petri_final.pnml') as f:
         trace = f.readlines()

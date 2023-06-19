@@ -992,6 +992,8 @@ button:hover {
   margin-left: -80px;
 }
 
+
+
 .close_pp{
   position: absolute;
   right: 0;
@@ -1199,6 +1201,7 @@ svg {
 
 #myPopup_cChecking{
   max-height: 400px;
+  overflow-y: scroll;
 }
 
 #history_div{
@@ -1581,11 +1584,12 @@ ul.no-bullets {
 .btn {
   border: none;
   outline: none;
-  padding: 12px 16px;
-  background-color: rgb(104, 104, 104);
+  /*padding: 12px 16px;
+  background-color: rgb(104, 104, 104);*/
   cursor: pointer;
 }
 
+/*
 .btn:hover {
   background-color: #ddd;
 }
@@ -1594,3 +1598,4 @@ ul.no-bullets {
   background-color: #666;
   color: white;
 }
+*/

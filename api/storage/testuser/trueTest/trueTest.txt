@@ -1,0 +1,101 @@
+Pipeline trueTest {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step EVENT_12_END
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step EVENT_2_START
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step analyzeData
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step createRecord
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step endAnalysis
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step receiveBloodMeasure
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step receiveDataFromMq
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step sendDataToMq
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step startAnalysis
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '12',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

@@ -12,9 +12,27 @@
 (total-cost)
 )
 
-(:action moveInTheModel#analyzedata_end
-:precondition (token p_4)
-:effect (and (not (allowed)) (not (token p_4)) (token p_5) (increase (total-cost) 1)
+(:action moveInTheModel#createrecord_end
+:precondition (token p_5)
+:effect (and (not (allowed)) (not (token p_5)) (token p_6) (increase (total-cost) 1)
+)
+)
+
+(:action moveInTheModel#endanalysis_end
+:precondition (token p_6)
+:effect (and (not (allowed)) (not (token p_6)) (token p_7) (increase (total-cost) 1)
+)
+)
+
+(:action moveInTheModel#receivebloodmeasure_end
+:precondition (token p_7)
+:effect (and (not (allowed)) (not (token p_7)) (token p_8) (increase (total-cost) 1)
+)
+)
+
+(:action moveInTheModel#receivescalemeasure_end
+:precondition (token p_9)
+:effect (and (not (allowed)) (not (token p_9)) (token p_10) (increase (total-cost) 1)
 )
 )
 
@@ -30,33 +48,15 @@
 )
 )
 
-(:action moveInTheModel#endanalysis_end
-:precondition (token p_6)
-:effect (and (not (allowed)) (not (token p_6)) (token p_7) (increase (total-cost) 1)
-)
-)
-
-(:action moveInTheModel#createrecord_end
-:precondition (token p_5)
-:effect (and (not (allowed)) (not (token p_5)) (token p_6) (increase (total-cost) 1)
-)
-)
-
-(:action moveInTheModel#receivebloodmeasure_end
-:precondition (token p_7)
-:effect (and (not (allowed)) (not (token p_7)) (token p_8) (increase (total-cost) 1)
+(:action moveInTheModel#analyzedata_end
+:precondition (token p_4)
+:effect (and (not (allowed)) (not (token p_4)) (token p_5) (increase (total-cost) 1)
 )
 )
 
 (:action moveInTheModel#receivedatafrommq_end
 :precondition (token p_8)
 :effect (and (not (allowed)) (not (token p_8)) (token p_9) (increase (total-cost) 1)
-)
-)
-
-(:action moveInTheModel#receivescalemeasure_end
-:precondition (token p_9)
-:effect (and (not (allowed)) (not (token p_9)) (token p_10) (increase (total-cost) 1)
 )
 )
 

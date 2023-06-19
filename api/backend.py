@@ -463,6 +463,8 @@ def upload_file():
     #print(isExistUser)
     #global directory_log
     
+    #TESTLIONE
+    #session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
     session["directory_log"]=directory_user+"/"+session["log_name_clear"]
     isExistLog = os.path.exists(session["directory_log"])
     if(not(isExistLog)):
@@ -689,6 +691,22 @@ def dslPost():
     return "work_done"    
 
 
+
+def process_string(input_string):
+    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
+        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    else :
+        return input_string
+
 @app.route('/getDslStructure')
 @oidc.require_login
 def getDslStructure():
@@ -700,102 +718,146 @@ def getDslStructure():
     }
     
 
-    response = requests.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers, verify=False)
+    #response = requests.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers, verify=False)
 
-    new_xes=fromDSLtoXES(json.loads(response.text)["data"])
+    '''
+    import asyncio
+    import aiohttp
+
+   
+    risposta=""
     
-    ######
-    
-    dfg=session["dfg"]
+    async def make_request():
+        async with aiohttp.ClientSession() as sz:
+            async with sz.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers) as response:
+                if response.status == 200:  # Check if the request was successful
+                    print("Request successful")
+                    risposta=await response.text()
+                    print(risposta)  # Access the response body
+                else:
+                    print(f"Request failed with status code {response.status}")
 
-    dataframe1=pd.DataFrame(session["log"])
-    log = pm4py.convert_to_event_log(dataframe1)
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(make_request())
+    '''
+    response = requests.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers)  # Send the GET request
 
-    activities = pm4py.get_event_attribute_values(log, "concept:name")
-    dfg_f=session["dfg_f"]
+    if response.status_code == 200:  # Check if the request was successful
+        print("Request successful")
+        print(response.text)  # Access the response body
+   
 
-    if(dfg_f!=None):
-        dfg_conf =dfg_f
-    else:
-        dfg_conf = dfg
+        try:
+            new_xes=fromDSLtoXES(json.loads(response.text)["data"])
+        except:
+            print("An exception occurred")
+            return(str("error"))
+        
 
-    #Print the current working directory
-    working_dir=os.getcwd()
-    #global backup_dir
-    
-    session["backup_dir"]=working_dir
-    print("Current working directory: {0}".format(os.getcwd()))
-    os.chdir(working_dir+'/jar')
-    
+        print("ERROREEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")    
+        ######
+        
+        dfg=session["dfg"]
 
-    # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
-    # subprocess.call(['bash', './run_SYMBA_all'])
-    os.chdir(working_dir)
-    
-    
-    ######
+        dataframe1=pd.DataFrame(session["log"])
+        log = pm4py.convert_to_event_log(dataframe1)
 
+        activities = None
+        activities = pm4py.get_event_attribute_values(log, "concept:name")
+        dfg_f=session["dfg_f"]
 
-    
-    path=session["directory_getdsl"][1:]+"/importedpipeline"+".xes"
-    
-    new_xes_log = xes_importer.apply(path)
+        if(dfg_f!=None):
+            dfg_conf =dfg_f
+        else:
+            dfg_conf = dfg
 
-    #dfg=session["dfg"]
-    #session["dfg"]=dfg
+        #Print the current working directory
+        working_dir=os.getcwd()
+        #global backup_dir
+        
+        session["backup_dir"]=working_dir
+        print("Current working directory: {0}".format(os.getcwd()))
+        # os.chdir(working_dir+'/jar')
+        
 
-    new_dfg, new_start_activities, new_end_activities = pm4py.discover_dfg(new_xes_log)
-    new_parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
-    new_gviz_freq = dfg_visualization.apply(new_dfg, log=new_xes_log, variant=dfg_visualization.Variants.FREQUENCY,
-                                            parameters={new_parameters.FORMAT: "svg", new_parameters.START_ACTIVITIES: new_start_activities,
-                                                new_parameters.END_ACTIVITIES: new_end_activities})
-
-    new_grafo_frequency=(str(new_gviz_freq))
-
-
-
-
-    parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
-    static_event_stream = log_converter.apply(new_xes_log, variant=log_converter.Variants.TO_EVENT_STREAM)
-    tree = inductive_miner.apply_tree(new_xes_log, variant=inductive_miner.Variants.IMf)
-    net, im, fm = pt_converter.apply(tree)
-
-    gviz = pn_visualizer.apply(net, im, fm)
-    # pn_visualizer.view(gviz)
-    places = net.places
-    transitions = net.transitions
-    arcs = net.arcs
-    trst=[]
+        # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
+        # subprocess.call(['bash', './run_SYMBA_all'])
+        os.chdir(working_dir)
+        
+        
+        ######
 
 
-    for tr in transitions:
-        trst.append([str(tr.name), str(tr.label)])
+        
+        path=process_string(session["directory_getdsl"][1:]+"/importedpipeline"+".xes")
+        
+        new_xes_log = xes_importer.apply(path)
+
+        #dfg=session["dfg"]
+        #session["dfg"]=dfg
+
+        new_dfg, new_start_activities, new_end_activities = pm4py.discover_dfg(new_xes_log)
+        new_parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
+        new_gviz_freq = dfg_visualization.apply(new_dfg, log=new_xes_log, variant=dfg_visualization.Variants.FREQUENCY,
+                                                parameters={new_parameters.FORMAT: "svg", new_parameters.START_ACTIVITIES: new_start_activities,
+                                                    new_parameters.END_ACTIVITIES: new_end_activities})
+
+        new_grafo_frequency=(str(new_gviz_freq))
 
 
-    print(session["directory_net_pnml"])
-    pnml_exporter.apply(net, im, session["directory_net_pnml"][1:]+'/petri_final.pnml', final_marking=fm)
-    with open(session["marking_path"], 'w') as f:
-        f.write(str(im))
-        f.write('\n')
-        f.write(str(fm))
 
-    xes_exporter.apply(new_xes_log, session["xes_path"])
 
-    
-    with open(session["cost_file_path"], "w") as f:
-        for index in trst:
-            if(index[1].lower().replace(" ", "")=="none"):
-                f.write(index[0].lower().replace(" ", "")+" 0 0")
-            else:
-                f.write(index[1].lower().replace(" ", "")+" 1 1")    
+        parameters = dfg_visualization.Variants.FREQUENCY.value.Parameters
+        static_event_stream = log_converter.apply(new_xes_log, variant=log_converter.Variants.TO_EVENT_STREAM)
+        tree = inductive_miner.apply_tree(new_xes_log, variant=inductive_miner.Variants.IMf)
+        net, im, fm = pt_converter.apply(tree)
+
+        gviz = pn_visualizer.apply(net, im, fm)
+        # pn_visualizer.view(gviz)
+        places = net.places
+        transitions = net.transitions
+        arcs = net.arcs
+        trst=[]
+
+
+        for tr in transitions:
+            trst.append([str(tr.name), str(tr.label)])
+
+
+        print(session["marking_path"])
+        print(session["cost_file_path"])
+
+        pnml_new_path=process_string(session["directory_net_pnml"][1:]+'/petri_final.pnml')
+        pnml_exporter.apply(net, im, pnml_new_path, final_marking=fm)
+        
+        with open(session["marking_path"], 'w') as f:
+            f.write(str(im))
             f.write('\n')
-        #f.write("none"+" 0 0") remove comment to consider invisible transitions
-        f.close()
+            f.write(str(fm))
 
-    #session["dfg"]=dfg
+        xes_exporter.apply(new_xes_log, session["xes_path"])
 
+        
+        with open(session["cost_file_path"], "w") as f:
+            for index in trst:
+                if(index[1].lower().replace(" ", "")=="none"):
+                    f.write(index[0].lower().replace(" ", "")+" 0 0")
+                else:
+                    f.write(index[1].lower().replace(" ", "")+" 1 1")    
+                f.write('\n')
+            #f.write("none"+" 0 0") remove comment to consider invisible transitions
+            f.close()
+
+        #session["dfg"]=dfg
+
+        
+        #print(str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst))
+
+        print(trst)
+        print(activities)
     
-    #print(str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst))
+    else:
+        print(f"Request failed with status code {response.status_code}")
 
     return str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst)+"£"+str(new_grafo_frequency)
 
@@ -885,6 +947,7 @@ def renameDSL(folderName,vecchioNome,nuovoNome):
 ############################################################
 
 if(path_f=="127.0.0.1"):
+    print("")
     context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
     app.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
 else:

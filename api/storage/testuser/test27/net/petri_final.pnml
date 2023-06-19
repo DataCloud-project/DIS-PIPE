@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <place id="p_8">
+        <name>
+          <text>p_8</text>
+        </name>
+      </place>
+      <place id="p_9">
+        <name>
+          <text>p_9</text>
+        </name>
+      </place>
+      <transition id="d9b471ad-8323-45e0-be9c-911efedb1d2a">
+        <name>
+          <text>check_ticket-End</text>
+        </name>
+      </transition>
+      <transition id="18af159a-7203-473b-aa95-5daefe931a0e">
+        <name>
+          <text>examine_thoroughly-End</text>
+        </name>
+      </transition>
+      <transition id="8ac1aea8-50d8-40ab-8be0-2155ec7450dc">
+        <name>
+          <text>reject_request-End</text>
+        </name>
+      </transition>
+      <transition id="cce978e6-16d8-45d3-8717-057601dd9660">
+        <name>
+          <text>pay_compensation-End</text>
+        </name>
+      </transition>
+      <transition id="0f7fc3c3-b8c9-4240-a2a5-07fccbb0695d">
+        <name>
+          <text>decide-End</text>
+        </name>
+      </transition>
+      <transition id="c3a4df20-8b03-4fdf-9009-6e8862d8db52">
+        <name>
+          <text>examine_casually-End</text>
+        </name>
+      </transition>
+      <transition id="7b5fef38-ea9f-4b98-89ef-9c6dd01c63ad">
+        <name>
+          <text>register_request-End</text>
+        </name>
+      </transition>
+      <transition id="f7b43c01-517f-4952-9796-7424c26581c8">
+        <name>
+          <text>reinitiate_request-End</text>
+        </name>
+      </transition>
+      <arc id="140060960097376" source="p_4" target="c3a4df20-8b03-4fdf-9009-6e8862d8db52"/>
+      <arc id="140060960097184" source="0f7fc3c3-b8c9-4240-a2a5-07fccbb0695d" target="p_4"/>
+      <arc id="140060960098336" source="c3a4df20-8b03-4fdf-9009-6e8862d8db52" target="p_5"/>
+      <arc id="140060960096512" source="p_5" target="18af159a-7203-473b-aa95-5daefe931a0e"/>
+      <arc id="140060960099488" source="18af159a-7203-473b-aa95-5daefe931a0e" target="p_6"/>
+      <arc id="140060960098240" source="p_6" target="cce978e6-16d8-45d3-8717-057601dd9660"/>
+      <arc id="140060960099008" source="p_7" target="7b5fef38-ea9f-4b98-89ef-9c6dd01c63ad"/>
+      <arc id="140060744770464" source="p_8" target="f7b43c01-517f-4952-9796-7424c26581c8"/>
+      <arc id="140060960098000" source="source" target="d9b471ad-8323-45e0-be9c-911efedb1d2a"/>
+      <arc id="140060960096368" source="d9b471ad-8323-45e0-be9c-911efedb1d2a" target="p_3"/>
+      <arc id="140060960096656" source="p_3" target="0f7fc3c3-b8c9-4240-a2a5-07fccbb0695d"/>
+      <arc id="140060960099536" source="cce978e6-16d8-45d3-8717-057601dd9660" target="p_7"/>
+      <arc id="140060960098096" source="7b5fef38-ea9f-4b98-89ef-9c6dd01c63ad" target="p_8"/>
+      <arc id="140060744770128" source="f7b43c01-517f-4952-9796-7424c26581c8" target="p_9"/>
+      <arc id="140060744770032" source="p_9" target="8ac1aea8-50d8-40ab-8be0-2155ec7450dc"/>
+      <arc id="140060744771952" source="8ac1aea8-50d8-40ab-8be0-2155ec7450dc" target="sink"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

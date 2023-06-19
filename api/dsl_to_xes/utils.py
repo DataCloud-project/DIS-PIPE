@@ -73,6 +73,21 @@ def debug(steps, step_phases, technologies):
 #--------------------------------------------------------------------
 #function to generate the xes file
 #--------------------------------------------------------------------
+def process_string(input_string):
+    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
+        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    else :
+        return input_string
+
 def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n, steps, step_phases):
         print("Generating XES file.")
         xes_result=""
@@ -107,7 +122,11 @@ def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n,
                             presence_of_networks = 1
         
         log_result=""
-        with open(session["directory_getdsl"][1:]+'/' + "importedpipeline" + '.xes', 'w+') as f:
+
+        
+        nuovo_path=process_string(session["directory_getdsl"][1:]+'/' + "importedpipeline" + '.xes')
+        print(nuovo_path)
+        with open(nuovo_path, 'w+') as f:
             sys.stdout = f # Change the standard output to the file we created.
             #standard header
             print("<?xml version='1.0' encoding='UTF-8'?>\n<log>")
@@ -274,7 +293,7 @@ def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n,
         sys.stdout = original_stdout # Reset the standard output to its original value       
         
         
-        with open(session["directory_getdsl"][1:]+'/' + "importedpipeline" + '.xes', 'r') as file:
+        with open(nuovo_path, 'r') as file:
             log_result = file.read()
         
         return log_result

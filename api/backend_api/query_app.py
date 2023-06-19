@@ -188,25 +188,31 @@ def makeQuery():
         print(sql_query.errors)
         return "errore,query"+"£"+"errore,query"
     else:
-        cursor1 = cnxn.cursor()
-        cursor1.execute(queryTODO) 
+        try:
+            cursor1 = cnxn.cursor()
+            cursor1.execute(queryTODO) 
 
-        response=""
-        row = cursor1.fetchone() 
-        while row: 
-        
-            for a in row:
-                if(isinstance(a, datetime.datetime)):
-                    response=response+a.strftime("%d/%m/%Y %H:%M:%S")+","
-                else:
-                    response=response+str(a)+","
-            response=response[:-1]+"\n"
+            response=""
+            row = cursor1.fetchone() 
+            while row: 
+            
+                for a in row:
+                    if(isinstance(a, datetime.datetime)):
+                        response=response+a.strftime("%d/%m/%Y %H:%M:%S")+","
+                    else:
+                        response=response+str(a)+","
+                response=response[:-1]+"\n"
 
-            #response=response+str(row)+"\n"
-            row = cursor1.fetchone()
+                #response=response+str(row)+"\n"
+                row = cursor1.fetchone()
 
-        cursor1.close()
-        cnxn.close()
+            cursor1.close()
+            cnxn.close()
+        except Exception as e:
+            # Handle the exception
+            print("An error occurred:", str(e))
+            # Return an appropriate error message or value
+            return "errore,query"+"£"+"errore,query"
 
     return response+"£"+querySELECT
 

@@ -185,8 +185,8 @@ function checkRefresh()
 			<center>
 				<div id="projectContainer">
 					<span>Chose a view</span>
-					<button style=" padding: 10px;" id="listProjectView" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
-					<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+					<button style=" padding: 10px;" id="listProjectView" type="button"  class="btn" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+					<button style=" padding: 10px;" type="button"  class="btn active" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
 				</div>
 				<br>
 				<div id="projectNameList" class="rowDslName">
@@ -210,8 +210,8 @@ function checkRefresh()
 			<center>
 				<div id="btnContainer">
 					<span>Chose a view</span>
-					<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
-					<button style=" padding: 10px;" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+					<button style=" padding: 10px;" type="button"  class="btn" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+					<button style=" padding: 10px;" id="gridViewBtn" type="button"  class="btn active" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
 				</div>
 				<br>
 				<div id="dslNameList" class="rowDslName">
@@ -258,7 +258,7 @@ function checkRefresh()
 					<i class="fa-solid fa-sliders"></i>
 					<span class="topic">Query</span>
 				</label>
-				<label for="segmentator" class="segmentator"> <!--onclick="queryDbRequest()"-->
+				<label style="display:none" for="segmentator" class="segmentator"> <!--onclick="queryDbRequest()"-->
 					<i class="fa-solid fa-sliders"></i>
 					<span class="topic">segmentator</span>
 				</label>
@@ -276,12 +276,12 @@ function checkRefresh()
 					<br />
 					<button id="export_dsl" class="menu_button" type="button" onclick="exportDsl()">Export DSL</button>
 					<br />
-					<button id="get_dsl" class="menu_button" type="button" onclick="getNameDsl()">Get DSL from DEF-PIPE</button>
-					<br />
+					<!--<button id="get_dsl" class="menu_button" type="button" onclick="getNameDsl()">Get DSL from DEF-PIPE</button>
+					<br />-->
 					<button id="send_dsl" class="menu_button" type="button" onclick="sendDslRequest('fine')">Send DSL to DEF-PIPE</button>
 					<br />
 					
-					<button id="open_project" class="menu_button" type="button" onclick="openProject()">Open Project Script</button>
+					<button style="display: none" id="open_project" class="menu_button" type="button" onclick="openProject()">Open Project Script</button>
 					<br />
 
 					<button style="visibility: hidden;" id="load_project" class="menu_button" type="button" onclick="load()">Load project</button>
@@ -1117,7 +1117,7 @@ function checkRefresh()
 					 	</button>
 						<button id="info_check_conformance" style="position: absolute; top: 35px;
 						right: 4%; font-size: 16px; width: 7%; cursor: pointer; z-index: 3; visibility: hidden;" onclick="do_check_conformance()">
-							Detailsℹ️
+							Details📝
 						</button>
 
 						<input type="checkbox" id="check_conformance" onchange="displayTracePopUp()">
@@ -1128,20 +1128,20 @@ function checkRefresh()
 							<div id="formConformanceChecking0" style="display: block;">
 								<br>
 								<div class="conformance-container">
-									<div class="conformance-title">Choose technique</div>
+									<div class="conformance-title">Start Conformance Checking</div>
 									
 									<hr>
 									<br>
 									
 									<div style="border-spacing: 0 15px;">
-										Do you want to use an external or internal model?
+										Choose a DSL from DEF-PIPE repository
 									</div>
 	
 									
 									<div style="text-align:center">
 										<br>
-										<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="petriNetComputeInternal()">Internal</button>
-										<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="getNameDsl()">External</button>
+										<button class="conf_check_button" type="button" style="font-size: 16px; display: none;" onclick="petriNetComputeInternal()">Internal</button>
+										<button class="conf_check_button" type="button" style="font-size: 16px;" onclick="getNameDsl()">Select ...</button>
 										
 									</div>
 								
@@ -1157,9 +1157,20 @@ function checkRefresh()
 							<br>
 							<div class="conformance-container">
 								<div class="conformance-title">Map steps</div>
-								
 								<hr>
 								<br>
+								<table>
+									<tr>
+									  <td style="border: revert">
+										<input type="radio" name="scelta-mapping" id="mapYes" checked>
+										<label for="mapYes">Perform mapping</label>
+									  </td>
+									  <td style="border: revert">
+										<input type="radio" name="scelta-mapping" id="mapNo">
+										<label for="mapNo">Don't perform mapping</label>
+									  </td>
+									</tr>
+								</table>
 								<br>
 								
 								<table id="pnml_log_table" style="border-spacing: 0 15px;">
@@ -1375,8 +1386,8 @@ function checkRefresh()
 										</select>
 										<br>
 										
-										<span>Highlight trace: </span>
-										<select id="highlight_trace" name="highlight_trace" onchange="highlightTrace()">
+										<span style="display: none;">Highlight trace: </span>
+										<select style="display: none;"  id="highlight_trace" name="highlight_trace" onchange="highlightTrace()">
 											<option value="yes">Yes</option>
 											<option value="no" selected>No</option>
 										</select>
@@ -1502,7 +1513,7 @@ function checkRefresh()
 								<textarea style="display: none; font-size: 16px;" cols="30" class="vmiddle" id="second_element_textarea">  </textarea>
 								
 								<br>
-								<button style="font-size: 16px; width: 20%;" id="addCondition" onclick="addCondition()">Add Condition</button>
+								<button style="font-size: 16px; width: 20%;" id="addCondition" disabled onclick="addCondition()">Add Condition</button>
 								<br> <br>
 								<!-- 
 								<input type="radio" name="condition" value="and">And
@@ -1561,9 +1572,17 @@ function checkRefresh()
 
 <!--(script with getMap())-->
 <script>
+
+	var tr_array = "";
+    //array con i nomi delle attività del log
+    var log_array="";
+	var r1;
+	var name_activity;
+	var name_activity_end;
 	var nodes_id_association={}
 	var color_node_highlight={}
 	var frontend = document.getElementById("path_frontend").innerHTML;
+	frontend = ""
 	// console.log(frontend)
 
 	var menu = document.getElementById("menu");

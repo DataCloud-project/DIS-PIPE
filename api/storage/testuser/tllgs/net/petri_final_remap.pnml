@@ -1,0 +1,153 @@
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <place id="p_11">
+        <name>
+          <text>p_11</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_8">
+        <name>
+          <text>p_8</text>
+        </name>
+      </place>
+      <place id="p_9">
+        <name>
+          <text>p_9</text>
+        </name>
+      </place>
+      <place id="p_10">
+        <name>
+          <text>p_10</text>
+        </name>
+      </place>
+      <place id="p_12">
+        <name>
+          <text>p_12</text>
+        </name>
+      </place>
+      <transition id="9bc2a2ef-a94e-44e1-a935-cbcf569ce3a9">
+        <name>
+          <text>EVENT 12 END</text>
+        </name>
+      </transition>
+      <transition id="06905ede-e856-4a7a-b04c-9973d9aad7b9">
+        <name>
+          <text>analyzeData</text>
+        </name>
+      </transition>
+      <transition id="180060e3-b2d9-4965-ba9f-d933dba9b7e0">
+        <name>
+          <text>receiveBloodMeasure</text>
+        </name>
+      </transition>
+      <transition id="1a130680-b446-4816-99b0-10d052d5e278">
+        <name>
+          <text>receiveDataFromMq</text>
+        </name>
+      </transition>
+      <transition id="cc92b3f0-c6ff-4a65-9958-fe3ec42a3625">
+        <name>
+          <text>receiveScaleMeasure</text>
+        </name>
+      </transition>
+      <transition id="9dee84d3-0dc6-4770-a2f5-62d9cdf71a34">
+        <name>
+          <text>receiveTempMeasure</text>
+        </name>
+      </transition>
+      <transition id="db6f7992-73d0-4b30-9dc2-d9203d8697de">
+        <name>
+          <text>sendDataToMq</text>
+        </name>
+      </transition>
+      <transition id="6c544217-2b1d-4b04-8b5d-d96080a7ea95">
+        <name>
+          <text>startAnalysis</text>
+        </name>
+      </transition>
+      <transition id="19b30d6b-8dad-4615-80bf-7516f8f207d2">
+        <name>
+          <text>endAnalysis</text>
+        </name>
+      </transition>
+      <transition id="5c5f3bf6-09c0-4676-9c2b-d3603d04c022">
+        <name>
+          <text>EVENT 2 START</text>
+        </name>
+      </transition>
+      <transition id="1f43101d-fcd3-4847-882c-2572d8e04dea">
+        <name>
+          <text>createRecord</text>
+        </name>
+      </transition>
+      <arc id="140087996072576" source="19b30d6b-8dad-4615-80bf-7516f8f207d2" target="p_7" />
+      <arc id="140088207540864" source="p_8" target="1a130680-b446-4816-99b0-10d052d5e278" />
+      <arc id="140088201004032" source="9dee84d3-0dc6-4770-a2f5-62d9cdf71a34" target="p_11" />
+      <arc id="140088306495104" source="6c544217-2b1d-4b04-8b5d-d96080a7ea95" target="sink" />
+      <arc id="140088181407120" source="p_3" target="5c5f3bf6-09c0-4676-9c2b-d3603d04c022" />
+      <arc id="140088181404576" source="source" target="9bc2a2ef-a94e-44e1-a935-cbcf569ce3a9" />
+      <arc id="140088207543840" source="180060e3-b2d9-4965-ba9f-d933dba9b7e0" target="p_8" />
+      <arc id="140088207543456" source="p_9" target="cc92b3f0-c6ff-4a65-9958-fe3ec42a3625" />
+      <arc id="140088181405488" source="9bc2a2ef-a94e-44e1-a935-cbcf569ce3a9" target="p_3" />
+      <arc id="140088181405248" source="p_4" target="06905ede-e856-4a7a-b04c-9973d9aad7b9" />
+      <arc id="140087996074304" source="06905ede-e856-4a7a-b04c-9973d9aad7b9" target="p_5" />
+      <arc id="140088306493760" source="p_11" target="db6f7992-73d0-4b30-9dc2-d9203d8697de" />
+      <arc id="140088306494528" source="p_12" target="6c544217-2b1d-4b04-8b5d-d96080a7ea95" />
+      <arc id="140088181406928" source="5c5f3bf6-09c0-4676-9c2b-d3603d04c022" target="p_4" />
+      <arc id="140087996072912" source="1f43101d-fcd3-4847-882c-2572d8e04dea" target="p_6" />
+      <arc id="140087996073680" source="p_6" target="19b30d6b-8dad-4615-80bf-7516f8f207d2" />
+      <arc id="140088207543504" source="p_7" target="180060e3-b2d9-4965-ba9f-d933dba9b7e0" />
+      <arc id="140088306494288" source="db6f7992-73d0-4b30-9dc2-d9203d8697de" target="p_12" />
+      <arc id="140087996074976" source="p_5" target="1f43101d-fcd3-4847-882c-2572d8e04dea" />
+      <arc id="140088207541344" source="cc92b3f0-c6ff-4a65-9958-fe3ec42a3625" target="p_10" />
+      <arc id="140088201004512" source="p_10" target="9dee84d3-0dc6-4770-a2f5-62d9cdf71a34" />
+      <arc id="140088207542256" source="1a130680-b446-4816-99b0-10d052d5e278" target="p_9" />
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
