@@ -132,14 +132,16 @@ function sendDslListenerReq2(){
 
 }
 
-function sendDslRequest(){
+function sendDslRequest(posizione){
 
 	console.log("sendDslRequest")
 
     var dsl = createDsl();
 	
     var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", sendDslListenerReq2);
+	if(posizione!="start"){
+		oReq.addEventListener("load", sendDslListenerReq2);
+	}
 	oReq.open("POST", frontend+"dslPost", true);
 	payload = {"pipeline": dsl}
 	
@@ -170,6 +172,7 @@ function createDsl(){
 	//print pipeline title + fixed line about communicationMedium
 	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
 	//iterate on the steps
+	console.log(dslSteps)
 	for (var i=0; i<dslSteps.length; i++){
 		// if the step is start or end, just skip
 		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')

@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_8">
+        <name>
+          <text>p_8</text>
+        </name>
+      </place>
+      <place id="p_9">
+        <name>
+          <text>p_9</text>
+        </name>
+      </place>
+      <place id="p_10">
+        <name>
+          <text>p_10</text>
+        </name>
+      </place>
+      <transition id="ea5d686a-b77d-436f-aa9b-ff868f8e2b98">
+        <name>
+          <text>EVENT_12_END-End</text>
+        </name>
+      </transition>
+      <transition id="32e5c495-393c-448b-a23a-57a484734504">
+        <name>
+          <text>createRecord-End</text>
+        </name>
+      </transition>
+      <transition id="1b866785-390e-4cfb-869d-f43a8ac45279">
+        <name>
+          <text>EVENT_2_START-End</text>
+        </name>
+      </transition>
+      <transition id="a1e2830b-90ba-4f57-a524-cf4b4f608ec5">
+        <name>
+          <text>receiveBloodMeasure-End</text>
+        </name>
+      </transition>
+      <transition id="9079a80b-dde7-4863-a758-63fac43196e8">
+        <name>
+          <text>receiveDataFromMq-End</text>
+        </name>
+      </transition>
+      <transition id="054e8eec-ff73-44cb-8bca-0b4ed29bb862">
+        <name>
+          <text>endAnalysis-End</text>
+        </name>
+      </transition>
+      <transition id="bf6be2a7-11b3-4c9e-9101-a672e44c5d6f">
+        <name>
+          <text>analyzeData-End</text>
+        </name>
+      </transition>
+      <transition id="2d09070c-f879-4624-a1ff-6ee86e5bb798">
+        <name>
+          <text>sendDataToMq-End</text>
+        </name>
+      </transition>
+      <transition id="86fc02b8-21ba-4509-b326-6b5e41d96680">
+        <name>
+          <text>startAnalysis-End</text>
+        </name>
+      </transition>
+      <arc id="140259570164448" source="p_4" target="bf6be2a7-11b3-4c9e-9101-a672e44c5d6f"/>
+      <arc id="140259570166080" source="1b866785-390e-4cfb-869d-f43a8ac45279" target="p_4"/>
+      <arc id="140259570165504" source="bf6be2a7-11b3-4c9e-9101-a672e44c5d6f" target="p_5"/>
+      <arc id="140259570165024" source="p_6" target="054e8eec-ff73-44cb-8bca-0b4ed29bb862"/>
+      <arc id="140259570071584" source="p_7" target="a1e2830b-90ba-4f57-a524-cf4b4f608ec5"/>
+      <arc id="140259570069952" source="p_8" target="9079a80b-dde7-4863-a758-63fac43196e8"/>
+      <arc id="140259778687040" source="p_9" target="2d09070c-f879-4624-a1ff-6ee86e5bb798"/>
+      <arc id="140259778687472" source="86fc02b8-21ba-4509-b326-6b5e41d96680" target="sink"/>
+      <arc id="140259570165552" source="source" target="ea5d686a-b77d-436f-aa9b-ff868f8e2b98"/>
+      <arc id="140259570165264" source="ea5d686a-b77d-436f-aa9b-ff868f8e2b98" target="p_3"/>
+      <arc id="140259570167664" source="p_3" target="1b866785-390e-4cfb-869d-f43a8ac45279"/>
+      <arc id="140259570166128" source="p_5" target="32e5c495-393c-448b-a23a-57a484734504"/>
+      <arc id="140259570166896" source="32e5c495-393c-448b-a23a-57a484734504" target="p_6"/>
+      <arc id="140259570069616" source="054e8eec-ff73-44cb-8bca-0b4ed29bb862" target="p_7"/>
+      <arc id="140259570073552" source="a1e2830b-90ba-4f57-a524-cf4b4f608ec5" target="p_8"/>
+      <arc id="140259778694928" source="9079a80b-dde7-4863-a758-63fac43196e8" target="p_9"/>
+      <arc id="140259778687184" source="2d09070c-f879-4624-a1ff-6ee86e5bb798" target="p_10"/>
+      <arc id="140259778687280" source="p_10" target="86fc02b8-21ba-4509-b326-6b5e41d96680"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

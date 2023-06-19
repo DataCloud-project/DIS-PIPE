@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<log>
+	<string key="creator" value="RefModel_Generator"/>
+	<extension name="Concept" prefix="concept" uri="http://code.deckfour.org/xes/concept.xesext"/>
+	<extension name="Time" prefix="time" uri="http://code.deckfour.org/xes/time.xesext"/>
+	<extension name="Organizational" prefix="org" uri="http://code.deckfour.org/xes/org.xesext"/>
+	<global scope="trace">
+		<string key="concept:name" value="name"/>
+	</global>
+	<global scope="event">
+		<string key="concept:name" value="name"/>
+		<string key="StepPhaseID" value="string"/>
+		<date key="time:timestamp" value="2023-06-15T14:22:24.258748+01:00"/>
+		<string key="PipelineName" value="name"/>
+		<string key="PipelineID" value="string"/>
+		<string key="PipelineCommunicationMedium" value="string"/>
+		<string key="StepID" value="string"/>
+		<string key="StepType" value="string"/>
+	</global>
+	<classifier name="Activity" keys="name"/>
+	<classifier name="activity classifier" keys="Activity"/>
+	<trace>
+		<string key="concept:name" value="1"/>
+		<event>
+			<string key="concept:name" value="Payment_Handled-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258822+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="0"/>
+			<string key="StepName" value="Payment_Handled"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_APPROVED_by_ADMINISTRATION-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258851+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="1"/>
+			<string key="StepName" value="Permit_APPROVED_by_ADMINISTRATION"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_APPROVED_by_BUDGET_OWNER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258875+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="2"/>
+			<string key="StepName" value="Permit_APPROVED_by_BUDGET_OWNER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_APPROVED_by_PRE_APPROVER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258900+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="3"/>
+			<string key="StepName" value="Permit_APPROVED_by_PRE_APPROVER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_APPROVED_by_SUPERVISOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258924+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="4"/>
+			<string key="StepName" value="Permit_APPROVED_by_SUPERVISOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_FINAL_APPROVED_by_DIRECTOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258947+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="5"/>
+			<string key="StepName" value="Permit_FINAL_APPROVED_by_DIRECTOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_FINAL_APPROVED_by_SUPERVISOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258970+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="6"/>
+			<string key="StepName" value="Permit_FINAL_APPROVED_by_SUPERVISOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_REJECTED_by_ADMINISTRATION-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.258993+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="7"/>
+			<string key="StepName" value="Permit_REJECTED_by_ADMINISTRATION"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_REJECTED_by_BUDGET_OWNER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259016+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="8"/>
+			<string key="StepName" value="Permit_REJECTED_by_BUDGET_OWNER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_REJECTED_by_EMPLOYEE-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259039+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="9"/>
+			<string key="StepName" value="Permit_REJECTED_by_EMPLOYEE"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_REJECTED_by_MISSING-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259062+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="10"/>
+			<string key="StepName" value="Permit_REJECTED_by_MISSING"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_REJECTED_by_PRE_APPROVER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259084+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="11"/>
+			<string key="StepName" value="Permit_REJECTED_by_PRE_APPROVER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_REJECTED_by_SUPERVISOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259107+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="12"/>
+			<string key="StepName" value="Permit_REJECTED_by_SUPERVISOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Permit_SUBMITTED_by_EMPLOYEE-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259136+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="13"/>
+			<string key="StepName" value="Permit_SUBMITTED_by_EMPLOYEE"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_APPROVED_by_ADMINISTRATION-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259169+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="14"/>
+			<string key="StepName" value="Request_For_Payment_APPROVED_by_ADMINISTRATION"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_APPROVED_by_BUDGET_OWNER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259192+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="15"/>
+			<string key="StepName" value="Request_For_Payment_APPROVED_by_BUDGET_OWNER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_APPROVED_by_PRE_APPROVER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259500+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="16"/>
+			<string key="StepName" value="Request_For_Payment_APPROVED_by_PRE_APPROVER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_APPROVED_by_SUPERVISOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259534+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="17"/>
+			<string key="StepName" value="Request_For_Payment_APPROVED_by_SUPERVISOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_FINAL_APPROVED_by_DIRECTOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259557+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="18"/>
+			<string key="StepName" value="Request_For_Payment_FINAL_APPROVED_by_DIRECTOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_FINAL_APPROVED_by_SUPERVISOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259581+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="19"/>
+			<string key="StepName" value="Request_For_Payment_FINAL_APPROVED_by_SUPERVISOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_REJECTED_by_ADMINISTRATION-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259604+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="20"/>
+			<string key="StepName" value="Request_For_Payment_REJECTED_by_ADMINISTRATION"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_REJECTED_by_BUDGET_OWNER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259637+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="21"/>
+			<string key="StepName" value="Request_For_Payment_REJECTED_by_BUDGET_OWNER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_REJECTED_by_EMPLOYEE-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259671+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="22"/>
+			<string key="StepName" value="Request_For_Payment_REJECTED_by_EMPLOYEE"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_REJECTED_by_MISSING-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259710+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="23"/>
+			<string key="StepName" value="Request_For_Payment_REJECTED_by_MISSING"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_REJECTED_by_PRE_APPROVER-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259747+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="24"/>
+			<string key="StepName" value="Request_For_Payment_REJECTED_by_PRE_APPROVER"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_REJECTED_by_SUPERVISOR-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259770+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="25"/>
+			<string key="StepName" value="Request_For_Payment_REJECTED_by_SUPERVISOR"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_SAVED_by_EMPLOYEE-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259794+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="26"/>
+			<string key="StepName" value="Request_For_Payment_SAVED_by_EMPLOYEE"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_For_Payment_SUBMITTED_by_EMPLOYEE-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259817+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="27"/>
+			<string key="StepName" value="Request_For_Payment_SUBMITTED_by_EMPLOYEE"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Request_Payment-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-15T14:22:24.259839+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="prepaid3"/>
+			<string key="StepID" value="28"/>
+			<string key="StepName" value="Request_Payment"/>
+		</event>
+	</trace>
+</log>
