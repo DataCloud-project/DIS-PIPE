@@ -4,7 +4,7 @@ end_version
 begin_metric
 1
 end_metric
-11
+3
 begin_variable
 var0
 -1
@@ -15,295 +15,349 @@ end_variable
 begin_variable
 var1
 -1
-2
+11
 Atom token(p_10)
-NegatedAtom token(p_10)
+Atom token(p_11)
+Atom token(p_13)
+Atom token(p_14)
+Atom token(p_3)
+Atom token(p_4)
+Atom token(p_5)
+Atom token(p_6)
+Atom token(p_7)
+Atom token(sink)
+Atom token(source)
 end_variable
 begin_variable
 var2
 -1
-2
-Atom token(p_11)
-NegatedAtom token(p_11)
-end_variable
-begin_variable
-var3
--1
-2
-Atom token(p_4)
-NegatedAtom token(p_4)
-end_variable
-begin_variable
-var4
--1
-2
-Atom token(p_5)
-NegatedAtom token(p_5)
-end_variable
-begin_variable
-var5
--1
-2
-Atom token(p_6)
-NegatedAtom token(p_6)
-end_variable
-begin_variable
-var6
--1
-2
-Atom token(p_8)
-NegatedAtom token(p_8)
-end_variable
-begin_variable
-var7
--1
-2
-Atom token(p_9)
-NegatedAtom token(p_9)
-end_variable
-begin_variable
-var8
--1
-2
-Atom token(sink)
-NegatedAtom token(sink)
-end_variable
-begin_variable
-var9
--1
-2
-Atom token(source)
-NegatedAtom token(source)
-end_variable
-begin_variable
-var10
--1
-6
+11
 Atom tracepointer(ev1)
+Atom tracepointer(ev10)
 Atom tracepointer(ev2)
 Atom tracepointer(ev3)
 Atom tracepointer(ev4)
 Atom tracepointer(ev5)
+Atom tracepointer(ev6)
+Atom tracepointer(ev7)
+Atom tracepointer(ev8)
+Atom tracepointer(ev9)
 Atom tracepointer(evend)
 end_variable
-1
+2
 begin_mutex_group
-6
-10 0
-10 1
-10 2
-10 3
-10 4
-10 5
+11
+1 0
+1 1
+1 2
+1 3
+1 4
+1 5
+1 6
+1 7
+1 8
+1 9
+1 10
+end_mutex_group
+begin_mutex_group
+11
+2 0
+2 1
+2 2
+2 3
+2 4
+2 5
+2 6
+2 7
+2 8
+2 9
+2 10
 end_mutex_group
 begin_state
 0
-1
-1
-1
-1
-1
-1
-1
-1
-0
+10
 0
 end_state
 begin_goal
-10
-1 1
-2 1
-3 1
-4 1
-5 1
-6 1
-7 1
-8 0
-9 1
-10 5
+2
+1 9
+2 10
 end_goal
-20
+33
 begin_operator
-moveinthelog#checkticket#ev2-ev3 
+moveinthelog#data_merge#ev6-ev7 
 1
 0 0
 1
-0 10 1 2
+0 2 6 7
 1
 end_operator
 begin_operator
-moveinthelog#decide#ev4-ev5 
+moveinthelog#data_merge#ev7-ev8 
 1
 0 0
 1
-0 10 3 4
+0 2 7 8
 1
 end_operator
 begin_operator
-moveinthelog#examinethoroughly#ev3-ev4 
+moveinthelog#query#ev2-ev3 
 1
 0 0
 1
-0 10 2 3
+0 2 2 3
 1
 end_operator
 begin_operator
-moveinthelog#registerrequest#ev1-ev2 
+moveinthelog#query#ev3-ev4 
 1
 0 0
 1
-0 10 0 1
+0 2 3 4
 1
 end_operator
 begin_operator
-moveinthelog#rejectrequest#ev5-evend 
+moveinthelog#report_generated#ev10-evend 
 1
 0 0
 1
-0 10 4 5
+0 2 1 10
 1
 end_operator
 begin_operator
-moveinthemodel#decide 
+moveinthelog#request#ev1-ev2 
+1
+0 0
+1
+0 2 0 2
+1
+end_operator
+begin_operator
+moveinthelog#trasformation#ev4-ev5 
+1
+0 0
+1
+0 2 4 5
+1
+end_operator
+begin_operator
+moveinthelog#trasformation#ev5-ev6 
+1
+0 0
+1
+0 2 5 6
+1
+end_operator
+begin_operator
+moveinthelog#visualization#ev8-ev9 
+1
+0 0
+1
+0 2 8 9
+1
+end_operator
+begin_operator
+moveinthelog#visualization#ev9-ev10 
+1
+0 0
+1
+0 2 9 1
+1
+end_operator
+begin_operator
+moveinthemodel#data_merge 
 0
-4
+2
 0 0 -1 1
-0 2 0 1
-0 5 -1 0
-0 7 0 1
+0 1 10 4
 1
 end_operator
 begin_operator
-moveinthemodel#examinecasually 
+moveinthemodel#launch_algorithm 
 0
-3
+2
+0 0 -1 1
+0 1 4 5
+1
+end_operator
+begin_operator
+moveinthemodel#model_generated 
+0
+2
+0 0 -1 1
+0 1 5 6
+1
+end_operator
+begin_operator
+moveinthemodel#query 
+0
+2
+0 0 -1 1
+0 1 1 0
+1
+end_operator
+begin_operator
+moveinthemodel#query 
+0
+2
+0 0 -1 1
+0 1 6 7
+1
+end_operator
+begin_operator
+moveinthemodel#report_generated 
+0
+2
+0 0 -1 1
+0 1 7 8
+1
+end_operator
+begin_operator
+moveinthemodel#request 
+0
+2
+0 0 -1 1
+0 1 8 0
+1
+end_operator
+begin_operator
+moveinthemodel#restore_accessto_database 
+0
+2
 0 0 -1 1
 0 1 0 1
-0 2 -1 0
 1
 end_operator
 begin_operator
-moveinthemodel#examinethoroughly 
+moveinthemodel#store_results 
 0
-3
+2
 0 0 -1 1
-0 1 0 1
-0 2 -1 0
+0 1 1 2
 1
 end_operator
 begin_operator
-moveinthemodel#examinethoroughly 
+moveinthemodel#trasformation 
 0
-3
+2
 0 0 -1 1
-0 6 0 1
-0 7 -1 0
+0 1 2 3
 1
 end_operator
 begin_operator
-moveinthemodel#paycompensation 
+moveinthemodel#visualization 
 0
-3
+2
 0 0 -1 1
-0 3 0 1
-0 8 -1 0
+0 1 3 9
 1
 end_operator
 begin_operator
-moveinthemodel#registerrequest 
+movesync#data_merge#ev6 
 0
 3
-0 0 -1 1
-0 4 -1 0
-0 9 0 1
-1
-end_operator
-begin_operator
-moveinthemodel#reinitiaterequest 
-0
-3
-0 0 -1 1
-0 4 -1 0
-0 5 0 1
-1
-end_operator
-begin_operator
-moveinthemodel#rejectrequest 
-0
-3
-0 0 -1 1
-0 3 0 1
-0 8 -1 0
-1
-end_operator
-begin_operator
-moveinthemodel#skip_5 
-0
-3
-0 0 -1 1
-0 3 -1 0
-0 5 0 1
-0
-end_operator
-begin_operator
-moveinthemodel#tausplit_3 
-0
-4
-0 0 -1 1
-0 1 -1 0
-0 4 0 1
-0 6 -1 0
-0
-end_operator
-begin_operator
-movesync#decide#ev4 
-0
-5
 0 0 -1 0
-0 2 0 1
-0 5 -1 0
-0 7 0 1
-0 10 3 4
+0 1 10 4
+0 2 6 7
 0
 end_operator
 begin_operator
-movesync#examinethoroughly#ev3 
+movesync#data_merge#ev7 
 0
-4
+3
 0 0 -1 0
-0 1 0 1
-0 2 -1 0
-0 10 2 3
+0 1 10 4
+0 2 7 8
 0
 end_operator
 begin_operator
-movesync#examinethoroughly#ev3 
+movesync#query#ev2 
 0
-4
+3
 0 0 -1 0
-0 6 0 1
-0 7 -1 0
-0 10 2 3
+0 1 1 0
+0 2 2 3
 0
 end_operator
 begin_operator
-movesync#registerrequest#ev1 
+movesync#query#ev2 
 0
-4
+3
 0 0 -1 0
-0 4 -1 0
-0 9 0 1
-0 10 0 1
+0 1 6 7
+0 2 2 3
 0
 end_operator
 begin_operator
-movesync#rejectrequest#ev5 
+movesync#query#ev3 
 0
-4
+3
 0 0 -1 0
-0 3 0 1
-0 8 -1 0
-0 10 4 5
+0 1 1 0
+0 2 3 4
+0
+end_operator
+begin_operator
+movesync#query#ev3 
+0
+3
+0 0 -1 0
+0 1 6 7
+0 2 3 4
+0
+end_operator
+begin_operator
+movesync#report_generated#ev10 
+0
+3
+0 0 -1 0
+0 1 7 8
+0 2 1 10
+0
+end_operator
+begin_operator
+movesync#request#ev1 
+0
+3
+0 0 -1 0
+0 1 8 0
+0 2 0 2
+0
+end_operator
+begin_operator
+movesync#trasformation#ev4 
+0
+3
+0 0 -1 0
+0 1 2 3
+0 2 4 5
+0
+end_operator
+begin_operator
+movesync#trasformation#ev5 
+0
+3
+0 0 -1 0
+0 1 2 3
+0 2 5 6
+0
+end_operator
+begin_operator
+movesync#visualization#ev8 
+0
+3
+0 0 -1 0
+0 1 3 9
+0 2 8 9
+0
+end_operator
+begin_operator
+movesync#visualization#ev9 
+0
+3
+0 0 -1 0
+0 1 3 9
+0 2 9 1
 0
 end_operator
 0

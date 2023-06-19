@@ -1,5 +1,0 @@
-2, 'Request', 'Restore_access to_database', 'Query', 'Trasformation', 'Install_supplementary_resources', 'Launch_Algorithm', 'Visualization', 'Store_Results', 'Model_Generated',segment_0
-5, 'Request', 'Query', 'Trasformation', 'Launch_Algorithm', 'Visualization', 'Store_Results', 'Model_Generated',segment_1
-12, 'Request', 'Query', 'Trasformation', 'Data_Merge', 'Visualization', 'Report_Generated',segment_2
-296, 'Request', 'Restore_access to_database', 'Query', 'Trasformation', 'Launch_Algorithm', 'Visualization', 'Store_Results', 'Model_Generated',segment_3
-839, 'Request', 'Restore access to_database', 'Query', 'Trasformation', 'Data_Merge', 'Visualization', 'Report_Generated',segment_4

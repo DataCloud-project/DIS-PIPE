@@ -248,12 +248,21 @@ function printBtn_iniziale(listBrand) {
 	
 	iDiv.appendChild(LessButton);
 	LessButton.addEventListener ("click", function(e) {
-		console.log(e.target.class)
-		index = from_list.indexOf(e.target.class);
-		x= from_list.splice(index, 1);
-		//log_numer=log_numer-1
-		console.log(from_list)
-		e.target.closest('div').remove()
+
+		const queryFilterDiv = document.getElementById('query_filter_div');
+		const divCount = queryFilterDiv.getElementsByTagName('div').length;
+		if(divCount>1){
+			console.log(e.target.class)
+			index = from_list.indexOf(e.target.class);
+			x= from_list.splice(index, 1);
+			//log_numer=log_numer-1
+			console.log(from_list)
+			e.target.closest('div').remove()
+		}else{
+			alert("It is not possible to remove this log")
+		}
+
+
 	})
 
 	var select1 = document.getElementById("select_first_element");
@@ -348,12 +357,20 @@ function printBtn(listBrand) {
 	
 	iDiv.appendChild(LessButton);
 	LessButton.addEventListener ("click", function(e) {
-		console.log(e.target.class)
-		index = from_list.indexOf(e.target.class);
-		x= from_list.splice(index, 1);
-		//log_numer=log_numer-1
-		console.log(from_list)
-		e.target.closest('div').remove()
+
+		const queryFilterDiv = document.getElementById('query_filter_div');
+		const divCount = queryFilterDiv.getElementsByTagName('div').length;
+		if(divCount>1){
+			console.log(e.target.class)
+			index = from_list.indexOf(e.target.class);
+			x= from_list.splice(index, 1);
+			//log_numer=log_numer-1
+			console.log(from_list)
+			e.target.closest('div').remove()
+		}else{
+			alert("It is not possible to remove this log")
+		}
+
 	})
 
 	var select1 = document.getElementById("select_first_element");
@@ -502,6 +519,11 @@ function changeSecondTerm(variabile){
 		
 		document.getElementById("select_second_element").style.display="block"
 		document.getElementById("second_element_textarea").style.display="none"
+
+		document.getElementById("addCondition").disabled = false;
+
+	
+
 	}else if (variabile=="textarea"){
 		document.getElementById("select_first_element").style.display="none"
 		document.getElementById("first_element_textarea").style.display="block"
@@ -510,6 +532,9 @@ function changeSecondTerm(variabile){
 		
 		document.getElementById("select_second_element").style.display="none"
 		document.getElementById("second_element_textarea").style.display="block"
+
+		document.getElementById("addCondition").disabled = false;
+
 	}else if (variabile=="none"){
 		document.getElementById("select_first_element").style.display="none"
 		document.getElementById("first_element_textarea").style.display="none"
@@ -518,6 +543,8 @@ function changeSecondTerm(variabile){
 		
 		document.getElementById("second_element_textarea").style.display="none"
 		document.getElementById("select_second_element").style.display="none"
+
+		document.getElementById("addCondition").disabled = true;
 	}
 
 }

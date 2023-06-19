@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<log>
+	<string key="creator" value="RefModel_Generator"/>
+	<extension name="Concept" prefix="concept" uri="http://code.deckfour.org/xes/concept.xesext"/>
+	<extension name="Time" prefix="time" uri="http://code.deckfour.org/xes/time.xesext"/>
+	<extension name="Organizational" prefix="org" uri="http://code.deckfour.org/xes/org.xesext"/>
+	<global scope="trace">
+		<string key="concept:name" value="name"/>
+	</global>
+	<global scope="event">
+		<string key="concept:name" value="name"/>
+		<string key="StepPhaseID" value="string"/>
+		<date key="time:timestamp" value="2023-06-14T20:14:51.630566+01:00"/>
+		<string key="PipelineName" value="name"/>
+		<string key="PipelineID" value="string"/>
+		<string key="PipelineCommunicationMedium" value="string"/>
+		<string key="StepID" value="string"/>
+		<string key="StepType" value="string"/>
+	</global>
+	<classifier name="Activity" keys="name"/>
+	<classifier name="activity classifier" keys="Activity"/>
+	<trace>
+		<string key="concept:name" value="1"/>
+		<event>
+			<string key="concept:name" value="EVENT_12_END-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630643+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="0"/>
+			<string key="StepName" value="EVENT_12_END"/>
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT_2_START-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630674+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="1"/>
+			<string key="StepName" value="EVENT_2_START"/>
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630701+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="2"/>
+			<string key="StepName" value="analyzeData"/>
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630727+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="3"/>
+			<string key="StepName" value="createRecord"/>
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630753+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="4"/>
+			<string key="StepName" value="endAnalysis"/>
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630781+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="5"/>
+			<string key="StepName" value="receiveBloodMeasure"/>
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630822+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="6"/>
+			<string key="StepName" value="receiveDataFromMq"/>
+		</event>
+		<event>
+			<string key="concept:name" value="receiveScaleMeasure-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630865+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="7"/>
+			<string key="StepName" value="receiveScaleMeasure"/>
+		</event>
+		<event>
+			<string key="concept:name" value="receiveTempMeasure-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630901+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="8"/>
+			<string key="StepName" value="receiveTempMeasure"/>
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630928+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="9"/>
+			<string key="StepName" value="sendDataToMq"/>
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-06-14T20:14:51.630956+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="provaprova"/>
+			<string key="StepID" value="10"/>
+			<string key="StepName" value="startAnalysis"/>
+		</event>
+	</trace>
+</log>

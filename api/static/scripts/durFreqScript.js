@@ -170,7 +170,7 @@ function getAllUsedVariables(variable){
 	document.getElementById("variants_original").innerHTML=String(variant.length)
 	
 	if(variant.length==0){
-		console.log("inside")
+		//console.log("inside")
 		variant=document.getElementById("variants_alternative").innerHTML.replace("[","").replace("]","").split(",")
 	}
 
