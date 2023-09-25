@@ -135,7 +135,9 @@ function sendDslListenerReq2(){
 function sendDslRequest(posizione){
 
 	console.log("sendDslRequest")
-
+	
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	
     var dsl = createDsl();
 	
     var oReq = new XMLHttpRequest();
@@ -161,13 +163,32 @@ function sendDslRequest(posizione){
 
 }
 
-//function to order the steps before exporting the DSL
-function orderDslSteps(){
-	//iterate on the dslsteps 
-}
-
 //function used to compute the DSL
 function createDsl(){
+	// set path slider to 0 to have a sequence
+	document.getElementById("myPathF").value = 0;
+	document.getElementById("pathF").value = "0";
+	request(0);
+	getMap(1);
+	// translation from DFG to matrix
+	console.log("Translating from map to matrix");
+	// get graph in an array
+	graphTextF = getGraphText('frequency');
+	graphTextP = getGraphText();
+	// get nodes in an array 
+	graphNodesF = getGraphNodes(graphTextF);
+	graphNodesP = getGraphNodes(graphTextP);
+	graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+	// get edges in an array
+	graphEdgesF = getGraphEdges(graphTextF, false);
+	graphEdgesP = getGraphEdges(graphTextP, true);
+	graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+	getLabeledGraphEdges(graphNodes, graphEdges);
+	// get final matrix ready for dsl conversion
+	dslSteps = getDslSteps(graphNodes, graphEdges);
+	// translating from matrix to DSL
+	console.log("Translating from matrix to DSL");
+	//translate to DSL
 	var parameters = [];
 	var count = [];
 	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
@@ -195,7 +216,7 @@ function createDsl(){
 }
 // function used to export the DSL to file
 function exportDsl(){
-	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	console.log("Exporting DSL");
 	var dsl = createDsl();
-	download(dsl, pipelineName, '.txt');
+	download(dsl, document.getElementById('mapTitle').innerHTML.replace('.xes', ''), '.txt');
 }
