@@ -1,88 +1,77 @@
 Pipeline Example {
 	communicationMedium: medium WEB_SERVICE
 	steps:
-		- data-processing step check_ticket
+		- data-processing step s
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '9',
-				Duration: '0s'
+				Frequency: 't',
+				Duration: 'a'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step decide
+		- data-processing step r
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '9',
-				Duration: '0s'
+				Frequency: 'e',
+				Duration: 'g'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step examine_casually
+		- data-processing step e
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '6',
-				Duration: '0s'
+				Frequency: 'x',
+				Duration: 'a'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step examine_thoroughly
+		- data-processing step c
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
-				Duration: '0s'
+				Frequency: 'h',
+				Duration: 'e'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step pay_compensation
+		- data-processing step d
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
-				Duration: '0s'
+				Frequency: 'e',
+				Duration: 'c'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step register_request
+		- data-processing step p
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '6',
-				Duration: '0s'
+				Frequency: 'a',
+				Duration: 'y'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step reinitiate_request
+		- data-processing step e
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: '3',
-				Duration: '0s'
-			}
-			resourceProvider: Accesspoint
-			executionRequirement:
-				hardRequirements:
-
-
-		- data-processing step reject_request
-			implementation: container-implementation image: ''
-			environmentParameters: {
-				Frequency: '3',
-				Duration: '0s'
+				Frequency: 'n',
+				Duration: 'd'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
