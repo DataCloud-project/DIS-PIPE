@@ -338,8 +338,6 @@ function getLabeledGraphEdges(graphNodes, graphEdges){
 
 function getDslSteps(graphNodes, graphEdges){
 	// from graphNodes and graphEdges get a unique matrix ready for conversion
-	console.log(graphNodes)
-	console.log(graphEdges)
 	var dslSteps = [];
 	// for each node 
 	for (var i=0; i<graphNodes.length; i++){
@@ -355,8 +353,27 @@ function getDslSteps(graphNodes, graphEdges){
 			}
 		}
 	}
-	console.log(dslSteps)
-	return dslSteps;
+	// order DSL steps
+	console.log(graphNodes);
+	console.log(graphEdges);
+	console.log(dslSteps);
+	var orderedDslSteps = [];
+	//populate start and end
+	orderedDslSteps[0] = ['start', '', ''];
+	orderedDslSteps[dslSteps.length-1] = ['end', '', ''];
+	// for each step in ordered dslSteps (except 'end')
+	for (var i=0; i<orderedDslSteps.length-1; i++){
+		// for each step in dslSteps
+		for (var j=0; j<dslSteps.length-1; j++){
+			// if the current ordered step is the current step
+			if (orderedDslSteps[i][0] == dslSteps[j][0][0]){
+				// push the successor of the step in the next ordered step
+				orderedDslSteps[i+1] = dslSteps[j][1] ;
+			}
+		}
+	}
+	console.log(orderedDslSteps);
+	return orderedDslSteps;
 }
 
 // Function to download data to a file
