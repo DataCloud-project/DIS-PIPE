@@ -226,8 +226,8 @@ function getGraphText(selector){
 	// then remove from the array the first 3 and last 2 elements which are useless
 	var graphText = graphText.split('\n\t').splice(3);
 	graphText.pop();
-	graphText.pop();
-
+	if ( selector != 'frequency' )
+		graphText.pop();
 	return graphText;
 }
 
@@ -282,7 +282,7 @@ function getCombinedNodes(graphNodesF, graphNodesP){
 }
 
 function getGraphEdges(graphText, boolFreq){
-	//obtain the array of edges with parameter
+	//obtain the array of edges with parameters
 	var graphEdges = [];
 	var j = 0;
 	// cycle throguh the graph array 
@@ -307,7 +307,7 @@ function getGraphEdges(graphText, boolFreq){
 				graphEdges[j][2] = '';
 			}
 			j++;
-		}	
+		}
 	}
 	
 	return graphEdges;
@@ -338,6 +338,8 @@ function getLabeledGraphEdges(graphNodes, graphEdges){
 
 function getDslSteps(graphNodes, graphEdges){
 	// from graphNodes and graphEdges get a unique matrix ready for conversion
+	console.log(graphNodes)
+	console.log(graphEdges)
 	var dslSteps = [];
 	// for each node 
 	for (var i=0; i<graphNodes.length; i++){
@@ -346,13 +348,14 @@ function getDslSteps(graphNodes, graphEdges){
 		dslSteps[i].push([graphNodes[i][1], graphNodes[i][2], graphNodes[i][3]]);
 		// then, for each edge
 		for (var j=0; j<graphEdges.length; j++){
-			// check if the current node is the successor
-			if (graphEdges[j][1] == graphNodes[i][1]){
-				// in that case save the info about the edge
-				dslSteps[i].push([graphEdges[j][0], graphEdges[j][2], graphEdges[j][3]]);
+			// check if the current node is the predecessor
+			if (graphEdges[j][0] == graphNodes[i][1]){
+				//save the info about the edge (successor name, frequency, duration)
+				dslSteps[i].push([graphEdges[j][1], graphEdges[j][2], graphEdges[j][3]]);
 			}
 		}
 	}
+	console.log(dslSteps)
 	return dslSteps;
 }
 
