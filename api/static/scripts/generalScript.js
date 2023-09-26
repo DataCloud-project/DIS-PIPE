@@ -368,7 +368,11 @@ function getDslSteps(graphNodes, graphEdges){
 			// if the current ordered step is the current step
 			if (orderedDslSteps[i][0] == dslSteps[j][0][0]){
 				// push the successor of the step in the next ordered step
-				orderedDslSteps[i+1] = dslSteps[j][1] ;
+				orderedDslSteps[i+1] = dslSteps[j][1];
+				// remove the current item from the array to reduce iterations
+				dslSteps.splice(j,1);
+				// exit from the cycle to reduce iterations
+				break;
 			}
 		}
 	}
