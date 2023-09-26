@@ -197,16 +197,16 @@ function createDsl(){
 	//iterate on the steps
 	for (var i=0; i<dslSteps.length; i++){
 		// if the step is start or end, just skip
-		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
+		if ( dslSteps[i][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0].replaceAll(' ', '_') == 'end')
 			continue;
 		// first iteration no \n
 		if (i != 0)
 			dsl = dsl + '\n\n';
 		count[i] = 0;
 		// get parameters of the current step in a string
-		parameters[i] = "\t\t\t\tFrequency: '" + dslSteps[i][0][1] + "',\n\t\t\t\tDuration: '" + dslSteps[i][0][2] +"'";
+		parameters[i] = "\t\t\t\tFrequency: '" + dslSteps[i][1] + "',\n\t\t\t\tDuration: '" + dslSteps[i][2] +"'";
 		// print the whole string for each step
-		dsl = dsl + '\t\t- data-processing step ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		dsl = dsl + '\t\t- data-processing step ' + dslSteps[i][0].replaceAll(' ', '_');
 		// --------------------------------------------------------------------------------------------*/
 		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n';
 	}
