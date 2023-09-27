@@ -169,7 +169,6 @@ function createDsl(){
 	document.getElementById("myPathF").value = 0;
 	document.getElementById("pathF").value = "0";
 	request(0);
-	getMap(1);
 	// translation from DFG to matrix
 	console.log("Translating from map to matrix");
 	// get graph in an array

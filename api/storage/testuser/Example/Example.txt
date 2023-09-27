@@ -1,77 +1,57 @@
 Pipeline Example {
 	communicationMedium: medium WEB_SERVICE
 	steps:
-		- data-processing step s
+
+
+		- data-processing step register_request
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: 't',
-				Duration: 'a'
+				Frequency: '',
+				Duration: '3s'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step r
+		- data-processing step examine_casually
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: 'e',
-				Duration: 'g'
+				Frequency: '3',
+				Duration: '3s'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step e
+		- data-processing step check_ticket
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: 'x',
-				Duration: 'a'
+				Frequency: '4',
+				Duration: '1s'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step c
+		- data-processing step decide
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: 'h',
-				Duration: 'e'
+				Frequency: '6',
+				Duration: '6s'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
 				hardRequirements:
 
 
-		- data-processing step d
+		- data-processing step pay_compensation
 			implementation: container-implementation image: ''
 			environmentParameters: {
-				Frequency: 'e',
-				Duration: 'c'
-			}
-			resourceProvider: Accesspoint
-			executionRequirement:
-				hardRequirements:
-
-
-		- data-processing step p
-			implementation: container-implementation image: ''
-			environmentParameters: {
-				Frequency: 'a',
-				Duration: 'y'
-			}
-			resourceProvider: Accesspoint
-			executionRequirement:
-				hardRequirements:
-
-
-		- data-processing step e
-			implementation: container-implementation image: ''
-			environmentParameters: {
-				Frequency: 'n',
-				Duration: 'd'
+				Frequency: '3',
+				Duration: '2s'
 			}
 			resourceProvider: Accesspoint
 			executionRequirement:
