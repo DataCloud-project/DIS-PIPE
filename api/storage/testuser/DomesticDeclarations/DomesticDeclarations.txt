@@ -1,0 +1,189 @@
+Pipeline DomesticDeclarations {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step Declaration_APPROVED_by_ADMINISTRATION
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '8202',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_APPROVED_by_BUDGET_OWNER
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '2820',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_APPROVED_by_PRE_APPROVER
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '685',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_FINAL_APPROVED_by_SUPERVISOR
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '10131',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_FOR_APPROVAL_by_ADMINISTRATION
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_FOR_APPROVAL_by_PRE_APPROVER
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_FOR_APPROVAL_by_SUPERVISOR
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_REJECTED_by_ADMINISTRATION
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '952',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_REJECTED_by_BUDGET_OWNER
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '59',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_REJECTED_by_EMPLOYEE
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1365',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_REJECTED_by_MISSING
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '91',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_REJECTED_by_PRE_APPROVER
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '86',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_REJECTED_by_SUPERVISOR
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '293',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_SAVED_by_EMPLOYEE
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '135',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Declaration_SUBMITTED_by_EMPLOYEE
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '11531',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Payment_Handled
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '10044',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Request_Payment
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '10040',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}
