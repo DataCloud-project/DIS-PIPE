@@ -1,0 +1,9 @@
+api/client_secrets.json
+api/key/ca_bundle.crt
+api/key/certificate.crt
+api/key/private.key
+api/key/localhost/localhost.crt
+api/key/localhost/localhost.csr
+api/key/localhost/localhost.key
+api/key/localhost/localhost.ext
+api/key/localhost/localhostd.key
