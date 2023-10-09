@@ -152,25 +152,43 @@ function closePP(){
 //function to handle all the map
 function getMap(bool) {
 		
-    
+  
     if (bool){
+        // get graph in an array
+        /*TOCHANGE
+        graphTextF = getGraphText('frequency');
+        graphTextP = getGraphText();
+        // get nodes in an array 
+        graphNodesF = getGraphNodes(graphTextF);
+        graphNodesP = getGraphNodes(graphTextP);
+        graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+        // get edges in an array
+        graphEdgesF = getGraphEdges(graphTextF, false);
+        graphEdgesP = getGraphEdges(graphTextP, true);
+        graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+        getLabeledGraphEdges(graphNodes, graphEdges);
+        // get final matrix ready for dsl conversion
+        dslSteps = getDslSteps(graphNodes, graphEdges);
+        console.log(dslSteps)
+        */
         meanDurationFP= getAllDuration("mean");
-		meanEdgeDuration= getAllEdgeDuration("mean");
-		// getAllUsedVariables("activities")
-		var array_Activities=getAllUsedVariables("activities")
-		for (const act of array_Activities) {
-			// console.log(act);
-			addCheckbox(act)
-		}
-		$(document).ready(function(){
-			$('#filter_by').on('change', function(e) {
-				e.stopImmediatePropagation();
-				var typeD=this.value
-				// console.log(typeD)
-				
-			});
-		});
+        meanEdgeDuration= getAllEdgeDuration("mean");
+        // getAllUsedVariables("activities")
+        var array_Activities=getAllUsedVariables("activities")
+        for (const act of array_Activities) {
+            // console.log(act);
+            addCheckbox(act)
+        }
+        $(document).ready(function(){
+            $('#filter_by').on('change', function(e) {
+                e.stopImmediatePropagation();
+                var typeD=this.value
+                // console.log(typeD)
+                
+            });
+        });
     }
+
     
     var selected = document.querySelector('input[name="mytabs"]:checked').value;
     var sample;

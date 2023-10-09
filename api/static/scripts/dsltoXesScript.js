@@ -171,9 +171,9 @@ function getDslbyNameListener(){
 
 
 function getDslbyNameListener() {
-    
 
     
+    //tochange
     const p1 = new Promise((resolve, reject) => {
         console.log("Function: getDslbyNameListener()");
           
@@ -204,7 +204,7 @@ function getDslbyNameListener() {
 
         // Resolve the promise with the result
         resolve({ tr_name, log_name }); 
-        }
+        }    
     });
     p1.then(
         (value) => {

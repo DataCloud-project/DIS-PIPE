@@ -67,6 +67,31 @@ from backend_classes import *
 
 app_query = Blueprint('app_query',__name__)
 
+def process_string(input_string):
+    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
+        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
+        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("home/jacopo/Desktop/DIS-PIPE/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("/home/jacopo/Desktop/DIS-PIPE/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    else :
+        return input_string
+
 @app_query.route('/queryDb', methods=['GET', 'POST'])
 def queryDb():
     
@@ -76,19 +101,46 @@ def queryDb():
     print(session["log_path"])
     #databaseName="TestDB"
     #databaseName="datacloud"
-    runningXesPath=session["log_path"]
+    #runningXesPath=session["log_path"]
+    
 
     # Print the current working directory
     working_dir=os.getcwd()
     print("Current working directory: {0}".format(os.getcwd()))
     
-    os.chdir(working_dir+'/queryJar')
+    #os.chdir(working_dir+'/queryJar')
 
     #os.system("java -jar XesToRxesPlus.jar "+databaseName+" "+runningXesPath)
-    os.system("java -jar XesToRxesPlus_Postgres.jar "+session["databaseName"]+" "+runningXesPath)
-    print("  \n")
+    #os.system("java -jar XesToRxesPlus_Postgres.jar "+session["databaseName"]+" "+runningXesPath)
+    #print("  \n")
+    
+    
+    db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_Postgres.jar")
+    if(db_data_jar_path[0]=="/"):
+        print("sono all'inizio jar")
+        db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_Postgres.jar")[1:]
 
-    os.chdir(working_dir)
+    runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])
+    if(runningXesPath[0]=="/"):
+        print("sono all'inizio xes")
+        runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])[1:]
+
+        
+
+    db_data_jar = subprocess.Popen( "java -jar " + db_data_jar_path +" "+session["databaseName"]+" "+runningXesPath, shell=True)
+    
+    session["pid_database"]=db_data_jar.pid
+
+    try:
+        print('Running in process', session["pid_database"])
+        db_data_jar.wait()    
+    except subprocess.TimeoutExpired:
+        print('Timed out - killing', session["pid_database"])
+        #process_jar.kill()
+        os.kill(session["pid_database"], signal.SIGKILL) #or signal.SIGKILL     
+    print("\njar database done")
+    
+    #os.chdir(working_dir)
 
     return "query_done"
 

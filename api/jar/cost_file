@@ -1,9 +1,8 @@
-event_12_end-end 1 1
-createrecord-end 1 1
-event_2_start-end 1 1
-receivebloodmeasure-end 1 1
-receivedatafrommq-end 1 1
-endanalysis-end 1 1
-analyzedata-end 1 1
-senddatatomq-end 1 1
-startanalysis-end 1 1
+paycompensation-end 1 1
+decide-end 1 1
+registerrequest-end 1 1
+checkticket-end 1 1
+examinethoroughly-end 1 1
+examinecasually-end 1 1
+reinitiaterequest-end 1 1
+rejectrequest-end 1 1

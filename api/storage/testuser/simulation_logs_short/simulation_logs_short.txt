@@ -1,7 +1,7 @@
 Pipeline simulation_logs_short {
 	communicationMedium: medium WEB_SERVICE
 	steps:
-		- data-processing step EVENT_12_END
+		- data-processing step EVENT12END
 			implementation: container-implementation image: ''
 			environmentParameters: {
 				Frequency: '7',
@@ -12,7 +12,7 @@ Pipeline simulation_logs_short {
 				hardRequirements:
 
 
-		- data-processing step EVENT_2_START
+		- data-processing step EVENT2START
 			implementation: container-implementation image: ''
 			environmentParameters: {
 				Frequency: '7',

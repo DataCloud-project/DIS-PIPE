@@ -135,7 +135,7 @@ function sendDslListenerReq2(){
 function sendDslRequest(posizione){
 
 	console.log("sendDslRequest")
-	
+	//TOCHANGE
 	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
 	
     var dsl = createDsl();
@@ -163,7 +163,9 @@ function sendDslRequest(posizione){
 
 }
 
+
 //function used to compute the DSL
+//TOCHANGE
 function createDsl(){
 	// set path slider to 0 to have a sequence
 	document.getElementById("myPathF").value = 0;
@@ -214,6 +216,7 @@ function createDsl(){
 	return dsl;
 }
 // function used to export the DSL to file
+//TOCHANGE
 function exportDsl(){
 	console.log("Exporting DSL");
 	var dsl = createDsl();

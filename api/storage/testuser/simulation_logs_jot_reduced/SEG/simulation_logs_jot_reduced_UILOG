@@ -1,0 +1,73 @@
+2022-09-19 12:19:54+0200+01:00 Request Request ON Other_Activity
+2022-09-19 12:33:50+0200+01:00 Restore access to_database Restore access to_database ON Other_Activity
+2022-09-19 12:41:10+0200+01:00 Query Query ON Other_Activity
+2022-09-19 12:41:10+0200+01:00 X X ON X
+2022-09-19 12:42:44+0200+01:00 Trasformation Trasformation ON Other_Activity
+2022-09-19 12:42:44+0200+01:00 X X ON X
+2022-09-19 12:42:54+0200+01:00 Data_Merge Data_Merge ON Other_Activity
+2022-09-19 12:50:49+0200+01:00 Visualization Visualization ON Other_Activity
+2022-09-19 12:50:49+0200+01:00 Report_Generated Report_Generated ON Other_Activity
+2023-01-18 12:09:32+0100+01:00 Request Request ON Other_Activity
+2023-01-18 12:34:10+0100+01:00 Query Query ON Other_Activity
+2023-01-18 12:34:10+0100+01:00 X X ON X
+2023-01-18 12:40:59+0100+01:00 Trasformation Trasformation ON Other_Activity
+2023-01-18 12:40:59+0100+01:00 X X ON X
+2023-01-18 12:41:09+0100+01:00 Data_Merge Data_Merge ON Other_Activity
+2023-01-18 12:43:07+0100+01:00 Visualization Visualization ON Other_Activity
+2023-01-18 12:43:07+0100+01:00 Report_Generated Report_Generated ON Other_Activity
+2023-07-04 05:59:45+0200+01:00 Request Request ON Other_Activity
+2023-07-04 08:40:08+0200+01:00 Restore access to_database Restore access to_database ON Other_Activity
+2023-07-04 09:04:53+0200+01:00 Query Query ON Other_Activity
+2023-07-04 09:04:53+0200+01:00 X X ON X
+2023-07-04 09:08:28+0200+01:00 Trasformation Trasformation ON Other_Activity
+2023-07-04 09:08:28+0200+01:00 X X ON X
+2023-07-04 09:08:38+0200+01:00 Data_Merge Data_Merge ON Other_Activity
+2023-07-04 09:10:11+0200+01:00 Visualization Visualization ON Other_Activity
+2023-07-04 09:10:11+0200+01:00 Report_Generated Report_Generated ON Other_Activity
+2023-08-03 08:45:08+0200+01:00 Request Request ON Other_Activity
+2023-08-03 09:06:40+0200+01:00 Restore_access to_database Restore_access to_database ON Other_Activity
+2023-08-03 10:00:08+0200+01:00 Query Query ON Other_Activity
+2023-08-03 10:00:08+0200+01:00 X X ON X
+2023-08-03 10:07:51+0200+01:00 Trasformation Trasformation ON Other_Activity
+2023-08-03 10:07:51+0200+01:00 X X ON X
+2023-08-03 11:34:31+0200+01:00 Launch_Algorithm Launch_Algorithm ON Other_Activity
+2023-08-03 11:35:01+0200+01:00 Visualization Visualization ON Other_Activity
+2023-08-03 11:35:29+0200+01:00 Store_Results Store_Results ON Other_Activity
+2023-08-03 11:35:29+0200+01:00 Model_Generated Model_Generated ON Other_Activity
+2023-12-21 00:27:52+0100+01:00 Request Request ON Other_Activity
+2023-12-21 01:47:48+0100+01:00 Restore access to_database Restore access to_database ON Other_Activity
+2023-12-21 02:27:10+0100+01:00 Query Query ON Other_Activity
+2023-12-21 02:27:10+0100+01:00 X X ON X
+2023-12-21 02:28:42+0100+01:00 Trasformation Trasformation ON Other_Activity
+2023-12-21 02:28:42+0100+01:00 X X ON X
+2023-12-21 02:28:52+0100+01:00 Data_Merge Data_Merge ON Other_Activity
+2023-12-21 02:34:07+0100+01:00 Visualization Visualization ON Other_Activity
+2023-12-21 02:34:07+0100+01:00 Report_Generated Report_Generated ON Other_Activity
+2024-01-22 06:24:27+0100+01:00 Request Request ON Other_Activity
+2024-01-22 07:05:50+0100+01:00 Restore_access to_database Restore_access to_database ON Other_Activity
+2024-01-22 07:20:50+0100+01:00 Query Query ON Other_Activity
+2024-01-22 07:20:50+0100+01:00 X X ON X
+2024-01-22 07:25:28+0100+01:00 Trasformation Trasformation ON Other_Activity
+2024-01-22 07:25:28+0100+01:00 X X ON X
+2024-01-22 08:37:38+0100+01:00 Launch_Algorithm Launch_Algorithm ON Other_Activity
+2024-01-22 08:37:59+0100+01:00 Visualization Visualization ON Other_Activity
+2024-01-22 08:38:28+0100+01:00 Store_Results Store_Results ON Other_Activity
+2024-01-22 08:38:28+0100+01:00 Model_Generated Model_Generated ON Other_Activity
+2024-02-15 16:25:31+0100+01:00 Request Request ON Other_Activity
+2024-02-15 17:15:14+0100+01:00 Restore access to_database Restore access to_database ON Other_Activity
+2024-02-15 17:35:20+0100+01:00 Query Query ON Other_Activity
+2024-02-15 17:35:20+0100+01:00 X X ON X
+2024-02-15 17:36:02+0100+01:00 Trasformation Trasformation ON Other_Activity
+2024-02-15 17:36:02+0100+01:00 X X ON X
+2024-02-15 17:36:12+0100+01:00 Data_Merge Data_Merge ON Other_Activity
+2024-02-15 17:41:09+0100+01:00 Visualization Visualization ON Other_Activity
+2024-02-15 17:41:09+0100+01:00 Report_Generated Report_Generated ON Other_Activity
+2024-07-08 18:34:33+0200+01:00 Request Request ON Other_Activity
+2024-07-08 20:30:03+0200+01:00 Restore access to_database Restore access to_database ON Other_Activity
+2024-07-08 21:09:01+0200+01:00 Query Query ON Other_Activity
+2024-07-08 21:09:01+0200+01:00 X X ON X
+2024-07-08 21:12:21+0200+01:00 Trasformation Trasformation ON Other_Activity
+2024-07-08 21:12:21+0200+01:00 X X ON X
+2024-07-08 21:12:31+0200+01:00 Data_Merge Data_Merge ON Other_Activity
+2024-07-08 21:14:31+0200+01:00 Visualization Visualization ON Other_Activity
+2024-07-08 21:14:31+0200+01:00 Report_Generated Report_Generated ON Other_Activity

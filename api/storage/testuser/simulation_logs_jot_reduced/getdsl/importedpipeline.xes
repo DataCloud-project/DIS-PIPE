@@ -10,7 +10,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name"/>
 		<string key="StepPhaseID" value="string"/>
-		<date key="time:timestamp" value="2023-06-17T15:22:01.171170+01:00"/>
+		<date key="time:timestamp" value="2023-07-12T10:25:19.979425+01:00"/>
 		<string key="PipelineName" value="name"/>
 		<string key="PipelineID" value="string"/>
 		<string key="PipelineCommunicationMedium" value="string"/>
@@ -24,122 +24,133 @@
 		<event>
 			<string key="concept:name" value="Data_Merge-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171296+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979575+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
+			<string key="PipelineName" value="simulationjot"/>
 			<string key="StepID" value="0"/>
 			<string key="StepName" value="Data_Merge"/>
 		</event>
 		<event>
-			<string key="concept:name" value="Launch_Algorithm-End"/>
+			<string key="concept:name" value="Install_supplementary_resources-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171348+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979637+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
+			<string key="PipelineName" value="simulationjot"/>
 			<string key="StepID" value="1"/>
+			<string key="StepName" value="Install_supplementary_resources"/>
+		</event>
+		<event>
+			<string key="concept:name" value="Launch_Algorithm-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979683+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="2"/>
 			<string key="StepName" value="Launch_Algorithm"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Model_Generated-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171402+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979723+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="2"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="3"/>
 			<string key="StepName" value="Model_Generated"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Query-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171464+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979763+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="3"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="4"/>
 			<string key="StepName" value="Query"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Report_Generated-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171509+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979804+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="4"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="5"/>
 			<string key="StepName" value="Report_Generated"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Request-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171553+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979845+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="5"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="6"/>
 			<string key="StepName" value="Request"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Restore_access_to_database-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171597+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979884+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="6"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="7"/>
 			<string key="StepName" value="Restore_access_to_database"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Restore_access_to_database-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171638+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979924+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="7"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="8"/>
 			<string key="StepName" value="Restore_access_to_database"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Store_Results-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171678+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.979965+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="8"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="9"/>
 			<string key="StepName" value="Store_Results"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Trasformation-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171719+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.980008+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="9"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="10"/>
 			<string key="StepName" value="Trasformation"/>
 		</event>
 		<event>
 			<string key="concept:name" value="Visualization-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-06-17T15:22:01.171753+01:00"/>
+			<date key="time:timestamp" value="2023-07-12T10:25:19.980047+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="simulation_logs_jot_reduced"/>
-			<string key="StepID" value="10"/>
+			<string key="PipelineName" value="simulationjot"/>
+			<string key="StepID" value="11"/>
 			<string key="StepName" value="Visualization"/>
 		</event>
 	</trace>

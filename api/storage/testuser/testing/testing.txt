@@ -1,0 +1,35 @@
+Pipeline testing {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step 1-1
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '10',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step 2-1
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '10',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step 2-2
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '10',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

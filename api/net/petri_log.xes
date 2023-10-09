@@ -12,7 +12,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name" />
 		<string key="StepPhaseID" value="string" />
-		<date key="time:timestamp" value="2023-06-19T01:54:26.638473+01:00" />
+		<date key="time:timestamp" value="2023-07-28T13:06:20.687491+01:00" />
 		<string key="PipelineName" value="name" />
 		<string key="PipelineID" value="string" />
 		<string key="PipelineCommunicationMedium" value="string" />
@@ -22,94 +22,84 @@
 	<trace>
 		<string key="concept:name" value="1" />
 		<event>
-			<string key="concept:name" value="EVENT_12_END-End" />
+			<string key="concept:name" value="checkTicket-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638540+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687552+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="0" />
-			<string key="StepName" value="EVENT_12_END" />
+			<string key="StepName" value="checkTicket" />
 		</event>
 		<event>
-			<string key="concept:name" value="EVENT_2_START-End" />
+			<string key="concept:name" value="decide-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638562+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687573+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="1" />
-			<string key="StepName" value="EVENT_2_START" />
+			<string key="StepName" value="decide" />
 		</event>
 		<event>
-			<string key="concept:name" value="analyzeData-End" />
+			<string key="concept:name" value="examineCasually-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638582+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687593+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="2" />
-			<string key="StepName" value="analyzeData" />
+			<string key="StepName" value="examineCasually" />
 		</event>
 		<event>
-			<string key="concept:name" value="createRecord-End" />
+			<string key="concept:name" value="examineThoroughly-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638603+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687616+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="3" />
-			<string key="StepName" value="createRecord" />
+			<string key="StepName" value="examineThoroughly" />
 		</event>
 		<event>
-			<string key="concept:name" value="endAnalysis-End" />
+			<string key="concept:name" value="payCompensation-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638623+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687637+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="4" />
-			<string key="StepName" value="endAnalysis" />
+			<string key="StepName" value="payCompensation" />
 		</event>
 		<event>
-			<string key="concept:name" value="receiveBloodMeasure-End" />
+			<string key="concept:name" value="registerRequest-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638640+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687656+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="5" />
-			<string key="StepName" value="receiveBloodMeasure" />
+			<string key="StepName" value="registerRequest" />
 		</event>
 		<event>
-			<string key="concept:name" value="receiveDataFromMq-End" />
+			<string key="concept:name" value="reinitiateRequest-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638658+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687674+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="6" />
-			<string key="StepName" value="receiveDataFromMq" />
+			<string key="StepName" value="reinitiateRequest" />
 		</event>
 		<event>
-			<string key="concept:name" value="sendDataToMq-End" />
+			<string key="concept:name" value="rejectRequest-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638678+01:00" />
+			<date key="time:timestamp" value="2023-07-28T13:06:20.687693+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="CascianiTraceSingle" />
 			<string key="StepID" value="7" />
-			<string key="StepName" value="sendDataToMq" />
-		</event>
-		<event>
-			<string key="concept:name" value="startAnalysis-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638698+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
-			<string key="StepID" value="8" />
-			<string key="StepName" value="startAnalysis" />
+			<string key="StepName" value="rejectRequest" />
 		</event>
 	</trace>
 </log>

@@ -32,10 +32,149 @@ function renameProjectListener(){
 	document.getElementById('mapTitle').innerHTML = this.responseText
 }
 
+/////
+
+
+
+////
+
+
+
 function update(){
+	console.log("update normale")
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
+	sessionStorage.setItem('segmentatore', 'NO');
+
+}
+function updateSegmentator(){
+	console.log("update segmentator")
+	document.getElementById('updated').value = true;
+	document.getElementById('file').click();
+	sessionStorage.setItem('segmentatore', 'YES');
+}
+
+function openDecisionMakingSegementator(){
+	document.getElementById("blocker_choseEndSeg").style.display = "block";
+    document.getElementById("choseEndSeg").style.display = "block";
+	const svgContent = document.getElementById('graphContainer').innerHTML;
+	console.log(svgContent)
+	// Assuming you have the SVG content in a variable called 'svgContent'
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(svgContent, "image/svg+xml");
+
+	// Get all elements with class "node"
+	const nodes = doc.getElementsByClassName("node");
+
+	// Iterate over the nodes and extract the text values
+	const nodeTexts = [];
+	for (const node of nodes) {
+	const textElement = node.querySelector("text");
+	if (textElement) {
+		const text = textElement.textContent.trim();
+		if (text !== "") {
+			const modifiedText = text.replace(/\([^)]*\)/g, "").trim();
+			nodeTexts.push(modifiedText);
+		}
+	}
+
+	}
+	console.log(nodeTexts);
+
+	const select = document.getElementById("endSegAct");
+
+    // Step 3-5: Add options to the select element
+    nodeTexts.forEach((option) => {
+      const optionElement = document.createElement("option");
+      optionElement.text = option;
+      optionElement.value = option;
+      select.appendChild(optionElement);
+    });
+}
+
+function closechoseEndSeg(){
+	document.getElementById("blocker_choseEndSeg").style.display = "none";
+    document.getElementById("choseEndSeg").style.display = "none";
+}
+
+var selectCount = 1; 
+function addNewEndAct(){
+	console.log("ora fai add")
+	var containerEnd = document.getElementById("containerEnd");
+
+	// Get the addEnd0 div
+	//var addEnd0 = document.getElementById("addEnd0");
+	var button = event.target;
+  
+	// Get the parent div to be removed
+	var addEnd0 = button.parentNode;
 	
+	// Clone the addEnd0 div
+	var clonedDiv = addEnd0.cloneNode(true);
+
+	/********/
+	
+	var selectElement = addEnd0.querySelector("select");
+  
+	var selectedOption = selectElement.options[selectElement.selectedIndex].text;
+	
+	const isPresent = segmemtator_array.includes(selectedOption);
+	if(isPresent){
+		alert("already present")
+	}else{
+	segmemtator_array.push(selectedOption)
+	var spanElement = document.createElement("span");
+	spanElement.textContent = selectedOption;
+
+
+	/**********/
+	
+	// Generate a new ID for the cloned div
+	//var newDivId = "addEnd" + containerEnd.children.length;
+	var newDivId = "addEnd" + selectCount;
+	selectCount=selectCount+1
+	
+	// Set the new ID for the cloned div
+	clonedDiv.id = newDivId;
+  
+	// Append the cloned div to the containerEnd element
+	containerEnd.appendChild(clonedDiv);
+
+	selectElement.parentNode.replaceChild(spanElement, selectElement);
+	
+	}
+	
+	
+}
+
+function removeEndAct(){
+	// Get the button element that triggered the function
+	var button = event.target;
+  
+	// Get the parent div to be removed
+	var divToRemove = button.parentNode;
+	var spanElement = divToRemove.querySelector("span");
+	console.log(spanElement.innerHTML)
+	elementToRemove=spanElement.innerHTML
+
+	segmemtator_array = segmemtator_array.filter((element) => element !== elementToRemove);
+	console.log(segmemtator_array); // Output: [1, 2, 4, 5]
+	
+	// Get the parent element of the div
+	var parent = divToRemove.parentNode;
+	
+	// Remove the div from its parent
+	parent.removeChild(divToRemove);
+}
+
+function normalORsegmentator(){
+	document.getElementById("blocker_importMenu").style.display = "block";
+    document.getElementById("importMenu").style.display = "block";
+}
+
+function closeImportMenu(){
+	document.getElementById("blocker_importMenu").style.display = "none";
+    document.getElementById("importMenu").style.display = "none";
 }
 
 function changeConstraint(){
@@ -226,7 +365,7 @@ function getGraphText(selector){
 	// then remove from the array the first 3 and last 2 elements which are useless
 	var graphText = graphText.split('\n\t').splice(3);
 	graphText.pop();
-	if ( selector != 'frequency' )
+	if ( selector != 'frequency' ) //TOCHANGE
 		graphText.pop();
 	return graphText;
 }
@@ -282,7 +421,7 @@ function getCombinedNodes(graphNodesF, graphNodesP){
 }
 
 function getGraphEdges(graphText, boolFreq){
-	//obtain the array of edges with parameters
+	//obtain the array of edges with parameter
 	var graphEdges = [];
 	var j = 0;
 	// cycle throguh the graph array 
@@ -307,7 +446,7 @@ function getGraphEdges(graphText, boolFreq){
 				graphEdges[j][2] = '';
 			}
 			j++;
-		}
+		}	
 	}
 	
 	return graphEdges;

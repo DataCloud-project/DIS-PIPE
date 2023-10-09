@@ -1,0 +1,8 @@
+check_ticket-end 1 1
+decide-end 1 1
+examine_casually-end 1 1
+pay_compensation-end 1 1
+register_request-end 1 1
+examine_thoroughly-end 1 1
+reinitiate_request-end 1 1
+reject_request-end 1 1

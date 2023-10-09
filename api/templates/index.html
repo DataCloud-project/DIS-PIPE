@@ -26,6 +26,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<title>DIS-PIPE</title>
 	<script>
+		//TOCHANGE
 		//document.addEventListener('readystatechange', event => { sendDslRequest('start')});
 	</script>
 	<style>
@@ -101,20 +102,15 @@ function showImg(img) {
 		x.style.width= "100%";
     }
 }
-/*
-window.onload = function () {
-	if (document.readyState == "complete") { 
-		document.getElementById("loadingMessage").style.visibility = "hidden";	
-	}	
-}
-*/
-function checkRefresh()
-{
+
+
+function checkRefresh(value){
 		 // This is a fresh page load
 		
     	if ( window.history.replaceState ) {
         	window.history.replaceState( null, null, window.location.href );
     	}
+		
 
 		$("#firstpagemap").click();
 		$("#myRange").val("100");
@@ -150,13 +146,19 @@ function checkRefresh()
     	//oReq.addEventListener("load", jarListener);
 		oReq.open("POST", frontend+"deleteRemap", true);
     	oReq.send()
-		// You may want to add code here special for
-		// fresh page loads
+
+		var segmentatoreValore = sessionStorage.getItem('segmentatore');
+		console.log(segmentatoreValore)
+		if(segmentatoreValore=="YES"){
+			openDecisionMakingSegementator()
+			sessionStorage.setItem('segmentatore', 'NO');
+		}
 
 }
 </script>
 
 
+<!-- <body onLoad="checkRefresh('NO')"> TOCHANGE-->
 <body onLoad="checkRefresh()">
 
 <p id="path_frontend" style="display:none">{{path}}</p>
@@ -221,6 +223,56 @@ function checkRefresh()
 		</form>
 	</div>
 
+	<div class="blocker" id="blocker_importMenu" onclick="closeImportMenu()"></div>
+	<div class="form-popup" id="importMenu">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="import_title" style="color:#7a4791; text-align: center; font-size: 25px;">Import</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnImport">
+					<span>Chose Import</span>
+					<button style=" padding: 10px;" type="button" onclick="update()"> Normal </button>
+					<button style=" padding: 10px;" type="button" onclick="updateSegmentator()"> Segmentator </button>
+				</div>
+			</center>
+		</form>
+	</div>
+
+	<div class="blocker" id="blocker_choseEndSeg"></div>
+	<div class="form-popup" id="choseEndSeg">
+		<form class="form-container">
+		<!-- <form action="/indexSeg" method='POST' enctype = "multipart/form-data"> -->
+			<div style="text-align: center">
+				<span id="import_title" style="color:#7a4791; text-align: center; font-size: 25px;">Segmentator</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center id="containerEnd">
+				<div id="addEnd0">
+					<p style="display: inline;">Add end activity</p>
+					<select name="endSegAct" id="endSegAct">
+						
+					</select>
+					<button style=" padding: 10px;" type="button" onclick="addNewEndAct()"> add </button>
+					<button style=" padding: 10px;" type="button" onclick="removeEndAct()"> remove </button>
+				</div>
+				
+			</center>
+			<br>
+			<br>
+			<div style="text-align: center; display: block;">								
+				<button type="button" class="btn applycancel" style="margin-right:10px; font-size:13px" onclick="closechoseEndSeg()">Cancel</button>
+				<button type="button" class="btn applycancel" style="font-size:13px" onclick="startSegmentator()">Apply</button>	
+				<button style="display: none;" id="bottone_prova" onclick="reloadLikeForm()">A</button>		
+				<!-- <input type="hidden" value="{{updated}}" name="updated" id="updatedSeg">	 -->
+				<!-- <input type="submit" id="submitSeg" value="Update">			 -->
+			</div>
+		</form>
+	</div>
+
 
 
 	<input type="checkbox" id="check" onclick="mainMenu()">
@@ -268,7 +320,8 @@ function checkRefresh()
 			<div class="bottomleft" id="bottomleft">
 				<form action="/index" method='POST' enctype = "multipart/form-data">
 					<!-- <button type="button" for="myFile">Import log</button> -->
-					<button id="import_log" class="menu_button" type="button" onclick="update()">Import log</button>
+					<button id="normal_segmentator" class="menu_button" type="button" onclick="normalORsegmentator()">Import log</button>
+					<button style="display: none;" id="import_log" class="menu_button" type="button" onclick="update()">Import log</button>
 					<input accept=".xes" type='file' id="file" name="file" style="display:none">
 					<br />
 					
@@ -1572,7 +1625,10 @@ function checkRefresh()
 
 <!--(script with getMap())-->
 <script>
+	var numero_tracce
+	var numero_variante
 
+	var segmemtator_array=[]
 	var tr_array = "";
     //array con i nomi delle attività del log
     var log_array="";

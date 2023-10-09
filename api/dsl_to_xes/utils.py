@@ -85,6 +85,16 @@ def process_string(input_string):
         # Replace "PrepaidTravelCost" with "Example" in the relevant part
         # Combine the modified relevant part with "storage/testuser/"
         return relevant_part
+    elif "home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("home/jacopo/Desktop/DIS-PIPE/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("/home/jacopo/Desktop/DIS-PIPE/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
     else :
         return input_string
 
