@@ -1,0 +1,1159 @@
+<log xes.version="1849.2016" xes.creator="Fluxicon Disco">
+	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
+	<extension name="Lifecycle" prefix="lifecycle" uri="http://www.xes-standard.org/lifecycle.xesext" />
+	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
+	<extension name="Organizational" prefix="org" uri="http://www.xes-standard.org/org.xesext" />
+	<global scope="trace">
+		<string key="concept:name" value="name" />
+		<string key="variant" value="string" />
+		<int key="variant-index" value="0" />
+		<string key="processId" value="string" />
+	</global>
+	<global scope="event">
+		<string key="concept:name" value="name" />
+		<string key="lifecycle:transition" value="transition" />
+		<string key="org:resource" value="resource" />
+		<date key="time:timestamp" value="2022-02-28T16:37:13.194+01:00" />
+		<string key="Activity" value="string" />
+		<string key="Resource" value="string" />
+		<string key="elementId" value="string" />
+	</global>
+	<classifier name="Activity" keys="Activity" />
+	<classifier name="Resource" keys="Resource" />
+	<string key="lifecycle:model" value="standard" />
+	<string key="creator" value="Fluxicon Disco" />
+	<string key="library" value="Fluxicon Octane" />
+	<trace>
+		<string key="concept:name" value="60" />
+		<string key="variant" value="Variant 4" />
+		<int key="variant-index" value="4" />
+		<string key="creator" value="Fluxicon Disco" />
+		<string key="processId" value="Process_1" />
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:01:00.009+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="BloodSens-000003" />
+			<date key="time:timestamp" value="2022-02-28T10:01:00.009+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000003" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="BloodSens-000003" />
+			<date key="time:timestamp" value="2022-02-28T10:01:00.570+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000003" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:00.570+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:00.963+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:00.963+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:01.294+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:18.340+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:18.477+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:42.694+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:01:42.810+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:02:12.228+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:02:13.826+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:02:46.504+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:02:47.408+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:21.931+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:22.177+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:03:22.177+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:03:23.777+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="BloodSens-000002" />
+			<date key="time:timestamp" value="2022-02-28T10:03:24.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000002" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="BloodSens-000002" />
+			<date key="time:timestamp" value="2022-02-28T10:03:25.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000002" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:26.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:27.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:28.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:29.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:30.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:31.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:32.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:33.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:34.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:35.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:36.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:37.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:03:38.777+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:03:39.777+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveTempMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="TempSens-000008" />
+			<date key="time:timestamp" value="2022-02-28T10:03:40.777+01:00" />
+			<string key="Activity" value="receiveTempMeasure" />
+			<string key="Resource" value="TempSens-000008" />
+			<string key="elementId" value="Activity_1wugku2" />
+			<string key="resourceId" value="qbp_0e58b448-3c97-7d41-24c3-4036df0a56a9" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveTempMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="TempSens-000008" />
+			<date key="time:timestamp" value="2022-02-28T10:03:41.777+01:00" />
+			<string key="Activity" value="receiveTempMeasure" />
+			<string key="Resource" value="TempSens-000008" />
+			<string key="elementId" value="Activity_1wugku2" />
+			<string key="resourceId" value="qbp_0e58b448-3c97-7d41-24c3-4036df0a56a9" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:42.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:43.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:44.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:45.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:46.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:47.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:48.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:49.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:50.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:51.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:52.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:53.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:03:54.777+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:03:55.777+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="BloodSens-000007" />
+			<date key="time:timestamp" value="2022-02-28T10:03:56.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000007" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="BloodSens-000007" />
+			<date key="time:timestamp" value="2022-02-28T10:03:57.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000007" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:58.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:03:59.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:00.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:01.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:02.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:03.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:04.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:05.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:06.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:07.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:08.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:09.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:10.777+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:11.777+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveTempMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="TempSens-000009" />
+			<date key="time:timestamp" value="2022-02-28T10:04:12.777+01:00" />
+			<string key="Activity" value="receiveTempMeasure" />
+			<string key="Resource" value="TempSens-000009" />
+			<string key="elementId" value="Activity_1wugku2" />
+			<string key="resourceId" value="qbp_0e58b448-3c97-7d41-24c3-4036df0a56a9" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveTempMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="TempSens-000009" />
+			<date key="time:timestamp" value="2022-02-28T10:04:13.777+01:00" />
+			<string key="Activity" value="receiveTempMeasure" />
+			<string key="Resource" value="TempSens-000009" />
+			<string key="elementId" value="Activity_1wugku2" />
+			<string key="resourceId" value="qbp_0e58b448-3c97-7d41-24c3-4036df0a56a9" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:14.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:15.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:16.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:17.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:18.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:19.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:20.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:21.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:22.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:23.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:24.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:25.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:26.777+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:27.777+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="BloodSens-000003" />
+			<date key="time:timestamp" value="2022-02-28T10:04:28.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000003" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="BloodSens-000003" />
+			<date key="time:timestamp" value="2022-02-28T10:04:29.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000003" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:30.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:31.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:32.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:33.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:34.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:35.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:36.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:37.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:38.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:39.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:40.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:41.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:42.777+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT2START" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:43.777+01:00" />
+			<string key="Activity" value="EVENT2START" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gjguyy" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="BloodSens-000004" />
+			<date key="time:timestamp" value="2022-02-28T10:04:44.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000004" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveBloodMeasure" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="BloodSens-000004" />
+			<date key="time:timestamp" value="2022-02-28T10:04:45.777+01:00" />
+			<string key="Activity" value="receiveBloodMeasure" />
+			<string key="Resource" value="BloodSens-000004" />
+			<string key="elementId" value="Activity_0bf5drw" />
+			<string key="resourceId" value="QBP_DEFAULT_RESOURCE" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:46.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="sendDataToMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:47.777+01:00" />
+			<string key="Activity" value="sendDataToMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_175b5zm" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:48.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="receiveDataFromMq" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="MQ-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:49.777+01:00" />
+			<string key="Activity" value="receiveDataFromMq" />
+			<string key="Resource" value="MQ-000001" />
+			<string key="elementId" value="Activity_1jvlw48" />
+			<string key="resourceId" value="qbp_28ea3dd5-8268-a446-c987-8bbc1c3f390d" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:50.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="createRecord" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:51.777+01:00" />
+			<string key="Activity" value="createRecord" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_14s221a" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:52.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="startAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:53.777+01:00" />
+			<string key="Activity" value="startAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1ryq35g" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:54.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="analyzeData" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:55.777+01:00" />
+			<string key="Activity" value="analyzeData" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1xe7czy" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="start" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:56.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="endAnalysis" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="DB-000001" />
+			<date key="time:timestamp" value="2022-02-28T10:04:57.777+01:00" />
+			<string key="Activity" value="endAnalysis" />
+			<string key="Resource" value="DB-000001" />
+			<string key="elementId" value="Activity_1v68o9x" />
+			<string key="resourceId" value="qbp_02cb4868-6953-36e7-7ac4-7f1520a4c387" />
+		</event>
+		<event>
+			<string key="concept:name" value="EVENT12END" />
+			<string key="lifecycle:transition" value="complete" />
+			<string key="org:resource" value="" />
+			<date key="time:timestamp" value="2022-02-28T10:04:58.777+01:00" />
+			<string key="Activity" value="EVENT12END" />
+			<string key="Resource" value="" />
+			<string key="elementId" value="Event_0gu15f7" />
+		</event>
+	</trace>
+</log>

@@ -1,0 +1,53 @@
+This is a nonunit task.
+reading input... [t=0s]
+Simplifying transitions... done!
+done reading input! [t=0s]
+building causal graph...done! [t=0s]
+packing state variables...Variables: 3
+Bytes per state: 4
+done! [t=0s]
+done initalizing global data [t=0s]
+Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+Initializing blind search heuristic...
+f = 0 [1 evaluated, 0 expanded, t=0s, 3752 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
+f = 1 [3 evaluated, 1 expanded, t=0s, 3752 KB]
+f = 2 [6 evaluated, 3 expanded, t=0s, 3752 KB]
+f = 3 [12 evaluated, 7 expanded, t=0s, 3752 KB]
+f = 4 [23 evaluated, 14 expanded, t=0s, 3752 KB]
+f = 5 [32 evaluated, 23 expanded, t=0s, 3752 KB]
+f = 6 [38 evaluated, 32 expanded, t=0s, 3752 KB]
+f = 7 [42 evaluated, 38 expanded, t=0s, 3752 KB]
+f = 8 [46 evaluated, 42 expanded, t=0s, 3752 KB]
+f = 9 [49 evaluated, 46 expanded, t=0s, 3752 KB]
+Solution found!
+Actual search time: 0s [t=0s]
+moveinthemodel#event12end  (1)
+moveinthemodel#event2start  (1)
+moveinthemodel#analyzedata  (1)
+movesync#createrecord#ev1  (0)
+movesync#endanalysis#ev2  (0)
+moveinthelog#event12end#ev3-evend  (1)
+moveinthemodel#receivebloodmeasure  (1)
+moveinthemodel#receivedatafrommq  (1)
+moveinthemodel#receivetempmeasure  (1)
+moveinthemodel#senddatatomq  (1)
+moveinthemodel#startanalysis  (1)
+Plan length: 11 step(s).
+Plan cost: 9
+Initial state h value: 0.
+Expanded 49 state(s).
+Reopened 0 state(s).
+Evaluated 50 state(s).
+Evaluations: 50
+Generated 56 state(s).
+Dead ends: 0 state(s).
+Expanded until last jump: 46 state(s).
+Reopened until last jump: 0 state(s).
+Evaluated until last jump: 49 state(s).
+Generated until last jump: 55 state(s).
+Number of registered states: 50
+Search time: 0s
+Total time: 0s
+Solution found.
+Peak memory: 3756 KB

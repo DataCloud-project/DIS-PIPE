@@ -12,7 +12,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name" />
 		<string key="StepPhaseID" value="string" />
-		<date key="time:timestamp" value="2023-06-19T01:54:26.638473+01:00" />
+		<date key="time:timestamp" value="2023-10-10T15:20:35.852448+01:00" />
 		<string key="PipelineName" value="name" />
 		<string key="PipelineID" value="string" />
 		<string key="PipelineCommunicationMedium" value="string" />
@@ -22,94 +22,124 @@
 	<trace>
 		<string key="concept:name" value="1" />
 		<event>
-			<string key="concept:name" value="EVENT_12_END-End" />
+			<string key="concept:name" value="Data_Merge-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638540+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852545+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="0" />
-			<string key="StepName" value="EVENT_12_END" />
+			<string key="StepName" value="Data_Merge" />
 		</event>
 		<event>
-			<string key="concept:name" value="EVENT_2_START-End" />
+			<string key="concept:name" value="Install_supplementary_resources-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638562+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852655+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="1" />
-			<string key="StepName" value="EVENT_2_START" />
+			<string key="StepName" value="Install_supplementary_resources" />
 		</event>
 		<event>
-			<string key="concept:name" value="analyzeData-End" />
+			<string key="concept:name" value="Launch_Algorithm-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638582+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852687+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="2" />
-			<string key="StepName" value="analyzeData" />
+			<string key="StepName" value="Launch_Algorithm" />
 		</event>
 		<event>
-			<string key="concept:name" value="createRecord-End" />
+			<string key="concept:name" value="Model_Generated-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638603+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852715+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="3" />
-			<string key="StepName" value="createRecord" />
+			<string key="StepName" value="Model_Generated" />
 		</event>
 		<event>
-			<string key="concept:name" value="endAnalysis-End" />
+			<string key="concept:name" value="Query-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638623+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852752+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="4" />
-			<string key="StepName" value="endAnalysis" />
+			<string key="StepName" value="Query" />
 		</event>
 		<event>
-			<string key="concept:name" value="receiveBloodMeasure-End" />
+			<string key="concept:name" value="Report_Generated-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638640+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852789+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="5" />
-			<string key="StepName" value="receiveBloodMeasure" />
+			<string key="StepName" value="Report_Generated" />
 		</event>
 		<event>
-			<string key="concept:name" value="receiveDataFromMq-End" />
+			<string key="concept:name" value="Request-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638658+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852824+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="6" />
-			<string key="StepName" value="receiveDataFromMq" />
+			<string key="StepName" value="Request" />
 		</event>
 		<event>
-			<string key="concept:name" value="sendDataToMq-End" />
+			<string key="concept:name" value="Restore_access_to_database-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638678+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852852+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="7" />
-			<string key="StepName" value="sendDataToMq" />
+			<string key="StepName" value="Restore_access_to_database" />
 		</event>
 		<event>
-			<string key="concept:name" value="startAnalysis-End" />
+			<string key="concept:name" value="Restore_access_to_database-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-06-19T01:54:26.638698+01:00" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852874+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="trueTest" />
+			<string key="PipelineName" value="simulation_jot" />
 			<string key="StepID" value="8" />
-			<string key="StepName" value="startAnalysis" />
+			<string key="StepName" value="Restore_access_to_database" />
+		</event>
+		<event>
+			<string key="concept:name" value="Store_Results-End" />
+			<string key="StepPhaseID" value="1" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852896+01:00" />
+			<string key="PipelineID" value="1" />
+			<string key="PipelineCommunicationMedium" value="medium  " />
+			<string key="PipelineName" value="simulation_jot" />
+			<string key="StepID" value="9" />
+			<string key="StepName" value="Store_Results" />
+		</event>
+		<event>
+			<string key="concept:name" value="Trasformation-End" />
+			<string key="StepPhaseID" value="1" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852917+01:00" />
+			<string key="PipelineID" value="1" />
+			<string key="PipelineCommunicationMedium" value="medium  " />
+			<string key="PipelineName" value="simulation_jot" />
+			<string key="StepID" value="10" />
+			<string key="StepName" value="Trasformation" />
+		</event>
+		<event>
+			<string key="concept:name" value="Visualization-End" />
+			<string key="StepPhaseID" value="1" />
+			<date key="time:timestamp" value="2023-10-10T15:20:35.852938+01:00" />
+			<string key="PipelineID" value="1" />
+			<string key="PipelineCommunicationMedium" value="medium  " />
+			<string key="PipelineName" value="simulation_jot" />
+			<string key="StepID" value="11" />
+			<string key="StepName" value="Visualization" />
 		</event>
 	</trace>
 </log>

@@ -1,0 +1,46 @@
+Pipeline tellulog2 {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step rabbitmq
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '154',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step tellucare_api
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '56',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step tellucare_application_logic
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '56',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step tellucloud_fhir
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '311',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

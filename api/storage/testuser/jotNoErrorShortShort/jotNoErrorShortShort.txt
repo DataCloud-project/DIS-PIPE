@@ -1,0 +1,134 @@
+Pipeline jotNoErrorShortShort {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step Data_Merge
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '135',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Install_supplementary_resources
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Launch_Algorithm
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '54',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Model_Generated
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '54',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Query
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '189',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Report_Generated
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '135',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Request
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '189',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Restore
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '132',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Restore_access
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '54',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Store_Results
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '54',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Trasformation
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '189',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step Visualization
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '189',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

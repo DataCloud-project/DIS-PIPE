@@ -1,0 +1,34 @@
+This is a task.
+reading input... [t=0s]
+Simplifying transitions... done!
+done reading input! [t=0s]
+building causal graph...done! [t=0s]
+packing state variables...Variables: 4
+Bytes per state: 4
+done! [t=0s]
+done initalizing global data [t=0s]
+Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+Initializing blind search heuristic...
+f = 0 [1 evaluated, 0 expanded, t=0s, 3760 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3760 KB]
+Solution found!
+Actual search time: 0s [t=0s]
+sync-d-t0t1  (0)
+Plan length: 1 step(s).
+Plan cost: 0
+Initial state h value: 0.
+Expanded 2 state(s).
+Reopened 0 state(s).
+Evaluated 3 state(s).
+Evaluations: 3
+Generated 3 state(s).
+Dead ends: 0 state(s).
+Expanded until last jump: 0 state(s).
+Reopened until last jump: 0 state(s).
+Evaluated until last jump: 1 state(s).
+Generated until last jump: 0 state(s).
+Number of registered states: 3
+Search time: 0s
+Total time: 0s
+Solution found.
+Peak memory: 3764 KB

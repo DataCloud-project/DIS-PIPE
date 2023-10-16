@@ -1,0 +1,90 @@
+Pipeline CascianiTraceSingle {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step checkTicket
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '9',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step decide
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '9',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step examineCasually
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step examineThoroughly
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '3',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step payCompensation
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '3',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step registerRequest
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step reinitiateRequest
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '3',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step rejectRequest
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '3',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

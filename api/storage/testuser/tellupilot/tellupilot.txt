@@ -1,0 +1,68 @@
+Pipeline tellupilot {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step application_logic-send
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step fhir-device
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step fhir-observation
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step fhir-patient
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step fhir-task
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step tellu_api-receive
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '100',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

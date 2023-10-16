@@ -1,0 +1,3 @@
+translate/translate.py Conformance_Checking/domain.pddl Conformance_Checking/problem.pddl < output.sas
+preprocess/preprocess < output.sas
+./search/downward --heuristic "hff=ff()" --heuristic "hcea=cea()" --search "lazy_greedy([hff, hcea], preferred=[hff, hcea])" < output

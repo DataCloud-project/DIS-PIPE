@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <log xes.version="1849-2016" xes.features="nested-attributes" xmlns="http://www.xes-standard.org/">
-	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
 	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
 	<extension name="Organizational" prefix="org" uri="http://www.xes-standard.org/org.xesext" />
+	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
 	<string key="origin" value="csv" />
 	<trace>
 		<string key="concept:name" value="3" />

@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<log xes.version="1849-2016" xes.features="nested-attributes" xmlns="http://www.xes-standard.org/">
+	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
+	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
+	<extension name="Lifecycle" prefix="lifecycle" uri="http://www.xes-standard.org/lifecycle.xesext" />
+	<global scope="trace">
+		<string key="concept:name" value="Example Trace" />
+	</global>
+	<global scope="event">
+		<string key="org:resource" value="John Doe" />
+	</global>
+	<trace>
+		<string key="concept:name" value="Trace1" />
+		<event>
+			<string key="concept:name" value="registerRequest" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="registerRequest" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="50" />
+			<date key="start_timestamp" value="2010-12-30T14:32:00+01:00" />
+			<date key="time:timestamp" value="2010-12-30T14:32:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="0" />
+			<string key="@@approx_bh_overall_wasted_time" value="0" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineCasually" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="examineCasually" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2010-12-30T15:06:00+01:00" />
+			<date key="time:timestamp" value="2010-12-30T15:06:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="2040" />
+			<string key="@@approx_bh_overall_wasted_time" value="2040" />
+			<string key="@@approx_bh_this_wasted_time" value="2040" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2010-12-30T16:34:00+01:00" />
+			<date key="time:timestamp" value="2010-12-30T16:34:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="7320" />
+			<string key="@@approx_bh_overall_wasted_time" value="7320" />
+			<string key="@@approx_bh_this_wasted_time" value="5280" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-06T09:18:00+01:00" />
+			<date key="time:timestamp" value="2011-01-06T09:18:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="161160" />
+			<string key="@@approx_bh_overall_wasted_time" value="161160" />
+			<string key="@@approx_bh_this_wasted_time" value="153840" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="reinitiateRequest" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="reinitiateRequest" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-06T12:18:00+01:00" />
+			<date key="time:timestamp" value="2011-01-06T12:18:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="171960" />
+			<string key="@@approx_bh_overall_wasted_time" value="171960" />
+			<string key="@@approx_bh_this_wasted_time" value="10800" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineThoroughly" />
+			<string key="org:resource" value="Sean" />
+			<string key="Activity" value="examineThoroughly" />
+			<string key="Resource" value="Sean" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-06T13:06:00+01:00" />
+			<date key="time:timestamp" value="2011-01-06T13:06:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="174840" />
+			<string key="@@approx_bh_overall_wasted_time" value="174840" />
+			<string key="@@approx_bh_this_wasted_time" value="2880" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-08T11:43:00+01:00" />
+			<date key="time:timestamp" value="2011-01-08T11:43:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="224880" />
+			<string key="@@approx_bh_overall_wasted_time" value="224880" />
+			<string key="@@approx_bh_this_wasted_time" value="50040" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-09T09:55:00+01:00" />
+			<date key="time:timestamp" value="2011-01-09T09:55:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="224880" />
+			<string key="@@approx_bh_overall_wasted_time" value="224880" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="payCompensation" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="payCompensation" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-15T10:45:00+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="404880" />
+			<string key="@@approx_bh_overall_wasted_time" value="404880" />
+			<string key="@@approx_bh_this_wasted_time" value="180000" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace2" />
+		<event>
+			<string key="concept:name" value="registerRequest" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="registerRequest" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="50" />
+			<date key="start_timestamp" value="2011-01-15T10:45:01+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:02+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="0" />
+			<string key="@@approx_bh_overall_wasted_time" value="0" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-15T10:45:03+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:04+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="2400" />
+			<string key="@@approx_bh_overall_wasted_time" value="2400" />
+			<string key="@@approx_bh_this_wasted_time" value="2400" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineCasually" />
+			<string key="org:resource" value="Sean" />
+			<string key="Activity" value="examineCasually" />
+			<string key="Resource" value="Sean" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-15T10:45:05+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:06+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="9840" />
+			<string key="@@approx_bh_overall_wasted_time" value="9840" />
+			<string key="@@approx_bh_this_wasted_time" value="7440" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-15T10:45:07+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:08+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="143400" />
+			<string key="@@approx_bh_overall_wasted_time" value="143400" />
+			<string key="@@approx_bh_this_wasted_time" value="133560" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="payCompensation" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="payCompensation" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-15T10:45:09+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:10+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="235680" />
+			<string key="@@approx_bh_overall_wasted_time" value="235680" />
+			<string key="@@approx_bh_this_wasted_time" value="92280" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace3" />
+		<event>
+			<string key="concept:name" value="registerRequest" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="registerRequest" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="50" />
+			<date key="start_timestamp" value="2011-01-15T10:45:11+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:12+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="0" />
+			<string key="@@approx_bh_overall_wasted_time" value="0" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineThoroughly" />
+			<string key="org:resource" value="Sue" />
+			<string key="Activity" value="examineThoroughly" />
+			<string key="Resource" value="Sue" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-15T10:45:13+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:14+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="32640" />
+			<string key="@@approx_bh_overall_wasted_time" value="32640" />
+			<string key="@@approx_bh_this_wasted_time" value="32640" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-15T10:45:15+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:16+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="159000" />
+			<string key="@@approx_bh_overall_wasted_time" value="159000" />
+			<string key="@@approx_bh_this_wasted_time" value="126360" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-15T10:45:17+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:18+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="180960" />
+			<string key="@@approx_bh_overall_wasted_time" value="180960" />
+			<string key="@@approx_bh_this_wasted_time" value="21960" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="rejectRequest" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="rejectRequest" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-15T10:45:19+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:20+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="228120" />
+			<string key="@@approx_bh_overall_wasted_time" value="228120" />
+			<string key="@@approx_bh_this_wasted_time" value="47160" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace4" />
+		<event>
+			<string key="concept:name" value="registerRequest" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="registerRequest" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="50" />
+			<date key="start_timestamp" value="2011-01-15T10:45:21+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:22+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="0" />
+			<string key="@@approx_bh_overall_wasted_time" value="0" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineCasually" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="examineCasually" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-15T10:45:23+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:24+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="3840" />
+			<string key="@@approx_bh_overall_wasted_time" value="3840" />
+			<string key="@@approx_bh_this_wasted_time" value="3840" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-15T10:45:25+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:26+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="40800" />
+			<string key="@@approx_bh_overall_wasted_time" value="40800" />
+			<string key="@@approx_bh_this_wasted_time" value="36960" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-15T10:45:27+01:00" />
+			<date key="time:timestamp" value="2011-01-15T10:45:28+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="42600" />
+			<string key="@@approx_bh_overall_wasted_time" value="42600" />
+			<string key="@@approx_bh_this_wasted_time" value="1800" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="payCompensation" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="payCompensation" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-16T11:47:00+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="223080" />
+			<string key="@@approx_bh_overall_wasted_time" value="223080" />
+			<string key="@@approx_bh_this_wasted_time" value="180480" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace5" />
+		<event>
+			<string key="concept:name" value="registerRequest" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="registerRequest" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="50" />
+			<date key="start_timestamp" value="2011-01-16T11:47:01+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:02+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="0" />
+			<string key="@@approx_bh_overall_wasted_time" value="0" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineCasually" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="examineCasually" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-16T11:47:03+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:04+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="40440" />
+			<string key="@@approx_bh_overall_wasted_time" value="40440" />
+			<string key="@@approx_bh_this_wasted_time" value="40440" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-16T11:47:05+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:06+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="64680" />
+			<string key="@@approx_bh_overall_wasted_time" value="64680" />
+			<string key="@@approx_bh_this_wasted_time" value="24240" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-16T11:47:07+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:08+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="87960" />
+			<string key="@@approx_bh_overall_wasted_time" value="87960" />
+			<string key="@@approx_bh_this_wasted_time" value="23280" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="reinitiateRequest" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="reinitiateRequest" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-16T11:47:09+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:10+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="134160" />
+			<string key="@@approx_bh_overall_wasted_time" value="134160" />
+			<string key="@@approx_bh_this_wasted_time" value="46200" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-16T11:47:11+01:00" />
+			<date key="time:timestamp" value="2011-01-16T11:47:12+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="235860" />
+			<string key="@@approx_bh_overall_wasted_time" value="235860" />
+			<string key="@@approx_bh_this_wasted_time" value="101700" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineCasually" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="examineCasually" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-16T15:50:00+01:00" />
+			<date key="time:timestamp" value="2011-01-16T15:50:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="244680" />
+			<string key="@@approx_bh_overall_wasted_time" value="244680" />
+			<string key="@@approx_bh_this_wasted_time" value="8820" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-19T11:18:00+01:00" />
+			<date key="time:timestamp" value="2011-01-19T11:18:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="332160" />
+			<string key="@@approx_bh_overall_wasted_time" value="332160" />
+			<string key="@@approx_bh_this_wasted_time" value="87480" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="reinitiateRequest" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="reinitiateRequest" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-20T12:48:00+01:00" />
+			<date key="time:timestamp" value="2011-01-20T12:48:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="373560" />
+			<string key="@@approx_bh_overall_wasted_time" value="373560" />
+			<string key="@@approx_bh_this_wasted_time" value="41400" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineCasually" />
+			<string key="org:resource" value="Sue" />
+			<string key="Activity" value="examineCasually" />
+			<string key="Resource" value="Sue" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-21T09:06:00+01:00" />
+			<date key="time:timestamp" value="2011-01-21T09:06:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="396240" />
+			<string key="@@approx_bh_overall_wasted_time" value="396240" />
+			<string key="@@approx_bh_this_wasted_time" value="22680" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-21T11:34:00+01:00" />
+			<date key="time:timestamp" value="2011-01-21T11:34:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="405120" />
+			<string key="@@approx_bh_overall_wasted_time" value="405120" />
+			<string key="@@approx_bh_this_wasted_time" value="8880" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-23T13:12:00+01:00" />
+			<date key="time:timestamp" value="2011-01-23T13:12:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="424680" />
+			<string key="@@approx_bh_overall_wasted_time" value="424680" />
+			<string key="@@approx_bh_this_wasted_time" value="19560" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="rejectRequest" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="rejectRequest" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-24T14:56:00+01:00" />
+			<date key="time:timestamp" value="2011-01-24T14:56:00+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="453240" />
+			<string key="@@approx_bh_overall_wasted_time" value="453240" />
+			<string key="@@approx_bh_this_wasted_time" value="28560" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace6" />
+		<event>
+			<string key="concept:name" value="registerRequest" />
+			<string key="org:resource" value="Pete" />
+			<string key="Activity" value="registerRequest" />
+			<string key="Resource" value="Pete" />
+			<string key="Costs" value="50" />
+			<date key="start_timestamp" value="2011-01-24T14:56:01+01:00" />
+			<date key="time:timestamp" value="2011-01-24T14:56:02+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="0" />
+			<string key="@@approx_bh_overall_wasted_time" value="0" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="checkTicket" />
+			<string key="org:resource" value="Mike" />
+			<string key="Activity" value="checkTicket" />
+			<string key="Resource" value="Mike" />
+			<string key="Costs" value="100" />
+			<date key="start_timestamp" value="2011-01-24T14:56:03+01:00" />
+			<date key="time:timestamp" value="2011-01-24T14:56:04+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="25440" />
+			<string key="@@approx_bh_overall_wasted_time" value="25440" />
+			<string key="@@approx_bh_this_wasted_time" value="25440" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="examineThoroughly" />
+			<string key="org:resource" value="Sean" />
+			<string key="Activity" value="examineThoroughly" />
+			<string key="Resource" value="Sean" />
+			<string key="Costs" value="400" />
+			<date key="start_timestamp" value="2011-01-24T14:56:05+01:00" />
+			<date key="time:timestamp" value="2011-01-24T14:56:06+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="43080" />
+			<string key="@@approx_bh_overall_wasted_time" value="43080" />
+			<string key="@@approx_bh_this_wasted_time" value="17640" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="decide" />
+			<string key="org:resource" value="Sara" />
+			<string key="Activity" value="decide" />
+			<string key="Resource" value="Sara" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-24T14:56:07+01:00" />
+			<date key="time:timestamp" value="2011-01-24T14:56:08+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="43080" />
+			<string key="@@approx_bh_overall_wasted_time" value="43080" />
+			<string key="@@approx_bh_this_wasted_time" value="0" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<string key="concept:name" value="rejectRequest" />
+			<string key="org:resource" value="Ellen" />
+			<string key="Activity" value="rejectRequest" />
+			<string key="Resource" value="Ellen" />
+			<string key="Costs" value="200" />
+			<date key="start_timestamp" value="2011-01-24T14:56:09+01:00" />
+			<date key="time:timestamp" value="2011-01-24T14:56:10+01:00" />
+			<string key="@@duration" value="0.0" />
+			<string key="@@approx_bh_partial_cycle_time" value="0" />
+			<string key="@@approx_bh_partial_lead_time" value="146520" />
+			<string key="@@approx_bh_overall_wasted_time" value="146520" />
+			<string key="@@approx_bh_this_wasted_time" value="103440" />
+			<string key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+</log>

@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<log xes.version="1849-2016" xes.features="nested-attributes" xmlns="http://www.xes-standard.org/">
+	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
+	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
+	<string key="origin" value="csv" />
+	<trace>
+		<string key="concept:name" value="Trace1" />
+		<event>
+			<int key="Unnamed: 0" value="0" />
+			<string key="concept:name" value="registerRequest" />
+			<string key="start_timestamp" value="2010-12-30 11:02:00" />
+			<string key="time:timestamp" value="2010-12-30 11:02:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="0" />
+			<int key="@@approx_bh_overall_wasted_time" value="0" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="1" />
+			<string key="concept:name" value="registerRequest" />
+			<string key="start_timestamp" value="2010-12-30 11:32:00" />
+			<string key="time:timestamp" value="2010-12-30 11:32:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="1800" />
+			<int key="@@approx_bh_overall_wasted_time" value="1800" />
+			<int key="@@approx_bh_this_wasted_time" value="1800" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="2" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2010-12-30 12:12:00" />
+			<string key="time:timestamp" value="2010-12-30 12:12:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="4200" />
+			<int key="@@approx_bh_overall_wasted_time" value="4200" />
+			<int key="@@approx_bh_this_wasted_time" value="2400" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="3" />
+			<string key="concept:name" value="examineCasually" />
+			<string key="start_timestamp" value="2010-12-30 14:16:00" />
+			<string key="time:timestamp" value="2010-12-30 14:16:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="11640" />
+			<int key="@@approx_bh_overall_wasted_time" value="11640" />
+			<int key="@@approx_bh_this_wasted_time" value="7440" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="4" />
+			<string key="concept:name" value="registerRequest" />
+			<string key="start_timestamp" value="2010-12-30 14:32:00" />
+			<string key="time:timestamp" value="2010-12-30 14:32:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="12600" />
+			<int key="@@approx_bh_overall_wasted_time" value="12600" />
+			<int key="@@approx_bh_this_wasted_time" value="960" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="5" />
+			<string key="concept:name" value="examineCasually" />
+			<string key="start_timestamp" value="2010-12-30 15:06:00" />
+			<string key="time:timestamp" value="2010-12-30 15:06:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="14640" />
+			<int key="@@approx_bh_overall_wasted_time" value="14640" />
+			<int key="@@approx_bh_this_wasted_time" value="2040" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="6" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2010-12-30 16:34:00" />
+			<string key="time:timestamp" value="2010-12-30 16:34:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="19920" />
+			<int key="@@approx_bh_overall_wasted_time" value="19920" />
+			<int key="@@approx_bh_this_wasted_time" value="5280" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="7" />
+			<string key="concept:name" value="examineThoroughly" />
+			<string key="start_timestamp" value="2010-12-31 10:06:00" />
+			<string key="time:timestamp" value="2010-12-31 10:06:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="32640" />
+			<int key="@@approx_bh_overall_wasted_time" value="32640" />
+			<int key="@@approx_bh_this_wasted_time" value="12720" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="8" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-05 11:22:00" />
+			<string key="time:timestamp" value="2011-01-05 11:22:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="145200" />
+			<int key="@@approx_bh_overall_wasted_time" value="145200" />
+			<int key="@@approx_bh_this_wasted_time" value="112560" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="9" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-05 15:12:00" />
+			<string key="time:timestamp" value="2011-01-05 15:12:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="159000" />
+			<int key="@@approx_bh_overall_wasted_time" value="159000" />
+			<int key="@@approx_bh_this_wasted_time" value="13800" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="10" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-06 09:18:00" />
+			<string key="time:timestamp" value="2011-01-06 09:18:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="173760" />
+			<int key="@@approx_bh_overall_wasted_time" value="173760" />
+			<int key="@@approx_bh_this_wasted_time" value="14760" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="11" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-06 11:18:00" />
+			<string key="time:timestamp" value="2011-01-06 11:18:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="180960" />
+			<int key="@@approx_bh_overall_wasted_time" value="180960" />
+			<int key="@@approx_bh_this_wasted_time" value="7200" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="12" />
+			<string key="concept:name" value="reinitiateRequest" />
+			<string key="start_timestamp" value="2011-01-06 12:18:00" />
+			<string key="time:timestamp" value="2011-01-06 12:18:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="184560" />
+			<int key="@@approx_bh_overall_wasted_time" value="184560" />
+			<int key="@@approx_bh_this_wasted_time" value="3600" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="13" />
+			<string key="concept:name" value="examineThoroughly" />
+			<string key="start_timestamp" value="2011-01-06 13:06:00" />
+			<string key="time:timestamp" value="2011-01-06 13:06:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="187440" />
+			<int key="@@approx_bh_overall_wasted_time" value="187440" />
+			<int key="@@approx_bh_this_wasted_time" value="2880" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="14" />
+			<string key="concept:name" value="rejectRequest" />
+			<string key="start_timestamp" value="2011-01-07 14:24:00" />
+			<string key="time:timestamp" value="2011-01-07 14:24:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="228120" />
+			<int key="@@approx_bh_overall_wasted_time" value="228120" />
+			<int key="@@approx_bh_this_wasted_time" value="40680" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="15" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-08 11:43:00" />
+			<string key="time:timestamp" value="2011-01-08 11:43:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="237480" />
+			<int key="@@approx_bh_overall_wasted_time" value="237480" />
+			<int key="@@approx_bh_this_wasted_time" value="9360" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="16" />
+			<string key="concept:name" value="payCompensation" />
+			<string key="start_timestamp" value="2011-01-08 12:05:00" />
+			<string key="time:timestamp" value="2011-01-08 12:05:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="237480" />
+			<int key="@@approx_bh_overall_wasted_time" value="237480" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="17" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-09 09:55:00" />
+			<string key="time:timestamp" value="2011-01-09 09:55:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="237480" />
+			<int key="@@approx_bh_overall_wasted_time" value="237480" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="18" />
+			<string key="concept:name" value="payCompensation" />
+			<string key="start_timestamp" value="2011-01-15 10:45:00" />
+			<string key="time:timestamp" value="2011-01-15 10:45:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="417480" />
+			<int key="@@approx_bh_overall_wasted_time" value="417480" />
+			<int key="@@approx_bh_this_wasted_time" value="180000" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace2" />
+		<event>
+			<int key="Unnamed: 0" value="19" />
+			<string key="concept:name" value="registerRequest" />
+			<string key="start_timestamp" value="2011-01-06 09:02:00" />
+			<string key="time:timestamp" value="2011-01-06 09:02:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="0" />
+			<int key="@@approx_bh_overall_wasted_time" value="0" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="20" />
+			<string key="concept:name" value="registerRequest" />
+			<string key="start_timestamp" value="2011-01-06 15:02:00" />
+			<string key="time:timestamp" value="2011-01-06 15:02:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="21600" />
+			<int key="@@approx_bh_overall_wasted_time" value="21600" />
+			<int key="@@approx_bh_this_wasted_time" value="21600" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="21" />
+			<string key="concept:name" value="examineCasually" />
+			<string key="start_timestamp" value="2011-01-06 16:06:00" />
+			<string key="time:timestamp" value="2011-01-06 16:06:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="25440" />
+			<int key="@@approx_bh_overall_wasted_time" value="25440" />
+			<int key="@@approx_bh_this_wasted_time" value="3840" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="22" />
+			<string key="concept:name" value="examineCasually" />
+			<string key="start_timestamp" value="2011-01-07 10:16:00" />
+			<string key="time:timestamp" value="2011-01-07 10:16:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="40440" />
+			<int key="@@approx_bh_overall_wasted_time" value="40440" />
+			<int key="@@approx_bh_this_wasted_time" value="15000" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="23" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-07 16:22:00" />
+			<string key="time:timestamp" value="2011-01-07 16:22:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="62400" />
+			<int key="@@approx_bh_overall_wasted_time" value="62400" />
+			<int key="@@approx_bh_this_wasted_time" value="21960" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="24" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-07 16:52:00" />
+			<string key="time:timestamp" value="2011-01-07 16:52:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="64200" />
+			<int key="@@approx_bh_overall_wasted_time" value="64200" />
+			<int key="@@approx_bh_this_wasted_time" value="1800" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="25" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-08 11:22:00" />
+			<string key="time:timestamp" value="2011-01-08 11:22:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="64680" />
+			<int key="@@approx_bh_overall_wasted_time" value="64680" />
+			<int key="@@approx_bh_this_wasted_time" value="480" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="26" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-10 13:28:00" />
+			<string key="time:timestamp" value="2011-01-10 13:28:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="87960" />
+			<int key="@@approx_bh_overall_wasted_time" value="87960" />
+			<int key="@@approx_bh_this_wasted_time" value="23280" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="27" />
+			<string key="concept:name" value="reinitiateRequest" />
+			<string key="start_timestamp" value="2011-01-11 16:18:00" />
+			<string key="time:timestamp" value="2011-01-11 16:18:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="134160" />
+			<int key="@@approx_bh_overall_wasted_time" value="134160" />
+			<int key="@@approx_bh_this_wasted_time" value="46200" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="28" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-14 14:33:00" />
+			<string key="time:timestamp" value="2011-01-14 14:33:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="235860" />
+			<int key="@@approx_bh_overall_wasted_time" value="235860" />
+			<int key="@@approx_bh_this_wasted_time" value="101700" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="29" />
+			<string key="concept:name" value="payCompensation" />
+			<string key="start_timestamp" value="2011-01-16 11:47:00" />
+			<string key="time:timestamp" value="2011-01-16 11:47:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="244680" />
+			<int key="@@approx_bh_overall_wasted_time" value="244680" />
+			<int key="@@approx_bh_this_wasted_time" value="8820" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="30" />
+			<string key="concept:name" value="examineCasually" />
+			<string key="start_timestamp" value="2011-01-16 15:50:00" />
+			<string key="time:timestamp" value="2011-01-16 15:50:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="244680" />
+			<int key="@@approx_bh_overall_wasted_time" value="244680" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="31" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-19 11:18:00" />
+			<string key="time:timestamp" value="2011-01-19 11:18:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="332160" />
+			<int key="@@approx_bh_overall_wasted_time" value="332160" />
+			<int key="@@approx_bh_this_wasted_time" value="87480" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="32" />
+			<string key="concept:name" value="reinitiateRequest" />
+			<string key="start_timestamp" value="2011-01-20 12:48:00" />
+			<string key="time:timestamp" value="2011-01-20 12:48:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="373560" />
+			<int key="@@approx_bh_overall_wasted_time" value="373560" />
+			<int key="@@approx_bh_this_wasted_time" value="41400" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="33" />
+			<string key="concept:name" value="examineCasually" />
+			<string key="start_timestamp" value="2011-01-21 09:06:00" />
+			<string key="time:timestamp" value="2011-01-21 09:06:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="396240" />
+			<int key="@@approx_bh_overall_wasted_time" value="396240" />
+			<int key="@@approx_bh_this_wasted_time" value="22680" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="34" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-21 11:34:00" />
+			<string key="time:timestamp" value="2011-01-21 11:34:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="405120" />
+			<int key="@@approx_bh_overall_wasted_time" value="405120" />
+			<int key="@@approx_bh_this_wasted_time" value="8880" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="35" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-23 13:12:00" />
+			<string key="time:timestamp" value="2011-01-23 13:12:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="424680" />
+			<int key="@@approx_bh_overall_wasted_time" value="424680" />
+			<int key="@@approx_bh_this_wasted_time" value="19560" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="36" />
+			<string key="concept:name" value="rejectRequest" />
+			<string key="start_timestamp" value="2011-01-24 14:56:00" />
+			<string key="time:timestamp" value="2011-01-24 14:56:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="453240" />
+			<int key="@@approx_bh_overall_wasted_time" value="453240" />
+			<int key="@@approx_bh_this_wasted_time" value="28560" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+	<trace>
+		<string key="concept:name" value="Trace3" />
+		<event>
+			<int key="Unnamed: 0" value="37" />
+			<string key="concept:name" value="registerRequest" />
+			<string key="start_timestamp" value="2011-01-06 15:02:00" />
+			<string key="time:timestamp" value="2011-01-06 15:02:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="0" />
+			<int key="@@approx_bh_overall_wasted_time" value="0" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="1.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="38" />
+			<string key="concept:name" value="checkTicket" />
+			<string key="start_timestamp" value="2011-01-07 12:06:00" />
+			<string key="time:timestamp" value="2011-01-07 12:06:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="25440" />
+			<int key="@@approx_bh_overall_wasted_time" value="25440" />
+			<int key="@@approx_bh_this_wasted_time" value="25440" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="39" />
+			<string key="concept:name" value="examineThoroughly" />
+			<string key="start_timestamp" value="2011-01-08 14:43:00" />
+			<string key="time:timestamp" value="2011-01-08 14:43:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="43080" />
+			<int key="@@approx_bh_overall_wasted_time" value="43080" />
+			<int key="@@approx_bh_this_wasted_time" value="17640" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="40" />
+			<string key="concept:name" value="decide" />
+			<string key="start_timestamp" value="2011-01-09 12:02:00" />
+			<string key="time:timestamp" value="2011-01-09 12:02:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="43080" />
+			<int key="@@approx_bh_overall_wasted_time" value="43080" />
+			<int key="@@approx_bh_this_wasted_time" value="0" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+		<event>
+			<int key="Unnamed: 0" value="41" />
+			<string key="concept:name" value="rejectRequest" />
+			<string key="start_timestamp" value="2011-01-12 15:44:00" />
+			<string key="time:timestamp" value="2011-01-12 15:44:00" />
+			<float key="@@duration" value="0.0" />
+			<int key="@@approx_bh_partial_cycle_time" value="0" />
+			<int key="@@approx_bh_partial_lead_time" value="146520" />
+			<int key="@@approx_bh_overall_wasted_time" value="146520" />
+			<int key="@@approx_bh_this_wasted_time" value="103440" />
+			<float key="@approx_bh_ratio_cycle_lead_time" value="0.0" />
+		</event>
+	</trace>
+</log>

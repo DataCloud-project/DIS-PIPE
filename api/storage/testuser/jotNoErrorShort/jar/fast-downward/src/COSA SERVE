@@ -1,0 +1,27 @@
+Len-originale=5
+Len-allineata=5
+(sync-a-ct19 )
+(sync-c-ct15 )
+(sync-a-ct18 )
+(sync-b-t3t4 )
+(sync-e-t4t5 )
+
+Len-originale=5
+Len-allineata=6
+(sync-a-ct19 )
+(sync-c-ct15 )
+(sync-a-ct18 )
+(sync-b-t3t4 )
+(sync-e-t4t5 )
+(add-f-t4t5 )
+
+Len-originale=5
+Len-allineata=4
+(sync-a-ct19 )
+(sync-c-ct15 )
+(sync-a-ct18 )
+(sync-b-t3t4 )
+(del-e-t4t5 )
+
+fitness = 1 - costo dell'allineamnto ottimo / (Len Originale + Len-allineata)
+

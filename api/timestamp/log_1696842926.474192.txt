@@ -1,0 +1,2 @@
+UPLOAD: 1696842926.474192
+APPLY: 1696842961.529719,Succession,receiveBloodMeasure,sendDataToMq

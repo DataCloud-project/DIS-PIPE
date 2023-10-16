@@ -1,0 +1,2 @@
+UPLOAD: 1696842986.668562
+DELETE: 1696842986.916078,ChainSuccession,receiveBloodMeasure,sendDataToMq

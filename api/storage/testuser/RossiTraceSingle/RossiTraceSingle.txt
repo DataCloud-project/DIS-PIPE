@@ -1,0 +1,4 @@
+Pipeline RossiTraceSingle {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+}

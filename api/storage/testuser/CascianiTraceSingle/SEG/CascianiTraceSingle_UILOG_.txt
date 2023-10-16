@@ -1,0 +1,5 @@
+examineCasually checkTicket decide 4
+registerRequest examineCasually checkTicket decide 3
+checkTicket examineCasually decide 2
+examineThoroughly checkTicket decide 2
+registerRequest examineCasually checkTicket decide reinitiateRequest 2

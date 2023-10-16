@@ -171,20 +171,12 @@ function getDslbyNameListener(){
 
 
 function getDslbyNameListener() {
-    
 
     
     const p1 = new Promise((resolve, reject) => {
         console.log("Function: getDslbyNameListener()");
           
         var response=this.responseText.split("£")
-        if(this.responseText=="error"){
-            alert("imcompatible dsl")
-            document.getElementById("formConformanceChecking0").style.display = "block";
-            document.getElementById("formConformanceChecking").style.display = "none";
-            document.getElementById("formConformanceChecking2").style.display = "none";
-            document.getElementById("map2-content").style.display = "none";
-        }else{
         
         tr_name=response[4]
         console.log(tr_name)
@@ -204,7 +196,6 @@ function getDslbyNameListener() {
 
         // Resolve the promise with the result
         resolve({ tr_name, log_name }); 
-        }
     });
     p1.then(
         (value) => {

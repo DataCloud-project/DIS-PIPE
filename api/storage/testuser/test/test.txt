@@ -1,0 +1,4 @@
+Pipeline test {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+}

@@ -173,6 +173,20 @@ function createDsl(){
 	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
 	//iterate on the steps
 	console.log(dslSteps)
+	graphTextF = getGraphText('frequency');
+	graphTextP = getGraphText();
+	// get nodes in an array 
+	graphNodesF = getGraphNodes(graphTextF);
+	graphNodesP = getGraphNodes(graphTextP);
+	graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+	// get edges in an array
+	graphEdgesF = getGraphEdges(graphTextF, false);
+	graphEdgesP = getGraphEdges(graphTextP, true);
+	graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+	getLabeledGraphEdges(graphNodes, graphEdges);
+	// get final matrix ready for dsl conversion
+	dslSteps = getDslSteps(graphNodes, graphEdges);
+	
 	for (var i=0; i<dslSteps.length; i++){
 		// if the step is start or end, just skip
 		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
@@ -216,4 +230,72 @@ function exportDsl(){
 	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
 	var dsl = createDsl();
 	download(dsl, pipelineName, '.txt');
+}
+
+
+
+
+function showBPMNGraph(){
+
+	console.log("show BPMN Graph")
+	if(document.getElementById("showHidePetriNet").value=="false"){
+		document.getElementById("petrinet-content").style.display = "none";
+		document.getElementById("showHidePetriNet").value="true"
+		document.getElementById("showHidePetriNet").innerHTML="Show BPMN"
+		document.getElementById("map-content").style.display = "block"
+		$("#check_tabs").prop("checked", false);
+	}else if (document.getElementById("showHidePetriNet").value=="true"){
+
+	$.ajax({
+        url: "/getBPMNGraph",
+        type: "GET",
+        contentType: "application/json",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (gdata) {
+            console.log(gdata["grafo"])
+			document.getElementById("showHidePetriNet").innerHTML="Hide BPMN"
+
+			var options = { format: 'svg',
+			ALLOW_MEMORY_GROWTH: 1,
+			totalMemory: 537395200, }; // You can change the format if needed
+        	var svgGraph = Viz(gdata["grafo"], options);
+			document.getElementById('petriContainer').innerHTML = svgGraph;	
+
+			// Get the div with the id "petriContainer"
+			var petriContainer = document.getElementById('petriContainer');
+
+			// Get all the g elements inside the petriContainer div
+			var gElements = petriContainer.querySelectorAll('g');
+
+			// Iterate through each g element and update its id
+			gElements.forEach(function(gElement) {
+				var currentId = gElement.getAttribute('id');
+				if (currentId) {
+					// Append "petri" to the existing id
+					var newId = 'petri' + currentId;
+					gElement.setAttribute('id', newId);
+				}
+			});
+
+			// Get all the text elements inside the petriContainer div
+			var textElements = petriContainer.querySelectorAll('g text');
+
+			// Iterate through each text element and update its font-size
+			textElements.forEach(function(textElement) {
+				textElement.setAttribute('font-size', '10'); // Set the font-size to 10
+			});
+
+			document.getElementById("petrinet-content").style.display = "block";
+			document.getElementById("showHidePetriNet").value="false"
+			document.getElementById("map-content").style.display = "none"
+			$("#check_tabs").prop("checked", false);
+
+        },
+        error: function (result) {
+            console.log("ko")
+        }
+    })
+	}
 }

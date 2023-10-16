@@ -1,5 +1,5 @@
 #!/bin/bash
-cd seq-opt-symba-2
+cd $1
 date1=$(date +%s%N | cut -b1-13)
 searchtime=0
 traces=0

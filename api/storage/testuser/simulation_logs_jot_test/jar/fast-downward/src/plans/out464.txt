@@ -1,0 +1,75 @@
+This is a nonunit task.
+reading input... [t=0s]
+Simplifying transitions... done!
+done reading input! [t=0s]
+building causal graph...done! [t=0s]
+packing state variables...Variables: 3
+Bytes per state: 4
+done! [t=0s]
+done initalizing global data [t=0s]
+Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+Initializing blind search heuristic...
+f = 0 [1 evaluated, 0 expanded, t=0s, 3752 KB]
+Best heuristic value: 0 [g=0, 1 evaluated, 0 expanded, t=0s, 3752 KB]
+f = 1 [3 evaluated, 1 expanded, t=0s, 3752 KB]
+f = 2 [6 evaluated, 3 expanded, t=0s, 3752 KB]
+f = 3 [10 evaluated, 6 expanded, t=0s, 3752 KB]
+f = 4 [15 evaluated, 10 expanded, t=0s, 3752 KB]
+f = 5 [21 evaluated, 15 expanded, t=0s, 3752 KB]
+f = 6 [28 evaluated, 21 expanded, t=0s, 3752 KB]
+f = 7 [43 evaluated, 30 expanded, t=0s, 3752 KB]
+f = 8 [65 evaluated, 45 expanded, t=0s, 3752 KB]
+f = 9 [87 evaluated, 66 expanded, t=0s, 3752 KB]
+f = 10 [110 evaluated, 88 expanded, t=0s, 3752 KB]
+f = 11 [135 evaluated, 111 expanded, t=0s, 3752 KB]
+f = 12 [157 evaluated, 135 expanded, t=0s, 3752 KB]
+f = 13 [177 evaluated, 157 expanded, t=0s, 3752 KB]
+f = 14 [196 evaluated, 177 expanded, t=0s, 3752 KB]
+f = 15 [216 evaluated, 197 expanded, t=0s, 3752 KB]
+f = 16 [236 evaluated, 217 expanded, t=0s, 3752 KB]
+f = 17 [251 evaluated, 236 expanded, t=0s, 3752 KB]
+f = 18 [266 evaluated, 252 expanded, t=0s, 3752 KB]
+f = 19 [278 evaluated, 266 expanded, t=0s, 3752 KB]
+Solution found!
+Actual search time: 0s [t=0s]
+moveinthemodel#data_merge  (1)
+moveinthemodel#install_supplementary_resources  (1)
+moveinthemodel#launch_algorithm  (1)
+moveinthemodel#model_generated  (1)
+moveinthemodel#query  (1)
+moveinthemodel#report_generated  (1)
+movesync#request#ev1  (0)
+movesync#restore_accessto_database#ev2  (0)
+moveinthelog#restore_accessto_database#ev3-ev4  (1)
+moveinthelog#query#ev4-ev5  (1)
+moveinthelog#query#ev5-ev6  (1)
+moveinthemodel#store_results  (1)
+movesync#trasformation#ev6  (0)
+moveinthelog#trasformation#ev7-ev8  (1)
+moveinthelog#install_supplementary_resources#ev8-ev9  (1)
+moveinthelog#install_supplementary_resources#ev9-ev10  (1)
+moveinthelog#launch_algorithm#ev10-ev11  (1)
+moveinthelog#launch_algorithm#ev11-ev12  (1)
+movesync#visualization#ev12  (0)
+moveinthelog#visualization#ev13-ev14  (1)
+moveinthelog#store_results#ev14-ev15  (1)
+moveinthelog#store_results#ev15-ev16  (1)
+moveinthelog#model_generated#ev16-evend  (1)
+Plan length: 23 step(s).
+Plan cost: 19
+Initial state h value: 0.
+Expanded 276 state(s).
+Reopened 0 state(s).
+Evaluated 283 state(s).
+Evaluations: 283
+Generated 403 state(s).
+Dead ends: 0 state(s).
+Expanded until last jump: 266 state(s).
+Reopened until last jump: 0 state(s).
+Evaluated until last jump: 278 state(s).
+Generated until last jump: 391 state(s).
+Number of registered states: 283
+Search time: 0s
+Total time: 0s
+Solution found.
+Peak memory: 3756 KB

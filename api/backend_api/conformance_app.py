@@ -97,7 +97,7 @@ def conformanceChecking():
     #global backup_dir
     
     session["backup_dir"]=working_dir
-    print("Current working directory: {0}".format(os.getcwd()))
+    # print("Current working directory: {0}".format(os.getcwd()))
     # os.chdir(working_dir+'/jar')
     
 
@@ -164,79 +164,101 @@ def jarCalling():
 
 
     # Print the current working directory
-    working_dir=os.getcwd()
-    print("Current working directory: {0}".format(os.getcwd()))
-    os.chdir(working_dir+'/jar')
+    # working_dir=os.getcwd()
+    # print("Current working directory: {0}".format(os.getcwd()))
+    # os.chdir(working_dir+"/"+process_string(session["conformace_jar"]))
     #pnmlPath="../net/petri_final_remap.pnml"
-    costPath="cost_file"
 
-    xesPath=".."+process_string_jar(session["directory_log"]+"/"+session["log_name"])
-    pnmlPath=".."+process_string_jar(session["directory_net_pnml"]+"/"+"petri_final_remap.pnml")
+    print("Current working il dopo directory: {0}".format(os.getcwd()))
+
+    #costPath="cost_file"
+    costPath=process_string(session["conformace_jar"]+"/cost_file")
+
+    #xesPath=".."+process_string_jar(session["directory_log"]+"/"+session["log_name"])
+    #xesPath="../"+session["log_name"]
+    xesPath=process_string(session["directory_log"]+"/"+session["log_name"])
+    #pnmlPath=".."+process_string_jar(session["directory_net_pnml"]+"/"+"petri_final_remap.pnml")
+    #pnmlPath="../net/"+"petri_final_remap.pnml"
+    pnmlPath=process_string(session["directory_net_pnml"]+"/petri_final_remap.pnml")
     #os.system("java -jar traceAligner.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate)
-    global process_jar
+    #global process_jar
+    jarPath=process_string(session["conformace_jar"]+"/traceAligner11NEW.jar")
+
+    cartellaPddlPath=process_string(session["conformace_jar"]+"/fast-downward/src")
+    cartellaSymbaPath=process_string(session["conformace_jar"]+"/seq-opt-symba-2")
     print("chiamata a jar è questa")
     print(session["log_path"])
     print(session["directory_log"])
     print(session["log_name"])
-    print("java -jar traceAligner11.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate )
+    print("java -jar " + jarPath +" align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate+" "+cartellaPddlPath+" "+cartellaSymbaPath )
     print("chiamata a jar è fininta")
-    process_jar = subprocess.Popen( "java -jar traceAligner11.jar align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate , shell=True)
-    
+    process_jar = subprocess.Popen( "java -jar " + jarPath +" align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate+" "+cartellaPddlPath+" "+cartellaSymbaPath , shell=True)
+    session["pid_jar"]=process_jar.pid
     try:
-        print('Running in process', process_jar.pid)
+        print('Running in process', session["pid_jar"])
         process_jar.wait()
     except subprocess.TimeoutExpired:
-        print('Timed out - killing', process_jar.pid)
-        process_jar.kill()
+        print('Timed out - killing', session["pid_jar"])
+        os.kill(session["pid_jar"], signal.SIGKILL) #or signal.SIGKILL 
+        #process_jar.kill()
     print("\njar done")
     
     
     print("  \n")
-    global plans_path
-    global process_script
+    #global plans_path
+    #global process_script
+
+
     
-    if(planner=="FD"):    
-        plans_path="./jar/fast-downward/src/plans"
+    if(planner=="FD"): 
+        process_string(session["conformace_jar"])   
+        #plans_path="./jar/fast-downward/src/plans"
+        session["plans_path"]=process_string(session["conformace_jar"])+"/fast-downward/src/plans"
         
-        process_script=subprocess.Popen(['bash', './run_FD_all'])
-        
+        process_script=subprocess.Popen(['bash', process_string(session["conformace_jar"]+'/run_FD_all'), process_string(session["conformace_jar"])+"/fast-downward/src"])
+        session["pid_script"]=process_script.pid
         try:
-            print('Running in process', process_script.pid)
+            print('Running in process', session["pid_script"])
             process_script.wait()
         except subprocess.TimeoutExpired:
-            print('Timed out - killing', process_script.pid)
-            process_script.kill()
+            print('Timed out - killing', session["pid_script"])
+            #process_script.kill()
+            os.kill(session["pid_script"], signal.SIGKILL)
         print("\nscript done")
     
     elif(planner=="SYMBA"):
-        plans_path="./jar/seq-opt-symba-2/plans"
+        #plans_path="./jar/seq-opt-symba-2/plans"
+        session["plans_path"]=process_string(session["conformace_jar"])+"/seq-opt-symba-2/plans"
         
-        process_script=subprocess.Popen(['bash', './run_SYMBA_all'])
+        process_script=subprocess.Popen(['bash',  process_string(session["conformace_jar"]+'/run_SYMBA_all'), process_string(session["conformace_jar"])+"/seq-opt-symba-2"])
         #os.system("bash ./run_SYMBA_all")
-        
+        session["pid_script"]=process_script.pid
         try:
-            print('Running in process', process_script.pid)
+            print('Running in process', session["pid_script"])
             process_script.wait()
         except subprocess.TimeoutExpired:
-            print('Timed out - killing', process_script.pid)
-            process_script.kill()
+            print('Timed out - killing', session["pid_script"])
+            #process_script.kill()
+            os.kill(session["pid_script"], signal.SIGKILL)
         print("\nscript done")
         
     else:
-        plans_path="./jar/fast-downward/src/plans"
+        #plans_path="./jar/fast-downward/src/plans"
+        session["plans_path"]="./"+process_string(session["conformace_jar"])+"/fast-downward/src/plans"
         
-        process_script=subprocess.Popen(['bash', './run_FD_all'])
+        process_script=subprocess.Popen(['bash',  process_string(session["conformace_jar"]+'/run_FD_all'), process_string(session["conformace_jar"])+"/fast-downward/src"])
         #os.system("bash ./run_FD_all")
-        
+        session["pid_script"]=process_script.pid
         try:
-            print('Running in process', process_script.pid)
+            print('Running in process', session["pid_script"])
             process_script.wait()
         except subprocess.TimeoutExpired:
-            print('Timed out - killing', process_script.pid)
-            process_script.kill()
+            print('Timed out - killing', session["pid_script"])
+            #process_script.kill()
+            os.kill(session["pid_script"], signal.SIGKILL)
         print("\nscript done")
        
-    os.chdir(working_dir)
+    #os.chdir(working_dir)
 
     return "jar_calling"
 
@@ -260,33 +282,42 @@ def traceDetail():
     allTraceName=""
 
     working_dir=os.getcwd()
+    print("XDBODE")
+    print(working_dir)
     if(working_dir=="/root/datacloud/DIS-PIPE-development-current/api/jar"):
         os.chdir("..")
     
     working_dir=os.getcwd()
     print("Current working directory: {0}".format(os.getcwd()))
 
-    global plans_path
+    #global plans_path
 
-    os.chdir(plans_path)
-    for fileName in glob.glob("*.txt"):
+    #os.chdir(session["plans_path"])
+    #for fileName in glob.glob("*.txt"):
         # print(fileName)
-        traceIndex=(fileName.replace("out","").replace(".txt",""))
-        allTraceName=allTraceName+traceIndex+"#"
+    #    traceIndex=(fileName.replace("out","").replace(".txt",""))
+    #    allTraceName=allTraceName+traceIndex+"#"
+
+    for fileName in glob.glob(os.path.join(session["plans_path"], "*.txt")):
+        traceIndex = (os.path.basename(fileName).replace("out", "").replace(".txt", ""))
+        allTraceName += traceIndex + "#"
         
     allTraceName = allTraceName[:-1]
 
-    os.chdir(working_dir)
+    #os.chdir(working_dir)
     
     return allTraceName
 
 @app_conformance.route('/updateTraceDetail', methods=['GET'])
 def updateTraceDetail():
     nameTrace = str(request.args.get('nameTrace'))
-    global plans_path
+    #global plans_path
+    working_dir=os.getcwd()
+    print("X2")
+    print(working_dir)
   
-    file_name = os.path.basename(plans_path+'/'+nameTrace)
-    with open(plans_path+'/'+nameTrace) as f:
+    file_name = os.path.basename(session["plans_path"]+'/'+nameTrace)
+    with open(session["plans_path"]+'/'+nameTrace) as f:
         trace = f.readlines()
 
     start_index=len(trace)
@@ -338,14 +369,22 @@ def generalTraceInfo():
 
     # plans_path="./jar/fast-downward/src/plans" 
     # plans_path="./jar/seq-opt-symba-2/plans"
-    global plans_path
-    os.chdir(plans_path)
-    for fileName in glob.glob("*.txt"):
+    # global plans_path
+    # os.chdir(session["plans_path"])
+
+    #for fileName in glob.glob("*.txt"):
         # print(fileName)
-        traceIndex=(fileName.replace("out","").replace(".txt",""))
+        # traceIndex=(fileName.replace("out","").replace(".txt",""))
         # print(traceIndex)
 
-        with open('./'+str(fileName)) as f:
+        # with open('./'+str(fileName)) as f:
+            # trace = f.readlines()
+
+    for fileName in glob.glob(os.path.join(session["plans_path"], "*.txt")):
+        traceIndex = os.path.basename(fileName).replace("out", "").replace(".txt", "")
+        # print(traceIndex)
+
+        with open(fileName) as f:
             trace = f.readlines()
 
         start_index=len(trace)
@@ -442,7 +481,7 @@ def generalTraceInfo():
             i=i+1
         temp_array=[]
     
-    os.chdir(working_dir)
+    # os.chdir(working_dir)
 
     #print(dict_event)
     #print(dict_trace)
@@ -562,8 +601,19 @@ def process_string(input_string):
         # Replace "PrepaidTravelCost" with "Example" in the relevant part
         # Combine the modified relevant part with "storage/testuser/"
         return relevant_part
+    elif "home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("home/jacopo/Desktop/DIS-PIPE/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("/home/jacopo/Desktop/DIS-PIPE/api/")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
     else :
         return input_string
+
 
 def process_string_jar(input_string):
     if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
@@ -574,6 +624,16 @@ def process_string_jar(input_string):
         return relevant_part
     elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
         relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("home/jacopo/Desktop/DIS-PIPE/api")[1]
+        # Replace "PrepaidTravelCost" with "Example" in the relevant part
+        # Combine the modified relevant part with "storage/testuser/"
+        return relevant_part
+    elif "/home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
+        relevant_part = input_string.split("/home/jacopo/Desktop/DIS-PIPE/api")[1]
         # Replace "PrepaidTravelCost" with "Example" in the relevant part
         # Combine the modified relevant part with "storage/testuser/"
         return relevant_part

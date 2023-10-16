@@ -1,0 +1,156 @@
+Pipeline log-cer-short {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+		- data-processing step data-analysis-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step data-analysis-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step environment-generation-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step environment-generation-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-casting-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1400',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-casting-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1400',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-finishing-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1400',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-finishing-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1400',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-remaining-activities-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1400',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-remaining-activities-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '1400',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step simulation-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step what-if-analysis-end
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+
+
+		- data-processing step what-if-analysis-start
+			implementation: container-implementation image: ''
+			environmentParameters: {
+				Frequency: '6',
+				Duration: '0s'
+			}
+			resourceProvider: Accesspoint
+			executionRequirement:
+				hardRequirements:
+}

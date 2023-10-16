@@ -64,4 +64,3 @@ dependencies:
     - urllib3==1.26.7
     - wcwidth==0.2.5
     - werkzeug==2.0.2
-prefix: C:\Users\lucia\miniconda3\envs\pm4py_env

@@ -168,6 +168,7 @@ function getMap(bool) {
         getLabeledGraphEdges(graphNodes, graphEdges);
         // get final matrix ready for dsl conversion
         dslSteps = getDslSteps(graphNodes, graphEdges);
+        console.log(dslSteps)
 
         meanDurationFP= getAllDuration("mean");
         meanEdgeDuration= getAllEdgeDuration("mean");

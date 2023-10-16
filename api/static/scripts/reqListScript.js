@@ -340,7 +340,7 @@ function initialVariantListener(){
 	//console.log("off")
 
 	allVariants = Object.keys(json);
-	//console.log("Total variants: " +String(allVariants.length));
+	console.log("Total variants: " +String(allVariants.length));
 	//console.log("tutte varianti: "+allVariants)
 	
 	

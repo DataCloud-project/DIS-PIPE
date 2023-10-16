@@ -1,0 +1,17 @@
+#!/bin/bash
+date1=$(date +%s%N | cut -b1-13)
+searchtime=0
+traces=0
+for f in Conformance_Checking/domain*.pddl
+do
+traces=$(($traces+1))
+f2="${f/domain/problem}"
+./plan $f $f2 output >/dev/null
+#echo $traces
+done
+date2=$(date +%s%N | cut -b1-13)
+diff=$(($date2-$date1))
+
+echo $date1
+echo $date2
+echo "the duration is: $date2 for $traces traces"

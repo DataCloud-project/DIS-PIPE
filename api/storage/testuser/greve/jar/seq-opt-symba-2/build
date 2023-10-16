@@ -1,0 +1,8 @@
+#! /bin/sh
+
+#source /opt/centos/devtoolset-1.1/i386/enable
+module load libs/gcc-4.7.2/i386
+
+cd src
+./build_all
+cd ..
