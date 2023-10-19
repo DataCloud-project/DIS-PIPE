@@ -1,6 +1,1 @@
-1, 'EVENT2START', 'sendDataToMq', 'createRecord', 'startAnalysis', 'analyzeData',segment_0
-1, 'EVENT2START', 'sendDataToMq', 'receiveDataFromMq', 'createRecord', 'analyzeData',segment_1
-1, 'receiveBloodMeasure', 'receiveDataFromMq', 'startAnalysis', 'endAnalysis',segment_2
-2, 'EVENT2START', 'sendDataToMq', 'createRecord', 'analyzeData', 'endAnalysis',segment_3
-2, 'receiveTempMeasure', 'receiveDataFromMq', 'startAnalysis', 'endAnalysis',segment_4
-3, 'EVENT12END',),segment_5
+3, 'Request', 'Query', 'Trasformation', 'Data_Merge', 'Visualization', 'Report_Generated',segment_0

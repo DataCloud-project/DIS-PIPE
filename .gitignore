@@ -14,3 +14,6 @@ api/key/localhost/localhost.ext
 api/key/localhost/localhost.csr
 api/key/localhost/localhost.crt
 api/key
+api/storage
+api/timestamp
+api/flask_session

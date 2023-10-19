@@ -10,7 +10,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name"/>
 		<string key="StepPhaseID" value="string"/>
-		<date key="time:timestamp" value="2023-07-28T12:52:53.352797+01:00"/>
+		<date key="time:timestamp" value="2023-10-19T12:58:47.867302+01:00"/>
 		<string key="PipelineName" value="name"/>
 		<string key="PipelineID" value="string"/>
 		<string key="PipelineCommunicationMedium" value="string"/>
@@ -22,125 +22,59 @@
 	<trace>
 		<string key="concept:name" value="1"/>
 		<event>
-			<string key="concept:name" value="Data_Merge-End"/>
+			<string key="concept:name" value="register_request-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.352872+01:00"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867425+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="Marinacci"/>
+			<string key="PipelineName" value="Example"/>
 			<string key="StepID" value="0"/>
-			<string key="StepName" value="Data_Merge"/>
+			<string key="StepName" value="register_request"/>
 		</event>
 		<event>
-			<string key="concept:name" value="Launch_Algorithm-End"/>
+			<string key="concept:name" value="examine_casually-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.352898+01:00"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867478+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="Marinacci"/>
+			<string key="PipelineName" value="Example"/>
 			<string key="StepID" value="1"/>
-			<string key="StepName" value="Launch_Algorithm"/>
+			<string key="StepName" value="examine_casually"/>
 		</event>
 		<event>
-			<string key="concept:name" value="Model_Generated-End"/>
+			<string key="concept:name" value="check_ticket-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.352933+01:00"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867523+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="Marinacci"/>
+			<string key="PipelineName" value="Example"/>
 			<string key="StepID" value="2"/>
-			<string key="StepName" value="Model_Generated"/>
+			<string key="StepName" value="check_ticket"/>
 		</event>
 		<event>
-			<string key="concept:name" value="Query-End"/>
+			<string key="concept:name" value="decide-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.352958+01:00"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867787+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="Marinacci"/>
+			<string key="PipelineName" value="Example"/>
 			<string key="StepID" value="3"/>
-			<string key="StepName" value="Query"/>
+			<string key="StepName" value="decide"/>
 		</event>
 		<event>
-			<string key="concept:name" value="Report_Generated-End"/>
+			<string key="concept:name" value="pay_compensation-End"/>
 			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.352972+01:00"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.868111+01:00"/>
 			<string key="PipelineID" value="1"/>
 			<string key="PipelineCommunicationMedium" value="medium
 	"/>
-			<string key="PipelineName" value="Marinacci"/>
+			<string key="PipelineName" value="Example"/>
 			<string key="StepID" value="4"/>
-			<string key="StepName" value="Report_Generated"/>
-		</event>
-		<event>
-			<string key="concept:name" value="Request-End"/>
-			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.352987+01:00"/>
-			<string key="PipelineID" value="1"/>
-			<string key="PipelineCommunicationMedium" value="medium
-	"/>
-			<string key="PipelineName" value="Marinacci"/>
-			<string key="StepID" value="5"/>
-			<string key="StepName" value="Request"/>
-		</event>
-		<event>
-			<string key="concept:name" value="Restore_access_to_database-End"/>
-			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.353002+01:00"/>
-			<string key="PipelineID" value="1"/>
-			<string key="PipelineCommunicationMedium" value="medium
-	"/>
-			<string key="PipelineName" value="Marinacci"/>
-			<string key="StepID" value="6"/>
-			<string key="StepName" value="Restore_access_to_database"/>
-		</event>
-		<event>
-			<string key="concept:name" value="Restore_access_to_database-End"/>
-			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.353016+01:00"/>
-			<string key="PipelineID" value="1"/>
-			<string key="PipelineCommunicationMedium" value="medium
-	"/>
-			<string key="PipelineName" value="Marinacci"/>
-			<string key="StepID" value="7"/>
-			<string key="StepName" value="Restore_access_to_database"/>
-		</event>
-		<event>
-			<string key="concept:name" value="Store_Results-End"/>
-			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.353030+01:00"/>
-			<string key="PipelineID" value="1"/>
-			<string key="PipelineCommunicationMedium" value="medium
-	"/>
-			<string key="PipelineName" value="Marinacci"/>
-			<string key="StepID" value="8"/>
-			<string key="StepName" value="Store_Results"/>
-		</event>
-		<event>
-			<string key="concept:name" value="Trasformation-End"/>
-			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.353045+01:00"/>
-			<string key="PipelineID" value="1"/>
-			<string key="PipelineCommunicationMedium" value="medium
-	"/>
-			<string key="PipelineName" value="Marinacci"/>
-			<string key="StepID" value="9"/>
-			<string key="StepName" value="Trasformation"/>
-		</event>
-		<event>
-			<string key="concept:name" value="Visualization-End"/>
-			<string key="StepPhaseID" value="1"/>
-			<date key="time:timestamp" value="2023-07-28T12:52:53.353059+01:00"/>
-			<string key="PipelineID" value="1"/>
-			<string key="PipelineCommunicationMedium" value="medium
-	"/>
-			<string key="PipelineName" value="Marinacci"/>
-			<string key="StepID" value="10"/>
-			<string key="StepName" value="Visualization"/>
+			<string key="StepName" value="pay_compensation"/>
 		</event>
 	</trace>
 </log>

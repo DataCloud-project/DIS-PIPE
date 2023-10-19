@@ -96,13 +96,29 @@ def allduration():
 
     mean_dizionario=dict.fromkeys(session["activity_list"])
     for j in session["activity_list"]:
-        mean_dizionario[j]=statistics.mean(activity_dictionary[j])
+        #mean_dizionario[j]=statistics.mean(activity_dictionary[j])
+        try:
+            mean_dizionario[j]=statistics.mean(activity_dictionary[j])
+        except TypeError as e:
+            test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
+            mean_dizionario[j]=statistics.mean(test_activity_dictionary)
+        except Exception as e:
+            print(f"7778 An error of type {type(e).__name__} occurred: {e}")
+            print(activity_dictionary[j])
 
         
     total_dizionario=dict.fromkeys(session["activity_list"])
     for j in session["activity_list"]:
-        total_dizionario[j]=sum(activity_dictionary[j])
-        
+        #total_dizionario[j]=sum(activity_dictionary[j])
+        try:
+            total_dizionario[j]=sum(activity_dictionary[j])
+        except TypeError as e:
+            test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
+            total_dizionario[j]=sum(test_activity_dictionary)
+        except Exception as e:
+            print(f"7778 An error of type {type(e).__name__} occurred: {e}")
+            print(activity_dictionary[j])
+
     median_dizionario=dict.fromkeys(session["activity_list"])
     for j in session["activity_list"]:
         median_dizionario[j]=activity_dictionary[j][int(len(activity_dictionary[j])/2)]

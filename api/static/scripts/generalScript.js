@@ -381,8 +381,8 @@ function getGraphText(selector){
 	// then remove from the array the first 3 and last 2 elements which are useless
 	var graphText = graphText.split('\n\t').splice(3);
 	graphText.pop();
-	graphText.pop();
-
+	if ( selector != 'frequency' )
+		graphText.pop();
 	return graphText;
 }
 
@@ -437,7 +437,7 @@ function getCombinedNodes(graphNodesF, graphNodesP){
 }
 
 function getGraphEdges(graphText, boolFreq){
-	//obtain the array of edges with parameter
+	//obtain the array of edges with parameters
 	var graphEdges = [];
 	var j = 0;
 	// cycle throguh the graph array 
@@ -462,7 +462,7 @@ function getGraphEdges(graphText, boolFreq){
 				graphEdges[j][2] = '';
 			}
 			j++;
-		}	
+		}
 	}
 	
 	return graphEdges;
@@ -491,7 +491,8 @@ function getLabeledGraphEdges(graphNodes, graphEdges){
 	return 1;
 }
 
-function getDslSteps(graphNodes, graphEdges){
+
+function getDslStepsTemp(graphNodes, graphEdges){
 	// from graphNodes and graphEdges get a unique matrix ready for conversion
 	var dsl_Steps = [];
 	// for each node 
@@ -509,6 +510,50 @@ function getDslSteps(graphNodes, graphEdges){
 		}
 	}
 	return dsl_Steps;
+}
+
+function getDslSteps(graphNodes, graphEdges){
+	// from graphNodes and graphEdges get a unique matrix ready for conversion
+	var dslSteps = [];
+	// for each node 
+	for (var i=0; i<graphNodes.length; i++){
+		// save info about the node
+		dslSteps[i] = [];
+		dslSteps[i].push([graphNodes[i][1], graphNodes[i][2], graphNodes[i][3]]);
+		// then, for each edge
+		for (var j=0; j<graphEdges.length; j++){
+			// check if the current node is the predecessor
+			if (graphEdges[j][0] == graphNodes[i][1]){
+				//save the info about the edge (successor name, frequency, duration)
+				dslSteps[i].push([graphEdges[j][1], graphEdges[j][2], graphEdges[j][3]]);
+			}
+		}
+	}
+	// order DSL steps
+	console.log(graphNodes);
+	console.log(graphEdges);
+	console.log(dslSteps);
+	var orderedDslSteps = [];
+	//populate start and end
+	orderedDslSteps[0] = ['start', '', ''];
+	orderedDslSteps[dslSteps.length-1] = ['end', '', ''];
+	// for each step in ordered dslSteps (except 'end')
+	for (var i=0; i<orderedDslSteps.length-1; i++){
+		// for each step in dslSteps
+		for (var j=0; j<dslSteps.length-1; j++){
+			// if the current ordered step is the current step
+			if (orderedDslSteps[i][0] == dslSteps[j][0][0]){
+				// push the successor of the step in the next ordered step
+				orderedDslSteps[i+1] = dslSteps[j][1];
+				// remove the current item from the array to reduce iterations
+				dslSteps.splice(j,1);
+				// exit from the cycle to reduce iterations
+				break;
+			}
+		}
+	}
+	console.log(orderedDslSteps);
+	return orderedDslSteps;
 }
 
 // Function to download data to a file

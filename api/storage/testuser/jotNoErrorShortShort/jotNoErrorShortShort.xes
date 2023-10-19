@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<log xes.version="1849-2016" xes.features="nested-attributes" xmlns="http://www.xes-standard.org/">
+<log xes.version="1849-2016" xes.features="nested-attributes">
 	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
 	<extension name="Time" prefix="time" uri="http://www.xes-standard.org/time.xesext" />
 	<extension name="Lifecycle" prefix="lifecycle" uri="http://www.xes-standard.org/lifecycle.xesext" />
@@ -586,7 +585,7 @@
 			<string key="Activity" value="Store_Results" />
 			<string key="Resource" value="" />
 			<string key="elementId" value="Id_ce328041-df97-4ea4-bbfd-2f49d7707b9e" />
-			<date key="start_timestamp" value="2023-08-03T11:35:01+02:00" />
+			<date key="start_timestamp" value="2023-08-03T11:35:02+02:00" />
 			<date key="time:timestamp" value="2023-08-03T11:35:29.799000+02:00" />
 			<string key="@@duration" value="28.799" />
 			<string key="@@approx_bh_partial_cycle_time" value="0" />

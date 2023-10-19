@@ -12,7 +12,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name" />
 		<string key="StepPhaseID" value="string" />
-		<date key="time:timestamp" value="2023-10-10T15:20:35.852448+01:00" />
+		<date key="time:timestamp" value="2023-10-19T12:59:56.137347+01:00" />
 		<string key="PipelineName" value="name" />
 		<string key="PipelineID" value="string" />
 		<string key="PipelineCommunicationMedium" value="string" />
@@ -22,124 +22,54 @@
 	<trace>
 		<string key="concept:name" value="1" />
 		<event>
-			<string key="concept:name" value="Data_Merge-End" />
+			<string key="concept:name" value="register_request-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852545+01:00" />
+			<date key="time:timestamp" value="2023-10-19T12:59:56.137417+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
+			<string key="PipelineName" value="exJ" />
 			<string key="StepID" value="0" />
-			<string key="StepName" value="Data_Merge" />
+			<string key="StepName" value="register_request" />
 		</event>
 		<event>
-			<string key="concept:name" value="Install_supplementary_resources-End" />
+			<string key="concept:name" value="examine_casually-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852655+01:00" />
+			<date key="time:timestamp" value="2023-10-19T12:59:56.137518+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
+			<string key="PipelineName" value="exJ" />
 			<string key="StepID" value="1" />
-			<string key="StepName" value="Install_supplementary_resources" />
+			<string key="StepName" value="examine_casually" />
 		</event>
 		<event>
-			<string key="concept:name" value="Launch_Algorithm-End" />
+			<string key="concept:name" value="check_ticket-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852687+01:00" />
+			<date key="time:timestamp" value="2023-10-19T12:59:56.137531+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
+			<string key="PipelineName" value="exJ" />
 			<string key="StepID" value="2" />
-			<string key="StepName" value="Launch_Algorithm" />
+			<string key="StepName" value="check_ticket" />
 		</event>
 		<event>
-			<string key="concept:name" value="Model_Generated-End" />
+			<string key="concept:name" value="decide-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852715+01:00" />
+			<date key="time:timestamp" value="2023-10-19T12:59:56.137544+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
+			<string key="PipelineName" value="exJ" />
 			<string key="StepID" value="3" />
-			<string key="StepName" value="Model_Generated" />
+			<string key="StepName" value="decide" />
 		</event>
 		<event>
-			<string key="concept:name" value="Query-End" />
+			<string key="concept:name" value="pay_compensation-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852752+01:00" />
+			<date key="time:timestamp" value="2023-10-19T12:59:56.137557+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
+			<string key="PipelineName" value="exJ" />
 			<string key="StepID" value="4" />
-			<string key="StepName" value="Query" />
-		</event>
-		<event>
-			<string key="concept:name" value="Report_Generated-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852789+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="5" />
-			<string key="StepName" value="Report_Generated" />
-		</event>
-		<event>
-			<string key="concept:name" value="Request-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852824+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="6" />
-			<string key="StepName" value="Request" />
-		</event>
-		<event>
-			<string key="concept:name" value="Restore_access_to_database-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852852+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="7" />
-			<string key="StepName" value="Restore_access_to_database" />
-		</event>
-		<event>
-			<string key="concept:name" value="Restore_access_to_database-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852874+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="8" />
-			<string key="StepName" value="Restore_access_to_database" />
-		</event>
-		<event>
-			<string key="concept:name" value="Store_Results-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852896+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="9" />
-			<string key="StepName" value="Store_Results" />
-		</event>
-		<event>
-			<string key="concept:name" value="Trasformation-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852917+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="10" />
-			<string key="StepName" value="Trasformation" />
-		</event>
-		<event>
-			<string key="concept:name" value="Visualization-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-10T15:20:35.852938+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="simulation_jot" />
-			<string key="StepID" value="11" />
-			<string key="StepName" value="Visualization" />
+			<string key="StepName" value="pay_compensation" />
 		</event>
 	</trace>
 </log>

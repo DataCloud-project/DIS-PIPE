@@ -234,14 +234,14 @@ def timeParser(filepath):
                         timezone=""
 
                     dataTempo=dataTempo_less+micsecond+timezone
-                    print("i milli sono 0")
+                    #print("i milli sono 0")
                 else:    
-                    print("tutto nella norma")
+                    #print("tutto nella norma")
                     dataTempo = child2.get("value")
 
 
-                print(pattern1)
-                print(dataTempo)
+                #print(pattern1)
+                #print(dataTempo)
 
 
                 if is_valid_datetime_string(pattern1,dataTempo):
@@ -275,8 +275,8 @@ def timeParser(filepath):
                     change = True
                     
 
-    print("IL CHANGE è in timeparser")
-    print(change)
+    #print("IL CHANGE è in timeparser")
+    #print(change)
     # Remove the namespace prefix from the tags
     if(change):
         for elem in root.iter():
@@ -294,7 +294,7 @@ def timeParser(filepath):
 def checkTimePrec(filepath, InizioString, timereset):
     tree = ET.parse(filepath)
     root = tree.getroot()
-    print(type(root))
+    #print(type(root))
 
     change = False
     for item in root.findall(InizioString+'trace'):
@@ -303,11 +303,11 @@ def checkTimePrec(filepath, InizioString, timereset):
             for child2 in child.findall(InizioString+'date'):
                 dataTempo = child2.get("value")
 
-                print(old_time)
-                print(dataTempo)
+                #print(old_time)
+                #print(dataTempo)
                 
                 if datetime.fromisoformat(old_time) > datetime.fromisoformat(dataTempo):
-                    print("NON C'è precedenza")
+                    #print("NON C'è precedenza")
                     original_time = datetime.fromisoformat(old_time)
                     new_time = original_time + timedelta(seconds=1)
                     new_time = (new_time.isoformat().split("+")[0]).split(".")[0]
@@ -336,10 +336,10 @@ def checkTimePrec(filepath, InizioString, timereset):
                 else:
                     old_time= dataTempo
 
-                print("#################################################")
+                #print("#################################################")
 
-    print("IL CHANGE è in time precedence")
-    print(change)
+    #print("IL CHANGE è in time precedence")
+    #print(change)
     # Remove the namespace prefix from the tags
     if(change):
         for elem in root.iter():
@@ -369,13 +369,13 @@ def initialAction():
         except:
             print("Invalid value provided.")
 
-    '''
+    
     try:
-        InizioString,timeReset=timeParser(process_string(session["log_path"]))
+        timeParser(process_string(session["log_path"]))
     except Exception as e:
         print(f"An error occurred during time parser: {str(e)}")
-    '''
-    timeParser(process_string(session["log_path"]))
+    
+    
 
     '''
     try:    
