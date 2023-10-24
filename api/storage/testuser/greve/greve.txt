@@ -1,4 +1,0 @@
-Pipeline greve {
-	communicationMedium: medium WEB_SERVICE
-	steps:
-}

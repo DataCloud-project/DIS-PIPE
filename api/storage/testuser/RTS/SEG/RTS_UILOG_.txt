@@ -1,5 +1,0 @@
-EVENT2START receiveBloodMeasure sendDataToMq receiveDataFromMq 4
-startAnalysis startAnalysis analyzeData analyzeData 2
-sendDataToMq receiveDataFromMq 3
-createRecord endAnalysis 2
-EVENT2START receiveBloodMeasure sendDataToMq receiveDataFromMq EVENT2START 2
