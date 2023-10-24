@@ -1,8 +1,0 @@
-A B 12
-E F 12
-C D 12
-G H 12
-A B C D 6
-E F G H 6
-E F A B G H 3
-A B E F C D 3

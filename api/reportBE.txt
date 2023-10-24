@@ -11,454 +11,66 @@
   warnings.warn("pm4py.objects.log.log is deprecated. please use the class pm4py.objects.log.obj instead")
  * Debugger is active!
  * Debugger PIN: 283-984-636
-213.249.38.66 - - [24/Oct/2023 09:06:46] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:06:46] "GET /auth/resources/b6qyi/login/keycloak/img/favicon.ico HTTP/1.1" 404 -
-213.249.38.66 - - [24/Oct/2023 09:07:12] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:07:49] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:07:53] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:08:23] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:09:40] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:13:46] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogIk9FbDZuZ2d0S00wRzBQZ2dnSnFfYndmc2otRVl1LUVTIiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOGkuM1V3MmFnY3NZR0dob0FuUmhuZzNLUXpVSUVZeE9xLTJrUlBGTWhHSFBtU29EbGE2QVZhN3BzQjNwM0VnQWZCTzdWQjVSUUhHellYa19ITFZpZEw5WFEifQ%3D%3D&session_state=ef4621d9-35a7-409f-8bcc-4ecf0735a8ed&code=a1523821-3812-47be-a9d8-7b83ff0c02cd.ef4621d9-35a7-409f-8bcc-4ecf0735a8ed.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:13:46] "GET / HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/styles/myStyle.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/durFreqScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/filterScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/reqListScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/lateralScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/mapScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/scanScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/checkScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/generalScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/queryScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/images/contained.jpg HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/scripts/openProjectScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:47] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 19:57:31] "GET / HTTP/1.1" 302 -
+213.249.38.66 - - [24/Oct/2023 19:57:34] "GET / HTTP/1.1" 302 -
+213.249.38.66 - - [24/Oct/2023 19:57:39] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogIkdwZTRNX0VlN2tPa1MyeFVhQ3V0alBLX2dmcnBwcE8tIiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOGkuM1V3MmFnY3NZR0dob0FuUmhuZzNLUXpVSUVZeE9xLTJrUlBGTWhHSFBtU29EbGE2QVZhN3BzQjNwM0VnQWZCTzdWQjVSUUhHellYa19ITFZpZEw5WFEifQ%3D%3D&session_state=2ae94c20-1b3c-4be5-9818-8fd67ad1118f&code=11d0d516-9491-4f92-98d9-4763ea729ee3.2ae94c20-1b3c-4be5-9818-8fd67ad1118f.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
+213.249.38.66 - - [24/Oct/2023 19:57:39] "GET / HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/styles/myStyle.css HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/durFreqScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/lateralScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/filterScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/reqListScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/mapScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/scanScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/checkScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/generalScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/queryScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:40] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:41] "GET /static/scripts/openProjectScript.js HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:41] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:41] "GET /static/images/contained.jpg HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:41] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 200 -
+The folder 'storage/testuser' exists.
 [home]
 /root/datacloud/DIS-PIPE-development-current/api/storage/testuser/Example/Example.xes
-parsing log, completed traces ::   0%|          | 0/6 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 6/6 [00:00<00:00, 1409.85it/s]
-213.249.38.66 - - [24/Oct/2023 09:13:48] "GET /initialAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:13:48] "GET /initialVariantAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:13:49] "GET /static/dist/images/prev.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:49] "GET /static/dist/images/next.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:49] "GET /static/dist/images/close.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:49] "GET /static/dist/images/loading.gif HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:49] "POST /deleteRemap HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "POST /index HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/styles/myStyle.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/lateralScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/filterScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/durFreqScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/reqListScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/scanScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/checkScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/queryScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/mapScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:13:59] "GET /static/scripts/generalScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /static/scripts/openProjectScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /static/images/contained.jpg HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 304 -
-killing None
-process alreay killed
-killing None
-process alreay killed
-killing None
-process alreay killed
-Current working directory: /root/datacloud/DIS-PIPE-development-current/api
-telluDatacloud.xes
-file allowed
-Current timestamp: 20231024091356558289
-create directory Log
-upload_file
-create directory getdsl
-create directory net
-create directory segmentator
-Folder copied successfully!
-Folder copied successfully!
-[home]
-/root/datacloud/DIS-PIPE-development-current/api/storage/testuser/telluDatacloud/telluDatacloud.xes
-parsing log, completed traces ::   0%|          | 0/1 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 1/1 [00:00<00:00, 38.07it/s]
-213.249.38.66 - - [24/Oct/2023 09:14:00] "GET /initialAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:01] "GET /initialVariantAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:02] "GET /static/dist/images/prev.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:02] "GET /static/dist/images/next.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:02] "GET /static/dist/images/loading.gif HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:02] "GET /static/dist/images/close.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:14:02] "POST /deleteRemap HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:13] "GET /index HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:14:37] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogImRFWkVvTWxaa0RJTlNINC1fbmJQZE8zTEg2Q0pVQ0V5IiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOXBibVJsZUNJLkVWRzJMR2hfZlh6N2ZXM0RuQWQyOVA3UlowY185Q2FaZGdBeGU2clVvVjlVbEV1LVNKTTJ6ZmpYMDA4VmNza3hmTVgwQk9YMnpobWlfX19kelZFZ1JRIn0%3D&session_state=ec44a427-850d-458a-9c1e-98003db1da0f&code=967131b0-2a09-4975-b714-4696e6db0202.ec44a427-850d-458a-9c1e-98003db1da0f.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:14:37] "GET /index HTTP/1.1" 500 -
-Traceback (most recent call last):
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2091, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2076, in wsgi_app
-    response = self.handle_exception(e)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask_oidc/__init__.py", line 487, in decorated
-    return view_func(*args, **kwargs)
-  File "/root/datacloud/DIS-PIPE-development-current/api/backend.py", line 400, in index
-    os.chdir(session["backup_dir"])
-KeyError: 'backup_dir'
-213.249.38.66 - - [24/Oct/2023 09:14:37] "GET /index?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:37] "GET /index?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:38] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:38] "GET /index?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:38] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:47] "GET /index HTTP/1.1" 500 -
-Traceback (most recent call last):
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2091, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2076, in wsgi_app
-    response = self.handle_exception(e)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask_oidc/__init__.py", line 487, in decorated
-    return view_func(*args, **kwargs)
-  File "/root/datacloud/DIS-PIPE-development-current/api/backend.py", line 400, in index
-    os.chdir(session["backup_dir"])
-KeyError: 'backup_dir'
-213.249.38.66 - - [24/Oct/2023 09:14:48] "GET /index?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:48] "GET /index?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:48] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:48] "GET /index?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:48] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:14:51] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogImRFWkVvTWxaa0RJTlNINC1fbmJQZE8zTEg2Q0pVQ0V5IiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOXBibVJsZUNJLkVWRzJMR2hfZlh6N2ZXM0RuQWQyOVA3UlowY185Q2FaZGdBeGU2clVvVjlVbEV1LVNKTTJ6ZmpYMDA4VmNza3hmTVgwQk9YMnpobWlfX19kelZFZ1JRIn0%3D&session_state=ec44a427-850d-458a-9c1e-98003db1da0f&code=a5db939b-7c36-46e1-b467-b95be726ce9c.ec44a427-850d-458a-9c1e-98003db1da0f.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:14:51] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:15:18] "GET /index HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:15:34] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogImVHb0YxdUxEQUF2enBVakVEVDFHekVTUUhKRkNiRGxhIiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOXBibVJsZUNJLkVWRzJMR2hfZlh6N2ZXM0RuQWQyOVA3UlowY185Q2FaZGdBeGU2clVvVjlVbEV1LVNKTTJ6ZmpYMDA4VmNza3hmTVgwQk9YMnpobWlfX19kelZFZ1JRIn0%3D&session_state=b4b9c107-172b-4afc-81e4-52240f57c187&code=95d9317f-cbb1-4e3d-a987-688a596a4c60.b4b9c107-172b-4afc-81e4-52240f57c187.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:15:34] "GET /index HTTP/1.1" 500 -
-Traceback (most recent call last):
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2091, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2076, in wsgi_app
-    response = self.handle_exception(e)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask/app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/flask_oidc/__init__.py", line 487, in decorated
-    return view_func(*args, **kwargs)
-  File "/root/datacloud/DIS-PIPE-development-current/api/backend.py", line 400, in index
-    os.chdir(session["backup_dir"])
-KeyError: 'backup_dir'
-213.249.38.66 - - [24/Oct/2023 09:15:35] "GET /index?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:15:35] "GET /index?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:15:35] "GET /index?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:15:35] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:15:36] "GET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:15:38] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogImVHb0YxdUxEQUF2enBVakVEVDFHekVTUUhKRkNiRGxhIiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOXBibVJsZUNJLkVWRzJMR2hfZlh6N2ZXM0RuQWQyOVA3UlowY185Q2FaZGdBeGU2clVvVjlVbEV1LVNKTTJ6ZmpYMDA4VmNza3hmTVgwQk9YMnpobWlfX19kelZFZ1JRIn0%3D&session_state=b4b9c107-172b-4afc-81e4-52240f57c187&code=403665f6-df9d-430f-9247-296fe94a947a.b4b9c107-172b-4afc-81e4-52240f57c187.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:15:54] "GET / HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET /oidc_callback?state=eyJjc3JmX3Rva2VuIjogIldyVGFIdXFMWGM5V2QxMzhQc3BycTJQNWRGZ3hzT0hqIiwgImRlc3RpbmF0aW9uIjogImV5SmhiR2NpT2lKSVV6VXhNaUo5LkltaDBkSEJ6T2k4dlpHRjBZV05zYjNWa0xXUnBjeTVsZFhCeWIycGxZM1J6TG01bGRDOGkuM1V3MmFnY3NZR0dob0FuUmhuZzNLUXpVSUVZeE9xLTJrUlBGTWhHSFBtU29EbGE2QVZhN3BzQjNwM0VnQWZCTzdWQjVSUUhHellYa19ITFZpZEw5WFEifQ%3D%3D&session_state=9f76dc36-0d3a-41d4-be12-97d994e1b261&code=ee11f349-11c9-4908-9127-4c297451152c.9f76dc36-0d3a-41d4-be12-97d994e1b261.a5b30c6e-d619-40c0-97a3-fa5a20251848 HTTP/1.1" 302 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET / HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET /static/styles/myStyle.css HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET /static/scripts/durFreqScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET /static/scripts/lateralScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:08] "GET /static/scripts/filterScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/reqListScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/scanScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/mapScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/checkScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/queryScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/generalScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/scripts/openProjectScript.js HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /static/images/contained.jpg HTTP/1.1" 200 -
-[home]
-/root/datacloud/DIS-PIPE-development-current/api/storage/dispipe2/Example/Example.xes
-parsing log, completed traces ::   0%|          | 0/6 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 6/6 [00:00<00:00, 1373.31it/s]
-213.249.38.66 - - [24/Oct/2023 09:16:09] "GET /initialAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:10] "GET /initialVariantAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:10] "GET /static/dist/images/next.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:11] "GET /static/dist/images/loading.gif HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:11] "GET /static/dist/images/prev.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:11] "GET /static/dist/images/close.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:11] "POST /deleteRemap HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:11] "GET /static/images/normal/logo.png HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:59] "POST /index HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:16:59] "GET /static/styles/myStyle.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:16:59] "GET /static/scripts/durFreqScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:16:59] "GET /static/scripts/lateralScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:16:59] "GET /static/scripts/filterScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:16:59] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/reqListScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/scanScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/mapScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/checkScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/queryScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/generalScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/scripts/openProjectScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/images/contained.jpg HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:00] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 304 -
-killing None
-process alreay killed
-killing None
-process alreay killed
-killing None
-process alreay killed
-Current working directory: /root/datacloud/DIS-PIPE-development-current/api
-telluDatacloud.xes
-file allowed
-Current timestamp: 20231024091657954095
-create directory Log
-upload_file
-create directory getdsl
-create directory net
-create directory segmentator
-Folder copied successfully!
-Folder copied successfully!
-[home]
-/root/datacloud/DIS-PIPE-development-current/api/storage/dispipe2/telluDatacloud/telluDatacloud.xes
-parsing log, completed traces ::   0%|          | 0/1 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 1/1 [00:00<00:00, 41.50it/s]
-213.249.38.66 - - [24/Oct/2023 09:17:01] "GET /initialAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:01] "GET /initialVariantAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:01] "POST /deleteRemap HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:02] "GET /static/dist/images/prev.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:02] "GET /static/dist/images/next.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:02] "GET /static/dist/images/loading.gif HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:02] "GET /static/dist/images/close.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:02] "GET /static/images/normal/logo.png HTTP/1.1" 304 -
-Reading the config file...done
-350 events and 8 labels in data set
-
-Discovering patterns...
-------- Iteration 0, 350 events, 350 size -------
-
-Best discovered sequence
-
-Pattern: value = 1.881720, number of instances = 34
-   meantime = 10.000000, stddevtime = 0.000000
- Sequence(6):
-   event (0) ReceiveMeasurement [1 1]
-   event (1) FetchPatientData [2 2]
-   event (2) CreateTask [3 3]
-   event (3) FetchTaskResult [4 4]
-   event (4) ProcessResultandNotify [5 5]
-   event (5) StoreDetails [6 6]
-Marked 170 events to compress, 0 duplicates, 180 numnewevents
-
-------- Iteration 1, 180 events, 180 size -------
-
-Best discovered sequence
-
-Pattern: value = 1.698113, number of instances = 16
-   meantime = 10.000000, stddevtime = 0.000000
- Sequence(6):
-   event (0) ReceiveMeasurement [8 8]
-   event (7) FetchDeviceData [9 9]
-   event (2) CreateTask [10 10]
-   event (3) FetchTaskResult [11 11]
-   event (4) ProcessResultandNotify [12 12]
-   event (5) StoreDetails [13 13]
-Marked 80 events to compress, 0 duplicates, 100 numnewevents
-
-------- Iteration 2, 100 events, 100 size -------
-
-No more compression can be achieved.	Done.
-
-Clustering patterns...
-Creation of file storage/dispipe2/telluDatacloud/SEG/telluDatacloud_UILOG_.txt
-
-Pattern (0) numInstances (34): (0) ReceiveMeasurement (1) FetchPatientData (2) CreateTask (3) FetchTaskResult (4) ProcessResultandNotify (5) StoreDetails 
-Pattern (1) numInstances (16): (0) ReceiveMeasurement (7) FetchDeviceData (2) CreateTask (3) FetchTaskResult (4) ProcessResultandNotify (5) StoreDetails 
-Done.
-
-Annotating data...Done.
-start segmentator
-Folder copied successfully!
-Current bis working directory: /root/datacloud/DIS-PIPE-development-current/api
-Current file in directory: ['backend_api', 'client_secrets.json', 'static', 'flask_session', 'AutSeg', 'output.mxml', 'rule_filter', 'converter.py', 'reportBE.txt', 'output.json', 'converterMXML.py', 'UILog777', 'net.svg', 'timestamp', 'key', 'exported.csv', 'database', 'event_insertion_times.mat', 'backend.py', 'dsl_to_xes', 'exported.xes', 'conv.ipynb', 'ru.bpmn', 'net', 'queryJar', 'templates', 'event_logs', 'jar', 'RJTS.csv', '__pycache__', 'storage', 'RJTS.xes']
-./storage/dispipe2/telluDatacloud/SEG/AutSeg/segmentator/al -d storage/dispipe2/telluDatacloud/SEG/AutSeg/segmentator/files/UILog.config
-Running in process 888995
-
-segmentator done
-Current working directory: /root/datacloud/DIS-PIPE-development-current/api
-File created successfully.
-File created successfully.
-parsing log, completed traces :: : 0it [00:00, ?it/s]parsing log, completed traces :: : 0it [00:00, ?it/s]
-exporting log, completed traces ::   0%|          | 0/50 [00:00<?, ?it/s]exporting log, completed traces :: 100%|██████████| 50/50 [00:00<00:00, 1808.67it/s]
-213.249.38.66 - - [24/Oct/2023 09:17:09] "POST /startSegmentator HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /indexSeg HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/styles/myStyle.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/scripts/durFreqScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/scripts/filterScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/scripts/lateralScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/scripts/mapScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:10] "GET /static/scripts/reqListScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/queryScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/scanScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/checkScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/generalScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/scripts/openProjectScript.js HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/images/contained.jpg HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 304 -
-killing None
-process alreay killed
-killing None
-process alreay killed
-killing None
-process alreay killed
-[home]
-/root/datacloud/DIS-PIPE-development-current/api/storage/dispipe2/telluDatacloud/telluDatacloud.xes
-parsing log, completed traces ::   0%|          | 0/50 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 50/50 [00:00<00:00, 1520.83it/s]
-213.249.38.66 - - [24/Oct/2023 09:17:11] "GET /initialAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:12] "GET /initialVariantAction HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:12] "POST /deleteRemap HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:12] "GET /static/images/normal/logo.png HTTP/1.1" 304 -
-213.249.38.66 - - [24/Oct/2023 09:17:13] "GET /getMacroTask HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:18] "GET /dfgFreqReduced?myPathF=0&myActF=100&myPathP=100&myActP=100&perf_checked=false HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:19] "GET /dfgPerfReduced?myPathF=0&myActF=100&myPathP=100&myActP=100&perf_checked=false HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:19] "POST /dslPost HTTP/1.1" 200 -
-/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'crowdserv.sys.kth.se'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(
-213.249.38.66 - - [24/Oct/2023 09:17:20] "GET /sendDsl HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:26] "POST /deleteRemap HTTP/1.1" 200 -
-/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'crowdserv.sys.kth.se'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(
-213.249.38.66 - - [24/Oct/2023 09:17:26] "GET /getDslName HTTP/1.1" 200 -
-/root/miniconda3/envs/pm4py_env/lib/python3.8/site-packages/urllib3/connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'crowdserv.sys.kth.se'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-  warnings.warn(
-{'ReceiveMeasurement,FetchPatientData,CreateTask,FetchTaskResult,ProcessResultandNotify,StoreDetails': 34, 'ReceiveMeasurement,FetchDeviceData,CreateTask,FetchTaskResult,ProcessResultandNotify,StoreDetails': 16}
-Request successful
-{"data":"Pipeline telluDatacloud {\n\tcommunicationMedium: medium \n\tsteps:\n\t\t- data-processing step ReceiveMeasurement\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tFrequency: '',\n\t\t\t\tDuration: '16s'\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\n\n\t\t- data-processing step FetchPatientData\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tFrequency: '34',\n\t\t\t\tDuration: '50s'\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\tprevious: [ReceiveMeasurement]\n\n\t\t- data-processing step CreateTask\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tFrequency: '34',\n\t\t\t\tDuration: '16s'\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\tprevious: [FetchPatientData]\n\n\t\t- data-processing step FetchTaskResult\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tFrequency: '50',\n\t\t\t\tDuration: '50s'\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\tprevious: [CreateTask]\n\n\t\t- data-processing step ProcessResultandNotify\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tFrequency: '50',\n\t\t\t\tDuration: '34s'\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\tprevious: [FetchTaskResult]\n\n\t\t- data-processing step StoreDetails\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n\t\t\t\tFrequency: '50',\n\t\t\t\tDuration: '50s'\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\tprevious: [ProcessResultandNotify]\n}\n\n","success":true,"errorMessage":null}
-"StepPhase": {
-	"ID": "1",
-	"Name": "End",
-}
-Generating XES file.
-storage/dispipe2/telluDatacloud/getdsl/importedpipeline.xes
-ERRORE
-Current working directory: /root/datacloud/DIS-PIPE-development-current/api
-parsing log, completed traces ::   0%|          | 0/1 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 1/1 [00:00<00:00, 1393.92it/s]
-net/marking.txt
-jar/cost_file
-exporting log, completed traces ::   0%|          | 0/1 [00:00<?, ?it/s]exporting log, completed traces :: 100%|██████████| 1/1 [00:00<00:00, 1554.60it/s]
-213.249.38.66 - - [24/Oct/2023 09:17:34] "GET /getDslStructure?dslName=065788d4-f368-4c13-a7a8-15c0bc1696a5 HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:17:34] "GET /getDslStructure?dslName=065788d4-f368-4c13-a7a8-15c0bc1696a5 HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:44] "POST /mapPnmlBis HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:17:44] "POST /mapPnmlBis HTTP/1.1" 200 -
-******* Event Log Summary *******
-Event Log file: storage/dispipe2/telluDatacloud/telluDatacloud.xes
-Total number of traces: 50
-Total number of events: 300
-Average trace length: 6.0
-Max trace length: 6 [ Trace#1 ]
-Min trace length: 6 [ Trace#1 ]
-Log Activities involved: [receivemeasurement, fetchpatientdata, createtask, fetchtaskresult, processresultandnotify, storedetails, fetchdevicedata]
-Number of activities involved: 7
-
-******* Petri Net Summary *******
-Petri Net file: storage/dispipe2/telluDatacloud/net/petri_final_remap.pnml
-Petri Net Transitions: fetchtaskresult receivemeasurement createtask processresultandnotify fetchpatientdata storedetails Number of Transitions: 6
-List of Places: [source, p_4, sink, p_5, p_6, p_7, p_3]
-Number of Places: 7
-Marking Petri Net: [[source, 1, 0], [p_4, 0, 0], [sink, 0, 1], [p_5, 0, 0], [p_6, 0, 0], [p_7, 0, 0], [p_3, 0, 0]]
-Initial Marking Petri Net: [source]
-Final Marking Petri Net: [sink]
-
-******* Configuration Summary *******
-ALL ACTIVITIES: [receivemeasurement, fetchpatientdata, createtask, fetchtaskresult, processresultandnotify, storedetails, fetchdevicedata]
-COST MODEL: [[receivemeasurement, 1, 1], [fetchpatientdata, 2, 2], [createtask, 1, 1], [fetchtaskresult, 1, 1], [processresultandnotify, 1, 1], [storedetails, 1, 1], [fetchdevicedata, 1, 1]]
-MINIMUM TRACE LENGTH: 3
-MAXIMUM TRACE LENGTH: 18
-DISCARD DUPLICATED TRACES: falsethe duration is: 4952 ms. for 50 traces
-the search time is: 1416 ms.
-the translation time is: 3536 ms.
-213.249.38.66 - - [24/Oct/2023 09:17:53] "GET /jarCalling?minLen=3&maxLen=18&planner=FD&duplicate=false HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:17:53] "GET /jarCalling?minLen=3&maxLen=18&planner=FD&duplicate=false HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:53] "GET /traceDetail HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:17:53] "GET /traceDetail HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:54] "GET /generalTraceInfo HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:17:54] "GET /generalTraceInfo HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:17:54] "GET /updateTraceDetail?nameTrace=out1.txt HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:17:54] "GET /updateTraceDetail?nameTrace=out1.txt HTTP/1.1" 200 -
-213.249.38.66 - - [24/Oct/2023 09:18:08] "GET /getBPMNGraph HTTP/1.1" 200 -
-INFO:werkzeug:213.249.38.66 - - [24/Oct/2023 09:18:08] "GET /getBPMNGraph HTTP/1.1" 200 -
-[['1ee826ed-7c57-4add-bf58-783c4da88336', 'FetchTaskResult-End'], ['0458e153-9cb0-4e17-8315-c787f0533895', 'ReceiveMeasurement-End'], ['fd3a122a-a8cd-40b9-a08b-874e3c3c5c85', 'CreateTask-End'], ['5f8b9127-4baf-4ae1-bbba-588f45a3299c', 'ProcessResultandNotify-End'], ['03084a8c-962b-42cd-90bb-93de48f5f772', 'FetchPatientData-End'], ['69e1f930-3aae-401b-83d6-b40eb577c78d', 'StoreDetails-End']]
-{'ReceiveMeasurement': 50, 'FetchPatientData': 34, 'CreateTask': 50, 'FetchTaskResult': 50, 'ProcessResultandNotify': 50, 'StoreDetails': 50, 'FetchDeviceData': 16}
-FetchTaskResult-End
-FetchTaskResult
-1ee826ed-7c57-4add-bf58-783c4da88336
-sono nel path iniziale
-Text updated successfully.
-ReceiveMeasurement-End
-ReceiveMeasurement
-0458e153-9cb0-4e17-8315-c787f0533895
-sono nel path finale
-Text updated successfully.
-CreateTask-End
-CreateTask
-fd3a122a-a8cd-40b9-a08b-874e3c3c5c85
-sono nel path finale
-Text updated successfully.
-ProcessResultandNotify-End
-ProcessResultandNotify
-5f8b9127-4baf-4ae1-bbba-588f45a3299c
-sono nel path finale
-Text updated successfully.
-FetchPatientData-End
-FetchPatientData
-03084a8c-962b-42cd-90bb-93de48f5f772
-sono nel path finale
-Text updated successfully.
-StoreDetails-End
-StoreDetails
-69e1f930-3aae-401b-83d6-b40eb577c78d
-sono nel path finale
-Text updated successfully.
-Current working il dopo directory: /root/datacloud/DIS-PIPE-development-current/api
-chiamata a jar è questa
-/root/datacloud/DIS-PIPE-development-current/api/storage/dispipe2/telluDatacloud/telluDatacloud.xes
-/root/datacloud/DIS-PIPE-development-current/api/storage/dispipe2/telluDatacloud
-telluDatacloud.xes
-java -jar storage/dispipe2/telluDatacloud/jar/traceAligner11NEW.jar align storage/dispipe2/telluDatacloud/net/petri_final_remap.pnml storage/dispipe2/telluDatacloud/telluDatacloud.xes storage/dispipe2/telluDatacloud/jar/cost_file 3 18 FD false storage/dispipe2/telluDatacloud/jar/fast-downward/src storage/dispipe2/telluDatacloud/jar/seq-opt-symba-2
-chiamata a jar è fininta
-Running in process 889079
-
-jar done
-  
-
-Running in process 889104
-
-script done
-XDBODE
-/root/datacloud/DIS-PIPE-development-current/api
-Current working directory: /root/datacloud/DIS-PIPE-development-current/api
-la cartella su cui lavora general trace info è:
-/root/datacloud/DIS-PIPE-development-current/api
-X2
-/root/datacloud/DIS-PIPE-development-current/api
+parsing log, completed traces ::   0%|          | 0/6 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 6/6 [00:00<00:00, 1408.04it/s]
+213.249.38.66 - - [24/Oct/2023 19:57:41] "GET /initialAction HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:42] "GET /initialVariantAction HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "POST /dslPost HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "POST /dslPost HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "POST /deleteRemap HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "GET /static/dist/images/prev.png HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "GET /static/dist/images/next.png HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "GET /static/dist/images/loading.gif HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "GET /static/dist/images/close.png HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 19:57:43] "GET /static/images/normal/logo.png HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/lateralScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/filterScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/checkScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/reqListScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/styles/myStyle.css HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/generalScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/mapScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/cCheckingScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/images/contained.jpg HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/durFreqScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/segmentatorScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/scanScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/dist/js/lightbox-plus-jquery.min.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/openProjectScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/dist/css/lightbox.min.css HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/dsltoXesScript.js HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:05] "GET /static/scripts/queryScript.js HTTP/1.1" 304 -
+/root/datacloud/DIS-PIPE-development-current/api/storage/testuser/Example/Example.xes
+parsing log, completed traces ::   0%|          | 0/6 [00:00<?, ?it/s]parsing log, completed traces :: 100%|██████████| 6/6 [00:00<00:00, 1094.40it/s]
+213.249.38.66 - - [24/Oct/2023 22:04:06] "GET /initialAction HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 22:04:06] "GET /initialVariantAction HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 22:04:08] "POST /dslPost HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 22:04:08] "GET /static/dist/images/next.png HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:08] "GET /static/dist/images/prev.png HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:08] "GET /static/dist/images/loading.gif HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:09] "GET /static/dist/images/close.png HTTP/1.1" 304 -
+213.249.38.66 - - [24/Oct/2023 22:04:09] "POST /dslPost HTTP/1.1" 200 -
+213.249.38.66 - - [24/Oct/2023 22:04:09] "POST /deleteRemap HTTP/1.1" 200 -

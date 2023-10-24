@@ -1,4 +1,0 @@
-Pipeline Ex {
-	communicationMedium: medium WEB_SERVICE
-	steps:
-}
