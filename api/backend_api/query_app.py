@@ -395,11 +395,11 @@ def doQuery2():
                         where key='DataSourceName' and EXISTS( \
                             select * \
                             from new_log_db nldb2 \
-                            where nldb1.eventname=nldb2.eventname and nldb2.key='StepContinuumLayer' and nldb2.value='edge' \
+                            where nldb1.eventname=nldb2.eventname and nldb2.key='StepContinuumLayer' and nldb2.value='Cloud' \
                         ) and NOT EXISTS ( \
                             select * \
                             from new_log_db nldb3 \
-                            where nldb1.eventname=nldb3.eventname and nldb3.key='DataSourceType' and nldb3.value='2' \
+                            where nldb1.eventname=nldb3.eventname and ((nldb3.key='DataSourceType' and nldb3.value='Output') or (nldb3.key='DataSourceType' and nldb3.value='Both')) \
                         );")
     cursor2_1.close()
 
@@ -411,11 +411,11 @@ def doQuery2():
                      where key='DataSourceVolume' and EXISTS( \
                          select * \
                          from new_log_db nldb2 \
-                         where nldb1.eventname=nldb2.eventname and nldb2.key='StepContinuumLayer' and nldb2.value='edge' \
+                         where nldb1.eventname=nldb2.eventname and nldb2.key='StepContinuumLayer' and nldb2.value='Cloud' \
                      ) and NOT EXISTS ( \
                          select * \
                          from new_log_db nldb3 \
-                         where nldb1.eventname=nldb3.eventname and nldb3.key='DataSourceType' and nldb3.value='2' \
+                         where nldb1.eventname=nldb3.eventname and ((nldb3.key='DataSourceType' and nldb3.value='Output') or (nldb3.key='DataSourceType' and nldb3.value='Both')) \
                      );")
     cursor2_2.close()
 

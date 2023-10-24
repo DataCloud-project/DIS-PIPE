@@ -27,7 +27,7 @@
 	<title>DIS-PIPE</title>
 	<script>
 		//document.addEventListener('readystatechange', event => { sendDslRequest('start')});
-		document.addEventListener('readystatechange', event => { sendTempDsl()});
+		//document.addEventListener('readystatechange', event => { sendTempDsl()});
 	</script>
 	<style>
 		.popup {
@@ -147,6 +147,8 @@ function checkRefresh(value){
 		oReq.open("POST", frontend+"deleteRemap", true);
     	oReq.send()
 
+		
+
 		var segmentatoreValore = sessionStorage.getItem('segmentatore');
 		console.log(segmentatoreValore)
 		if(segmentatoreValore=="YES"){
@@ -239,8 +241,8 @@ function checkRefresh(value){
 			<table border="1">
 				<thead>
 					<tr>
-						<th>Macro Task</th>
-						<th>Frequency</th>
+						<th>Macro Tasks</th>
+						<th>Occurrences</th>
 					</tr>
 				</thead>
 				<tbody id="table-body">
@@ -265,7 +267,7 @@ function checkRefresh(value){
 			<br>
 			<center>
 				<div id="btnExport">
-					<span>The updated log has 1 trace. Do you want apply Segmentator?</span>
+					<span>The updated log has 1 trace. Do you want apply <b>Segmentator?</b></span>
 					<button style=" padding: 10px;" type="button" onclick="wrapOpenDecisionMakingSegmentator()"> YES </button>
 					<button style=" padding: 10px;" type="button" onclick="closeCheckSeg()"> NO </button>
 				</div>
@@ -284,8 +286,8 @@ function checkRefresh(value){
 			<center>
 				<div id="btnExport">
 					<span>Chose Export</span>
-					<a  href="{{url_for('downloadXes')}}"><button style=" padding: 10px;" type="button"> XES </button></a>
-					<a  href="{{url_for('downloadCsv')}}"><button style=" padding: 10px;" type="button"> CSV </button></a>
+					<a  href="{{url_for('downloadXes')}}"><button onclick="closeExportMenu()" style=" padding: 10px;" type="button"> XES </button></a>
+					<a  href="{{url_for('downloadCsv')}}"><button onclick="closeExportMenu()" style=" padding: 10px;" type="button"> CSV </button></a>
 				</div>
 			</center>
 		</form>
@@ -321,7 +323,7 @@ function checkRefresh(value){
 			<br>
 			<center id="containerEnd">
 				<div id="addEnd0">
-					<p style="display: inline;">Add end activity</p>
+					<p style="display: inline;">Add end step</p>
 					<select name="endSegAct" id="endSegAct">
 						
 					</select>

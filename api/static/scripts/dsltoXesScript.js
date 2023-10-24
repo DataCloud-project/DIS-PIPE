@@ -50,6 +50,11 @@ function getNameDslListener(){
     //console.log(dslIdArraySingle.length);
     //console.log(dslNameArraySingle.length);
 
+    var divNameL = document.getElementById("dslNameList");
+    while (divNameL.firstChild) {
+        divNameL.removeChild(divNameL.firstChild);
+    }
+
     for (let j in dslNameArray){
         
         $('#dslNameList').append('<div class="columnNameList" onclick="getDslbyName('+"'"+dslIdArray[j]+"'"+')"><h3>'+dslNameArray[j]+'</h3></div>');   

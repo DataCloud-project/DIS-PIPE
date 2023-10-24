@@ -1,1 +1,1 @@
-3, 'Request', 'Query', 'Trasformation', 'Data_Merge', 'Visualization', 'Report_Generated',segment_0
+16, 'ReceiveMeasurement', 'FetchDeviceData', 'CreateTask', 'FetchTaskResult', 'ProcessResultandNotify', 'StoreDetails',segment_0
