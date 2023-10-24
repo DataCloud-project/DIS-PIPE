@@ -244,6 +244,21 @@ def indice():
             session["TIMESTAMP_FOLDER"] = 'timestamp/'
             session["NODOsegmen"] = False
 
+            
+            folder_path="storage"+"/"+session["user"]
+            source_folder="Example"
+
+            if os.path.exists(folder_path) and os.path.isdir(folder_path):
+                print(f"The folder '{folder_path}' exists.")
+            else:
+                print(f"The folder '{folder_path}' does not exist.")
+                os.makedirs(folder_path)
+                try:
+                    shutil.copytree(source_folder, os.path.join(folder_path, os.path.basename(source_folder)))
+                    print(f"Contents from '{source_folder}' have been copied to '{folder_path}'.")
+                except Exception as e:
+                    print(f"An error occurred while copying: {e}")
+
             #print(session["directory_log"])
 
 

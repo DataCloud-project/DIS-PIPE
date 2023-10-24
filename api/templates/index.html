@@ -27,7 +27,7 @@
 	<title>DIS-PIPE</title>
 	<script>
 		//document.addEventListener('readystatechange', event => { sendDslRequest('start')});
-		//document.addEventListener('readystatechange', event => { sendTempDsl()});
+		document.addEventListener('readystatechange', event => { sendTempDsl()});
 	</script>
 	<style>
 		.popup {
@@ -148,6 +148,15 @@ function checkRefresh(value){
     	oReq.send()
 
 		
+		var timeValore = sessionStorage.getItem('time');
+		console.log(timeValore)
+		if(timeValore=="YES"){
+			//wrapOpenDecisionMakingSegmentator();
+			//openCheckSegmentatorPopup();
+			//console.log("test tempo")
+			openCheckTimePopup()
+		}
+
 
 		var segmentatoreValore = sessionStorage.getItem('segmentatore');
 		console.log(segmentatoreValore)
@@ -252,6 +261,25 @@ function checkRefresh(value){
 			<br>
 			<center><button style=" padding: 10px;" type="button" onclick="closeMacroTask()"> Close </button></center>
 
+		</form>
+	</div>
+
+
+	<div class="blocker" id="blocker_checkTime" onclick="closeCheckTime()"></div>
+	<div class="form-popup" id="checkTime">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="checkTime_title" style="color:#7a4791; text-align: center; font-size: 25px;">Time Granularity Check</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnTime">
+					<span>Since partially ordered or no temporally aligned event logs are not interpretable by DIS-PIPE,<br> the imported log has been checked to remove any case of partial ordering between <br>events and for repairing timestamps at a different level of granularity.</span>
+					<br>
+					<button style=" padding: 10px;" type="button" onclick="closeCheckTime()"> OK </button>
+				</div>
+			</center>
 		</form>
 	</div>
 
@@ -1373,7 +1401,7 @@ function checkRefresh(value){
 
 										<div class="column-col center2-col" >
 											
-											<span>Cost for disalignment steps</span><br>
+											<span>Cost for misalignment steps</span><br>
 											<!-- <span>Cost to add/remove activities in/from trace</span><br> -->
 											<select id="disalignment_log" onchange="changedisalignment_select()">
 												
@@ -1400,8 +1428,8 @@ function checkRefresh(value){
 											<span>Planner list</span><br>
 											<input checked type="radio" id="FD" name="planner_list" value="FD">
 											<label for="FD">fast-downward</label><br>
-											<input type="radio" id="SYMBA" name="planner_list" value="SYMBA">
-											<label for="SYMBA">seq-opt-symba-2</label><br>
+											<input style="visibility: hidden;" type="radio" id="SYMBA" name="planner_list" value="SYMBA">
+											<label style="visibility: hidden;" for="SYMBA">seq-opt-symba-2</label><br>
 											<input style="visibility: hidden;" type="radio" id="Planner3" name="planner_list" value="Planner 3">
 											<label style="visibility: hidden;" for="Planner3">Planner 3</label><br>
 											<input style="visibility: hidden;" type="radio" id="Planner4" name="planner_list" value="Planner 4">

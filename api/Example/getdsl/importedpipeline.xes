@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<log>
+	<string key="creator" value="RefModel_Generator"/>
+	<extension name="Concept" prefix="concept" uri="http://code.deckfour.org/xes/concept.xesext"/>
+	<extension name="Time" prefix="time" uri="http://code.deckfour.org/xes/time.xesext"/>
+	<extension name="Organizational" prefix="org" uri="http://code.deckfour.org/xes/org.xesext"/>
+	<global scope="trace">
+		<string key="concept:name" value="name"/>
+	</global>
+	<global scope="event">
+		<string key="concept:name" value="name"/>
+		<string key="StepPhaseID" value="string"/>
+		<date key="time:timestamp" value="2023-10-19T12:58:47.867302+01:00"/>
+		<string key="PipelineName" value="name"/>
+		<string key="PipelineID" value="string"/>
+		<string key="PipelineCommunicationMedium" value="string"/>
+		<string key="StepID" value="string"/>
+		<string key="StepType" value="string"/>
+	</global>
+	<classifier name="Activity" keys="name"/>
+	<classifier name="activity classifier" keys="Activity"/>
+	<trace>
+		<string key="concept:name" value="1"/>
+		<event>
+			<string key="concept:name" value="register_request-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867425+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="Example"/>
+			<string key="StepID" value="0"/>
+			<string key="StepName" value="register_request"/>
+		</event>
+		<event>
+			<string key="concept:name" value="examine_casually-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867478+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="Example"/>
+			<string key="StepID" value="1"/>
+			<string key="StepName" value="examine_casually"/>
+		</event>
+		<event>
+			<string key="concept:name" value="check_ticket-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867523+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="Example"/>
+			<string key="StepID" value="2"/>
+			<string key="StepName" value="check_ticket"/>
+		</event>
+		<event>
+			<string key="concept:name" value="decide-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.867787+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="Example"/>
+			<string key="StepID" value="3"/>
+			<string key="StepName" value="decide"/>
+		</event>
+		<event>
+			<string key="concept:name" value="pay_compensation-End"/>
+			<string key="StepPhaseID" value="1"/>
+			<date key="time:timestamp" value="2023-10-19T12:58:47.868111+01:00"/>
+			<string key="PipelineID" value="1"/>
+			<string key="PipelineCommunicationMedium" value="medium
+	"/>
+			<string key="PipelineName" value="Example"/>
+			<string key="StepID" value="4"/>
+			<string key="StepName" value="pay_compensation"/>
+		</event>
+	</trace>
+</log>

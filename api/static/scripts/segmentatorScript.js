@@ -56,14 +56,15 @@ function startSegmentator(){
 
 }
 
-function openChecTimePopup(){
-		document.getElementById("blocker_checkTime").style.display = "block"
-		document.getElementById("checkTime").style.display = "block"
+function openCheckTimePopup(){
+	document.getElementById("blocker_checkTime").style.display = "block"
+	document.getElementById("checkTime").style.display = "block"
 }
 
 function closeCheckTime(){
 	document.getElementById("blocker_checkTime").style.display = "none"
 	document.getElementById("checkTime").style.display = "none"
+	sessionStorage.setItem('time', 'YES');
 }
 
 

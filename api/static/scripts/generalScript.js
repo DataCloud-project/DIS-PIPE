@@ -45,6 +45,7 @@ function update(){
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
 	sessionStorage.setItem('segmentatore', 'NO');
+	sessionStorage.setItem('time', 'YES');
 
 }
 function updateSegmentator(){
@@ -52,6 +53,7 @@ function updateSegmentator(){
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
 	sessionStorage.setItem('segmentatore', 'YES');
+	sessionStorage.setItem('time', 'YES');
 }
 
 function openDecisionMakingSegementator(){
@@ -128,7 +130,7 @@ function addNewEndAct(){
 		alert("already present")
 	}else{
 	segmemtator_array.push(selectedOption)
-	var spanElement = document.createElement("span");
+	var spanElement = document.createElement("b");
 	spanElement.textContent = selectedOption;
 
 
@@ -158,18 +160,22 @@ function removeEndAct(){
   
 	// Get the parent div to be removed
 	var divToRemove = button.parentNode;
-	var spanElement = divToRemove.querySelector("span");
-	console.log(spanElement.innerHTML)
-	elementToRemove=spanElement.innerHTML
+	var spanElement = divToRemove.querySelector("b");
+	if(spanElement){
+		console.log(spanElement.innerHTML)
+		elementToRemove=spanElement.innerHTML
+	
+		segmemtator_array = segmemtator_array.filter((element) => element !== elementToRemove);
+		console.log(segmemtator_array); // Output: [1, 2, 4, 5]
+		
+		// Get the parent element of the div
+		var parent = divToRemove.parentNode;
+		
+		// Remove the div from its parent
+		parent.removeChild(divToRemove);
 
-	segmemtator_array = segmemtator_array.filter((element) => element !== elementToRemove);
-	console.log(segmemtator_array); // Output: [1, 2, 4, 5]
-	
-	// Get the parent element of the div
-	var parent = divToRemove.parentNode;
-	
-	// Remove the div from its parent
-	parent.removeChild(divToRemove);
+	}
+
 }
 
 function xesORcsv(){
