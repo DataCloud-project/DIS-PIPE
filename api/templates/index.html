@@ -150,19 +150,13 @@ function checkRefresh(value){
 		
 		var timeValore = sessionStorage.getItem('time');
 		console.log(timeValore)
-		if(timeValore=="YES"){
-			//wrapOpenDecisionMakingSegmentator();
-			//openCheckSegmentatorPopup();
-			//console.log("test tempo")
-			openCheckTimePopup()
-		}
 
 
 		var segmentatoreValore = sessionStorage.getItem('segmentatore');
 		console.log(segmentatoreValore)
-		if(segmentatoreValore=="YES"){
+		if(segmentatoreValore=="YES" && timeValore=="YES"){
 			//wrapOpenDecisionMakingSegmentator();
-			openCheckSegmentatorPopup();
+			openCheckTimePopupFix();
 		}
 
 
@@ -231,8 +225,8 @@ function checkRefresh(value){
 			<center>
 				<div id="btnContainer">
 					<span>Chose a view</span>
-					<button style=" padding: 10px;" type="button"  class="btn" onclick="listView()"><i class="fa fa-bars"></i> List</button>
-					<button style=" padding: 10px;" id="gridViewBtn" type="button"  class="btn active" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+					<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+					<button style=" padding: 10px;" id="gridViewBtn" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
 				</div>
 				<br>
 				<div id="dslNameList" class="rowDslName">
@@ -263,6 +257,26 @@ function checkRefresh(value){
 
 		</form>
 	</div>
+
+
+	<div class="blocker" id="blocker_checkTimeFix" onclick="closeCheckTimeFix()"></div>
+	<div class="form-popup" id="checkTimeFix" style=" max-width: 60vw;">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="checkTime_titleFix" style="color:#7a4791; text-align: center; font-size: 25px;">Time Granularity Check</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnTimeFix">
+					<span>Since partially ordered or no temporally aligned event logs are not interpretable by DIS-PIPE, the imported log has been checked to remove any case of partial ordering between events and for repairing timestamps at a different level of granularity.</span>
+					<br>
+					<button style=" padding: 10px;" type="button" onclick="closeCheckTimeFix()"> OK </button>
+				</div>
+			</center>
+		</form>
+	</div>
+
 
 
 	<div class="blocker" id="blocker_checkTime" onclick="closeCheckTime()"></div>

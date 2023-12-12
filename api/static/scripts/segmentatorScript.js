@@ -56,6 +56,19 @@ function startSegmentator(){
 
 }
 
+function openCheckTimePopupFix(){
+	document.getElementById("blocker_checkTimeFix").style.display = "block"
+	document.getElementById("checkTimeFix").style.display = "block"
+}
+
+function closeCheckTimeFix(){
+	document.getElementById("blocker_checkTimeFix").style.display = "none"
+	document.getElementById("checkTimeFix").style.display = "none"
+	sessionStorage.setItem('time', 'YES');
+	openCheckSegmentatorPopup()
+}
+
+
 function openCheckTimePopup(){
 	document.getElementById("blocker_checkTime").style.display = "block"
 	document.getElementById("checkTime").style.display = "block"

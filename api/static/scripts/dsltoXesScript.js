@@ -24,7 +24,7 @@ function getNameDslWork(){
 	oReq.open("GET", frontend+"getDslName", false);
 	oReq.send();
 
-    document.getElementById("gridViewBtn").click();
+    document.getElementById("listViewBtn").click();
 
 }
 

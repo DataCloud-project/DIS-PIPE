@@ -1,1 +1,1 @@
-16, 'ReceiveMeasurement', 'FetchDeviceData', 'CreateTask', 'FetchTaskResult', 'ProcessResultandNotify', 'StoreDetails', 'segment_0',
+17, 'ReceiveMeasurement', 'FetchDeviceData', 'CreateTask', 'FetchTaskResult', 'ProcessResultandNotify', 'StoreDetails',segment_0
