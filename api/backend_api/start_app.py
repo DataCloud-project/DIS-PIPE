@@ -138,6 +138,17 @@ def is_valid_datetime_string(pattern1, input_str):
     return re.match(pattern1, input_str) is not None
 
 
+def pad_string(input_str, reference_str):
+    if len(input_str) < len(reference_str):
+        padding = reference_str[len(input_str):]
+        padded_input_str = input_str + padding
+        return padded_input_str, True
+    elif len(input_str) > len(reference_str):
+        return reference_str, True
+    else:
+        return input_str, False
+
+
 def timeParser(filepath):
     tree = ET.parse(filepath)
     root = tree.getroot()

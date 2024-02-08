@@ -1326,9 +1326,10 @@ def filter_non_http_requests():
 ############################################################
 
 if(path_f=="127.0.0.1"):
-    print("")
-    context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
-    app.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
+    print("local")
+    #context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
+    #pp.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
+    app.run(host=path_f, port=int(port_f), debug=True)
 else:
     port = int(os.environ.get('PORT', port_f))
     context = ('key/certificate.crt', 'key/private.key')    #certificate and key files
