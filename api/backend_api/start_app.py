@@ -71,29 +71,16 @@ from datetime import datetime, timedelta
 ############################################################
 
 def process_string(input_string):
-    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
-        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
-        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
-        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    elif "home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
-        relevant_part = input_string.split("home/jacopo/Desktop/DIS-PIPE/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    elif "/home/jacopo/Desktop/DIS-PIPE/api/" in input_string:
-        relevant_part = input_string.split("/home/jacopo/Desktop/DIS-PIPE/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    else :
-        return input_string
+    split_string = input_string.split("api/", 1)
+    if len(split_string) > 1:
+        result = split_string[1]
+        return result
+    else:
+        if(input_string.startswith("/storage")):
+            return input_string[1:]
+        else:
+            return input_string
+            
 
 
 def translate_format(input_format):
@@ -175,6 +162,7 @@ def timeParser(filepath):
                             dataTempo = child2.get("value")
 
                             risultato, timestamp_f = validate_date_format(dataTempo)
+                            
                             InizioString=preString
                            
                             new_date = "1970-01-01T01:00:00"
@@ -212,10 +200,15 @@ def timeParser(filepath):
         for child in item.findall(InizioString+'event'):
             for child2 in child.findall(InizioString+'date'):
                 
+                
+                temp_nuovo, is_padded =pad_string(child2.get("value"), old_time)
+                if(is_padded):
+                    change = True
+                child2.set("value",temp_nuovo)
                 date_obj=datetime.fromisoformat(child2.get("value"))
                 
                 if((re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{2}:\d{2}$", child2.get("value")) is not None) or (re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$",child2.get("value"))) is not None):
-
+                    print("STOINIFF primo")
                     dataTempo_less = (date_obj.isoformat().split("+")[0]).split(".")[0]
 
                     micsecond=""
@@ -236,7 +229,6 @@ def timeParser(filepath):
                     dataTempo=dataTempo_less+micsecond+timezone
                     #print("i milli sono 0")
                 else:    
-                    #print("tutto nella norma")
                     dataTempo = child2.get("value")
 
 
@@ -247,7 +239,6 @@ def timeParser(filepath):
                 if is_valid_datetime_string(pattern1,dataTempo):
                     old_time = child2.get("value")
                 else:
-                    print("IS NOT VALID")
                     
                     original_time = datetime.fromisoformat(old_time)
                     new_time = original_time + timedelta(seconds=1)
@@ -279,6 +270,7 @@ def timeParser(filepath):
     #print(change)
     # Remove the namespace prefix from the tags
     if(change):
+        print("save new xes")
         for elem in root.iter():
             if '}' in elem.tag:
                 elem.tag = elem.tag.split('}', 1)[1]

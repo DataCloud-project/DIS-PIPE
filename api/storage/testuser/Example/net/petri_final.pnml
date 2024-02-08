@@ -2,6 +2,21 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
     <page id="n0">
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
       <place id="source">
         <name>
           <text>source</text>
@@ -9,11 +24,6 @@
         <initialMarking>
           <text>1</text>
         </initialMarking>
-      </place>
-      <place id="sink">
-        <name>
-          <text>sink</text>
-        </name>
       </place>
       <place id="p_3">
         <name>
@@ -25,51 +35,41 @@
           <text>p_6</text>
         </name>
       </place>
-      <place id="p_4">
-        <name>
-          <text>p_4</text>
-        </name>
-      </place>
-      <place id="p_5">
-        <name>
-          <text>p_5</text>
-        </name>
-      </place>
-      <transition id="36926824-012e-4858-b8d4-00cafe86b5a2">
-        <name>
-          <text>pay_compensation-End</text>
-        </name>
-      </transition>
-      <transition id="a3b1d9c0-ff19-4307-abd8-064f17be288a">
+      <transition id="197dcaec-15f6-479e-9f3f-ca1c463f0b53">
         <name>
           <text>register_request-End</text>
         </name>
       </transition>
-      <transition id="3edba7c5-604d-4783-ba00-cf2ab9a899fa">
+      <transition id="379cbca5-fc9b-4213-9575-9e58dbc129d0">
         <name>
           <text>check_ticket-End</text>
         </name>
       </transition>
-      <transition id="5b0cadcc-a85a-4d96-b91d-2a67a3090b7b">
-        <name>
-          <text>examine_casually-End</text>
-        </name>
-      </transition>
-      <transition id="b1cc6503-90b4-4cb6-aebc-a98ebec12203">
+      <transition id="fd827614-4ea4-44cf-9bd9-40499b2180e8">
         <name>
           <text>decide-End</text>
         </name>
       </transition>
-      <arc id="140575790052640" source="source" target="a3b1d9c0-ff19-4307-abd8-064f17be288a"/>
-      <arc id="140575790665984" source="p_4" target="3edba7c5-604d-4783-ba00-cf2ab9a899fa"/>
-      <arc id="140575795649024" source="5b0cadcc-a85a-4d96-b91d-2a67a3090b7b" target="p_4"/>
-      <arc id="140575790811840" source="b1cc6503-90b4-4cb6-aebc-a98ebec12203" target="p_6"/>
-      <arc id="140575790053648" source="a3b1d9c0-ff19-4307-abd8-064f17be288a" target="p_3"/>
-      <arc id="140575795647056" source="p_3" target="5b0cadcc-a85a-4d96-b91d-2a67a3090b7b"/>
-      <arc id="140575790667952" source="3edba7c5-604d-4783-ba00-cf2ab9a899fa" target="p_5"/>
-      <arc id="140575790669488" source="p_5" target="b1cc6503-90b4-4cb6-aebc-a98ebec12203"/>
-      <arc id="140575790547344" source="p_6" target="36926824-012e-4858-b8d4-00cafe86b5a2"/>
-      <arc id="140575790547056" source="36926824-012e-4858-b8d4-00cafe86b5a2" target="sink"/>
+      <transition id="cd9c9cd5-dec4-4789-9397-648c451eac19">
+        <name>
+          <text>pay_compensation-End</text>
+        </name>
+      </transition>
+      <transition id="dacf5e90-881a-47cd-9a1d-dd95d4b3991c">
+        <name>
+          <text>examine_casually-End</text>
+        </name>
+      </transition>
+      <arc id="140704929269408" source="p_4" target="379cbca5-fc9b-4213-9575-9e58dbc129d0"/>
+      <arc id="140704929270944" source="dacf5e90-881a-47cd-9a1d-dd95d4b3991c" target="p_4"/>
+      <arc id="140704928309152" source="fd827614-4ea4-44cf-9bd9-40499b2180e8" target="p_6"/>
+      <arc id="140704928202560" source="p_6" target="cd9c9cd5-dec4-4789-9397-648c451eac19"/>
+      <arc id="140704932226096" source="source" target="197dcaec-15f6-479e-9f3f-ca1c463f0b53"/>
+      <arc id="140704932225616" source="197dcaec-15f6-479e-9f3f-ca1c463f0b53" target="p_3"/>
+      <arc id="140704929268688" source="p_3" target="dacf5e90-881a-47cd-9a1d-dd95d4b3991c"/>
+      <arc id="140704929269072" source="379cbca5-fc9b-4213-9575-9e58dbc129d0" target="p_5"/>
+      <arc id="140704928307280" source="p_5" target="fd827614-4ea4-44cf-9bd9-40499b2180e8"/>
+      <arc id="140704928200688" source="cd9c9cd5-dec4-4789-9397-648c451eac19" target="sink"/>
     </page>
     <finalmarkings>
       <marking>

@@ -12,7 +12,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name" />
 		<string key="StepPhaseID" value="string" />
-		<date key="time:timestamp" value="2023-10-26T10:07:56.164544+01:00" />
+		<date key="time:timestamp" value="2024-01-26T00:21:40.579343+01:00" />
 		<string key="PipelineName" value="name" />
 		<string key="PipelineID" value="string" />
 		<string key="PipelineCommunicationMedium" value="string" />
@@ -22,64 +22,54 @@
 	<trace>
 		<string key="concept:name" value="1" />
 		<event>
-			<string key="concept:name" value="ReceiveMeasurement-End" />
+			<string key="concept:name" value="register_request-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-26T10:07:56.164642+01:00" />
+			<date key="time:timestamp" value="2024-01-26T00:21:40.579414+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="telluDatacloud" />
+			<string key="PipelineName" value="Example" />
 			<string key="StepID" value="0" />
-			<string key="StepName" value="ReceiveMeasurement" />
+			<string key="StepName" value="register_request" />
 		</event>
 		<event>
-			<string key="concept:name" value="FetchPatientData-End" />
+			<string key="concept:name" value="examine_casually-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-26T10:07:56.164682+01:00" />
+			<date key="time:timestamp" value="2024-01-26T00:21:40.579440+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="telluDatacloud" />
+			<string key="PipelineName" value="Example" />
 			<string key="StepID" value="1" />
-			<string key="StepName" value="FetchPatientData" />
+			<string key="StepName" value="examine_casually" />
 		</event>
 		<event>
-			<string key="concept:name" value="CreateTask-End" />
+			<string key="concept:name" value="check_ticket-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-26T10:07:56.164717+01:00" />
+			<date key="time:timestamp" value="2024-01-26T00:21:40.579463+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="telluDatacloud" />
+			<string key="PipelineName" value="Example" />
 			<string key="StepID" value="2" />
-			<string key="StepName" value="CreateTask" />
+			<string key="StepName" value="check_ticket" />
 		</event>
 		<event>
-			<string key="concept:name" value="FetchTaskResult-End" />
+			<string key="concept:name" value="decide-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-26T10:07:56.164753+01:00" />
+			<date key="time:timestamp" value="2024-01-26T00:21:40.579486+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="telluDatacloud" />
+			<string key="PipelineName" value="Example" />
 			<string key="StepID" value="3" />
-			<string key="StepName" value="FetchTaskResult" />
+			<string key="StepName" value="decide" />
 		</event>
 		<event>
-			<string key="concept:name" value="ProcessResultandNotify-End" />
+			<string key="concept:name" value="pay_compensation-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-26T10:07:56.164789+01:00" />
+			<date key="time:timestamp" value="2024-01-26T00:21:40.579509+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="telluDatacloud" />
+			<string key="PipelineName" value="Example" />
 			<string key="StepID" value="4" />
-			<string key="StepName" value="ProcessResultandNotify" />
-		</event>
-		<event>
-			<string key="concept:name" value="StoreDetails-End" />
-			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2023-10-26T10:07:56.164824+01:00" />
-			<string key="PipelineID" value="1" />
-			<string key="PipelineCommunicationMedium" value="medium  " />
-			<string key="PipelineName" value="telluDatacloud" />
-			<string key="StepID" value="5" />
-			<string key="StepName" value="StoreDetails" />
+			<string key="StepName" value="pay_compensation" />
 		</event>
 	</trace>
 </log>
