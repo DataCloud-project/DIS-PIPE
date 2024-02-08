@@ -132,6 +132,21 @@ function sendDslListenerReq2(){
 
 }
 
+function sendDslListenerReq2start(){
+	console.log(this.responseText)
+
+	// var oReq1 = new XMLHttpRequest();
+	// oReq1.addEventListener("load", sendDslListenerBis);
+	// oReq1.open("GET", frontend+"sendDsl", false);
+	// oReq1.send();
+
+	document.getElementById("myPathF").value = 100;
+	document.getElementById("pathF").value = "100";
+	request(0);
+	closeChangement()
+
+}
+
 function sendDslRequest(posizione){
 
 	console.log("sendDslRequest")
@@ -150,6 +165,8 @@ function sendDslRequest(posizione){
     oReq.setRequestHeader('Dsl', JSON.stringify(payload));
     oReq.send()
 	
+	closeChangement()
+	document.getElementById("btn").click()
 
 	//alert("DSL sent to DEF-PIPE")
 	/*
@@ -163,8 +180,87 @@ function sendDslRequest(posizione){
 
 }
 
+function sendTempDsl(){
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	
+    var dsl = createTempDsl();
+	console.log("ildsl è questo2")
+	console.log(dsl)
+	
+    var oReq = new XMLHttpRequest();
+	oReq.open("POST", frontend+"dslPost", true);
+	payload = {"pipeline": dsl}
+	
+    oReq.setRequestHeader('Dsl', JSON.stringify(payload));
+    oReq.send()
+
+}
+
+/*
 //function used to compute the DSL
 function createDsl(){
+	
+	var predecessors = [];
+	var parameters = [];
+	var count = [];
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	//print pipeline title + fixed line about communicationMedium
+	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
+	//iterate on the steps
+	console.log(dslSteps)
+	graphTextF = getGraphText('frequency');
+	graphTextP = getGraphText();
+	// get nodes in an array 
+	graphNodesF = getGraphNodes(graphTextF);
+	graphNodesP = getGraphNodes(graphTextP);
+	graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+	// get edges in an array
+	graphEdgesF = getGraphEdges(graphTextF, false);
+	graphEdgesP = getGraphEdges(graphTextP, true);
+	graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+	getLabeledGraphEdges(graphNodes, graphEdges);
+	// get final matrix ready for dsl conversion
+	dslSteps = getDslSteps(graphNodes, graphEdges);
+	
+	for (var i=0; i<dslSteps.length; i++){
+		// if the step is start or end, just skip
+		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
+			continue;
+		// first iteration no \n
+		if (i != 0)
+			dsl = dsl + '\n\n';
+		predecessors[i] = '';
+		count[i] = 0;
+		// get parameters of the current step in a string
+		parameters[i] = "\t\t\t\tFrequency: '" + dslSteps[i][0][1] + "',\n\t\t\t\tDuration: '" + dslSteps[i][0][2] +"'";
+		/* -----------------------outdated part about predecessors --------------------------------------
+		// iterate on the predecessors of the current step and save them in a string
+		for (var j=1; j<dslSteps[i].length; j++){
+			count[i]++;
+			predecessors[i] = predecessors[i] + '\t\t\t\t' + dslSteps[i][j][0].replace(' ', '_');
+			if (j<dslSteps[i].length-1)
+				predecessors[i] = predecessors[i] +',\n';	
+		}
+		// --------------------------------------------------------------------------------------------
+		// print the whole string for each step
+		dsl = dsl + '\t\t- data-processing step ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		/* -----------------------outdated part about predecessors --------------------------------------
+		if (predecessors[i] != ''){
+			dsl = dsl + '\n\t\t\tPrevious:';
+			if (count[i]>1)
+				dsl = dsl + '[';
+			dsl = dsl + '\n' + predecessors[i];
+			if (count[i]>1)
+				dsl = dsl + '\n\t\t\t]';
+		}
+		// --------------------------------------------------------------------------------------------
+		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n';
+	}
+	dsl = dsl + '\}';
+	//return the dsl
+	return dsl;
+	*/
+	/*
 	// set path slider to 0 to have a sequence
 	document.getElementById("myPathF").value = 0;
 	document.getElementById("pathF").value = "0";
@@ -194,6 +290,62 @@ function createDsl(){
 	//print pipeline title + fixed line about communicationMedium
 	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
 	//iterate on the steps
+	console.log(dslSteps)
+	for (var i=0; i<dslSteps.length; i++){
+		// if the step is start or end, just skip
+		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
+			continue;
+		// first iteration no \n
+		if (i != 0)
+			dsl = dsl + '\n\n';
+		count[i] = 0;
+		// get parameters of the current step in a string
+		parameters[i] = "\t\t\t\tFrequency: '" + dslSteps[i][0][1] + "',\n\t\t\t\tDuration: '" + dslSteps[i][0][2] +"'";
+		// print the whole string for each step
+		dsl = dsl + '\t\t- data-processing step ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		// --------------------------------------------------------------------------------------------*
+		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n';
+	}
+	dsl = dsl + '\}';
+	//return the dsl
+	return dsl;
+	
+}
+*/
+function createDsl(){
+	// set path slider to 0 to have a sequence
+	
+	document.getElementById("myPathF").value = 0;
+	document.getElementById("pathF").value = "0";
+	pre_request('false')
+	
+	// translation from DFG to matrix
+	console.log("Translating from map to matrix");
+	// get graph in an array
+	graphTextF = getGraphText('frequency');
+	graphTextP = getGraphText();
+	// get nodes in an array 
+	graphNodesF = getGraphNodes(graphTextF);
+	graphNodesP = getGraphNodes(graphTextP);
+	graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+	// get edges in an array
+	graphEdgesF = getGraphEdges(graphTextF, false);
+	graphEdgesP = getGraphEdges(graphTextP, true);
+	graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+	getLabeledGraphEdges(graphNodes, graphEdges);
+	// get final matrix ready for dsl conversion
+	dslSteps = getDslSteps(graphNodes, graphEdges);
+	// translating from matrix to DSL
+	console.log("Translating from matrix to DSL");
+
+
+	//translate to DSL
+	var parameters = [];
+	var count = [];
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	//print pipeline title + fixed line about communicationMedium
+	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
+	//iterate on the steps
 	for (var i=0; i<dslSteps.length; i++){
 		// if the step is start or end, just skip
 		if ( dslSteps[i][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0].replaceAll(' ', '_') == 'end')
@@ -211,6 +363,7 @@ function createDsl(){
 	}
 	dsl = dsl + '\}';
 	//return the dsl
+
 	return dsl;
 }
 // function used to export the DSL to file
@@ -218,4 +371,147 @@ function exportDsl(){
 	console.log("Exporting DSL");
 	var dsl = createDsl();
 	download(dsl, document.getElementById('mapTitle').innerHTML.replace('.xes', ''), '.txt');
+	closeChangement()
+	document.getElementById("btn").click()
+}
+
+
+
+function createTempDsl(){
+	// translation from DFG to matrix
+	console.log("Translating from map to matrix");
+	// get graph in an array
+	graphTextF = getGraphText('frequency');
+	graphTextP = getGraphText();
+	// get nodes in an array 
+	graphNodesF = getGraphNodes(graphTextF);
+	graphNodesP = getGraphNodes(graphTextP);
+	graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+	// get edges in an array
+	graphEdgesF = getGraphEdges(graphTextF, false);
+	graphEdgesP = getGraphEdges(graphTextP, true);
+	graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+	getLabeledGraphEdges(graphNodes, graphEdges);
+	// get final matrix ready for dsl conversion
+	dslSteps = getDslStepsTemp(graphNodes, graphEdges);
+	// translating from matrix to DSL
+	console.log("Translating from matrix to DSL");
+
+	var predecessors = [];
+	var parameters = [];
+	var count = [];
+	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
+	//print pipeline title + fixed line about communicationMedium
+	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
+	//iterate on the steps
+	console.log(dslSteps)
+	for (var i=0; i<dslSteps.length; i++){
+		// if the step is start or end, just skip
+		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
+			continue;
+		// first iteration no \n
+		if (i != 0)
+			dsl = dsl + '\n\n';
+		predecessors[i] = '';
+		count[i] = 0;
+		// get parameters of the current step in a string
+		parameters[i] = "\t\t\t\tFrequency: '" + dslSteps[i][0][1] + "',\n\t\t\t\tDuration: '" + dslSteps[i][0][2] +"'";
+		/* -----------------------outdated part about predecessors --------------------------------------
+		// iterate on the predecessors of the current step and save them in a string
+		for (var j=1; j<dslSteps[i].length; j++){
+			count[i]++;
+			predecessors[i] = predecessors[i] + '\t\t\t\t' + dslSteps[i][j][0].replace(' ', '_');
+			if (j<dslSteps[i].length-1)
+				predecessors[i] = predecessors[i] +',\n';	
+		}
+		// --------------------------------------------------------------------------------------------*/
+		// print the whole string for each step
+		dsl = dsl + '\t\t- data-processing step ' + dslSteps[i][0][0].replaceAll(' ', '_');
+		/* -----------------------outdated part about predecessors --------------------------------------
+		if (predecessors[i] != ''){
+			dsl = dsl + '\n\t\t\tPrevious:';
+			if (count[i]>1)
+				dsl = dsl + '[';
+			dsl = dsl + '\n' + predecessors[i];
+			if (count[i]>1)
+				dsl = dsl + '\n\t\t\t]';
+		}
+		// --------------------------------------------------------------------------------------------*/
+		dsl = dsl + "\n\t\t\timplementation: container-implementation image: ''\n\t\t\tenvironmentParameters: {\n" + parameters[i] + '\n\t\t\t}\n\t\t\tresourceProvider: Accesspoint\n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\n';
+	}
+	dsl = dsl + '\}';
+	//return the dsl
+	//console.log("il dsl è questo")
+	//console.log(dsl)
+	return dsl;
+
+}
+
+
+
+
+
+function showBPMNGraph(){
+
+	console.log("show BPMN Graph")
+	if(document.getElementById("showHidePetriNet").value=="false"){
+		document.getElementById("petrinet-content").style.display = "none";
+		document.getElementById("showHidePetriNet").value="true"
+		document.getElementById("showHidePetriNet").innerHTML="Show BPMN"
+		document.getElementById("map-content").style.display = "block"
+		$("#check_tabs").prop("checked", false);
+	}else if (document.getElementById("showHidePetriNet").value=="true"){
+
+	$.ajax({
+        url: "/getBPMNGraph",
+        type: "GET",
+        contentType: "application/json",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (gdata) {
+            console.log(gdata["grafo"])
+			document.getElementById("showHidePetriNet").innerHTML="Hide BPMN"
+
+			var options = { format: 'svg',
+			ALLOW_MEMORY_GROWTH: 1,
+			totalMemory: 537395200, }; // You can change the format if needed
+        	var svgGraph = Viz(gdata["grafo"], options);
+			document.getElementById('petriContainer').innerHTML = svgGraph;	
+
+			// Get the div with the id "petriContainer"
+			var petriContainer = document.getElementById('petriContainer');
+
+			// Get all the g elements inside the petriContainer div
+			var gElements = petriContainer.querySelectorAll('g');
+
+			// Iterate through each g element and update its id
+			gElements.forEach(function(gElement) {
+				var currentId = gElement.getAttribute('id');
+				if (currentId) {
+					// Append "petri" to the existing id
+					var newId = 'petri' + currentId;
+					gElement.setAttribute('id', newId);
+				}
+			});
+
+			// Get all the text elements inside the petriContainer div
+			var textElements = petriContainer.querySelectorAll('g text');
+
+			// Iterate through each text element and update its font-size
+			textElements.forEach(function(textElement) {
+				textElement.setAttribute('font-size', '10'); // Set the font-size to 10
+			});
+
+			document.getElementById("petrinet-content").style.display = "block";
+			document.getElementById("showHidePetriNet").value="false"
+			document.getElementById("map-content").style.display = "none"
+			$("#check_tabs").prop("checked", false);
+
+        },
+        error: function (result) {
+            console.log("ko")
+        }
+    })
+	}
 }

@@ -64,4 +64,11 @@ dependencies:
     - urllib3==1.26.7
     - wcwidth==0.2.5
     - werkzeug==2.0.2
-prefix: C:\Users\lucia\miniconda3\envs\pm4py_env
+    - pyodbc==5.0.1
+    - psycopg2-binary==2.9.9
+    - sqlvalidator==0.0.20
+    - flask_oidc==1.1
+    - flask_cors==4.0.0
+    - python-keycloak==3.0.0
+    - flask_session==0.4.1
+    - simplejson==3.19.2 

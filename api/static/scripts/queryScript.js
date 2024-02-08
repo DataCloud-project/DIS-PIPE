@@ -791,6 +791,7 @@ function applicaFiltro(){
 
 }
 
+
 function makeQueryListener(){
 	console.log(this.responseText)
 	var risposta=this.responseText.split("£");
@@ -838,4 +839,27 @@ function goback(){
 	console.log("work? or not")
 	document.getElementById("formQuery").style.display = "block"
 	document.getElementById("formQuery2").style.display = "none"
+}
+
+
+function doQuery1(){
+	document.getElementById("formQuery3").style.display = "block"
+	document.getElementById("formQuery2").style.display = "none"
+
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", makeQueryListener);
+	oReq.open("GET", frontend+"doQuery1", false);
+	oReq.send();
+}
+
+
+
+function doQuery2(){
+	document.getElementById("formQuery3").style.display = "block"
+	document.getElementById("formQuery2").style.display = "none"
+
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", makeQueryListener);
+	oReq.open("GET", frontend+"doQuery2", false);
+	oReq.send();
 }

@@ -74,19 +74,16 @@ def debug(steps, step_phases, technologies):
 #function to generate the xes file
 #--------------------------------------------------------------------
 def process_string(input_string):
-    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
-        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
-        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
-        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    else :
-        return input_string
+    split_string = input_string.split("api/", 1)
+    if len(split_string) > 1:
+        result = split_string[1]
+        return result
+    else:
+        if(input_string.startswith("/storage")):
+            return input_string[1:]
+        else:
+            return input_string
+            
 
 def generateXES(pipeline_id, pipeline_name, pipeline_medium, pipeline_traces, n, steps, step_phases):
         print("Generating XES file.")

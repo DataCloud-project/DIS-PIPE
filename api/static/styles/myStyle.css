@@ -354,6 +354,21 @@ label #btn_tabs{
 	padding: 6px 12px;
 }
 
+
+label #btn_petri{
+	position: absolute;
+	cursor: pointer;
+	background: white;
+	border-radius: 3px;
+	z-index: 2;
+	right: 80px;
+	top: 25px;
+	font-size: 23px;
+	color: #6d50e2;
+	padding: 6px 12px;
+}
+
+
 label #btn_conformance{
 	position: absolute;
 	cursor: pointer;
@@ -1061,10 +1076,11 @@ button:hover {
   border: 3px solid #cfa8d5;
   z-index: 15; 
   position: absolute;
-    max-width: 1000px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  /*max-width: 1000px; CAMBIARE*/ 
+  max-width: 80vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   /* position:absolute; */
   /* top:50%; */
   /* left:50%; */

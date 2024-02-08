@@ -32,10 +32,171 @@ function renameProjectListener(){
 	document.getElementById('mapTitle').innerHTML = this.responseText
 }
 
+/////
+
+
+
+////
+
+
+
 function update(){
+	console.log("update normale")
 	document.getElementById('updated').value = true;
 	document.getElementById('file').click();
+	sessionStorage.setItem('segmentatore', 'NO');
+	sessionStorage.setItem('time', 'YES');
+
+}
+function updateSegmentator(){
+	console.log("update segmentator")
+	document.getElementById('updated').value = true;
+	document.getElementById('file').click();
+	sessionStorage.setItem('segmentatore', 'YES');
+	sessionStorage.setItem('time', 'YES');
+}
+
+function openDecisionMakingSegementator(){
+	document.getElementById("blocker_choseEndSeg").style.display = "block";
+    document.getElementById("choseEndSeg").style.display = "block";
+	const svgContent = document.getElementById('graphContainer').innerHTML;
+	console.log(svgContent)
+	// Assuming you have the SVG content in a variable called 'svgContent'
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(svgContent, "image/svg+xml");
+
+	// Get all elements with class "node"
+	const nodes = doc.getElementsByClassName("node");
+
+	// Iterate over the nodes and extract the text values
+	const nodeTexts = [];
+	for (const node of nodes) {
+	const textElement = node.querySelector("text");
+	if (textElement) {
+		const text = textElement.textContent.trim();
+		if (text !== "") {
+			const modifiedText = text.replace(/\([^)]*\)/g, "").trim();
+			nodeTexts.push(modifiedText);
+		}
+	}
+
+	}
+	console.log(nodeTexts);
+
+	const select = document.getElementById("endSegAct");
+
+    // Step 3-5: Add options to the select element
+    nodeTexts.forEach((option) => {
+      const optionElement = document.createElement("option");
+      optionElement.text = option;
+      optionElement.value = option;
+      select.appendChild(optionElement);
+    });
+}
+
+function wrapOpenDecisionMakingSegmentator(){
+	openDecisionMakingSegementator()
+	sessionStorage.setItem('segmentatore', 'NO');
+}
+
+function closechoseEndSeg(){
+	document.getElementById("blocker_choseEndSeg").style.display = "none";
+    document.getElementById("choseEndSeg").style.display = "none";
+}
+
+var selectCount = 1; 
+function addNewEndAct(){
+	console.log("ora fai add")
+	var containerEnd = document.getElementById("containerEnd");
+
+	// Get the addEnd0 div
+	//var addEnd0 = document.getElementById("addEnd0");
+	var button = event.target;
+  
+	// Get the parent div to be removed
+	var addEnd0 = button.parentNode;
 	
+	// Clone the addEnd0 div
+	var clonedDiv = addEnd0.cloneNode(true);
+
+	/********/
+	
+	var selectElement = addEnd0.querySelector("select");
+  
+	var selectedOption = selectElement.options[selectElement.selectedIndex].text;
+	
+	const isPresent = segmemtator_array.includes(selectedOption);
+	if(isPresent){
+		alert("already present")
+	}else{
+	segmemtator_array.push(selectedOption)
+	var spanElement = document.createElement("b");
+	spanElement.textContent = selectedOption;
+
+
+	/**********/
+	
+	// Generate a new ID for the cloned div
+	//var newDivId = "addEnd" + containerEnd.children.length;
+	var newDivId = "addEnd" + selectCount;
+	selectCount=selectCount+1
+	
+	// Set the new ID for the cloned div
+	clonedDiv.id = newDivId;
+  
+	// Append the cloned div to the containerEnd element
+	containerEnd.appendChild(clonedDiv);
+
+	selectElement.parentNode.replaceChild(spanElement, selectElement);
+	
+	}
+	
+	
+}
+
+function removeEndAct(){
+	// Get the button element that triggered the function
+	var button = event.target;
+  
+	// Get the parent div to be removed
+	var divToRemove = button.parentNode;
+	var spanElement = divToRemove.querySelector("b");
+	if(spanElement){
+		console.log(spanElement.innerHTML)
+		elementToRemove=spanElement.innerHTML
+	
+		segmemtator_array = segmemtator_array.filter((element) => element !== elementToRemove);
+		console.log(segmemtator_array); // Output: [1, 2, 4, 5]
+		
+		// Get the parent element of the div
+		var parent = divToRemove.parentNode;
+		
+		// Remove the div from its parent
+		parent.removeChild(divToRemove);
+
+	}
+
+}
+
+function xesORcsv(){
+	document.getElementById("blocker_exportMenu").style.display = "block";
+    document.getElementById("exportMenu").style.display = "block";
+}
+
+function normalORsegmentator(){
+	//document.getElementById("blocker_importMenu").style.display = "block";
+    //document.getElementById("importMenu").style.display = "block";
+	updateSegmentator()
+}
+
+function closeExportMenu(){
+	document.getElementById("blocker_exportMenu").style.display = "none";
+    document.getElementById("exportMenu").style.display = "none";
+}
+
+function closeImportMenu(){
+	document.getElementById("blocker_importMenu").style.display = "none";
+    document.getElementById("importMenu").style.display = "none";
 }
 
 function changeConstraint(){
@@ -334,6 +495,27 @@ function getLabeledGraphEdges(graphNodes, graphEdges){
 		}
 	}
 	return 1;
+}
+
+
+function getDslStepsTemp(graphNodes, graphEdges){
+	// from graphNodes and graphEdges get a unique matrix ready for conversion
+	var dsl_Steps = [];
+	// for each node 
+	for (var i=0; i<graphNodes.length; i++){
+		// save info about the node
+		dsl_Steps[i] = [];
+		dsl_Steps[i].push([graphNodes[i][1], graphNodes[i][2], graphNodes[i][3]]);
+		// then, for each edge
+		for (var j=0; j<graphEdges.length; j++){
+			// check if the current node is the successor
+			if (graphEdges[j][1] == graphNodes[i][1]){
+				// in that case save the info about the edge
+				dsl_Steps[i].push([graphEdges[j][0], graphEdges[j][2], graphEdges[j][3]]);
+			}
+		}
+	}
+	return dsl_Steps;
 }
 
 function getDslSteps(graphNodes, graphEdges){

@@ -7,6 +7,7 @@ import os
 import sys
 import requests
 import json
+import simplejson
 import re
 import glob
 import subprocess
@@ -61,10 +62,295 @@ from rule import *
 
 
 from backend_classes import *
+import xml.etree.ElementTree as ET
+import re
+from datetime import datetime, timedelta
 
 ############################################################
 #______________________START API______________________#
 ############################################################
+
+def process_string(input_string):
+    split_string = input_string.split("api/", 1)
+    if len(split_string) > 1:
+        result = split_string[1]
+        return result
+    else:
+        if(input_string.startswith("/storage")):
+            return input_string[1:]
+        else:
+            return input_string
+            
+
+
+def translate_format(input_format):
+    # Define a mapping of format characters to their corresponding regular expression patterns
+    format_mapping = {
+        '%Y': r'\d{4}',
+        '%m': r'\d{2}',
+        '%d': r'\d{2}',
+        '%T': r'T',
+        '%H': r'\d{2}',
+        '%M': r'\d{2}',
+        '%S': r'\d{2}',
+        '%f': r'\d{1,6}',
+        '%z': r'\+\d{2}:\d{2}',
+    }
+    
+    # Replace each format character with its corresponding regular expression pattern
+    for format_char, pattern in format_mapping.items():
+        input_format = input_format.replace(format_char, pattern)
+    
+    # Add anchors to make sure the pattern matches the entire string
+    output_pattern = f'^{input_format}$'
+    
+    return output_pattern
+
+
+
+def validate_date_format(input_date):
+    timestamp_formats = {
+        '%Y-%m-%dT%H:%M:%S.%f%z': 'timestamp_format1',
+        '%Y-%m-%dT%H:%M:%S%z': 'timestamp_format2',
+        '%Y-%m-%dT%H:%M:%S.%f': 'timestamp_format3',
+        '%Y-%m-%dT%H:%M:%S': 'timestamp_format4'
+    }
+
+    for format_str, format_name in timestamp_formats.items():
+        try:
+            datetime.strptime(input_date, format_str)
+            return True, format_str
+        except ValueError:
+            pass
+    return False, None
+
+
+def add_leading_zeros(s):
+    if len(s) == 1:
+        return "0" + s
+    elif "1" in s or "7" in s or "17" in s:
+        return s.zfill(2)
+    else:
+        return s
+
+
+def is_valid_datetime_string(pattern1, input_str):
+    return re.match(pattern1, input_str) is not None
+
+
+def pad_string(input_str, reference_str):
+    if len(input_str) < len(reference_str):
+        padding = reference_str[len(input_str):]
+        padded_input_str = input_str + padding
+        return padded_input_str, True
+    elif len(input_str) > len(reference_str):
+        return reference_str, True
+    else:
+        return input_str, False
+
+
+def timeParser(filepath):
+    tree = ET.parse(filepath)
+    root = tree.getroot()
+
+    change = False
+    pattern = ""
+
+    dict_tempo_temp={}
+    temp_i=0
+    InizioString=""
+    timereset="1970-01-01T01:00:00.000"
+    pattern1=""
+
+    preStringList=['{http://www.xes-standard.org/}','','{http://www.xes-standard.org}','{https://www.xes-standard.org/}','{https://www.xes-standard.org}','{www.xes-standard.org/}','{www.xes-standard.org}']
+    while(len(dict_tempo_temp)==0):
+        for preString in preStringList:
+            temp_i=0    
+            for item in root.findall(preString+'trace'):
+                for child in item.findall(preString+'event'):
+                    for child2 in child.findall(preString+'date'):
+                        try:
+                            dataTempo = child2.get("value")
+
+                            risultato, timestamp_f = validate_date_format(dataTempo)
+                            
+                            InizioString=preString
+                           
+                            new_date = "1970-01-01T01:00:00"
+                            micsecond=""
+                            try:
+                                micsecond = (dataTempo.split(".")[1]).split("+")[0]
+                                micsecond = '7' * len(micsecond)
+                                micsecond = "."+micsecond
+                            except Exception as e:
+                                micsecond=""
+
+                            timezone=""
+                            try:
+                                timezone = dataTempo.split("+")[1]
+                                timezone = "+"+timezone
+                            except Exception as e:
+                                timezone=""
+
+                            timereset=new_date+micsecond+timezone
+                            pattern1=translate_format(timestamp_f)
+                            temp_i=temp_i+1 
+                            dict_tempo_temp[str(temp_i)]=child
+                        except Exception as e:
+                            print("error at the beginning")
+                        if(len(dict_tempo_temp)>0):
+                            break
+                    if(len(dict_tempo_temp)>0):
+                        break
+                if(len(dict_tempo_temp)>0):
+                    break
+            
+    change = False
+    for item in root.findall(InizioString+'trace'):
+        old_time = timereset
+        for child in item.findall(InizioString+'event'):
+            for child2 in child.findall(InizioString+'date'):
+                
+                
+                temp_nuovo, is_padded =pad_string(child2.get("value"), old_time)
+                if(is_padded):
+                    change = True
+                child2.set("value",temp_nuovo)
+                date_obj=datetime.fromisoformat(child2.get("value"))
+                
+                if((re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{2}:\d{2}$", child2.get("value")) is not None) or (re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$",child2.get("value"))) is not None):
+                    print("STOINIFF primo")
+                    dataTempo_less = (date_obj.isoformat().split("+")[0]).split(".")[0]
+
+                    micsecond=""
+                    try:
+                        micsecond = (old_time.split(".")[1]).split("+")[0]
+                        micsecond = '7' * len(micsecond)
+                        micsecond = "."+micsecond
+                    except Exception as e:
+                        micsecond=""
+
+                    timezone=""
+                    try:
+                        timezone = child2.get("value").split("+")[1]
+                        timezone = "+"+timezone
+                    except Exception as e:
+                        timezone=""
+
+                    dataTempo=dataTempo_less+micsecond+timezone
+                    #print("i milli sono 0")
+                else:    
+                    dataTempo = child2.get("value")
+
+
+                #print(pattern1)
+                #print(dataTempo)
+
+
+                if is_valid_datetime_string(pattern1,dataTempo):
+                    old_time = child2.get("value")
+                else:
+                    
+                    original_time = datetime.fromisoformat(old_time)
+                    new_time = original_time + timedelta(seconds=1)
+                    new_time = (new_time.isoformat().split("+")[0]).split(".")[0]
+
+                    micsecond=""
+                    try:
+                        micsecond = (old_time.split(".")[1]).split("+")[0]
+                        micsecond = '7' * len(micsecond)
+                        micsecond = "."+micsecond
+                    except Exception as e:
+                        micsecond=""
+
+                    timezone=""
+                    try:
+                        timezone = old_time.split("+")[1]
+                        timezone = "+"+timezone
+                    except Exception as e:
+                        timezone=""
+
+                    timenew=new_time+micsecond+timezone
+
+                    child2.set("value", timenew)
+                    old_time = timenew
+                    change = True
+                    
+
+    #print("IL CHANGE è in timeparser")
+    #print(change)
+    # Remove the namespace prefix from the tags
+    if(change):
+        print("save new xes")
+        for elem in root.iter():
+            if '}' in elem.tag:
+                elem.tag = elem.tag.split('}', 1)[1]
+
+        # Save the modified XML to a new file without namespace prefixes
+        tree.write(filepath, default_namespace="")
+
+    #InizioString, timereset
+    checkTimePrec(filepath, InizioString, timereset )
+
+
+
+def checkTimePrec(filepath, InizioString, timereset):
+    tree = ET.parse(filepath)
+    root = tree.getroot()
+    #print(type(root))
+
+    change = False
+    for item in root.findall(InizioString+'trace'):
+        old_time = timereset
+        for child in item.findall(InizioString+'event'):
+            for child2 in child.findall(InizioString+'date'):
+                dataTempo = child2.get("value")
+
+                #print(old_time)
+                #print(dataTempo)
+                
+                if datetime.fromisoformat(old_time) > datetime.fromisoformat(dataTempo):
+                    #print("NON C'è precedenza")
+                    original_time = datetime.fromisoformat(old_time)
+                    new_time = original_time + timedelta(seconds=1)
+                    new_time = (new_time.isoformat().split("+")[0]).split(".")[0]
+
+                    micsecond=""
+                    try:
+                        micsecond = (old_time.split(".")[1]).split("+")[0]
+                        micsecond = '7' * len(micsecond)
+                        micsecond = "."+micsecond
+                    except Exception as e:
+                        micsecond=""
+
+                    timezone=""
+                    try:
+                        timezone = old_time.split("+")[1]
+                        timezone = "+"+timezone
+                    except Exception as e:
+                        timezone=""
+                        print(timezone)
+
+                    timeprec=new_time+micsecond+timezone
+
+                    child2.set("value", timeprec)
+                    old_time = timeprec
+                    change = True
+                else:
+                    old_time= dataTempo
+
+                #print("#################################################")
+
+    #print("IL CHANGE è in time precedence")
+    #print(change)
+    # Remove the namespace prefix from the tags
+    if(change):
+        for elem in root.iter():
+            if '}' in elem.tag:
+                elem.tag = elem.tag.split('}', 1)[1]
+
+        # Save the modified XML to a new file without namespace prefixes
+        tree.write(filepath, default_namespace="")
 
 app_start = Blueprint('app_start',__name__)
 
@@ -72,9 +358,35 @@ app_start = Blueprint('app_start',__name__)
 @app_start.route('/initialAction', methods=['GET', 'POST'])
 def initialAction():
 
-    import simplejson
-    print(session["log_path"])
     
+    print(session["log_path"])
+    if(session["log_name"].endswith(".csv")):
+        try:
+            dataframe1 = pd.read_csv(session["log_path"], sep=',')
+            dataframe1 = pm4py.format_dataframe(dataframe1, case_id='case:concept:name', activity_key='concept:name', timestamp_key='time:timestamp')
+            event_log = pm4py.convert_to_event_log(dataframe1)
+            new_log_path=session["log_path"][:-3]+"xes"
+            pm4py.write_xes(event_log, new_log_path)
+            session["log_path"]=new_log_path
+            session["log_name"]=session["log_name"][:-3]+"xes"
+        except:
+            print("Invalid value provided.")
+
+    
+    try:
+        timeParser(process_string(session["log_path"]))
+    except Exception as e:
+        print(f"An error occurred during time parser: {str(e)}")
+    
+    
+
+    '''
+    try:    
+        checkTimePrec(process_string(session["log_path"]),InizioString, timeReset)
+    except Exception as e:
+        print(f"An error occurred during time precedence: {str(e)}")
+    '''
+
     log_clone = xes_importer.apply(session["log_path"])
 
     log_clone = interval_lifecycle.assign_lead_cycle_time(log_clone, parameters={
@@ -153,11 +465,25 @@ def initialAction():
     
     mean_dizionario=dict.fromkeys(session["activity_list"])
     for j in session["activity_list"]:
-        mean_dizionario[j]=statistics.mean(activity_dictionary[j])
-        
+        try:
+            mean_dizionario[j]=statistics.mean(activity_dictionary[j])
+        except TypeError as e:
+            test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
+            mean_dizionario[j]=statistics.mean(test_activity_dictionary)
+        except Exception as e:
+            print(f"777 An error of type {type(e).__name__} occurred: {e}")
+            print(activity_dictionary[j])
+
     total_dizionario=dict.fromkeys(session["activity_list"])
     for j in session["activity_list"]:
-        total_dizionario[j]=sum(activity_dictionary[j])
+        try:
+            total_dizionario[j]=sum(activity_dictionary[j])
+        except TypeError as e:
+            test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
+            total_dizionario[j]=sum(test_activity_dictionary)
+        except Exception as e:
+            print(f"777 An error of type {type(e).__name__} occurred: {e}")
+            print(activity_dictionary[j])
         
     median_dizionario=dict.fromkeys(session["activity_list"])
     for j in session["activity_list"]:

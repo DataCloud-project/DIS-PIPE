@@ -1147,7 +1147,8 @@ function displayTracePopUp(){
 window.onchange = function() {
     console.log("Function: window.onchange function()")
 
-	var regex = new RegExp(/^[\(\)\w\.,\s-]+\.xes$/);
+	//var regex = new RegExp(/^[\(\)\w\.,\s-]+\.xes$/);
+    var regex = new RegExp(/^[\(\)\w\.,\s-]+(\.xes|\.csv)$/);
 
 	if (document.getElementById("file").files[0] != undefined && regex.test(document.getElementById("file").files[0]['name']) == false) {
 		// console.log(document.getElementById("file").files[0])

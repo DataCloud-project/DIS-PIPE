@@ -27,6 +27,7 @@
 	<title>DIS-PIPE</title>
 	<script>
 		//document.addEventListener('readystatechange', event => { sendDslRequest('start')});
+		document.addEventListener('readystatechange', event => { sendTempDsl()});
 	</script>
 	<style>
 		.popup {
@@ -101,20 +102,15 @@ function showImg(img) {
 		x.style.width= "100%";
     }
 }
-/*
-window.onload = function () {
-	if (document.readyState == "complete") { 
-		document.getElementById("loadingMessage").style.visibility = "hidden";	
-	}	
-}
-*/
-function checkRefresh()
-{
+
+
+function checkRefresh(value){
 		 // This is a fresh page load
 		
     	if ( window.history.replaceState ) {
         	window.history.replaceState( null, null, window.location.href );
     	}
+		
 
 		$("#firstpagemap").click();
 		$("#myRange").val("100");
@@ -150,14 +146,33 @@ function checkRefresh()
     	//oReq.addEventListener("load", jarListener);
 		oReq.open("POST", frontend+"deleteRemap", true);
     	oReq.send()
-		// You may want to add code here special for
-		// fresh page loads
+
+		
+		var timeValore = sessionStorage.getItem('time');
+		console.log(timeValore)
+
+
+		var segmentatoreValore = sessionStorage.getItem('segmentatore');
+		console.log(segmentatoreValore)
+		if(segmentatoreValore=="YES" && timeValore=="YES"){
+			//wrapOpenDecisionMakingSegmentator();
+			openCheckTimePopupFix();
+		}
+
+
+		var macroTaskValore = sessionStorage.getItem('macroTask');
+		console.log(macroTaskValore)
+		if(macroTaskValore=="YES"){
+			//wrapOpenDecisionMakingSegmentator();
+			//openCheckSegmentatorPopup();
+			openMacroTaskPopup();
+		}
 
 }
 </script>
 
 
-<body onLoad="checkRefresh()">
+<body onLoad="checkRefresh('NO')">
 
 <p id="path_frontend" style="display:none">{{path}}</p>
 
@@ -210,14 +225,164 @@ function checkRefresh()
 			<center>
 				<div id="btnContainer">
 					<span>Chose a view</span>
-					<button style=" padding: 10px;" type="button"  class="btn" onclick="listView()"><i class="fa fa-bars"></i> List</button>
-					<button style=" padding: 10px;" id="gridViewBtn" type="button"  class="btn active" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
+					<button style=" padding: 10px;" id="listViewBtn" type="button"  class="btn active" onclick="listView()"><i class="fa fa-bars"></i> List</button>
+					<button style=" padding: 10px;" id="gridViewBtn" type="button"  class="btn" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>
 				</div>
 				<br>
 				<div id="dslNameList" class="rowDslName">
 				
 				</div>
 			</center>
+		</form>
+	</div>
+
+
+	<div class="blocker" id="blocker_macroTask" onclick="closeMacroTask()"></div>
+	<div class="form-popup" id="macroTask">
+		<form action="" class="form-container">
+			
+			<table border="1">
+				<thead>
+					<tr>
+						<th>Macro Tasks</th>
+						<th>Occurrences</th>
+					</tr>
+				</thead>
+				<tbody id="table-body">
+				</tbody>
+			</table>
+
+			<br>
+			<center><button style=" padding: 10px;" type="button" onclick="closeMacroTask()"> Close </button></center>
+
+		</form>
+	</div>
+
+
+	<div class="blocker" id="blocker_checkTimeFix" onclick="closeCheckTimeFix()"></div>
+	<div class="form-popup" id="checkTimeFix" style=" max-width: 60vw;">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="checkTime_titleFix" style="color:#7a4791; text-align: center; font-size: 25px;">Time Granularity Check</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnTimeFix">
+					<span>Since partially ordered or no temporally aligned event logs are not interpretable by DIS-PIPE, the imported log has been checked to remove any case of partial ordering between events and for repairing timestamps at a different level of granularity.</span>
+					<br>
+					<button style=" padding: 10px;" type="button" onclick="closeCheckTimeFix()"> OK </button>
+				</div>
+			</center>
+		</form>
+	</div>
+
+
+
+	<div class="blocker" id="blocker_checkTime" onclick="closeCheckTime()"></div>
+	<div class="form-popup" id="checkTime">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="checkTime_title" style="color:#7a4791; text-align: center; font-size: 25px;">Time Granularity Check</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnTime">
+					<span>Since partially ordered or no temporally aligned event logs are not interpretable by DIS-PIPE,<br> the imported log has been checked to remove any case of partial ordering between <br>events and for repairing timestamps at a different level of granularity.</span>
+					<br>
+					<button style=" padding: 10px;" type="button" onclick="closeCheckTime()"> OK </button>
+				</div>
+			</center>
+		</form>
+	</div>
+
+
+
+	<div class="blocker" id="blocker_checkSeg" onclick="closeCheckSeg()"></div>
+	<div class="form-popup" id="checkSeg">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="checkSeg_title" style="color:#7a4791; text-align: center; font-size: 25px;">Segmentator</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnExport">
+					<span>The updated log has 1 trace. Do you want apply <b>Segmentator?</b></span>
+					<button style=" padding: 10px;" type="button" onclick="wrapOpenDecisionMakingSegmentator()"> YES </button>
+					<button style=" padding: 10px;" type="button" onclick="closeCheckSeg()"> NO </button>
+				</div>
+			</center>
+		</form>
+	</div>
+
+	<div class="blocker" id="blocker_exportMenu" onclick="closeExportMenu()"></div>
+	<div class="form-popup" id="exportMenu">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="export_title" style="color:#7a4791; text-align: center; font-size: 25px;">Export</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnExport">
+					<span>Chose Export</span>
+					<a  href="{{url_for('downloadXes')}}"><button onclick="closeExportMenu()" style=" padding: 10px;" type="button"> XES </button></a>
+					<a  href="{{url_for('downloadCsv')}}"><button onclick="closeExportMenu()" style=" padding: 10px;" type="button"> CSV </button></a>
+				</div>
+			</center>
+		</form>
+	</div>
+
+
+	<div class="blocker" id="blocker_importMenu" onclick="closeImportMenu()"></div>
+	<div class="form-popup" id="importMenu">
+		<form action="" class="form-container">
+			<div style="text-align: center">
+				<span id="import_title" style="color:#7a4791; text-align: center; font-size: 25px;">Import</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center>
+				<div id="btnImport">
+					<span>Chose Import</span>
+					<button style=" padding: 10px;" type="button" onclick="update()"> Normal </button>
+					<button style=" padding: 10px;" type="button" onclick="updateSegmentator()"> Segmentator </button>
+				</div>
+			</center>
+		</form>
+	</div>
+
+	<div class="blocker" id="blocker_choseEndSeg"></div>
+	<div class="form-popup" id="choseEndSeg">
+		<form class="form-container">
+		<!-- <form action="/indexSeg" method='POST' enctype = "multipart/form-data"> -->
+			<div style="text-align: center">
+				<span id="import_title" style="color:#7a4791; text-align: center; font-size: 25px;">Segmentator</span>
+			</div>
+			<hr style="background:#cfa8d5">
+			<br>
+			<center id="containerEnd">
+				<div id="addEnd0">
+					<p style="display: inline;">Add end step</p>
+					<select name="endSegAct" id="endSegAct">
+						
+					</select>
+					<button style=" padding: 10px;" type="button" onclick="addNewEndAct()"> add </button>
+					<button style=" padding: 10px;" type="button" onclick="removeEndAct()"> remove </button>
+				</div>
+				
+			</center>
+			<br>
+			<br>
+			<div style="text-align: center; display: block;">								
+				<button type="button" class="btn applycancel" style="margin-right:10px; font-size:13px" onclick="closechoseEndSeg()">Cancel</button>
+				<button type="button" class="btn applycancel" style="font-size:13px" onclick="startSegmentator()">Apply</button>	
+				<button style="display: none;" id="bottone_prova" onclick="reloadLikeForm()">A</button>		
+				<!-- <input type="hidden" value="{{updated}}" name="updated" id="updatedSeg">	 -->
+				<!-- <input type="submit" id="submitSeg" value="Update">			 -->
+			</div>
 		</form>
 	</div>
 
@@ -268,11 +433,12 @@ function checkRefresh()
 			<div class="bottomleft" id="bottomleft">
 				<form action="/index" method='POST' enctype = "multipart/form-data">
 					<!-- <button type="button" for="myFile">Import log</button> -->
-					<button id="import_log" class="menu_button" type="button" onclick="update()">Import log</button>
+					<button id="normal_segmentator" class="menu_button" type="button" onclick="normalORsegmentator()">Import log</button>
+					<button style="display: none;" id="import_log" class="menu_button" type="button" onclick="update()">Import log</button>
 					<input accept=".xes" type='file' id="file" name="file" style="display:none">
 					<br />
 					
-					<button id="export_log" class="menu_button" type="button"><a id="link_export_log" class="link_normal" href="{{url_for('downloadXes')}}">Export log</a></button>
+					<button id="export_log" class="menu_button" type="button" onclick="xesORcsv()"><a id="link_export_log" class="link_normal">Export log</a></button> <!-- href="{{url_for('downloadXes')}}"-->
 					<br />
 					<button id="export_dsl" class="menu_button" type="button" onclick="exportDsl()">Export DSL</button>
 					<br />
@@ -333,6 +499,10 @@ function checkRefresh()
 							<i class="fas fa-edit" id="btn_tabs"></i>
 						</label>
 
+						<!-- <i class="fa-solid fa-table" id="btn_petri"></i> -->
+						<button value="true" id="showHidePetriNet" style="font-size: 13px; padding: 8px;" type="button" onclick="showBPMNGraph()">Show BPMN</button>
+						
+
 						<!-- <button onclick="showPopup()">Show Popup</button>
 						<div class="popup" id="popup77">
 						<h2 id="popup-title"></h2>
@@ -350,6 +520,14 @@ function checkRefresh()
 							</span>
 							
 							<!-- graph container -->
+
+							<div style="display: none;" class="map-content" id="petrinet-content">
+								<svg id="petriContainer">
+								
+								</svg>
+							</div>
+
+
 							<div class="map-content" id="map-content">
 								<svg id="graphContainer">
 								
@@ -1237,7 +1415,7 @@ function checkRefresh()
 
 										<div class="column-col center2-col" >
 											
-											<span>Cost for disalignment steps</span><br>
+											<span>Cost for misalignment steps</span><br>
 											<!-- <span>Cost to add/remove activities in/from trace</span><br> -->
 											<select id="disalignment_log" onchange="changedisalignment_select()">
 												
@@ -1264,8 +1442,8 @@ function checkRefresh()
 											<span>Planner list</span><br>
 											<input checked type="radio" id="FD" name="planner_list" value="FD">
 											<label for="FD">fast-downward</label><br>
-											<input type="radio" id="SYMBA" name="planner_list" value="SYMBA">
-											<label for="SYMBA">seq-opt-symba-2</label><br>
+											<input style="visibility: hidden;" type="radio" id="SYMBA" name="planner_list" value="SYMBA">
+											<label style="visibility: hidden;" for="SYMBA">seq-opt-symba-2</label><br>
 											<input style="visibility: hidden;" type="radio" id="Planner3" name="planner_list" value="Planner 3">
 											<label style="visibility: hidden;" for="Planner3">Planner 3</label><br>
 											<input style="visibility: hidden;" type="radio" id="Planner4" name="planner_list" value="Planner 4">
@@ -1464,9 +1642,11 @@ function checkRefresh()
 							<br>
 							<center>
 							<div id="qc2" class="conformance-container3 query-container2">
-								<div class="conformance-title quety-title">Personalize Query</div>
+								<div class="conformance-title quety-title">Query</div>
 								<hr>
 								<br>
+
+								<div style="display: none;">
 							
 								<div id="query_filter_div">
 
@@ -1527,7 +1707,25 @@ function checkRefresh()
 									<br>
 									<button class="conf_check_button" onclick="goback()" type="button" style="font-size: 16px;">Back</button>
 									<button class="conf_check_button" onclick="applicaFiltro()" type="button" style="font-size: 16px;">Apply filter</button>
+									<br><br>
 								</div>
+								</div>
+
+								<div style="text-align:center">
+									<br>
+									<div>Find all the data sources that appear in the log</div>
+									<div>as the output of some steps but are never used as input</div>
+									<br>
+									<button class="conf_check_button" onclick="doQuery1()" type="button" style="font-size: 16px;">Query1</button>
+									<br><br><br><br>
+									<div>Find the amount of dark data that</div>
+									<div>the pipeline is producing on the cloud. </div>
+									<br>
+									<button class="conf_check_button" onclick="doQuery2()" type="button" style="font-size: 16px;">Query2</button>
+									<br><br><br>
+								</div>
+
+								
 							
 							</div>
 							</center>
@@ -1572,7 +1770,10 @@ function checkRefresh()
 
 <!--(script with getMap())-->
 <script>
+	var numero_tracce
+	var numero_variante
 
+	var segmemtator_array=[]
 	var tr_array = "";
     //array con i nomi delle attività del log
     var log_array="";
@@ -1809,6 +2010,113 @@ function checkRefresh()
 		output.innerHTML = slider.value;
 		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
 		zvgZoom.setAttribute('viewBox', attr);
+	}
+	
+</script>
+
+
+<script>
+	// ZOOM MAP3
+	var slider3 = document.getElementById("myRange");
+	var output3 = document.getElementById("demo");
+	const zvgZoom3 = document.getElementById("petriContainer");
+
+	output3.innerHTML = slider3.value;
+
+
+	const svgContainer3 = document.getElementById("petrinet-content");
+
+	var viewBox = {x:0,y:0,w:"1920",h:"1080"};
+	var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+	zvgZoom3.setAttribute('viewBox', attr);
+
+	//console.log(zvgZoom3.clientWidth);
+	//console.log(String(zvgZoom3.style.width));
+	//const svgSize = {w:zvgZoom3.style.width,h:zvgZoom3.style.height};
+	const svgSize3 = {w:"1920",h:"1080"};
+	//console.log("Initial svgSize3: "+String(svgSize3.w)+" "+String(svgSize3.h));
+	var isPanning = false;
+	var startPoint = {x:0,y:0};
+	var endPoint = {x:0,y:0};;
+	var scale = 1;
+
+	svgContainer3.onwheel = function(e) {
+		e.preventDefault();
+		var w = viewBox.w;
+		var h = viewBox.h;
+		var mx = e.offsetX;//mouse x  
+		var my = e.offsetY;    
+		var dw = -w*Math.sign(e.deltaY)*0.05;
+		var dh = -h*Math.sign(e.deltaY)*0.05;
+		var dx = dw*mx/svgSize3.w;
+		var dy = dh*my/svgSize3.h;
+		viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+		scale = svgSize3.w/viewBox.w;
+		slider3.value = scale*100;
+		output3.innerHTML = slider3.value;
+		//   zoomValue.innerText = String(Math.round(scale*100)/100);
+		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+		zvgZoom3.setAttribute('viewBox', attr);
+	}
+
+
+	svgContainer3.onmousedown = function(e){
+		isPanning = true;
+		startPoint = {x:e.x,y:e.y};   
+	}
+
+	svgContainer3.onmousemove = function(e){
+		if (isPanning){
+			endPoint = {x:e.x,y:e.y};
+			var dx = (startPoint.x - endPoint.x)/scale;
+			var dy = (startPoint.y - endPoint.y)/scale;
+			var movedViewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};
+			var attr = String(movedViewBox.x)+" "+String(movedViewBox.y)+" "+String(movedViewBox.w)+" "+String(movedViewBox.h);
+			zvgZoom3.setAttribute('viewBox', attr);
+		}
+	}
+
+	svgContainer3.onmouseup = function(e){
+		if (isPanning){ 
+			endPoint = {x:e.x,y:e.y};
+			var dx = (startPoint.x - endPoint.x)/scale;
+			var dy = (startPoint.y - endPoint.y)/scale;
+			viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w,h:viewBox.h};   
+			var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+			zvgZoom3.setAttribute('viewBox', attr);
+			isPanning = false;
+		}
+	}
+
+	svgContainer3.onmouseleave = function(e){
+		isPanning = false;
+	}
+
+	var lastNum3 = 0;
+	var v3;
+	slider3.oninput = function(e) {
+
+		if(lastNum3 < this.value) {
+				v3 = -500;
+		} else {
+			v3 = 500;
+		}
+		lastNum3 = this.value;
+		
+		var w = viewBox.w;
+		var h = viewBox.h;
+		var mx = 0;//mouse x  
+		var my = 0;
+		var dw = -w*Math.sign(v)*0.05;
+		var dh = -h*Math.sign(v)*0.05;
+		var dx = dw*mx/svgSize3.w;
+		var dy = dh*my/svgSize3.h;
+		viewBox = {x:viewBox.x+dx,y:viewBox.y+dy,w:viewBox.w-dw,h:viewBox.h-dh};
+		scale = svgSize3.w/viewBox.w;
+		slider3.value = scale*100;
+		output3.innerHTML = slider3.value;
+		var attr = String(viewBox.x)+" "+String(viewBox.y)+" "+String(viewBox.w)+" "+String(viewBox.h);
+		zvgZoom3.setAttribute('viewBox', attr);
 	}
 	
 </script>

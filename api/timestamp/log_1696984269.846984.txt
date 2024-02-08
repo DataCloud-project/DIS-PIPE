@@ -1,0 +1,2 @@
+UPLOAD: 1696984269.846984
+APPLY: 1696984295.166059,ChainSuccession,Query,Trasformation

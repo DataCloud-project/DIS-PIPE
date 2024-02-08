@@ -1,0 +1,10 @@
+event12end-end 1 1
+analyzedata-end 1 1
+createrecord-end 1 1
+event2start-end 1 1
+receivetempmeasure-end 1 1
+senddatatomq-end 1 1
+startanalysis-end 1 1
+endanalysis-end 1 1
+receivebloodmeasure-end 1 1
+receivedatafrommq-end 1 1

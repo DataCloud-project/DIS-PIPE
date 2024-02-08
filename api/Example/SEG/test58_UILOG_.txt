@@ -1,0 +1,5 @@
+examineCasually checkTicket 3
+decide reinitiateRequest 3
+registerRequest registerRequest 2
+decide checkTicket 2
+decide decide reinitiateRequest 2

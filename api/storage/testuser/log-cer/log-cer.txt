@@ -1,0 +1,4 @@
+Pipeline log-cer {
+	communicationMedium: medium WEB_SERVICE
+	steps:
+}

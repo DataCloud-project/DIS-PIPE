@@ -152,7 +152,43 @@ function closePP(){
 //function to handle all the map
 function getMap(bool) {
 		
-    
+    // DARIO START
+    /*
+    if (bool){
+        // get graph in an array
+        graphTextF = getGraphText('frequency');
+        graphTextP = getGraphText();
+        // get nodes in an array 
+        graphNodesF = getGraphNodes(graphTextF);
+        graphNodesP = getGraphNodes(graphTextP);
+        graphNodes = getCombinedNodes(graphNodesF, graphNodesP);
+        // get edges in an array
+        graphEdgesF = getGraphEdges(graphTextF, false);
+        graphEdgesP = getGraphEdges(graphTextP, true);
+        graphEdges = getCombinedEdges(graphEdgesF, graphEdgesP);
+        getLabeledGraphEdges(graphNodes, graphEdges);
+        // get final matrix ready for dsl conversion
+        dslSteps = getDslSteps(graphNodes, graphEdges);
+        console.log(dslSteps)
+
+        meanDurationFP= getAllDuration("mean");
+        meanEdgeDuration= getAllEdgeDuration("mean");
+        // getAllUsedVariables("activities")
+        var array_Activities=getAllUsedVariables("activities")
+        for (const act of array_Activities) {
+            // console.log(act);
+            addCheckbox(act)
+        }
+        $(document).ready(function(){
+            $('#filter_by').on('change', function(e) {
+                e.stopImmediatePropagation();
+                var typeD=this.value
+                // console.log(typeD)
+                
+            });
+        });
+    }*/
+    //DARIO END
     if (bool){
         meanDurationFP= getAllDuration("mean");
 		meanEdgeDuration= getAllEdgeDuration("mean");
@@ -250,12 +286,17 @@ function getMap(bool) {
 
 
     $(document).ready(function(){
+
+
+
+
         for(var i=0; i<nodes.length; i++){
             
             // console.log(nodes[i].children[2].innerHTML);
             nodesNames[i] = nodes[i].children[2].innerHTML;
             // console.log(nodes[i].children[2].innerHTML);
             // console.log(nodes[i].children[0].innerHTML)
+
             if(nodes[i].id!=undefined){
                 var use=nodes[i].id
                 $("#"+use).append("<label class='label_node' hidden>"+nodes[i].children[0].innerHTML+"</label>");
@@ -1312,7 +1353,7 @@ function getMap(bool) {
                         $('#performanceDuration').prop('title', $('#pd_minDur').prop('title'));
                     }
                     
-                    var $title = $("#"+node_id+" title").html(); 				
+                    var $title = $("#"+node_id+" title").html(); 			
                             
                             $titolo_name=$title.split(' (')[0].trim()
                             $("#"+node_id).find(".text_name").text($titolo_name);
@@ -1421,7 +1462,7 @@ function getMap(bool) {
                     }
                     
                     var $title = $("#"+node_id+" title").html(); 				
-                            
+
                     $titolo_name=$title.split(' (')[0].trim()
                     $("#"+node_id).find("text").text($titolo_name+" ("+($frequency_values[$titolo_name])+")");
                     // $("#"+node_id).find(".stat_name").text("("+timeToHms($duration_values[$titolo_name])+")");

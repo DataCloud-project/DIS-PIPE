@@ -21,6 +21,7 @@ import pyodbc
 import psycopg2
 import sqlvalidator
 import pandas as pd
+import shutil
 
 from flask_oidc import OpenIDConnect
 from flask_cors import CORS
@@ -175,6 +176,16 @@ app.register_blueprint(app_Segmentator)
 #_________________________API LOGIN________________________#
 ############################################################
 
+
+def copy_folder(source_folder, destination_folder):
+    try:
+        shutil.copytree(source_folder, destination_folder)
+        print("Folder copied successfully!")
+    except shutil.Error as e:
+        print(f"Folder copy failed: {e}")
+    except OSError as e:
+        print(f"Folder copy failed: {e}")
+
 #added by SimoneONE
 @app.route('/',methods=["POST", "GET"])
 @oidc.require_login
@@ -198,7 +209,7 @@ def indice():
             session["access_token"] = OAuth2Credentials.from_json(oidc.credentials_store[user_id]).access_token
             session["refresh_token"] = OAuth2Credentials.from_json(oidc.credentials_store[user_id]).refresh_token
             #print(greeting, user_id, session["access_token"])
-            #session.permanent = True
+            session.permanent = True
             session["user"] = username
             session["log_name"] = "Example.xes"
             session["log_name_clear"] = session["log_name"].replace(".xes","")
@@ -206,6 +217,11 @@ def indice():
             session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
             session["directory_getdsl"]=session["directory_log"]+"/"+"getdsl"
             session["directory_net_pnml"]=session["directory_log"]+"/"+"net"
+            session["segmentator"]=session["directory_log"]+"/"+"SEG"
+            session["conformace_jar"] = session["directory_log"]+"/"+"jar"
+            session["plans_path"]= process_string(session["conformace_jar"])+"/fast-downward/src/plans"
+
+            session["database_jar"] = session["directory_log"]+"/"+"db_jar"
             
             session["log_path"] = os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
             session["nomeupload"] = ""
@@ -216,12 +232,32 @@ def indice():
             session["dfg"] = None
             session["dfg_f"] = None
             process_jar= None
+            session["pid_jar"] = None
+            session["pid_script"] = None
+            session["pid_database"] = None
+            session["pid_segmentator"] = None
             session["process_script"]= None
             session["pnml_path"] = "net/petri_final.pnml"
             session["marking_path"]="net/marking.txt"
             session["xes_path"] = "net/petri_log.xes"
             session["cost_file_path"]="jar/cost_file"
             session["TIMESTAMP_FOLDER"] = 'timestamp/'
+            session["NODOsegmen"] = False
+
+            
+            folder_path="storage"+"/"+session["user"]
+            source_folder="Example"
+
+            if os.path.exists(folder_path) and os.path.isdir(folder_path):
+                print(f"The folder '{folder_path}' exists.")
+            else:
+                print(f"The folder '{folder_path}' does not exist.")
+                os.makedirs(folder_path)
+                try:
+                    shutil.copytree(source_folder, os.path.join(folder_path, os.path.basename(source_folder)))
+                    print(f"Contents from '{source_folder}' have been copied to '{folder_path}'.")
+                except Exception as e:
+                    print(f"An error occurred while copying: {e}")
 
             #print(session["directory_log"])
 
@@ -254,6 +290,8 @@ def logout():
     session.pop("TIMESTAMP_FOLDER", None)
     session.pop("directory_getdsl",None)
     session.pop("directory_net_pnml",None)
+    session.pop("segmentator",None)
+    session.pop("NODOsegmen",None)
     
     keycloak_openid = KeycloakOpenID(server_url=secret_server_url,
                                     client_id=secret_client_id,
@@ -309,7 +347,8 @@ def home(file):
 @app.route('/index')
 @oidc.require_login
 def index():
-    #session.permanent = True
+    session.permanent = True
+    '''
     if session.get('user') != True:
         session["user"] = "testuser"
     
@@ -358,6 +397,15 @@ def index():
     if session.get("directory_net_pnml") != True:
         session["directory_net_pnml"] = session["directory_log"]+"/"+"net"
 
+    if session.get("segmentator") != True:
+        session["segmentator"]=session["directory_log"]+"/"+"SEG"
+
+    if session.get("conformace_jar") != True:
+        session["conformace_jar"] = session["directory_log"]+"/"+"jar"
+
+    if session.get("database_jar") != True:
+        session["database_jar"] = session["directory_log"]+"/"+"db_jar"
+    '''
     #session["pnml_path"] = "net/petri_final.pnml"
     #session["marking_path"] = "net/marking.txt"
     #session["xes_path"] = "net/petri_log.xes"
@@ -371,19 +419,28 @@ def index():
     filename = log_name
     #print("index")
 
-    global process_jar
+    #global process_jar
     #process_jar= None
     #session["process_script"]= None
     try:
-        print('killing', process_jar.pid)
-        #process_jar.kill()
+        print('killing', session["pid_jar"])
+        os.kill(session["pid_jar"], signal.SIGKILL)
     except :
         print("process alreay killed")
 
-    global process_script
+    #global process_script
     try:
-        print('killing', process_script.pid)
-        process_script.kill()
+        print('killing', session["pid_script"])
+        #process_script.kill()
+        os.kill(session["pid_script"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+
+    try:
+        print('killing', session["pid_database"])
+        #process_script.kill()
+        os.kill(session["pid_database"], signal.SIGKILL)
     except :
         print("process alreay killed")
 
@@ -394,17 +451,26 @@ process_jar= None
 @app.route('/index', methods = ['POST'])
 def upload_file():
 
-    global process_jar
+    #global process_jar
     try:
-        print('killing', process_jar.pid)
+        print('killing', session["pid_jar"])
         #process_jar.kill()
+        os.kill(session["pid_jar"], signal.SIGKILL)
     except :
         print("process alreay killed")
 
-    global process_script
+    #global process_script
     try:
-        print('killing', process_script.pid)
-        process_script.kill()
+        print('killing', session["pid_script"])
+        #process_script.kill()
+        os.kill(session["pid_script"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    try:
+        print('killing', session["pid_database"])
+        #process_script.kill()
+        os.kill(session["pid_database"], signal.SIGKILL)
     except :
         print("process alreay killed")
 
@@ -415,7 +481,7 @@ def upload_file():
     f = request.files['file']
     print(f.filename)
 
-    regex_expression="^[\(\)\w\.,\s-]+\.xes$"
+    regex_expression="^[\(\)\w\.,\s-]+\.(xes|csv)$"
     check = re.search(regex_expression, f.filename)
 
     #global nomeupload
@@ -450,7 +516,7 @@ def upload_file():
     session["log_name"]=session["nomeupload"]
     #session["log_name"]=session["nomeupload"].replace(".xes","")+str(time_stamp)+".xes"
     #global log_name_clear    
-    session["log_name_clear"]=session["log_name"].replace(".xes","")
+    session["log_name_clear"]=session["log_name"].replace(".xes","").replace(".csv","")
     #global databaseName
     session["databaseName"]=session["log_name_clear"].lower()+"_"+session["user"].lower()
     #global log_path
@@ -512,26 +578,298 @@ def upload_file():
     if(not(isExistNETPNML)):
         print("create directory net")
         os.mkdir(session["directory_net_pnml"])
-    
-    
 
+    
+    session["segmentator"] = session["directory_log"]+"/"+"SEG"
+    isExistSEGMENTATOR = os.path.exists(session["segmentator"])
+    if(not(isExistSEGMENTATOR)):
+        print("create directory segmentator")
+        os.mkdir(session["segmentator"])
+
+    session["conformace_jar"] = session["directory_log"]+"/"+"jar"
+    copy_folder(os.path.dirname(os.path.realpath(__file__))+"/jar",session["conformace_jar"])
+    session["plans_path"]="./"+process_string(session["conformace_jar"])+"/fast-downward/src/plans"
+
+    session["database_jar"] = session["directory_log"]+"/"+"db_jar"
+    copy_folder(os.path.dirname(os.path.realpath(__file__))+"/queryJar",session["database_jar"])
+
+    
+    
     return home(f.filename)
     #return redirect("http://127.0.0.1:8080", code=200)    
+
+@app.route('/indexSeg')
+@oidc.require_login
+def indexSeg():
+    session.permanent = True
+    '''
+    if session.get('user') != True:
+        session["user"] = "testuser"
+    
+    if session.get('log_name') != True:
+        session["log_name"] = "Example.xes"
+
+    if session.get('log_name_clear') != True:
+        session["log_name_clear"] = session["log_name"].replace(".xes","")
+    
+    if session.get('databaseName') != True:
+        session["databaseName"] = session["log_name_clear"].lower()+"_"+session["user"].lower()
+
+    if session.get('directory_log') != True:
+        session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
+    
+    if session.get('log_path') != True:
+        session["log_path"] = os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
+
+    if session.get('nomeupload') != True:
+        session["nomeupload"] = ""
+
+    if session.get('backup_dir') != True:
+        session["backup_dir"] = os.getcwd()
+
+    if session.get('plans_path') != True:
+        session["plans_path"] = ""
+
+    if session.get('boolean_case') != True:
+        session["boolean_case"] = False
+
+    if session.get('activity_list') != True:
+        session["activity_list"] = []
+
+    if session.get('dfg') != True:
+        session["dfg"] = None
+
+    if session.get('dfg_f') != True:
+        session["dfg_f"] = None
+
+    if session.get('process_script') != True:
+        session["process_script"]= None
+
+    if session.get("directory_getdsl") != True:
+        session["directory_getdsl"]= session["directory_log"]+"/"+"getdsl"
+
+    if session.get("directory_net_pnml") != True:
+        session["directory_net_pnml"] = session["directory_log"]+"/"+"net"
+
+    if session.get("segmentator") != True:
+        session["segmentator"]=session["directory_log"]+"/"+"SEG"
+
+    if session.get("conformace_jar") != True:
+        session["conformace_jar"] = session["directory_log"]+"/"+"jar"
+
+    if session.get("database_jar") != True:
+        session["database_jar"] = session["directory_log"]+"/"+"db_jar"
+    
+    '''
+    #session["pnml_path"] = "net/petri_final.pnml"
+    #session["marking_path"] = "net/marking.txt"
+    #session["xes_path"] = "net/petri_log.xes"
+    #session["cost_file_path"] = "jar/cost_file"
+
+
+    os.chdir(session["backup_dir"])
+    #print("Current working directory: {0}".format(os.getcwd()))
+
+    log_name = session["log_name"]
+    filename = log_name
+    #print("index")
+
+    #global process_jar
+    #process_jar= None
+    #session["process_script"]= None
+    try:
+        print('killing', session["pid_jar"])
+        #process_jar.kill()
+        os.kill(session["pid_jar"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    #global process_script
+    try:
+        print('killing', session["pid_script"])
+        #process_script.kill()
+        os.kill(session["pid_script"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+
+    try:
+        print('killing', session["pid_database"])
+        #process_script.kill()
+        os.kill(session["pid_database"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    return home(filename)
+
+
+process_jar= None
+@app.route('/indexSeg', methods = ['POST'])
+def upload_file_seg():
+
+    #global process_jar
+    try:
+        print('killing', session["pid_jar"])
+        #process_jar.kill()
+        os.kill(session["pid_jar"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    #global process_script
+    try:
+        print('killing',session["pid_script"])
+        #process_script.kill()
+        os.kill(session["pid_script"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    try:
+        print('killing', session["pid_database"])
+        #process_script.kill()
+        os.kill(session["pid_database"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    #global backup_dir
+    os.chdir(session["backup_dir"])
+    print("Current working directory: {0}".format(os.getcwd()))
+
+    log_name = session["log_name"]
+    filename = log_name
+
+    session["nomeupload"] = filename
+
+    #global user
+    #global log_name
+    '''
+    import calendar
+    import time
+
+    current_GMT = time.gmtime()
+
+    time_stamp = calendar.timegm(current_GMT)
+    '''
+
+    now = datetime.datetime.now()
+    time_stamp = now.strftime("%Y%m%d%H%M%S%f")
+
+    print("Current timestamp:", time_stamp)
+
+    session["log_name"]=session["nomeupload"]
+    #session["log_name"]=session["nomeupload"].replace(".xes","")+str(time_stamp)+".xes"
+    #global log_name_clear    
+    session["log_name_clear"]=session["log_name"].replace(".xes","")
+    #global databaseName
+    session["databaseName"]=session["log_name_clear"].lower()+"_"+session["user"].lower()
+    #global log_path
+
+    directory_user=os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]
+    isExistUser = os.path.exists(directory_user)
+    if(not(isExistUser)):
+        print("create directory User")
+        os.mkdir(directory_user)
+    #print(isExistUser)
+    #global directory_log
+    
+    #TESTLIONE
+    #session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
+    session["directory_log"]=directory_user+"/"+session["log_name_clear"]
+    isExistLog = os.path.exists(session["directory_log"])
+    if(not(isExistLog)):
+        print("create directory Log")
+        os.mkdir(session["directory_log"])
+        #createDatabase(session["databaseName"])
+        #applyDbSchema(session["databaseName"])
+        
+        session["log_path"]=os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
+        
+        #f.save(session["log_path"])
+        
+        now = datetime.datetime.now()
+        time_stamp = now.strftime("%Y%m%d%H%M%S%f")
+        
+        
+        f.save(os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+time_stamp+".txt")
+        # Open the file in write mode
+        file = open(os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+time_stamp+".txt", "w")
+
+        # Write the string to the file
+        file.write(time_stamp)
+
+        # Close the file
+        file.close()
+
+
+        print("upload_file")
+        #Process(target=queryDb).start()
+    else: 
+        session["log_path"]=os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
+        #f.save(session["log_path"])
+        print("upload_file")
+    #print(isExistLog)
+
+    session["directory_getdsl"]=session["directory_log"]+"/"+"getdsl"
+    isExistGETDSL = os.path.exists(session["directory_getdsl"])
+    if(not(isExistGETDSL)):
+        print("create directory getdsl")
+        os.mkdir(session["directory_getdsl"])
+
+    
+    session["directory_net_pnml"] = session["directory_log"]+"/"+"net"
+    isExistNETPNML = os.path.exists(session["directory_net_pnml"])
+    if(not(isExistNETPNML)):
+        print("create directory net")
+        os.mkdir(session["directory_net_pnml"])
+
+    
+    session["segmentator"] = session["directory_log"]+"/"+"SEG"
+    isExistSEGMENTATOR = os.path.exists(session["segmentator"])
+    if(not(isExistSEGMENTATOR)):
+        print("create directory segmentator")
+        os.mkdir(session["segmentator"])
+
+    session["conformace_jar"] = session["directory_log"]+"/"+"jar"
+    copy_folder(os.path.dirname(os.path.realpath(__file__))+"/jar",session["conformace_jar"])
+    session["plans_path"]="./"+process_string(session["conformace_jar"])+"/fast-downward/src/plans"
+    
+    session["database_jar"] = session["directory_log"]+"/"+"db_jar"
+    copy_folder(os.path.dirname(os.path.realpath(__file__))+"/queryJar",session["database_jar"])
+
+
+    return home(filename)
+    #return redirect("http://127.0.0.1:8080", code=200)    
+
+
+
+
+
+
+
+
 
 @app.route('/loadProject', methods = ['POST'])
 def loadProject():
 
-    global process_jar
+    #global process_jar
     try:
-        print('killing', process_jar.pid)
+        print('killing', session["pid_jar"])
         #process_jar.kill()
+        os.kill(session["pid_jar"], signal.SIGKILL)
     except :
         print("process alreay killed")
 
-    global process_script
+    #global process_script
     try:
-        print('killing', process_script.pid)
-        process_script.kill()
+        print('killing',session["pid_script"])
+        #process_script.kill()
+        os.kill(session["pid_script"], signal.SIGKILL)
+    except :
+        print("process alreay killed")
+
+    try:
+        print('killing', session["pid_database"])
+        #process_script.kill()
+        os.kill(session["pid_database"], signal.SIGKILL)
     except :
         print("process alreay killed")
 
@@ -573,6 +911,9 @@ def loadProject():
         nameupload = session["nomeupload"]     ) )
 
 
+from flask import Flask, send_file
+import io
+import tempfile
 
 ############################################################
 #_____________________LATERAL FEATURES_____________________#
@@ -600,9 +941,36 @@ def downloadXes():
     dataframe1=pd.DataFrame(session["log"])
     log = pm4py.convert_to_event_log(dataframe1)
 
-    pm4py.write_xes(log, 'exported.xes')
-    path = 'exported.xes'
-    return send_file(path, as_attachment=True)
+    # Create a temporary file in memory
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    
+    # Replace this with code that generates the content you want to serve as a file.
+    file_content = log
+
+    pm4py.write_xes(log, temp_file.name)
+    
+    # Close the temporary file
+    temp_file.close()
+
+    return send_file(temp_file.name, as_attachment=True, download_name='exported.xes')
+
+
+
+@app.route('/downloadCsv', methods=['GET'])
+def downloadCsv():
+    #global log
+    dataframe1=pd.DataFrame(session["log"])
+
+    # Create a temporary file in memory
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    
+    # Replace this with code that generates the content you want to serve as a file.
+    dataframe1.to_csv(temp_file.name)
+
+    # Close the temporary file
+    temp_file.close()
+
+    return send_file(temp_file.name, as_attachment=True, download_name='exported.csv')
    
 @app.route('/saveProject', methods=['GET'])
 def saveProject():
@@ -653,6 +1021,11 @@ def renameProject(newname):
     session["directory_log"] = storage+"/"+session["user"]+"/"+session["log_name_clear"]
     session["directory_getdsl"]=session["directory_log"]+"/"+"getdsl"
     session["directory_net_pnml"]=session["directory_log"]+"/"+"net"
+    session["segmentator"] = session["directory_log"]+"/"+"SEG"
+    session["conformace_jar"] = session["directory_log"]+"/"+"jar"
+    session["plans_path"]="./"+process_string(session["conformace_jar"])+"/fast-downward/src/plans"
+    session["database_jar"] = session["directory_log"]+"/"+"db_jar"
+
 
     session["log_path"] = os.path.dirname(os.path.realpath(__file__))+storage+"/"+session["user"]+"/"+session["log_name_clear"]+"/"+session["log_name"]
 
@@ -693,19 +1066,16 @@ def dslPost():
 
 
 def process_string(input_string):
-    if "root/datacloud/DIS-PIPE-development-current/api/" in input_string:
-        # Extract the relevant part after "root/datacloud/DIS-PIPE-development-current/api/"
-        relevant_part = input_string.split("root/datacloud/DIS-PIPE-development-current/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    elif "/root/datacloud/DIS-PIPE-development-current/api/" in input_string:
-        relevant_part = input_string.split("/root/datacloud/DIS-PIPE-development-current/api/")[1]
-        # Replace "PrepaidTravelCost" with "Example" in the relevant part
-        # Combine the modified relevant part with "storage/testuser/"
-        return relevant_part
-    else :
-        return input_string
+    split_string = input_string.split("api/", 1)
+    if len(split_string) > 1:
+        result = split_string[1]
+        return result
+    else:
+        if(input_string.startswith("/storage")):
+            return input_string[1:]
+        else:
+            return input_string
+            
 
 @app.route('/getDslStructure')
 @oidc.require_login
@@ -740,21 +1110,22 @@ def getDslStructure():
     loop = asyncio.new_event_loop()
     loop.run_until_complete(make_request())
     '''
-    response = requests.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers)  # Send the GET request
+    response = requests.get('https://crowdserv.sys.kth.se/api/repo/export/'+session["user"]+"/"+str(dslName), headers=headers, verify=False)  # Send the GET request
 
     if response.status_code == 200:  # Check if the request was successful
         print("Request successful")
         print(response.text)  # Access the response body
    
 
+
         try:
             new_xes=fromDSLtoXES(json.loads(response.text)["data"])
-        except:
-            print("An exception occurred")
+        except Exception as e:
+            print(e)
             return(str("error"))
         
 
-        print("ERROREEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")    
+        print("ERRORE")    
         ######
         
         dfg=session["dfg"]
@@ -942,15 +1313,25 @@ def renameDSL(folderName,vecchioNome,nuovoNome):
         return concatenazione
 
 
+@app.before_request
+def filter_non_http_requests():
+    # Check if the request is an HTTP request
+    if not request.method or not request.url:
+        # Reject non-HTTP requests with a 400 Bad Request response
+        abort(400)
+
+
 ############################################################
 #_____________________START APPLICATION_____________________#
 ############################################################
 
 if(path_f=="127.0.0.1"):
-    print("")
-    context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
-    app.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
+    print("local")
+    #context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
+    #pp.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
+    app.run(host=path_f, port=int(port_f), debug=True)
 else:
+    port = int(os.environ.get('PORT', port_f))
     context = ('key/certificate.crt', 'key/private.key')    #certificate and key files
-    app.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
+    app.run(host=path_f, port=port, debug=True, ssl_context=context)
 

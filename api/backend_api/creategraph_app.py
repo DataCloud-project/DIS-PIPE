@@ -197,6 +197,7 @@ def dfgFreqReduced():
                                             parameters={parameters.FORMAT: "svg", parameters.START_ACTIVITIES: sa_f,
                                                 parameters.END_ACTIVITIES: ea_f})
     session["dfg_f"]=dfg_f
+    #print(pm4py.get_event_attribute_values(log, "concept:name"))
                                                 
     return str(gviz_f)
 
