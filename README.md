@@ -34,7 +34,7 @@ Specifically, it provides a graphical user interface for importing event logs in
 **DIS-PIPE-Discovery-And-Visualization** component provides a graphical user interface for importing event logs in the IEEE Standard for eXtensible Event Stream (XES) format and executing the functionalities by leveraging a drag-and-drop workbench. -->
 
 ## Requirements
-The code has been tested using **Python 3.8.12** and **conda 4.10.3**. Other versions are not guaranteed to work properly.
+The code has been tested using **Python 3.8.12**, **Java 11**, **GCC compiler**, **conda 4.10.3**. Other versions are not guaranteed to work properly.
 
 ### To install conda
 
