@@ -34,7 +34,7 @@ Specifically, it provides a graphical user interface for importing event logs in
 **DIS-PIPE-Discovery-And-Visualization** component provides a graphical user interface for importing event logs in the IEEE Standard for eXtensible Event Stream (XES) format and executing the functionalities by leveraging a drag-and-drop workbench. -->
 
 ## Requirements
-The code has been tested using **Python 3.8.12**, **Java 11**, **GCC compiler**, **conda 4.10.3**. Other versions are not guaranteed to work properly.
+The code has been tested using **Python 3.8.12**, **Java 11**, **GCC compiler**, **conda 4.10.3**, **PostgreSQL 12**. Other versions are not guaranteed to work properly.
 
 ### To install conda
 
@@ -84,8 +84,10 @@ conda info --envs.
 1. Open terminal or Anaconda Prompt.
 2. Activate "pm4py_env".
 3. Change directory to go in the "api" folder downloaded.
-4. Run: ``python backend.py`` in terminal or prompt;
-5. Go to your browser on http://127.0.0.1:7778/
+4. Run: ``python cleanCompiler.py`` in terminal or prompt;
+5. Run: ``python configDatabase.py`` to define the configuration of your Postgres server or use the default settings;
+6. Run: ``python backend.py`` in terminal or prompt;
+7. Go to your browser on http://127.0.0.1:7778/ or http://localhost:7778/
 
 ## NOTE
 
@@ -107,7 +109,7 @@ The DIS-PIPE tool is deployed on a single host as shown in the figure below. Fro
     <img src="https://raw.githubusercontent.com/DataCloud-project/DIS-PIPE/main/images/DIS-PIPE-online-deployment.png">
 </p>
 
-The ``exportPipeline(pipelineID)`` REST-API can be invoked at: http://195.231.61.196:7780/
+<!--The ``exportPipeline(pipelineID)`` REST-API can be invoked at: http://195.231.61.196:7780/-->
 
 ## User Guide
 

@@ -2,6 +2,7 @@
 
 import pyodbc
 import psycopg2
+import json
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 with open('../properties.txt') as f:
@@ -17,7 +18,29 @@ with open('../properties.txt') as f:
 f.close()
 
 
-if (path_f=="0.0.0.0"):
+
+# Path to the JSON file
+json_file_path = "database_config.json"
+
+# Read the JSON file
+with open(json_file_path, "r") as json_file:
+    database_config = json.load(json_file)
+
+
+serverDB= database_config['database']['database_host']
+portDB=database_config['database']['port']
+databaseDB = 'dove' 
+usernameDB=database_config['database']['user']
+passwordDB=database_config['database']['password']
+
+if (database_config['database']['populate']=="true"):
+   serverDB= database_config['database']['database_host']
+   portDB=database_config['database']['port']
+   databaseDB = 'dove' 
+   usernameDB=database_config['database']['user']
+   passwordDB=database_config['database']['password']
+   URL_DATABASE= "jdbc:postgresql://"+serverDB+":"+portDB
+elif (path_f=="0.0.0.0"):
    serverDB = 'flask_db' 
    portDB = '5432'
    databaseDB = 'dove' 
@@ -29,7 +52,7 @@ else:
    portDB = '5432'
    databaseDB = 'dove' 
    usernameDB = 'postgres' 
-   passwordDB = 'ubuntu-777' 
+   passwordDB = 'postgres' 
    URL_DATABASE= "jdbc:postgresql://"+serverDB+":"+portDB
 
 def createDatabase(databaseName):

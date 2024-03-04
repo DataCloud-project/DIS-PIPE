@@ -1,0 +1,9 @@
+{
+    "database": {
+        "populate": "false",
+        "database_host": "",
+        "port": "",
+        "user": "",
+        "password": ""
+    }
+}
