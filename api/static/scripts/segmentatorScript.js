@@ -16,7 +16,7 @@ function reloadLikeForm(){
 }
 
 function startSegmentator(){
-	console.log("chiamata start segmentator")
+	console.log("startSegmentator()")
 
 	if(total_trace_number==1 && segmemtator_array.length > 0){
 		//document.getElementById('updatedSeg').value = true;
@@ -41,7 +41,7 @@ function startSegmentator(){
 				xhr.setRequestHeader('Array-Data', jsonData);
 			},
 			success: function (data) {
-				console.log("XD")
+				//console.log("")
 				reloadLikeForm()
 			},
 			error: function (result) {
@@ -82,7 +82,7 @@ function closeCheckTime(){
 
 
 function openCheckSegmentatorPopup(){
-	console.log(total_trace_number)
+	//console.log(total_trace_number)
 	if(total_trace_number==1){
 		document.getElementById("blocker_checkSeg").style.display = "block"
 		document.getElementById("checkSeg").style.display = "block"
@@ -106,7 +106,7 @@ function openMacroTaskPopup(){
             withCredentials: true
         },
         success: function (data) {
-            console.log(data)
+            //console.log(data)
 			const tableBody = document.getElementById('table-body');
 
 			const column1 = document.createElement("th")

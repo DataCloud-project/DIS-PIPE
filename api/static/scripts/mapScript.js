@@ -353,11 +353,11 @@ function getMap(bool) {
                 $("#"+$used_id).find("text").css({"text-decoration":"underline"});
 
                 $titolo_name=$titolo.split(' (')[0].trim()
-                console.log($titolo_name)
+                //console.log($titolo_name)
 
                 $titolo_time=$titolo.split(' (')[1].trim()
                 $statistica=$titolo_time.substring(0,$titolo_time.length-1)
-                console.log($statistica)
+                //console.log($statistica)
                 
                 $myduration_mean=getAllDuration("mean");
                 $myduration_total=getAllDuration("total");

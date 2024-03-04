@@ -2,21 +2,6 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
     <page id="n0">
-      <place id="p_5">
-        <name>
-          <text>p_5</text>
-        </name>
-      </place>
-      <place id="sink">
-        <name>
-          <text>sink</text>
-        </name>
-      </place>
-      <place id="p_4">
-        <name>
-          <text>p_4</text>
-        </name>
-      </place>
       <place id="source">
         <name>
           <text>source</text>
@@ -30,46 +15,61 @@
           <text>p_3</text>
         </name>
       </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
       <place id="p_6">
         <name>
           <text>p_6</text>
         </name>
       </place>
-      <transition id="197dcaec-15f6-479e-9f3f-ca1c463f0b53">
-        <name>
-          <text>register_request-End</text>
-        </name>
-      </transition>
-      <transition id="379cbca5-fc9b-4213-9575-9e58dbc129d0">
+      <transition id="51bdf9a6-05fd-4cd1-9f90-2f87df956b20">
         <name>
           <text>check_ticket-End</text>
         </name>
       </transition>
-      <transition id="fd827614-4ea4-44cf-9bd9-40499b2180e8">
+      <transition id="156415f0-3187-48ef-9eac-60baf07f406c">
         <name>
           <text>decide-End</text>
         </name>
       </transition>
-      <transition id="cd9c9cd5-dec4-4789-9397-648c451eac19">
+      <transition id="f45bfe6d-6343-41ce-866f-230361a9560f">
+        <name>
+          <text>register_request-End</text>
+        </name>
+      </transition>
+      <transition id="9d557968-cb82-421d-b98e-e1b8e15bc12d">
         <name>
           <text>pay_compensation-End</text>
         </name>
       </transition>
-      <transition id="dacf5e90-881a-47cd-9a1d-dd95d4b3991c">
+      <transition id="f77cdc7a-5565-4a4e-ac3e-8a51b29e47a5">
         <name>
           <text>examine_casually-End</text>
         </name>
       </transition>
-      <arc id="140704929269408" source="p_4" target="379cbca5-fc9b-4213-9575-9e58dbc129d0"/>
-      <arc id="140704929270944" source="dacf5e90-881a-47cd-9a1d-dd95d4b3991c" target="p_4"/>
-      <arc id="140704928309152" source="fd827614-4ea4-44cf-9bd9-40499b2180e8" target="p_6"/>
-      <arc id="140704928202560" source="p_6" target="cd9c9cd5-dec4-4789-9397-648c451eac19"/>
-      <arc id="140704932226096" source="source" target="197dcaec-15f6-479e-9f3f-ca1c463f0b53"/>
-      <arc id="140704932225616" source="197dcaec-15f6-479e-9f3f-ca1c463f0b53" target="p_3"/>
-      <arc id="140704929268688" source="p_3" target="dacf5e90-881a-47cd-9a1d-dd95d4b3991c"/>
-      <arc id="140704929269072" source="379cbca5-fc9b-4213-9575-9e58dbc129d0" target="p_5"/>
-      <arc id="140704928307280" source="p_5" target="fd827614-4ea4-44cf-9bd9-40499b2180e8"/>
-      <arc id="140704928200688" source="cd9c9cd5-dec4-4789-9397-648c451eac19" target="sink"/>
+      <arc id="140331142991584" source="source" target="f45bfe6d-6343-41ce-866f-230361a9560f"/>
+      <arc id="140331142990048" source="f45bfe6d-6343-41ce-866f-230361a9560f" target="p_3"/>
+      <arc id="140334810807936" source="p_3" target="f77cdc7a-5565-4a4e-ac3e-8a51b29e47a5"/>
+      <arc id="140334810807456" source="f77cdc7a-5565-4a4e-ac3e-8a51b29e47a5" target="p_4"/>
+      <arc id="140334810807744" source="51bdf9a6-05fd-4cd1-9f90-2f87df956b20" target="p_5"/>
+      <arc id="140334821920288" source="p_5" target="156415f0-3187-48ef-9eac-60baf07f406c"/>
+      <arc id="140334810807600" source="p_4" target="51bdf9a6-05fd-4cd1-9f90-2f87df956b20"/>
+      <arc id="140334810876272" source="156415f0-3187-48ef-9eac-60baf07f406c" target="p_6"/>
+      <arc id="140334810876368" source="p_6" target="9d557968-cb82-421d-b98e-e1b8e15bc12d"/>
+      <arc id="140334810876560" source="9d557968-cb82-421d-b98e-e1b8e15bc12d" target="sink"/>
     </page>
     <finalmarkings>
       <marking>

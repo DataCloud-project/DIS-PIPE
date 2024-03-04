@@ -219,7 +219,7 @@ def timeParser(filepath):
                 date_obj=datetime.fromisoformat(child2.get("value"))
                 
                 if((re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{2}:\d{2}$", child2.get("value")) is not None) or (re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$",child2.get("value"))) is not None):
-                    print("STOINIFF primo")
+                    print("first if timeParser()")
                     dataTempo_less = (date_obj.isoformat().split("+")[0]).split(".")[0]
 
                     micsecond=""
@@ -238,7 +238,6 @@ def timeParser(filepath):
                         timezone=""
 
                     dataTempo=dataTempo_less+micsecond+timezone
-                    #print("i milli sono 0")
                 else:    
                     dataTempo = child2.get("value")
 
@@ -310,7 +309,6 @@ def checkTimePrec(filepath, InizioString, timereset):
                 #print(dataTempo)
                 
                 if datetime.fromisoformat(old_time) > datetime.fromisoformat(dataTempo):
-                    #print("NON C'è precedenza")
                     original_time = datetime.fromisoformat(old_time)
                     new_time = original_time + timedelta(seconds=1)
                     new_time = (new_time.isoformat().split("+")[0]).split(".")[0]
@@ -358,8 +356,6 @@ app_start = Blueprint('app_start',__name__)
 @app_start.route('/initialAction', methods=['GET', 'POST'])
 def initialAction():
 
-    
-    print(session["log_path"])
     if(session["log_name"].endswith(".csv")):
         try:
             dataframe1 = pd.read_csv(session["log_path"], sep=',')
@@ -471,7 +467,7 @@ def initialAction():
             test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
             mean_dizionario[j]=statistics.mean(test_activity_dictionary)
         except Exception as e:
-            print(f"777 An error of type {type(e).__name__} occurred: {e}")
+            print(f"initialAction() An error of type {type(e).__name__} occurred: {e}")
             print(activity_dictionary[j])
 
     total_dizionario=dict.fromkeys(session["activity_list"])
@@ -482,7 +478,7 @@ def initialAction():
             test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
             total_dizionario[j]=sum(test_activity_dictionary)
         except Exception as e:
-            print(f"777 An error of type {type(e).__name__} occurred: {e}")
+            print(f"initialAction() An error of type {type(e).__name__} occurred: {e}")
             print(activity_dictionary[j])
         
     median_dizionario=dict.fromkeys(session["activity_list"])

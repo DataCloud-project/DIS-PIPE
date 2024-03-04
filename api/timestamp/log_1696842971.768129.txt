@@ -1,3 +1,0 @@
-UPLOAD: 1696842971.768129
-DELETE: 1696842971.961625,Succession,receiveBloodMeasure,sendDataToMq
-APPLY: 1696842980.400343,ChainSuccession,receiveBloodMeasure,sendDataToMq

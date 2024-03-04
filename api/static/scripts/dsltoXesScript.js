@@ -179,14 +179,14 @@ function getDslbyNameListener() {
 
     
     const p1 = new Promise((resolve, reject) => {
-        console.log("Function: getDslbyNameListener()");
+        //console.log("Function: getDslbyNameListener()");
           
         var response=this.responseText.split("£")
         
         tr_name=response[4]
-        console.log(tr_name)
+        //console.log(tr_name)
         log_name=response[3]
-        console.log(log_name)
+        //console.log(log_name)
         nuovo_grafo=response[5]
 
         document.getElementById("new_digraph").innerHTML = nuovo_grafo;
@@ -204,7 +204,7 @@ function getDslbyNameListener() {
     });
     p1.then(
         (value) => {
-            console.log(value); // Success!
+            //console.log(value); // Success!
             const { tr_name, log_name } = value
             addTransitionName(tr_name, log_name);
         },
@@ -460,7 +460,7 @@ function personalizeNode(){
             var titolo=refactor_title.replaceAll(" ","").replaceAll("-","_").replaceAll("_End","").replaceAll("_","").toLowerCase()
             var titolo_end = refactor_title.replaceAll(" ","").replaceAll("-","_").toLowerCase()
 
-            console.log("Sono in personilizeNode, il titolo prima è: "+ titolo)
+            //console.log("Sono in personilizeNode, il titolo prima è: "+ titolo)
             //#################################
 
             var selected_elem=""
@@ -474,15 +474,15 @@ function personalizeNode(){
 
             if(refactor_title.toLowerCase() in color_dictionary){
                 titolo=refactor_title.toLowerCase()
-                console.log("Sono in personilizeNode, primo if")
+                //console.log("Sono in personilizeNode, primo if")
             }else if(refactor_title.toLowerCase().replaceAll(" ","").replaceAll("-end","") in color_dictionary){
                 titolo=refactor_title.toLowerCase().replaceAll(" ","").replaceAll("-end","")
-                console.log("Sono in personilizeNode, secondo if")
+                //console.log("Sono in personilizeNode, secondo if")
             }else if(refactor_title.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_") in color_dictionary){
                 titolo=refactor_title.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
-                console.log("Sono in personilizeNode, terzo if")
+                //console.log("Sono in personilizeNode, terzo if")
             }else{
-                console.log("Sono in personilizeNode, quarto if")
+                //console.log("Sono in personilizeNode, quarto if")
                 var stringa_temporanea=refactor_title.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
                 var stringa_comparazione=selected_elem.toLowerCase().replaceAll(" ","")
 
@@ -493,14 +493,14 @@ function personalizeNode(){
                 }
             }
 
-            console.log("Sono in personilizeNode, il titolo dopo è: "+ titolo)
+            //console.log("Sono in personilizeNode, il titolo dopo è: "+ titolo)
 
             //################################
 
 
             if(titolo in color_dictionary){
-                console.log("sto printando il titolo DPG")
-                console.log(titolo)
+                //console.log("printing title")
+                //console.log(titolo)
                 if(color_dictionary[titolo]==0){
                     //console.log("i am inside the problem")
                     $("#"+item.id).find("polygon").attr('stroke',"#187F00")
@@ -519,8 +519,8 @@ function personalizeNode(){
                     color_node_highlight[item.id]="#E20000"
                 } 
             }else if(titolo_end in color_dictionary){
-                console.log("sto printando il titolo DPG")
-                console.log(titolo_end)
+                //console.log("printing title")
+                //console.log(titolo_end)
                 if(color_dictionary[titolo_end]==0){
                     //console.log("i am inside the problem")
                     $("#"+item.id).find("polygon").attr('stroke',"#187F00")
@@ -539,8 +539,8 @@ function personalizeNode(){
                     color_node_highlight[item.id]="#E20000"
                 } 
             }else{
-                console.log("il titolo nonè è dentro")
-                console.log(titolo_end)
+                //console.log("title not inside")
+                //console.log(titolo_end)
                 $("#"+item.id).find("polygon").attr('stroke',"#999999")
                 color_node_highlight[item.id]="#999999"
             }
@@ -557,7 +557,7 @@ function personalizeNode(){
 
                 //prende il valore della stroke
                 $temp = ($("#"+item.id).find("polygon").attr('stroke'))
-                console.log("colore della stroke del nodo è: "+ $temp)
+                //console.log("stroke color node: "+ $temp)
                 $check_node=($("#"+item.id).find("polygon")).length
 
                 if(($temp=="#686868" ||$temp=="#999999" || $temp=="#FFD23F" || $temp=="#000000" || $temp=="#187F00" || $temp=="#FF9292" || $temp=="#FF5C5C" || $temp=="#FF3838" || $temp=="#E20000") && $check_node!=0){
@@ -640,15 +640,15 @@ function personalizeNode(){
 
                         if(chosen_element.toLowerCase() in color_dictionary){
                             name_activity=chosen_element.toLowerCase()
-                            console.log("Sono in personilizeNode, primo if")
+                            //console.log("Sono in personilizeNode, primo if")
                         }else if(chosen_element.toLowerCase().replaceAll(" ","").replaceAll("-end","") in color_dictionary){
                             name_activity=chosen_element.toLowerCase().replaceAll(" ","").replaceAll("-end","")
-                            console.log("Sono in personilizeNode, secondo if")
+                            //console.log("Sono in personilizeNode, secondo if")
                         }else if(chosen_element.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_") in color_dictionary){
                             name_activity=chosen_element.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
-                            console.log("Sono in personilizeNode, terzo if")
+                            //console.log("Sono in personilizeNode, terzo if")
                         }else{
-                            console.log("Sono in personilizeNode, quarto if")
+                            //console.log("Sono in personilizeNode, quarto if")
                             var stringa_temporanea=chosen_element.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
                             var stringa_comparazione=selected_elem.toLowerCase().replaceAll(" ","")
 
@@ -661,14 +661,14 @@ function personalizeNode(){
 
                         
                         if(name_activity in r1){
-                            console.log("name activity sta in r1")
-                            console.log(r1[name_activity][1])
-                            console.log(r1[name_activity][2])
+                            //console.log("name activity in r1")
+                            //console.log(r1[name_activity][1])
+                            //console.log(r1[name_activity][2])
                             $("#skip_act").text(r1[name_activity][1] )
                             $("#ins_act").text(r1[name_activity][2] )
                         }else if(name_activity_end in r1){
-                            console.log(r1[name_activity_end][1])
-                            console.log(r1[name_activity_end][2])
+                            //console.log(r1[name_activity_end][1])
+                            //console.log(r1[name_activity_end][2])
                             $("#skip_act").text(r1[name_activity_end][1] )
                             $("#ins_act").text(r1[name_activity_end][2] )
                         }else{
@@ -678,13 +678,13 @@ function personalizeNode(){
 
                         var arraySkipIns=findNumberSkipIns(r3)
                         
-                        console.log("sto stampando arraySkipIns")
-                        console.log(arraySkipIns)
+                        //console.log("printing arraySkipIns")
+                        //console.log(arraySkipIns)
 
                         if(name_activity in r2){
                             try {
-                                console.log(arraySkipIns[name_activity][1])
-                                console.log(arraySkipIns[name_activity][0])
+                                //console.log(arraySkipIns[name_activity][1])
+                                //console.log(arraySkipIns[name_activity][0])
                                 var r2_name_Act_1=arraySkipIns[name_activity][1]
                                 var r2_name_Act_2=arraySkipIns[name_activity][0]
                             }catch(error){
@@ -692,11 +692,11 @@ function personalizeNode(){
                                 var r2_name_Act_1="0"
                                 var r2_name_Act_2="0"
                             }
-                            console.log("name activity sta in r2")
+                            //console.log("name activity in r2")
                         }else if(name_activity_end in r2){
                             try {
-                                console.log(arraySkipIns[name_activity_end][1])
-                                console.log(arraySkipIns[name_activity_end][0])
+                                //console.log(arraySkipIns[name_activity_end][1])
+                                //console.log(arraySkipIns[name_activity_end][0])
                                 $("#skip_act").text(arraySkipIns[name_activity_end][1] )
                                 $("#ins_act").text(arraySkipIns[name_activity_end][0] )
                                 var r2_name_Act_1=arraySkipIns[name_activity_end][1]

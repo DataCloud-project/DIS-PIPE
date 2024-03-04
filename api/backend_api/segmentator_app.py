@@ -134,9 +134,9 @@ def segmentator():
     os.chdir(working_dir+'/AutSeg/segmentator')
 
 
-    print("Current working directory, quella che mi serve: {0}".format(os.getcwd()))
-    print("tutti i file sono: ")
-    print(os.listdir())    
+    print("segmentator() start Current working directory: {0}".format(os.getcwd()))
+    #print("tutti i file sono: ")
+    #print(os.listdir())    
     # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")
     os.system('./al -d files/UILog.config')
     
@@ -162,10 +162,6 @@ def copy_folder(source_folder, destination_folder):
 
 @app_Segmentator.route('/startSegmentator', methods=['POST'])
 def startSegmentator():
-
-
-    
-    print("start segmentator")
 
     array_data = request.headers.get("Array-Data")
 
@@ -216,7 +212,7 @@ def startSegmentator():
 
         #os.chdir(process_string(session["segmentator"][1:]+"/AutSeg"+"/segmentator"))
 
-        print("Current bis working directory: {0}".format(os.getcwd()))
+        print("startSegmentator() Current working directory: {0}".format(os.getcwd()))
         print("Current file in directory: {0}".format(os.listdir()))
         
         # os.system("java -jar traceAligner.jar align d31.pnml d31.xes cost_file 10 40 SYMBA false")

@@ -62,14 +62,14 @@ function cb(valore,controllo){
         // console.log(this.value)
         var valore_s=valore.replace(".", "@");
         listToFilter.push(valore_s)
-        console.log(listToFilter)
+        //console.log(listToFilter)
     }else{
         var valore_s=valore.replace(".", "@");
         const index = listToFilter.indexOf(valore_s);
         if (index > -1) {
             listToFilter.splice(index, 1); // 2nd parameter means remove one item only
         }
-        console.log(listToFilter)
+        //console.log(listToFilter)
     }
 }
 
@@ -299,7 +299,7 @@ function showEvents(varKey, caseKey) {
             // console.log(inv_map[kf]);
             if(inv_map[kf]!="Activity" && inv_map[kf][0]!="@"){
         
-                console.log(inv_map[kf][0])
+                //console.log(inv_map[kf][0])
                 if(e[inv_map[kf]]!=undefined){
                     tableHTML += "<td class='text-table' style='border-radius: 4px;'>" + e[inv_map[kf]] + "</td>" ;
                     // console.log(e[inv_map[kf]]);
@@ -880,8 +880,8 @@ function filterSwipeUp(id){
 		history_crono[indice_up]=temp
 		// console.log(history_crono)
 
-		console.log(id)
-        console.log(indice_up)
+		//console.log(id)
+        //console.log(indice_up)
 
 		var v1 = $('#valore'+String(id)).html(),
 			v2 = $('#valore'+(indice_up)).html();
@@ -935,9 +935,9 @@ function filterSwipeUp(id){
         // $('#valore'+String(id)).html(v2);
 
         var temp = $('#valore'+String(id)).attr('title');
-        console.log(temp)
+        //console.log(temp)
         var temp2 = $('#valore'+indice_up).attr('title');
-        console.log(temp2)
+        //console.log(temp2)
 
         $('#valore'+indice_up).attr('title',temp);
         $('#valore'+String(id)).attr('title',temp2);
@@ -1143,7 +1143,7 @@ function apply_crono(){
 	
 	
 	Object.keys(history_crono).forEach(function(key) {
-        console.log("applycronoinside")
+        console.log("apply_crono() inside")
    		
 		oReq.open("GET",frontend+history_crono[key], false);
 

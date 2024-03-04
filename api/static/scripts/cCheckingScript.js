@@ -36,14 +36,14 @@ function backPopUp(){
                                                         "</table>"
                                                         
     if(name_activity in r1){
-        console.log("name activity sta in r1")
-        console.log(r1[name_activity][1])
-        console.log(r1[name_activity][2])
+        //console.log("name activity sta in r1")
+        //console.log(r1[name_activity][1])
+        //console.log(r1[name_activity][2])
         $("#skip_act").text(r1[name_activity][1] )
         $("#ins_act").text(r1[name_activity][2] )
     }else if(name_activity_end in r1){
-        console.log(r1[name_activity_end][1])
-        console.log(r1[name_activity_end][2])
+        //console.log(r1[name_activity_end][1])
+        //console.log(r1[name_activity_end][2])
         $("#skip_act").text(r1[name_activity_end][1] )
         $("#ins_act").text(r1[name_activity_end][2] )
     }else{
@@ -52,15 +52,15 @@ function backPopUp(){
     }
 
     var arraySkipIns=findNumberSkipIns(r3)
-    console.log("sto stampando arraySkipIns")
-    console.log(arraySkipIns)
+    //console.log("arraySkipIns")
+    //console.log(arraySkipIns)
 
     if(name_activity in r2){
 
-        console.log("name activity sta in r2")
+        //console.log("name activity sta in r2")
         try {
-            console.log(arraySkipIns[name_activity][1])
-            console.log(arraySkipIns[name_activity][0])
+            //console.log(arraySkipIns[name_activity][1])
+            //console.log(arraySkipIns[name_activity][0])
             var r2_name_Act_1=arraySkipIns[name_activity][1]
             var r2_name_Act_2=arraySkipIns[name_activity][0]
         }catch(error){
@@ -71,8 +71,8 @@ function backPopUp(){
 
     }else if(name_activity_end in r2){
         try {
-            console.log(arraySkipIns[name_activity_end][1])
-            console.log(arraySkipIns[name_activity_end][0])
+            //console.log(arraySkipIns[name_activity_end][1])
+            //console.log(arraySkipIns[name_activity_end][0])
             $("#skip_act").text(arraySkipIns[name_activity_end][1] )
             $("#ins_act").text(arraySkipIns[name_activity_end][0] )
             var r2_name_Act_1=arraySkipIns[name_activity_end][1]
@@ -168,17 +168,17 @@ function updateInfoListener(){
         r3 = response[2]
         r3 = JSON.parse(r3.replace(/'/g,"\""));
 
-        console.log("sto stampando r1")
-        console.log(r1)
+        //console.log("sto stampando r1")
+        //console.log(r1)
         
         //console.log(r3);
 
         
         for (const [key, value] of Object.entries(r1)) {
-            console.log(key, (value[1]+value[2])/(value[1]+value[2]+value[0]));
+            //console.log(key, (value[1]+value[2])/(value[1]+value[2]+value[0]));
             color_dictionary[key]=(value[1]+value[2])/(value[1]+value[2]+value[0])  
         }
-        console.log("sto stampando color_dictionary: "+color_dictionary)
+        //console.log("sto stampando color_dictionary: "+color_dictionary)
 
 
         resolve(response); 
@@ -500,7 +500,7 @@ function updatePnml(first,after){
 function updatePnmlBis(array){
 
     console.log("Function: updatePnml()")
-    console.log(array)
+    //console.log(array)
     var oReq = new XMLHttpRequest();
     var ciao=1
     //oReq.addEventListener("load", jarListener);
@@ -541,8 +541,6 @@ function getPnmlExistenceRequest(){
 
 function noMappingListener(){
     console.log(this.responseText)
-
-
 }
 
 function noMappingRequest(){
@@ -594,7 +592,7 @@ function nextDivForm(){
   
     // Check if mapping is allowed
     if (mapYes.checked && !mapNo.checked) {
-        console.log("Mapping is allowed")
+        // console.log("Mapping is allowed")
         // Mapping is allowed
         var confirmation = confirm("Do you want to apply the following mapping?");
 
@@ -617,9 +615,9 @@ function nextDivForm(){
     
                 cambio_mapping=1
                 var prima_1=selectId.replaceAll("_bis", " ").trim()
-                console.log(prima_1);
+                //console.log(prima_1);
                 var dopo_1=selectedValue
-                console.log(dopo_1)
+                //console.log(dopo_1)
                 howUpdatePnml.push({ before_text: prima_1, after_text: dopo_1 });
                 //updatePnml(prima_1,dopo_1)
                 
@@ -694,7 +692,7 @@ function petriRequestInternal(){
 
 function petriListenerInternal(){
     console.log("Function: petriListenerInternal()")
-    console.log("non usato forse")
+    //console.log("maybe i am not using this function")
 
     var response=this.responseText.split("£")
 
@@ -747,7 +745,7 @@ function petriRequestExternal(){
 }
 
 function petriListenerExternal(){
-    console.log("non usato")
+    //console.log("not used?")
     console.log("Function: petriListenerExternal()")
 
     var response=this.responseText.split("£")
@@ -768,7 +766,7 @@ function petriListenerExternal(){
 var invisible_steps=[]
 
 function addTransitionName(tr_name,log_name){
-    console.log("Function: addTransitionName("+tr_name+","+log_name+")")
+    //console.log("Function: addTransitionName("+tr_name+","+log_name+")")
     
     //array con i nomi delle transizioni relative al dsl importato
     tr_array = JSON.parse(tr_name.replace(/'/g,"\"") );
@@ -955,7 +953,7 @@ function closePP2(){
    
         var titolo_end = title_id.replaceAll(" ","").replaceAll("-","_").toLowerCase()
 
-        console.log("Sono in closePP2, il titolo prima è:" + titolo)
+        //console.log("Sono in closePP2, il titolo prima è:" + titolo)
 
         ///
         var selected_elem=""
@@ -969,13 +967,13 @@ function closePP2(){
         }
         if(title_id.toLowerCase() in color_dictionary){
             titolo=title_id.toLowerCase()
-            console.log("Sono in closePP2, primo if")
+            //console.log("Sono in closePP2, primo if")
         }else if(title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","") in color_dictionary){
             titolo=title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","")
-            console.log("Sono in closePP2, secondo if")
+            //console.log("Sono in closePP2, secondo if")
         }else if(title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_") in color_dictionary){
             titolo=title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
-            console.log("Sono in closePP2, terzo if")
+            //console.log("Sono in closePP2, terzo if")
         }else{
             var stringa_temporanea=title_id.toLowerCase().replaceAll(" ","").replaceAll("-end","").replaceAll("-","_")
             var stringa_comparazione=selected_elem.toLowerCase().replaceAll(" ","")
@@ -987,7 +985,7 @@ function closePP2(){
             }
 
         }
-        console.log("Sono in closePP2, il titolo dopo è:" + titolo)
+        //console.log("Sono in closePP2, il titolo dopo è:" + titolo)
 
         ///
 

@@ -88,11 +88,11 @@ function checkTraceLengthFilter() {
 
 function do_check_conformance(){
     if(document.getElementById("check_conformance").checked){
-        console.log("false")
+        //console.log("false")
         $('#check_conformance').prop('checked', false);
         displayTracePopUp()
     }else{
-        console.log("true")
+        //console.log("true")
         $('#check_conformance').prop('checked', true);
         displayTracePopUp()
     }

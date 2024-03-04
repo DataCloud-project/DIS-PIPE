@@ -169,7 +169,7 @@ def jarCalling():
     # os.chdir(working_dir+"/"+process_string(session["conformace_jar"]))
     #pnmlPath="../net/petri_final_remap.pnml"
 
-    print("Current working il dopo directory: {0}".format(os.getcwd()))
+    print("jarCalling() start Current working directory: {0}".format(os.getcwd()))
 
     #costPath="cost_file"
     costPath=process_string(session["conformace_jar"]+"/cost_file")
@@ -186,12 +186,12 @@ def jarCalling():
 
     cartellaPddlPath=process_string(session["conformace_jar"]+"/fast-downward/src")
     cartellaSymbaPath=process_string(session["conformace_jar"]+"/seq-opt-symba-2")
-    print("chiamata a jar è questa")
-    print(session["log_path"])
-    print(session["directory_log"])
-    print(session["log_name"])
-    print("java -jar " + jarPath +" align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate+" "+cartellaPddlPath+" "+cartellaSymbaPath )
-    print("chiamata a jar è fininta")
+    #print("chiamata a jar è questa")
+    #print(session["log_path"])
+    #print(session["directory_log"])
+    #print(session["log_name"])
+    #print("java -jar " + jarPath +" align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate+" "+cartellaPddlPath+" "+cartellaSymbaPath )
+    #print("chiamata a jar è fininta")
     process_jar = subprocess.Popen( "java -jar " + jarPath +" align "+pnmlPath+" "+xesPath+" "+costPath+" "+minLen +" "+maxLen+" "+planner+" "+duplicate+" "+cartellaPddlPath+" "+cartellaSymbaPath , shell=True)
     session["pid_jar"]=process_jar.pid
     try:
@@ -266,8 +266,8 @@ def jarCalling():
 def costFile():
     costHeader=request.headers.get('Contenuto')
     costJson = json.loads(costHeader)
-    print(costHeader)
-    print(costJson)
+    #print(costHeader)
+    #print(costJson)
 
     with open(session["cost_file_path"], "w") as f:
         for singleCost in costJson:
@@ -282,8 +282,7 @@ def traceDetail():
     allTraceName=""
 
     working_dir=os.getcwd()
-    print("XDBODE")
-    print(working_dir)
+    #print(working_dir)
     if(working_dir=="/root/datacloud/DIS-PIPE-development-current/api/jar"):
         os.chdir("..")
     
@@ -313,7 +312,6 @@ def updateTraceDetail():
     nameTrace = str(request.args.get('nameTrace'))
     #global plans_path
     working_dir=os.getcwd()
-    print("X2")
     print(working_dir)
   
     file_name = os.path.basename(session["plans_path"]+'/'+nameTrace)
@@ -364,7 +362,7 @@ def generalTraceInfo():
     dict_skip_ins ={} 
 
     working_dir=os.getcwd()
-    print("la cartella su cui lavora general trace info è:")
+    print("generalTraceInfo() folder is:")
     print(working_dir)
 
     # plans_path="./jar/fast-downward/src/plans" 
@@ -645,16 +643,16 @@ def mapPnmlBis():
     for item in array:
         before_text = item['before_text']
         after_text = item['after_text']
-        print(before_text)
-        print(after_text)
+        #print(before_text)
+        #print(after_text)
         transition_id = retrieve_id(before_text,all_transitions)
-        print(transition_id)
+        #print(transition_id)
         
         if os.path.exists(path_finale):
-            print("sono nel path finale")
+            #print("sono nel path finale")
             execute_remap = rephrase_text(path_finale, transition_id, after_text, path_finale)
         else:
-            print("sono nel path iniziale")
+            #print("sono nel path iniziale")
             execute_remap = rephrase_text(path_base, transition_id, after_text, path_finale)
            
         if execute_remap:
@@ -703,7 +701,7 @@ def getPnmlExistence():
 def createRemap():
 
 
-    print("creato un remap XDXDXDXDXDXXD")
+    print("createRemap()")
 
     with open(session["directory_net_pnml"][1:]+'/petri_final.pnml') as f:
         trace = f.readlines()

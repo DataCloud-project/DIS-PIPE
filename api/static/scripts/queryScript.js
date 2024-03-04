@@ -22,11 +22,11 @@ function queryDbRequest() {
 }
 
 function initializeDBListener(){
-	console.log(this.responseText)
+	//console.log(this.responseText)
 	document.getElementById("resultQuery").innerHTML=""
 	//document.getElementById("resultQuery").innerHTML=this.responseText
 	var ciao=this.responseText.split("\n")
-	console.log(ciao.length)
+	//console.log(ciao.length)
 	for(var i=0; i<ciao.length;i++){
 		document.getElementById("resultQuery").innerHTML=document.getElementById("resultQuery").innerHTML+ciao[i]+"<br>"
 	}
@@ -36,7 +36,7 @@ function initializeDBListener(){
 function initializeDBRequest(){
 
 	var percentageFilter=document.getElementById("queryPercentage").value
-	console.log(percentageFilter)
+	//console.log(percentageFilter)
 
 	$("#loadingMessage").css("visibility", "visible");
 
@@ -60,7 +60,7 @@ function databasePresenceListener(){
 	
 	var db_response =JSON.parse(this.responseText)["presence"]
 	if(db_response==="yes"){
-		console.log("databse presence")
+		//console.log("databse presence")
 		$("#response_database").text('A database with the name of this log is already present, do you want to redo translation? it may takes some time');
 		
 			var YesButton = document.createElement("button");
@@ -118,7 +118,7 @@ function databasePresenceListener(){
 
 	
 	}else{
-		console.log("databse not presence")
+		//console.log("databse not presence")
 		$("#response_database").text("You have to translate the log, Do you want to continue? It may take some times");
 		var YesButton = document.createElement("button");
 			YesButton.innerHTML = "Yes";
@@ -199,7 +199,7 @@ function printBtn_iniziale(listBrand) {
 	
 
 	from_list.push('log'+log_numer)
-	console.log(from_list)
+	//console.log(from_list)
 
 	for (var i = 0; i < listBrand.length; i++) {
 		var checkBox = document.createElement("input");
@@ -218,11 +218,11 @@ function printBtn_iniziale(listBrand) {
 			
 			if (e.target.checked) {
 				element_list_select.push(e.target.id)
-				console.log(element_list_select)
+				//console.log(element_list_select)
 			}else{
 				index = element_list_select.indexOf(e.target.id);
 				x= element_list_select.splice(index, 1);
-				console.log(element_list_select)
+				//console.log(element_list_select)
 			}
 		};
 		
@@ -308,7 +308,7 @@ function printBtn(listBrand) {
 	
 
 	from_list.push('log'+log_numer)
-	console.log(from_list)
+	//console.log(from_list)
 
 	for (var i = 0; i < listBrand.length; i++) {
 		var checkBox = document.createElement("input");
@@ -327,11 +327,11 @@ function printBtn(listBrand) {
 			
 			if (e.target.checked) {
 				element_list_select.push(e.target.id)
-				console.log(element_list_select)
+				//console.log(element_list_select)
 			}else{
 				index = element_list_select.indexOf(e.target.id);
 				x= element_list_select.splice(index, 1);
-				console.log(element_list_select)
+				//console.log(element_list_select)
 			}
 		};
 		
@@ -448,7 +448,7 @@ function translationListener2(){
 	console.log(this.responseText)
 	if(CheckTranslationRequest()=="false"){
 		takeListRequest();
-		console.log("bode")
+		//console.log("bode")
 	}
 }
 function translationRequest2(){
@@ -597,13 +597,13 @@ function addCondition(){
 	removeCondButt.class=stringCond
 	
 	removeCondButt.addEventListener ("click", function(e,stringCond) {
-		console.log(e.target.closest('div').textContent.slice(0, -6))
-		console.log(condition_query)
+		//console.log(e.target.closest('div').textContent.slice(0, -6))
+		//console.log(condition_query)
 
 		if(condition_query.split("#").length == 3){
 
-			console.log("lunghezza 3")
-			console.log(condition_query.split("#"))
+			//console.log("lunghezza 3")
+			//console.log(condition_query.split("#"))
 
 			condition_query=condition_query.replace("# "+e.target.closest('div').textContent.slice(0, -6),"")
 
@@ -612,7 +612,7 @@ function addCondition(){
 			//condition_query=condition_query.replace("or ","")
 			//condition_query=condition_query.replace("and ","")
 			
-			console.log(condition_query.length)
+			//console.log(condition_query.length)
 			if(condition_query.length==0){
 				condition_query="#"
 			}
@@ -622,29 +622,29 @@ function addCondition(){
 			document.getElementById("addAnd").disabled = true;
 			document.getElementById("addOr").disabled = true;
 			condition_query=condition_query.trim()
-			console.log(condition_query.length)
+			//console.log(condition_query.length)
 			if(condition_query.length==0){
 				condition_query="#"
 			}
 		}else{
 			condition_query=condition_query.replace("# "+e.target.closest('div').textContent.slice(0, -6),"")
 			condition_query=condition_query.trim()
-			console.log(condition_query.length)
+			//console.log(condition_query.length)
 			if(condition_query.length==0){
 				condition_query="#"
 			}
 		}
 		
-		console.log(condition_query)
+		//console.log(condition_query)
 		e.target.closest('div').remove()
 		console.log(e.target.class)
-		console.log(condition_query.split("#"))
+		//console.log(condition_query.split("#"))
 
 		if(condition_query.split("#").length == 2){
 			condition_query=condition_query.replace("# "+e.target.closest('div').textContent.slice(0, -6),"")
 
 			condition_query=condition_query.trim()
-			console.log(condition_query.length)
+			//console.log(condition_query.length)
 			if(condition_query.length==0){
 				condition_query="#"
 			}
@@ -676,7 +676,7 @@ function addCondition(){
 	
 	
 	number_condition=number_condition+1
-	console.log(condition_query)
+	//console.log(condition_query)
 }
 
 function addAnd(){
@@ -700,7 +700,7 @@ function addAnd(){
 	var div_div = document.getElementById("Condition"+number_condition);
 	div_div.appendChild(operatorSpan)
 
-	console.log(condition_query)
+	//console.log(condition_query)
 }
 
 function addOr(){
@@ -724,7 +724,7 @@ function addOr(){
 	var div_div = document.getElementById("Condition"+number_condition);
 	div_div.appendChild(operatorSpan)
 
-	console.log(condition_query)
+	//console.log(condition_query)
 }
 
 function backMakeQuery(){
@@ -738,9 +738,9 @@ function applicaFiltro(){
 	document.getElementById("formQuery3").style.display = "block"
 	document.getElementById("formQuery2").style.display = "none"
 
-	console.log(condition_query)
-	console.log(from_list)
-	console.log(element_list_select)
+	//console.log(condition_query)
+	//console.log(from_list)
+	//console.log(element_list_select)
 	var querySelectString="select distinct "
 	var queryFromString="from "
 	var queryWhereString="where "
@@ -748,21 +748,21 @@ function applicaFiltro(){
 	//const array1 = ['a', 'b', 'c'];
 
 	for (const element of element_list_select) {
-		console.log(element);
+		//console.log(element);
 		querySelectString=querySelectString+" "+element
 		querySelectString=querySelectString+","
 	}
 	querySelectString=querySelectString.slice(0, -1)
-	console.log(querySelectString)
+	//console.log(querySelectString)
 
 
 	for (const element of from_list) {
-		console.log(element);
+		//console.log(element);
 		queryFromString=queryFromString+" log_db "+element
 		queryFromString=queryFromString+","
 	}
 	queryFromString=queryFromString.slice(0, -1)
-	console.log(queryFromString)
+	//console.log(queryFromString)
 
 	var cond_q_filt=condition_query;
 	if(cond_q_filt.split("#").length == 2){
@@ -771,11 +771,11 @@ function applicaFiltro(){
 	}
 
 	for (const element of cond_q_filt.split("#")) {
-		console.log(element);
+		//console.log(element);
 		queryWhereString=queryWhereString+" "+element.trim()
 	}
 		
-	console.log(queryWhereString)
+	//console.log(queryWhereString)
 	cond_q_filt_where=queryWhereString.replace("where","")
 	if(!cond_q_filt_where.replace(/\s/g, '').length){
 		var totalQuery=querySelectString+" "+queryFromString
@@ -793,14 +793,14 @@ function applicaFiltro(){
 
 
 function makeQueryListener(){
-	console.log(this.responseText)
+	//console.log(this.responseText)
 	var risposta=this.responseText.split("£");
 
 	document.getElementById("result_div").innerHTML = ""
-	console.log("gfr")
+	//console.log("gfr")
 	
 	var array_query= risposta[0].split("\n")
-	console.log(array_query.length)
+	//console.log(array_query.length)
 
 	//var headers = ["Title", "Author", "Read?"];
     var table = document.createElement("TABLE");  //makes a table element for the page
@@ -816,7 +816,7 @@ function makeQueryListener(){
 		for (var j = 0; j < elementi_row.length; j++) {
 			
 			//d = date_time.strftime("%m/%d/%Y, %H:%M:%S")
-			console.log(typeof elementi_row[j]);
+			//console.log(typeof elementi_row[j]);
 			row.insertCell(j).innerHTML = elementi_row[j];
 		}
     }
@@ -836,7 +836,7 @@ function makeQueryListener(){
 }
 
 function goback(){
-	console.log("work? or not")
+	//console.log("work? or not")
 	document.getElementById("formQuery").style.display = "block"
 	document.getElementById("formQuery2").style.display = "none"
 }

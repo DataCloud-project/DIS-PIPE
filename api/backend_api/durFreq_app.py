@@ -103,7 +103,7 @@ def allduration():
             test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
             mean_dizionario[j]=statistics.mean(test_activity_dictionary)
         except Exception as e:
-            print(f"7778 An error of type {type(e).__name__} occurred: {e}")
+            print(f"An error of type {type(e).__name__} occurred: {e}")
             print(activity_dictionary[j])
 
         
@@ -116,7 +116,7 @@ def allduration():
             test_activity_dictionary = [float(x) for x in activity_dictionary[j]]
             total_dizionario[j]=sum(test_activity_dictionary)
         except Exception as e:
-            print(f"7778 An error of type {type(e).__name__} occurred: {e}")
+            print(f"An error of type {type(e).__name__} occurred: {e}")
             print(activity_dictionary[j])
 
     median_dizionario=dict.fromkeys(session["activity_list"])

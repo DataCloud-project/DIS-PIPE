@@ -1123,9 +1123,7 @@ def getDslStructure():
         except Exception as e:
             print(e)
             return(str("error"))
-        
-
-        print("ERRORE")    
+         
         ######
         
         dfg=session["dfg"]
@@ -1195,8 +1193,8 @@ def getDslStructure():
             trst.append([str(tr.name), str(tr.label)])
 
 
-        print(session["marking_path"])
-        print(session["cost_file_path"])
+        #print(session["marking_path"])
+        #print(session["cost_file_path"])
 
         pnml_new_path=process_string(session["directory_net_pnml"][1:]+'/petri_final.pnml')
         pnml_exporter.apply(net, im, pnml_new_path, final_marking=fm)
@@ -1224,8 +1222,8 @@ def getDslStructure():
         
         #print(str(gviz)+"£"+str(im)+"£"+str(fm)+"£"+str(list(activities))+"£"+str(trst))
 
-        print(trst)
-        print(activities)
+        #print(trst)
+        #print(activities)
     
     else:
         print(f"Request failed with status code {response.status_code}")
@@ -1330,8 +1328,13 @@ if(path_f=="127.0.0.1"):
     #context = ('key/localhost/localhost.crt', 'key/localhost/localhostd.key')
     #pp.run(host=path_f, port=int(port_f), debug=True, ssl_context=context)
     app.run(host=path_f, port=int(port_f), debug=True)
+elif(path_f=="0.0.0.0"):
+    print("DOCKER")
+    app.run(host='0.0.0.0', port=7778, debug=True)
 else:
     port = int(os.environ.get('PORT', port_f))
     context = ('key/certificate.crt', 'key/private.key')    #certificate and key files
     app.run(host=path_f, port=port, debug=True, ssl_context=context)
+
+
 

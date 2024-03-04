@@ -12,7 +12,7 @@
 	<global scope="event">
 		<string key="concept:name" value="name" />
 		<string key="StepPhaseID" value="string" />
-		<date key="time:timestamp" value="2024-01-26T00:21:40.579343+01:00" />
+		<date key="time:timestamp" value="2024-03-04T11:22:48.909909+01:00" />
 		<string key="PipelineName" value="name" />
 		<string key="PipelineID" value="string" />
 		<string key="PipelineCommunicationMedium" value="string" />
@@ -24,7 +24,7 @@
 		<event>
 			<string key="concept:name" value="register_request-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2024-01-26T00:21:40.579414+01:00" />
+			<date key="time:timestamp" value="2024-03-04T11:22:48.909987+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
 			<string key="PipelineName" value="Example" />
@@ -34,7 +34,7 @@
 		<event>
 			<string key="concept:name" value="examine_casually-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2024-01-26T00:21:40.579440+01:00" />
+			<date key="time:timestamp" value="2024-03-04T11:22:48.910000+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
 			<string key="PipelineName" value="Example" />
@@ -44,7 +44,7 @@
 		<event>
 			<string key="concept:name" value="check_ticket-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2024-01-26T00:21:40.579463+01:00" />
+			<date key="time:timestamp" value="2024-03-04T11:22:48.910011+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
 			<string key="PipelineName" value="Example" />
@@ -54,7 +54,7 @@
 		<event>
 			<string key="concept:name" value="decide-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2024-01-26T00:21:40.579486+01:00" />
+			<date key="time:timestamp" value="2024-03-04T11:22:48.910021+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
 			<string key="PipelineName" value="Example" />
@@ -64,7 +64,7 @@
 		<event>
 			<string key="concept:name" value="pay_compensation-End" />
 			<string key="StepPhaseID" value="1" />
-			<date key="time:timestamp" value="2024-01-26T00:21:40.579509+01:00" />
+			<date key="time:timestamp" value="2024-03-04T11:22:48.910031+01:00" />
 			<string key="PipelineID" value="1" />
 			<string key="PipelineCommunicationMedium" value="medium  " />
 			<string key="PipelineName" value="Example" />

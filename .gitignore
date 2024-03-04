@@ -17,3 +17,4 @@ api/key
 api/storage
 api/timestamp
 api/flask_session
+api/timestamp

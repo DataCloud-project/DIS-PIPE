@@ -51,7 +51,7 @@ function saveProjectXes(){
 }
 
 function saveProjectDsl(){
-	console.log("dslrequest")
+	//console.log("dslrequest")
 
     var dsl = createDsl();
 	
@@ -75,18 +75,18 @@ function changeFolder(){
 
 	var name_log, name_dsl;
 
-	console.log(files)
+	//console.log(files)
 
 	for(i=0;i<len;i+=1){
 		console.log(files[i].name);
 		if(files[i].name.match(regex_expression_txt)!=null){
 			console.log(files[i].name.match(regex_expression_txt))
-			console.log("txt")
+			//console.log("txt")
 			name_dsl=files[i].name
 		}
 		if(files[i].name.match(regex_expression_xes)!=null){
 			console.log(files[i].name.match(regex_expression_xes))
-			console.log("xes")
+			//console.log("xes")
 			name_log=files[i].name
 		}		
 	}
@@ -104,16 +104,16 @@ function load(){
 }
 
 function sendDslListenerBis(){
-	console.log(this.responseText)
+	//console.log(this.responseText)
 	
 	var obj = JSON.parse(this.responseText);
-	console.log(obj.success)
+	//console.log(obj.success)
 	if(obj.success==true){
 		alert("DSL sent to DEF-PIPE")
 	}else{
 		alert("error sending dsl to DEF-PIPE")
 	}
-	console.log(obj)
+	// console.log(obj)
 	// Expected output: 42
 
 	/*
@@ -123,7 +123,7 @@ function sendDslListenerBis(){
 }
 
 function sendDslListenerReq2(){
-	console.log(this.responseText)
+	// console.log(this.responseText)
 
 	var oReq1 = new XMLHttpRequest();
 	oReq1.addEventListener("load", sendDslListenerBis);
@@ -133,7 +133,7 @@ function sendDslListenerReq2(){
 }
 
 function sendDslListenerReq2start(){
-	console.log(this.responseText)
+	// console.log(this.responseText)
 
 	// var oReq1 = new XMLHttpRequest();
 	// oReq1.addEventListener("load", sendDslListenerBis);
@@ -184,8 +184,8 @@ function sendTempDsl(){
 	var pipelineName = document.getElementById('mapTitle').innerHTML.replace('.xes', '');
 	
     var dsl = createTempDsl();
-	console.log("ildsl è questo2")
-	console.log(dsl)
+	//console.log("dsl: ")
+	//console.log(dsl)
 	
     var oReq = new XMLHttpRequest();
 	oReq.open("POST", frontend+"dslPost", true);
@@ -320,7 +320,7 @@ function createDsl(){
 	pre_request('false')
 	
 	// translation from DFG to matrix
-	console.log("Translating from map to matrix");
+	// console.log("Translating from map to matrix");
 	// get graph in an array
 	graphTextF = getGraphText('frequency');
 	graphTextP = getGraphText();
@@ -336,7 +336,7 @@ function createDsl(){
 	// get final matrix ready for dsl conversion
 	dslSteps = getDslSteps(graphNodes, graphEdges);
 	// translating from matrix to DSL
-	console.log("Translating from matrix to DSL");
+	// console.log("Translating from matrix to DSL");
 
 
 	//translate to DSL
@@ -379,7 +379,7 @@ function exportDsl(){
 
 function createTempDsl(){
 	// translation from DFG to matrix
-	console.log("Translating from map to matrix");
+	// console.log("Translating from map to matrix");
 	// get graph in an array
 	graphTextF = getGraphText('frequency');
 	graphTextP = getGraphText();
@@ -395,7 +395,7 @@ function createTempDsl(){
 	// get final matrix ready for dsl conversion
 	dslSteps = getDslStepsTemp(graphNodes, graphEdges);
 	// translating from matrix to DSL
-	console.log("Translating from matrix to DSL");
+	// console.log("Translating from matrix to DSL");
 
 	var predecessors = [];
 	var parameters = [];
@@ -404,7 +404,7 @@ function createTempDsl(){
 	//print pipeline title + fixed line about communicationMedium
 	var dsl = 'Pipeline ' + pipelineName +' {\n\tcommunicationMedium: medium WEB_SERVICE\n\tsteps:\n' ;
 	//iterate on the steps
-	console.log(dslSteps)
+	// console.log(dslSteps)
 	for (var i=0; i<dslSteps.length; i++){
 		// if the step is start or end, just skip
 		if ( dslSteps[i][0][0].replaceAll(' ', '_') == 'start' || dslSteps[i][0][0].replaceAll(' ', '_') == 'end')
@@ -453,7 +453,7 @@ function createTempDsl(){
 
 function showBPMNGraph(){
 
-	console.log("show BPMN Graph")
+	//console.log("show BPMN Graph")
 	if(document.getElementById("showHidePetriNet").value=="false"){
 		document.getElementById("petrinet-content").style.display = "none";
 		document.getElementById("showHidePetriNet").value="true"
@@ -470,7 +470,7 @@ function showBPMNGraph(){
             withCredentials: true
         },
         success: function (gdata) {
-            console.log(gdata["grafo"])
+            //console.log(gdata["grafo"])
 			document.getElementById("showHidePetriNet").innerHTML="Hide BPMN"
 
 			var options = { format: 'svg',

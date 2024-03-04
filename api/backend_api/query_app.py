@@ -60,10 +60,23 @@ from utilities import *
 from rule import *
 
 from backend_classes import *
+import databaseFunctions
 
 ############################################################
 #________________________QUERY API_________________________#
 ############################################################
+
+with open('../properties.txt') as f:
+    lines = f.readlines()
+    frontend = lines[0]
+    frontend = frontend.split(': ')
+    http = frontend[1]
+    frontend = frontend[1]
+    frontend = frontend.split('//')
+    path_f = frontend[1].split(':')[0]
+    port_f = frontend[1].split(':')[1]
+    port_f = port_f.split('/')[0]
+f.close()
 
 app_query = Blueprint('app_query',__name__)
 
@@ -84,8 +97,8 @@ def queryDb():
     
     #global log_path
     #global databaseName
-    print(session["databaseName"])
-    print(session["log_path"])
+    #print(session["databaseName"])
+    #print(session["log_path"])
     #databaseName="TestDB"
     #databaseName="datacloud"
     #runningXesPath=session["log_path"]
@@ -102,20 +115,31 @@ def queryDb():
     #print("  \n")
     
     
-    db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_Postgres.jar")
-    if(db_data_jar_path[0]=="/"):
-        print("sono all'inizio jar")
-        db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_Postgres.jar")[1:]
+    if (path_f=="0.0.0.0"):
+        db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_PostgresDocker.jar")
+        if(db_data_jar_path[0]=="/"):
+            #print("start database jar path")
+            db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_PostgresDocker.jar")[1:]
 
-    runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])
-    if(runningXesPath[0]=="/"):
-        print("sono all'inizio xes")
-        runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])[1:]
+        runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])
+        if(runningXesPath[0]=="/"):
+            #print("start xes path")
+            runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])[1:]
 
-        
+        db_data_jar = subprocess.Popen( "java -jar " + db_data_jar_path +" "+session["databaseName"]+" "+runningXesPath+" "+"'"+databaseFunctions.URL_DATABASE+"/"+session["databaseName"]+"?user="+databaseFunctions.usernameDB+"&password="+databaseFunctions.passwordDB+"'", shell=True)
+    else:
+        db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_Postgres.jar")
+        if(db_data_jar_path[0]=="/"):
+            #print("start database jar path")
+            db_data_jar_path=process_string(session["database_jar"]+"/XesToRxesPlus_Postgres.jar")[1:]
 
-    db_data_jar = subprocess.Popen( "java -jar " + db_data_jar_path +" "+session["databaseName"]+" "+runningXesPath, shell=True)
-    
+        runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])
+        if(runningXesPath[0]=="/"):
+            #print("start xes path")
+            runningXesPath=process_string(session["directory_log"]+"/"+session["log_name"])[1:]    
+
+        db_data_jar = subprocess.Popen( "java -jar " + db_data_jar_path +" "+session["databaseName"]+" "+runningXesPath, shell=True)
+
     session["pid_database"]=db_data_jar.pid
 
     try:
@@ -134,21 +158,17 @@ def queryDb():
 @app_query.route('/initializeQuery', methods=['GET', 'POST'])
 def initializeQuery():
     queryPercentage = str(request.args.get('queryPercentage'))
-    server = 'localhost' 
-    port= '5432'
+    #server = 'localhost' 
+    #port= '5432'
     #database = 'TestDB'
     #global databaseName
-    #database = 'datacloud' 
-    #username = 'sa'
-    username = 'postgres' 
-    password = 'ubuntu-777' 
     #cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
     #cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for PostgreSQL};Server='+server+';Database='+database+';User ID='+username+';Password='+password+';String Types=Unicode')
     
-    print(session["databaseName"])
+    #print(session["databaseName"])
     #establishing the connection
     cnxn = psycopg2.connect(
-        database=session["databaseName"], user=username, password=password, host=server, port= port
+        database=session["databaseName"], user=databaseFunctions.usernameDB, password=databaseFunctions.passwordDB, host=databaseFunctions.serverDB, port= databaseFunctions.portDB
     )
 
 
@@ -184,22 +204,16 @@ def makeQuery():
     querySELECT = str(request.args.get("selectpart"))
     querySELECT = querySELECT.replace("select distinct ","")
 
-    server = 'localhost' 
-    port= '5432'
     #database = 'TestDB'
     #global databaseName
     #database = 'datacloud' 
     #username = 'sa'
-    username = 'postgres' 
-    password = 'ubuntu-777' 
     #cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
     #cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for PostgreSQL};Server='+server+';Database='+database+';User ID='+username+';Password='+password+';String Types=Unicode')
     
-    print(session["databaseName"])
-    
     #establishing the connection
     cnxn = psycopg2.connect(
-        database=session["databaseName"], user=username, password=password, host=server, port= port
+        database=session["databaseName"], user=databaseFunctions.usernameDB, password=databaseFunctions.passwordDB, host=databaseFunctions.serverDB, port= databaseFunctions.portDB
     )
 
 
@@ -264,22 +278,18 @@ def doQuery1():
     #querySELECT = str(request.args.get("selectpart"))
     #querySELECT = querySELECT.replace("select distinct ","")
 
-    server = 'localhost' 
-    port= '5432'
+    #server = 'localhost' 
+    #port= '5432'
     #database = 'TestDB'
     #global databaseName
     #database = 'datacloud' 
     #username = 'sa'
-    username = 'postgres' 
-    password = 'ubuntu-777' 
     #cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
     #cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for PostgreSQL};Server='+server+';Database='+database+';User ID='+username+';Password='+password+';String Types=Unicode')
     
-    print(session["databaseName"])
-    
     #establishing the connection
     cnxn = psycopg2.connect(
-        database=session["databaseName"], user=username, password=password, host=server, port= port
+        database=session["databaseName"],user=databaseFunctions.usernameDB, password=databaseFunctions.passwordDB, host=databaseFunctions.serverDB, port= databaseFunctions.portDB
     )
 
 
@@ -305,7 +315,7 @@ def doQuery1():
                      where key='DataSourceName' and NOT EXISTS( \
                          select * \
                          from new_log_db nldb2 \
-                         where nldb1.eventname=nldb2.eventname and nldb2.key='DataSourceType' and nldb2.value='1' \
+                         where nldb1.eventname=nldb2.eventname and ((nldb2.key='DataSourceType' and nldb2.value='Input') or (nldb2.key='DataSourceType' and nldb2.value='Both')) \
                      )")
 
 
@@ -340,22 +350,16 @@ def doQuery2():
     #querySELECT = str(request.args.get("selectpart"))
     #querySELECT = querySELECT.replace("select distinct ","")
 
-    server = 'localhost' 
-    port= '5432'
     #database = 'TestDB'
     #global databaseName
     #database = 'datacloud' 
     #username = 'sa'
-    username = 'postgres' 
-    password = 'ubuntu-777' 
     #cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
     #cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for PostgreSQL};Server='+server+';Database='+database+';User ID='+username+';Password='+password+';String Types=Unicode')
     
-    print(session["databaseName"])
-    
     #establishing the connection
     cnxn = psycopg2.connect(
-        database=session["databaseName"], user=username, password=password, host=server, port= port
+        database=session["databaseName"], user=databaseFunctions.usernameDB, password=databaseFunctions.passwordDB, host=databaseFunctions.serverDB, port= databaseFunctions.portDB
     )
 
 
@@ -386,7 +390,7 @@ def doQuery2():
                         ) and NOT EXISTS ( \
                             select * \
                             from new_log_db nldb3 \
-                            where nldb1.eventname=nldb3.eventname and ((nldb3.key='DataSourceType' and nldb3.value='Output') or (nldb3.key='DataSourceType' and nldb3.value='Both')) \
+                            where nldb1.eventname=nldb3.eventname and ((nldb3.key='DataSourceType' and nldb3.value='Input') or (nldb3.key='DataSourceType' and nldb3.value='Both')) \
                         );")
     cursor2_1.close()
 
@@ -402,7 +406,7 @@ def doQuery2():
                      ) and NOT EXISTS ( \
                          select * \
                          from new_log_db nldb3 \
-                         where nldb1.eventname=nldb3.eventname and ((nldb3.key='DataSourceType' and nldb3.value='Output') or (nldb3.key='DataSourceType' and nldb3.value='Both')) \
+                         where nldb1.eventname=nldb3.eventname and ((nldb3.key='DataSourceType' and nldb3.value='Input') or (nldb3.key='DataSourceType' and nldb3.value='Both')) \
                      );")
     cursor2_2.close()
 
@@ -439,15 +443,12 @@ def doQuery2():
 @app_query.route('/checkDatabasePresence', methods=['GET'])
 def checkDatabasePresence():
 
-    server = 'localhost' 
-    port= '5432'
-    username = 'postgres' 
-    password = 'ubuntu-777' 
-
     response = "yes" 
     connection = None
     try:
-        connection = psycopg2.connect("user='postgres' host='localhost' password='ubuntu-777' port='5432'")
+        connection=psycopg2.connect(
+                    user=databaseFunctions.usernameDB, password=databaseFunctions.passwordDB, host=databaseFunctions.serverDB, port= databaseFunctions.portDB
+                )        
         print('Database connected.')
 
     except:
@@ -515,21 +516,17 @@ def checkTranslationEnd():
 
 @app_query.route('/createEventLog', methods=["GET"])
 def createEventLog():
-    server = 'localhost' 
-    port= '5432'
+
     #database = 'TestDB'
     #global databaseName
     #database = 'datacloud' 
     #username = 'sa'
-    username = 'postgres' 
-    password = 'ubuntu-777' 
     #cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
     #cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for PostgreSQL};Server='+server+';Database='+database+';User ID='+username+';Password='+password+';String Types=Unicode')
-    
-    print(session["databaseName"])
+
     #establishing the connection
     cnxn = psycopg2.connect(
-        database=session["databaseName"], user=username, password=password, host=server, port= port
+        database=session["databaseName"], user=databaseFunctions.usernameDB, password=databaseFunctions.passwordDB, host=databaseFunctions.serverDB, port= databaseFunctions.portDB
     )
 
 
