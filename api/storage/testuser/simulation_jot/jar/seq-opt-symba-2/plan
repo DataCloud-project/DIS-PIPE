@@ -1,2 +1,0 @@
-#! /bin/bash
-"$(dirname "$0")"/src/plan-ipc seq-opt-symba-2 "$@"

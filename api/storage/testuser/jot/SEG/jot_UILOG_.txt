@@ -1,6 +1,0 @@
-Query Trasformation Data_Merge Visualization Report_Generated Request 841
-Query Trasformation Launch_Algorithm Visualization Store_Results Model_Generated 297
-Query Trasformation Data_Merge Visualization Report_Generated Request Query Trasformation Data_Merge Visualization Report_Generated Request 8
-Query Trasformation Install_supplementary_resources Launch_Algorithm Visualization Store_Results Model_Generated 2
-Request Query Trasformation Data_Merge Visualization Report_Generated Request 4
-Query Trasformation Data_Merge Visualization Report_Generated Request Query Trasformation Launch_Algorithm Visualization Store_Results Model_Generated 3
