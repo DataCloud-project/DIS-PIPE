@@ -22,7 +22,7 @@ In particular, the functionalities provided by DIS-PIPE include:
 
 <!--- The architecture of the DIS-PIPE consists of two software components referred to as [DIS-PIPE-Event-Log-Manager](https://github.com/DataCloud-project/DIS-PIPE-Event-Log-Manager) and [DIS-PIPE-Discovery-And-Visualization](https://github.com/DataCloud-project/DIS-PIPE-Discovery-And-Visualization) as shown in the figure below. -->
 
-DIS-PIPE consists of a Web API implemented using Python and **Flask**[^1]:
+DIS-PIPE consists of a Web API implemented using Python and **Flask**[^1]: 
 
 - **backend.py**: uses the PM4PY library[^2] and Process Discovery algorithms to find a suitable process model that describes the order of events/activities of a given event log. In particular, for Process Discovery it has been used the DFG[^3] algorithm, that, together with some input parameters, returns a Digraph in DOT language format. It also exposes a web application implemented using **html, css and javascript**. It uses the Viz.js[^4] library to represents the DOT language format.
 
